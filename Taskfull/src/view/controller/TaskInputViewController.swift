@@ -5,14 +5,14 @@
 //  Created by IscIsc on 2017/03/11.
 //  Copyright © 2017年 isc. All rights reserved.
 //
-
+//TODO:文字の定数化,登録データ型,Utility,AutoLayout,入力方法最適化
 
 import UIKit
 
 ///
 /// タスク入力画面
 ///
-class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPickerViewDataSource
+class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate
 {
 /**
  * 定数
@@ -34,14 +34,10 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     @IBOutlet weak var InputTaskNameField: UITextField!
     @IBOutlet weak var InputPointListField: UITextField!
     @IBOutlet weak var lblInputPointList: UILabel!
-    @IBOutlet weak var InputTaskMemoView: UITextView!
+    @IBOutlet weak var InputTaskMemoView: UIPlaceHolderTextView!
     @IBOutlet weak var InputTaskDateField: UITextField!
     @IBOutlet weak var AddAfterTask: UIButton!
-    @IBOutlet weak var btnInputImportanceLow: UICustomButton!
-    @IBOutlet weak var btnInputImportanceMedium: UICustomButton!
-    @IBOutlet weak var btnInputImportanceHigh: UICustomButton!
-    @IBOutlet weak var btnInputImportanceUrgent: UICustomButton!
-   
+
     
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
@@ -111,7 +107,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         displayInputPoint()
         
         //重要度:初期設定
-        displayInputImportanceBtn()
+        displayInputImportanceSegment()
         
         //後続タスクボタン:初期設定
         displayAddAfterTaskBtn()
@@ -119,15 +115,9 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     }
     
     //重要度:初期設定
-    private func displayInputImportanceBtn(){
-        //重要度ボタン:低
-        btnInputImportanceLow.setTitle("低", forState: .Normal)
-        //重要度ボタン:中
-        btnInputImportanceMedium.setTitle("中", forState: .Normal)
-        //重要度ボタン:高
-        btnInputImportanceHigh.setTitle("高", forState: .Normal)
-        //重要度ボタン:至急
-        btnInputImportanceUrgent.setTitle("至急", forState: .Normal)
+    private func displayInputImportanceSegment(){
+        
+
     }
     
     //項目名入力欄,メモ入力欄:初期設定
@@ -136,17 +126,17 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         //項目名入力欄(透かし文字,左寄せ)要定数化
         InputTaskNameField.placeholder = "項目名:"
         InputTaskNameField.textAlignment = NSTextAlignment.Left
+        //項目名入力欄:delegate設定
+        InputTaskNameField.delegate  = self
+        //リターンキー(完了)タップ時イベント
+        textFieldShouldReturn(InputTaskNameField)
         
-        //メモ入力欄(透かし文字,左寄せ,上寄せ)
-        //InputTaskMemoView.placeholder = "メモ:"
+        //メモ入力欄(透かし文字"メモ:",左寄せ,上寄せ)
         InputTaskMemoView.textAlignment = NSTextAlignment.Left
         InputTaskMemoView.layer.borderWidth = 1
         InputTaskMemoView.layer.borderColor = UIColor.grayColor().CGColor
-        //InputTaskMemoView.layer.shadowOpacity = 0.1
-        //InputTaskMemoView.layer.masksToBounds = false
-        
-        //InputTaskMemoView.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
-        
+        InputTaskMemoView.placeHolder = "メモ:"
+
     }
     
     //タスク終了時刻欄:初期設定
@@ -159,7 +149,6 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         
         //タスク終了時刻入力欄 入力方法：DatePicker
         InputTaskDateField.inputView = inputDatePicker
-        
         //DatePiceker設定（日付時刻,JP）
         inputDatePicker.datePickerMode = UIDatePickerMode.DateAndTime
         inputDatePicker.locale = NSLocale(localeIdentifier : "ja_JP")
@@ -200,10 +189,16 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         AddAfterTask.layer.cornerRadius = 10.0
         AddAfterTask.layer.masksToBounds = true
         AddAfterTask.backgroundColor = UIColor.orangeColor()
-        //AddAfterTask.setBackgroundColor(UIColor.blackColor(), forUIControlState: .Highlighted)
         
-        
+        //後続タスク追加ボタン:タップ時イベント
         AddAfterTask.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_addAfterTaskButton(_:)), forControlEvents:.TouchUpInside)
+        
+    }
+    
+    //Datepicer：値変更時イベント
+    func inputDatePickerEdit(sender: UIDatePicker){
+        //値をタスク終了時刻入力欄に表示
+        InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(sender.date)
         
     }
     
@@ -214,15 +209,9 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         //AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.PartialCurl
         //self.navigationController?.pushViewController(AddAfterTaskInputView, animated: true)
         
+        
         //後続タスク作成イベント
         
-    }
-
-    //Datepicer：値変更時イベント
-    func inputDatePickerEdit(sender: UIDatePicker){
-        //値をタスク終了時刻入力欄に表示
-        InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(sender.date)
-
     }
     
     //フォーカスが外れた際、viewを閉じる
@@ -233,10 +222,26 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     //登録確定ボタン：タップ時イベント
     func onTouchDown_addInputTaskButton(){
+        
+        //項目名未入力時
+        if(false == StringUtility.isEmpty(InputTaskNameField.text)){
+            //代入文字：要定数化
+            InputTaskNameField.text = "項目名未入力"
+        }
+        
+        
         //タスク登録イベント実装
         
     }
+
     
+    
+    //リターンキー：タップ時イベント
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        //キーボードを閉じる
+        textField.resignFirstResponder()
+        return false
+    }
 
     //PicerView　表示列
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
