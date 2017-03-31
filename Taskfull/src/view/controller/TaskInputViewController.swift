@@ -22,34 +22,31 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     // 登録地点リスト入力PickerView
     let inputPointPicker : UIPickerView! = UIPickerView()
     
-    var aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
+    //登録地点用要素配列（テスト用）
+    let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
 /**
  * 変数
  */
 
+    /**
+     * 登録内容入力欄
+     */
     @IBOutlet weak var InputTaskNameField: UITextField!
-    
     @IBOutlet weak var InputPointListField: UITextField!
-    
     @IBOutlet weak var lblInputPointList: UILabel!
-    
-    //
     @IBOutlet weak var InputTaskMemoView: UITextView!
-
     @IBOutlet weak var InputTaskDateField: UITextField!
-    
     @IBOutlet weak var AddAfterTask: UIButton!
-    
     @IBOutlet weak var btnInputImportanceLow: UICustomButton!
     @IBOutlet weak var btnInputImportanceMedium: UICustomButton!
     @IBOutlet weak var btnInputImportanceHigh: UICustomButton!
     @IBOutlet weak var btnInputImportanceUrgent: UICustomButton!
+   
     
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
         // 基底のviewDidLoadを呼び出す
         super.viewDidLoad()
-
         
         // 初期化
         initializeProc()
@@ -66,8 +63,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         {
             // 登録内容入力欄の初期化
             
-            //ナビゲーションバー背景色変更(テスト用)
-            //self.navigationController?.navigationBar.barTintColor = UIColor.groupTableViewBackgroundColor()
+            
 
             //viewからフォーカスが外れた際の動作
             let tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskInputViewController.missFocusView))
@@ -181,6 +177,9 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         lblInputPointList.font = UIFont.systemFontOfSize(15)
         //lblInputPointList.sizeToFit()
         
+        //登録地点リスト:要素追加イベント(未実装)
+        
+        
         //登録地点リスト：Delegate,DataSource設定
         inputPointPicker.delegate = self
         inputPointPicker.dataSource = self
@@ -234,7 +233,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     //登録確定ボタン：タップ時イベント
     func onTouchDown_addInputTaskButton(){
-        
+        //タスク登録イベント実装
         
     }
     
@@ -245,6 +244,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     }
     //PicerView　表示行（要素数）
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        //要素数(仮　要)
         return aaa.count
     }
     //PicerView　表示要素
@@ -254,6 +254,13 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     //PicerView　値選択時イベント
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         InputPointListField.text = aaa[row] as? String
+    }
+ 
+    
+    /// didReceiveMemoryWarningイベント処理
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
 }
