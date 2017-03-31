@@ -8,8 +8,12 @@
 
 import UIKit
 
+//
+// UIテキストビュークラス
+//
 public class UIPlaceHolderTextView: UITextView {
     
+    //プレースホルダー実装用設定項目
     lazy var placeHolderLabel:UILabel = UILabel()
     var placeHolderColor:UIColor      = UIColor.lightGrayColor()
     var placeHolder:NSString          = ""
@@ -18,6 +22,16 @@ public class UIPlaceHolderTextView: UITextView {
         super.init(coder: aDecoder)!
     }
     
+    
+    /* swift2.0 初期化処理:要エラー対策
+    override init(frame: CGRect){
+        super.init(frame: frame)
+    }
+    
+    override init() {
+        super.init()
+    }
+    */
 
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -52,6 +66,7 @@ public class UIPlaceHolderTextView: UITextView {
         
         self.sendSubviewToBack(placeHolderLabel)
         
+        // swift2.0 エラー対策(utf16Count)
         if(self.text.utf16.count == 0 && self.placeHolder.length > 0){
             self.viewWithTag(999)?.alpha = 1
         }
@@ -64,6 +79,7 @@ public class UIPlaceHolderTextView: UITextView {
             return
         }
         
+        // swift2.0 エラー対策
         //if(countElements(self.text) == 0) {
         if((self.text.characters.count) == 0) {
             self.viewWithTag(999)?.alpha = 1
