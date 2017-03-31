@@ -53,4 +53,20 @@ class CommonConst
      */
     static internal let VIW_TITLE_INPUT_TASK : String = "タスク登録";
     
+    /**
+     * ドキュメント（共有）ディレクトリ
+     */
+    static internal let DIRECTORY_DOCUMENTS : String = NSHomeDirectory() + "/Library/Documents";
+    /**
+     * アプリケーションディレクトリ
+     */
+    static internal let DIRECTORY_APPLICATION_SUPPORT : String = NSHomeDirectory() + "/Library/Application Support";
+    /**
+     * キャッシュディレクトリ
+     */
+    static internal let DIRECTORY_CACHES : String = NSHomeDirectory() + "/Library/Caches";
+    /**
+     * テンポラリーディレクトリ
+     */
+    static internal let DIRECTORY_TMP : String = NSTemporaryDirectory();
 }

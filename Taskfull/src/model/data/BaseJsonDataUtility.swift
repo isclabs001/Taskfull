@@ -1,6 +1,5 @@
 //
 //  BaseJsonDataUtility.swift
-//  SchoolCafeteriaMap
 //
 //  Created by IscIsc on 2016/07/20.
 //  Copyright © 2016年 IscIsc. All rights reserved.
@@ -8,10 +7,46 @@
 
 import Foundation
 
-class BaseJsonDataUtility
+///
+/// BaseJsonDataUtilityクラス
+///
+public class BaseJsonDataUtility : JSON
 {
     ///
-    ///　レスポンス値からString値を取得する
+    ///　JSONファイルに保存する
+    ///　- parameter fileName:ファイル名
+    ///　- returns:true:正常 false:異常
+    ///
+    public func saveJSONFile(fileName : String) -> Bool {
+        var ret : Bool = false
+        
+        // データが有効な場合
+        if(false == self.isError && false == self.isNull){
+            // 保存フルパスを取得
+            let fullPath : String = BaseJsonDataUtility.getJSONSaveDirectory().stringByAppendingPathExtension(fileName)!
+            
+            // NSArray型の場合
+            if(true == self.isArray){
+                // ファイルに保存する
+                let buf : NSArray = self.data! as! NSArray
+                buf.writeToFile(fullPath, atomically: true)
+                ret = true
+
+            // NSDictionary型の場合
+            } else if(true == self.isDictionary){
+                // ファイルに保存する
+                let buf : NSDictionary = self.data! as! NSDictionary
+                buf.writeToFile(fullPath, atomically: true)
+                ret = true
+            }
+        }
+        
+        // 処理結果を返す
+        return ret
+    }
+    
+    ///
+    ///　NSDictionary値からString値を取得する
     ///　- parameter response:NSDictionaryオブジェクト
     ///　- parameter key:キー
     ///　- returns:値
@@ -21,7 +56,7 @@ class BaseJsonDataUtility
     }
     
     ///
-    ///　レスポンス値からString値を取得する
+    ///　NSDictionary値からString値を取得する
     ///　- parameter response:NSDictionaryオブジェクト
     ///　- parameter key:キー
     ///　- parameter defaultValue デフォルト値
@@ -33,7 +68,7 @@ class BaseJsonDataUtility
     }
     
     ///
-    ///　レスポンス値からDate値を取得する
+    ///　NSDictionary値からDate値を取得する
     ///　- parameter response:NSDictionaryオブジェクト
     ///　- parameter key:キー
     ///　- returns:値
@@ -55,7 +90,7 @@ class BaseJsonDataUtility
     }
    
     ///
-    ///　レスポンス値からint値を取得する
+    ///　NSDictionary値からint値を取得する
     ///　- parameter response:NSDictionaryオブジェクト
     ///　- parameter key:キー
     ///　- parameter defaultValue:デフォルト値
@@ -81,7 +116,7 @@ class BaseJsonDataUtility
     }
     
     ///
-    ///　レスポンス値からdouble値を取得する
+    ///　NSDictionary値からdouble値を取得する
     ///　- parameter response:NSDictionaryオブジェクト
     ///　- parameter key:キー
     ///　- parameter defaultValue:デフォルト値
@@ -105,34 +140,31 @@ class BaseJsonDataUtility
         }
         return ret
     }
-    
-//    ///
-//    ///　バージョン番号取得
-//    ///　- parameter data:データ
-//    ///　- returns:バージョン番号
-//    ///
-//    func getVesion(data : NSDictionary) -> String
-//    {
-//        return getStringForResponse(data, key : CommonConst.JSON_FIELD_VERSION)
-//    }
-//    
-//    ///
-//    ///　URL01取得
-//    ///　- parameter data:データ
-//    ///　- returns:URL01
-//    ///
-//    func getUrl01(data : NSDictionary) -> String
-//    {
-//        return getStringForResponse(data, key: CommonConst.JSON_FIELD_URL01)
-//    }
-//    
-//    ///
-//    ///　URL02取得
-//    ///　- parameter data:データ
-//    ///　- returns:URL02
-//    ///
-//    func getUrl02(data : NSDictionary) -> String
-//    {
-//        return getStringForResponse(data, key: CommonConst.JSON_FIELD_URL02)
-//    }
+}
+
+///
+/// BaseJsonDataUtilityクラスプロパティ
+///
+extension BaseJsonDataUtility {
+    ///
+    ///　JSON保管ディレクトリを取得する
+    ///　- returns:JSON保管ディレクトリ
+    ///
+    public class func getJSONSaveDirectory() -> String {
+        return CommonConst.DIRECTORY_APPLICATION_SUPPORT
+    }
+
+    ///
+    ///　JSONファイルからBaseJsonDataUtility取得する
+    ///　- parameter fileName:ファイル名
+    ///　- returns:読み込んだJSONファイルのBaseJsonDataUtility
+    ///
+    public class func readJSONFile(fileName : String) -> BaseJsonDataUtility {
+        
+        // JSON保管ディレクトリにあるファイルを読込む
+        let jsonData = NSData(contentsOfFile: getJSONSaveDirectory().stringByAppendingPathComponent(fileName))!
+        
+        // BaseJsonDataUtilityオブジェクトに変換する
+        return BaseJsonDataUtility(jsonData)
+    }
 }
