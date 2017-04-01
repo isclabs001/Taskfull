@@ -47,7 +47,6 @@ class CommonConst
      */
     static internal let DISTANCE_THRESHOLD : Double = 0.5;
     
-    
     /**
      * 画面タイトル
      */
@@ -69,4 +68,17 @@ class CommonConst
      * テンポラリーディレクトリ
      */
     static internal let DIRECTORY_TMP : String = NSTemporaryDirectory();
+
+    /**
+     * タスク完了フラグ
+     */
+    /**
+     * 未完了
+     */
+    static internal let TASK_COMPLETE_FLAG_INVALID : Int = 0;
+    /**
+     * 完了
+     */
+    static internal let TASK_COMPLETE_FLAG_VALID : Int = 1;
+    
 }

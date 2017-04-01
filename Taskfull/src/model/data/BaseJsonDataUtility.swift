@@ -10,39 +10,57 @@ import Foundation
 ///
 /// BaseJsonDataUtilityクラス
 ///
-public class BaseJsonDataUtility : JSON
+public class BaseJsonDataUtility
 {
     ///
-    ///　JSONファイルに保存する
-    ///　- parameter fileName:ファイル名
-    ///　- returns:true:正常 false:異常
+    ///　JSON形式の文字列をJSON構造に変換する
+    ///　- parameter data:JSON形式の文字列(NSData)
+    ///　- returns:JSON構造のDirectory
     ///
-    public func saveJSONFile(fileName : String) -> Bool {
-        var ret : Bool = false
-        
-        // データが有効な場合
-        if(false == self.isError && false == self.isNull){
-            // 保存フルパスを取得
-            let fullPath : String = BaseJsonDataUtility.getJSONSaveDirectory().stringByAppendingPathExtension(fileName)!
-            
-            // NSArray型の場合
-            if(true == self.isArray){
-                // ファイルに保存する
-                let buf : NSArray = self.data! as! NSArray
-                buf.writeToFile(fullPath, atomically: true)
-                ret = true
-
-            // NSDictionary型の場合
-            } else if(true == self.isDictionary){
-                // ファイルに保存する
-                let buf : NSDictionary = self.data! as! NSDictionary
-                buf.writeToFile(fullPath, atomically: true)
-                ret = true
-            }
+    func NSDataToAnyObject(data:NSData) -> AnyObject? {
+        var obj:AnyObject?
+        do {
+            obj = try NSJSONSerialization.JSONObjectWithData(
+                data, options:NSJSONReadingOptions.MutableContainers)
+        } catch {
+            obj = nil
         }
         
-        // 処理結果を返す
-        return ret
+        return obj
+    }
+    
+    ///
+    ///　JSON項目の値をArray、または、Directoryに変換する
+    ///　- parameter itemObj:JSON項目の値(AnyObject)
+    ///　- returns:JSON項目の値
+    ///
+    func JSONItemToObject(itemObj:AnyObject) -> AnyObject {
+        switch itemObj {
+        // JSON項目の値がNSArrayの場合
+        case let ary as NSArray:
+            // 配列で格納する
+            var ret = [AnyObject]()
+            for v in ary {
+                ret.append(JSONItemToObject(v))
+            }
+            return ret
+            
+        // JSON項目の値がNSDictionaryの場合
+        case let dict as NSDictionary:
+            // Dictionaryで格納する
+            var ret = [String:AnyObject]()
+            for (ko, v) in dict {
+                if let k = ko as? String {
+                    ret[k] = JSONItemToObject(v)
+                }
+            }
+            return ret
+            
+        // 上記以外の場合
+        default:
+            // 変換せずにそのまま返す
+            return itemObj
+        }
     }
     
     ///
@@ -152,19 +170,5 @@ extension BaseJsonDataUtility {
     ///
     public class func getJSONSaveDirectory() -> String {
         return CommonConst.DIRECTORY_APPLICATION_SUPPORT
-    }
-
-    ///
-    ///　JSONファイルからBaseJsonDataUtility取得する
-    ///　- parameter fileName:ファイル名
-    ///　- returns:読み込んだJSONファイルのBaseJsonDataUtility
-    ///
-    public class func readJSONFile(fileName : String) -> BaseJsonDataUtility {
-        
-        // JSON保管ディレクトリにあるファイルを読込む
-        let jsonData = NSData(contentsOfFile: getJSONSaveDirectory().stringByAppendingPathComponent(fileName))!
-        
-        // BaseJsonDataUtilityオブジェクトに変換する
-        return BaseJsonDataUtility(jsonData)
     }
 }

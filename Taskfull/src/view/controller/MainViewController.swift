@@ -84,6 +84,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
             // 動作モードによるメイン画面の初期化
             initializeMain(self.mActionMode)
     
+            // 登録タスク情報の取得
+            getTaskInfo()
+                
             // タスクを表示する
             displayTask(self.mActionMode)
  
@@ -113,6 +116,108 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         }
     }
     
+    private func getTaskInfo() {
+        // タスク情報の読込み
+        TaskInfoUtility.DefaultInstance.ReadTaskInfo()
+        
+        //TEST START
+        // タスク情報のクリア
+        TaskInfoUtility.DefaultInstance.ClearTaskInfo()
+        
+        // TODO:後で登録できるようになったら消す！！
+        // タスク情報の取得
+        var taskInfo : [TaskInfoDataEntity] = TaskInfoUtility.DefaultInstance.getTaskInfoData()
+        taskInfo.removeAll()
+
+        // タスク情報追加
+        var taskInfoDataEntity : TaskInfoDataEntity
+        taskInfoDataEntity = TaskInfoDataEntity()
+        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
+        taskInfoDataEntity.Title = "1234567890"
+        taskInfoDataEntity.Memo = "memo"
+        taskInfoDataEntity.DateTime = "2017/04/02 12:13:14"
+        taskInfoDataEntity.NotifiedLocation = 0
+        taskInfoDataEntity.Importance = 0
+        taskInfoDataEntity.Color = 0
+        taskInfoDataEntity.ParrentId = -1
+        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+        taskInfoDataEntity.CreateDateTime = "2017/03/02 12:13:14"
+        taskInfoDataEntity.UpdateDateTime = "2017/03/02 12:13:14"
+        
+        taskInfo.append(taskInfoDataEntity)
+        
+        taskInfoDataEntity = TaskInfoDataEntity()
+        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
+        taskInfoDataEntity.Title = "2345678901"
+        taskInfoDataEntity.Memo = "memo2"
+        taskInfoDataEntity.DateTime = "2017/04/12 10:11:12"
+        taskInfoDataEntity.NotifiedLocation = 0
+        taskInfoDataEntity.Importance = 0
+        taskInfoDataEntity.Color = 1
+        taskInfoDataEntity.ParrentId = -1
+        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+        taskInfoDataEntity.CreateDateTime = "2017/03/05 12:13:14"
+        taskInfoDataEntity.UpdateDateTime = "2017/03/06 12:13:14"
+        
+        taskInfo.append(taskInfoDataEntity)
+        
+        taskInfoDataEntity = TaskInfoDataEntity()
+        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
+        taskInfoDataEntity.Title = "あいおえお"
+        taskInfoDataEntity.Memo = "memo3"
+        taskInfoDataEntity.DateTime = "2017/04/12 09:30:00"
+        taskInfoDataEntity.NotifiedLocation = 0
+        taskInfoDataEntity.Importance = 0
+        taskInfoDataEntity.Color = 0
+        taskInfoDataEntity.ParrentId = -1
+        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+        taskInfoDataEntity.CreateDateTime = "2017/03/11 12:13:14"
+        taskInfoDataEntity.UpdateDateTime = "2017/03/11 12:13:14"
+        
+        taskInfo.append(taskInfoDataEntity)
+        
+        taskInfoDataEntity = TaskInfoDataEntity()
+        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
+        taskInfoDataEntity.Title = "あいおえおあいおえおあいおえおあいおえお"
+        taskInfoDataEntity.Memo = "memo4"
+        taskInfoDataEntity.DateTime = "2017/04/05 18:30:40"
+        taskInfoDataEntity.NotifiedLocation = 0
+        taskInfoDataEntity.Importance = 0
+        taskInfoDataEntity.Color = 1
+        taskInfoDataEntity.ParrentId = -1
+        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+        taskInfoDataEntity.CreateDateTime = "2017/03/12 12:13:14"
+        taskInfoDataEntity.UpdateDateTime = "2017/03/12 12:13:14"
+        
+        taskInfo.append(taskInfoDataEntity)
+        
+        taskInfoDataEntity = TaskInfoDataEntity()
+        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
+        taskInfoDataEntity.Title = "完了タスク"
+        taskInfoDataEntity.Memo = "memo5"
+        taskInfoDataEntity.DateTime = "2017/02/11 18:30:40"
+        taskInfoDataEntity.NotifiedLocation = 0
+        taskInfoDataEntity.Importance = 0
+        taskInfoDataEntity.Color = 1
+        taskInfoDataEntity.ParrentId = -1
+        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_VALID
+        taskInfoDataEntity.CreateDateTime = "2017/01/12 12:13:14"
+        taskInfoDataEntity.UpdateDateTime = "2017/01/12 12:13:14"
+        
+        taskInfo.append(taskInfoDataEntity)
+        
+        // タスク情報のデータを入れ替える
+        TaskInfoUtility.DefaultInstance.setTaskInfoData(taskInfo)
+        
+        // タスク情報の書込み
+        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+
+        // タスク情報の読込み
+        TaskInfoUtility.DefaultInstance.ReadTaskInfo()
+        //TEST END
+        
+    }
+    
     /// タスクを表示する
     private func displayTask(actionType : CommonConst.ActionType)
     {
@@ -136,83 +241,91 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         var y: Double = 0
         var width: Double = 0
         var height: Double = 0
-        var imageFile: String = ""
-        var title: String = ""
-        var memo: String = ""
-        var datetime: String = ""
-        var aaa : UITaskImageButton
 
+        // TODO:後で調整
         x = 100
         y = 50
-        width = 32
-        height = 32
-        imageFile = "soap001.png"
-        title = "1234567890"
-        memo = "memo"
-        datetime = "2017/01/05 18:30:40"
 
-        aaa = UITaskImageButton(frame: CGRect(x: x,y: y,width: width,height: height))
-        aaa.btnImage.setImageInfo(UIImage(named: imageFile), width:width , height:height)
-        aaa.btnImage.tag = 1
-        aaa.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
-        self.mArrayTaskImageButton.append(aaa)
-        aaa.labelTitle = title
-        aaa.labelMemo = memo
-        aaa.labelDateTime = datetime
+        // 現在日付を取得
+        let systemDate : String = FunctionUtility.DateToyyyyMMddHHmmss(NSDate(), separation: true)
         
-        x = 200
-        y = 50
-        width = 64
-        height = 64
-        imageFile = "soap002.png"
-        title = "2345678901"
-        memo = "memo2"
-        datetime = "2017/02/15 00:10:00"
+        // 表示対象データ数分処理する
+        for item in getDisplayTaskData() {
+            // ボタンサイズ取得
+            let buttonSize : CGPoint = getButtonSize(systemDate, taskDate: item.DateTime, createDate: item.CreateDateTime)
+            
+            width = Double(buttonSize.x)
+            height = Double(buttonSize.y)
+            // TODO:後で調整
+            let imageFile : String = "soap001.png"
 
-        aaa = UITaskImageButton(frame: CGRect(x: x,y: y,width: width,height: height))
-        aaa.btnImage.setImageInfo(UIImage(named: imageFile), width:width , height:height)
-        aaa.btnImage.tag = 2
-        aaa.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
-        self.mArrayTaskImageButton.append(aaa)
-        aaa.labelTitle = title
-        aaa.labelMemo = memo
-        aaa.labelDateTime = datetime
+            // ボタンコントロール生成
+            let button : UITaskImageButton = UITaskImageButton(frame: CGRect(x: x,y: y,width: width,height: height))
+            
+            // ボタン情報設定
+            button.btnImage.setImageInfo(UIImage(named: imageFile), width:width , height:height)
+            button.btnImage.tag = item.Id
+            button.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
+                    self.mArrayTaskImageButton.append(button)
+            button.labelTitle = item.Title
+            button.labelMemo = item.Memo
+            button.labelDateTime = item.DateTime
+
+            // TODO:後で調整
+            x += 50
+            y += 100
+        }
+    }
+    
+    private func getButtonSize(systemDate : String, taskDate : String, createDate : String) -> CGPoint {
+        var ret : CGPoint = CGPoint(x: 64, y: 64)
         
-        x = 200
-        y = 150
-        width = 128
-        height = 128
-        imageFile = "soap001.png"
-        title = "あいおえお"
-        memo = "memo3"
-        datetime = "2017/01/22 09:00:00"
-
-        aaa = UITaskImageButton(frame: CGRect(x: x,y: y,width: width,height: height))
-        aaa.btnImage.setImageInfo(UIImage(named: imageFile), width:width , height:height)
-        aaa.btnImage.tag = 3
-        aaa.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
-        self.mArrayTaskImageButton.append(aaa)
-        aaa.labelTitle = title
-        aaa.labelMemo = memo
-        aaa.labelDateTime = datetime
+        // 時間の差取得
+        let diffHour : Int = FunctionUtility.DiffHour(taskDate, date2: systemDate)
         
-        x = 20
-        y = 250
-        width = 384
-        height = 384
-        imageFile = "soap002.png"
-        title = "あいおえおあいおえおあいおえおあいおえお"
-        memo = "memo4"
-        datetime = "2017/01/05 18:30:40"
+        // 当日の場合
+        if(24 >= diffHour) {
+            ret = CGPoint(x: 256, y: 256)
+            
+        // 上記以外の場合
+        } else {
+            // 作成日からの時間の差取得
+            let diffHour2 : Int = FunctionUtility.DiffHour(taskDate, date2: createDate)
 
-        aaa = UITaskImageButton(frame: CGRect(x: x,y: y,width: width,height: height))
-        aaa.btnImage.setImageInfo(UIImage(named: imageFile), width:width , height:height)
-        aaa.btnImage.tag = 4
-        aaa.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
-        self.mArrayTaskImageButton.append(aaa)
-        aaa.labelTitle = title
-        aaa.labelMemo = memo
-        aaa.labelDateTime = datetime
+            let work : CGFloat = CGFloat(64) + ((CGFloat(256 - 64) / CGFloat(diffHour2)) * CGFloat(diffHour))
+            ret = CGPoint(x: work, y: work)
+        }
+        
+        return ret;
+    }
+    
+    /// 表示タスクデータの取得
+    private func getDisplayTaskData() -> [TaskInfoDataEntity] {
+        return getTopDisplayTaskData()
+    }
+    
+    /// 上位に表示するタスクデータの取得
+    private func getTopDisplayTaskData() -> [TaskInfoDataEntity] {
+        var taskData : [TaskInfoDataEntity] = [TaskInfoDataEntity]()
+        var dicParrentId : Dictionary<Int, Int> = Dictionary<Int, Int>()
+        
+        // データ数分表示する
+        for data in TaskInfoUtility.DefaultInstance.getTaskInfoData() {
+            // 未完了、かつ、親が表示されていない場合
+            if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
+                && false == dicParrentId.keys.contains(data.ParrentId)) {
+                // 表示対象に追加する
+                taskData.append(data)
+                // 表示しているIDを設定
+                dicParrentId[data.Id] = data.Id
+            }
+        }
+        
+        // 完了日の昇順でソートする
+        taskData.sortInPlace(<)
+        
+        // 結果を返す
+        return taskData
     }
     
     /// キャンバスビューからタスクイメージボタンを全削除処理
