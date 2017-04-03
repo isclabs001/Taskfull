@@ -124,8 +124,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
             break;
         // 上記以外の場合
         default:
-            self.mainView.gradationBackgroundStartColor = UIColorUtility.rgb(222, g: 255, b: 255)
-            self.mainView.gradationBackgroundEndColor = UIColorUtility.rgb(254, g: 255, b: 255)
+            self.mainView.gradationBackgroundStartColor = UIColorUtility.rgb(0, g: 30, b: 183)
+            self.mainView.gradationBackgroundEndColor = UIColorUtility.rgb(222, g: 255, b: 255)
             ButtomButtonMenuBar.hidden = true;
             break;
         }
@@ -298,6 +298,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
             taskViewItem.TaskButton!.labelTitle = item.Title
             taskViewItem.TaskButton!.labelMemo = item.Memo
             taskViewItem.TaskButton!.labelDateTime = item.DateTime
+            taskViewItem.TaskButton!.labelTextColor = item.TextColor
 
             // 配列に追加
             self.mArrayViewTaskItem.append(taskViewItem)

@@ -97,19 +97,24 @@ class CommonConst
      * タスクボタンリソース配列
      */
     static internal let TASK_BUTTON_RESOURCE : Array<String> = [
-        "soap001.png",
-        "soap002.png",
-        "soap003.png",
-        "soap004.png",
-        "soap005.png",
-        "soap006.png",
-        "soap007.png",
-        "soap008.png",
-        "soap009.png",
-        "soap010.png",
-        "soap011.png",
-        "soap012.png",
-        "soap013.png",
+        // 重要度：低
+        "soap001.png",      // 白
+        "soap002.png",      // 水色
+        "soap003.png",      // 灰色
+        // 重要度：中
+        "soap004.png",      // 緑
+        "soap005.png",      // 橙
+        "soap006.png",      // 青
+        // 重要度：高
+        "soap007.png",      // 黄色
+        "soap008.png",      // ピンク
+        "soap009.png",      // 紫
+        // 重要度：至急
+        "soap010.png",      // 濃い黄色
+        "soap011.png",      // 濃いピンク
+        "soap012.png",      // 濃い紫
+        // 重要度：大至急
+        "soap013.png",      // 濃い赤
         ]
 
 }

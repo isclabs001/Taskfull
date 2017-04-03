@@ -60,6 +60,9 @@ class UITaskImageButton : UIView
     // ラベル日時文字列
     @IBInspectable var labelDateTime: String = StringUtility.EMPTY
     
+    // ラベル文字色
+    @IBInspectable var labelTextColor: Int = 0
+    
     ///
     ///　初期化処理（Storyboard/xibから）
     ///　- parameter aDecoder:NSCoder
@@ -119,6 +122,9 @@ class UITaskImageButton : UIView
         self.txtLabel.layer.frame = CGRect(x: txtMargin, y: 0, width: width - (txtMargin * 2), height: height)
         self.btnImage.layer.frame = CGRect(x: 0, y: 0, width: width, height: height)
 
+        // ラベル文字色設定
+        self.txtLabel.textColor = getLabelTextColor(self.labelTextColor)
+        
         // アニメーション設定
         setViewAnimation()
         
@@ -160,6 +166,15 @@ class UITaskImageButton : UIView
     ///
     private func stopTimerForLabel() {
         self.timLabel?.invalidate()
+    }
+    
+    ///
+    ///　ラベル用　テキスト文字色取得
+    ///　- parameter textColor:テキスト色
+    ///　- returns:UIColor
+    ///
+    private func getLabelTextColor(textColor : Int) -> UIColor {
+        return UIColorUtility.rgb(222, g: 255, b: 255)
     }
     
     ///
