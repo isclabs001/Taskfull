@@ -94,9 +94,26 @@ class CommonConst
     static internal let TASK_BUTTON_SIZE_MAX : Double = 192;
     
     /**
+     * タスクボタン色
+     */
+    static internal let TASK_BUTTON_COLOR_WHITE : Int       = 0
+    static internal let TASK_BUTTON_COLOR_LIGHT_BLUE : Int  = 1
+    static internal let TASK_BUTTON_COLOR_GLAY : Int        = 2
+    static internal let TASK_BUTTON_COLOR_GREEN : Int       = 3
+    static internal let TASK_BUTTON_COLOR_ORANGE : Int      = 4
+    static internal let TASK_BUTTON_COLOR_BLUE : Int        = 5
+    static internal let TASK_BUTTON_COLOR_YELLOW : Int      = 6
+    static internal let TASK_BUTTON_COLOR_PINK : Int        = 7
+    static internal let TASK_BUTTON_COLOR_PURPLE : Int      = 8
+    static internal let TASK_BUTTON_COLOR_DARK_YELLOW : Int = 9
+    static internal let TASK_BUTTON_COLOR_DARK_PINK : Int   = 10
+    static internal let TASK_BUTTON_COLOR_DARK_PURPLE : Int = 11
+    static internal let TASK_BUTTON_COLOR_RED : Int         = 12
+    
+    /**
      * タスクボタンリソース配列
      */
-    static internal let TASK_BUTTON_RESOURCE : Array<String> = [
+    static internal let TASK_BUTTON_COLOR_RESOURCE : Array<String> = [
         // 重要度：低
         "soap001.png",      // 白
         "soap002.png",      // 水色

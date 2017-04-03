@@ -459,7 +459,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     private func getButtonColor(color : Int, systemDate : String, taskDate : String) -> Int {
         
         // 当日の場合は緊急色（赤）、それ以外はそのままの色
-        return (true == FunctionUtility.isToday(systemDate, date2: taskDate)) ? 12 : color
+        return (true == FunctionUtility.isToday(systemDate, date2: taskDate)) ? CommonConst.TASK_BUTTON_COLOR_RED : color
     }
     
     ///
@@ -469,7 +469,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     private func getButtonResource(color : Int) -> UIImage {
         
         // 指定されたインデックスのリソースを返す
-        return UIImage(named: CommonConst.TASK_BUTTON_RESOURCE[color])!
+        return UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[color])!
     }
 			    
     ///
