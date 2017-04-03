@@ -13,18 +13,25 @@ import UIKit
 ///
 class BaseViewController: UIViewController {
     
-    /// 初期化処理
+    ///
+    ///　初期化処理
+    ///　- returns:true:正常終了 false:以上終了
+    ///
     func initializeProc() ->Bool
     {
         return true
     }
 
+    ///
     /// 処理中画面表示
+    ///
     func showProgress()
     {
     }
     
+    ///
     /// 処理中画面非表示
+    ///
     func hideProgress()
     {
     }

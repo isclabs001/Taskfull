@@ -16,7 +16,10 @@ class UIGradientButton : UIButton {
     internal var endGradient : CGColor
 
 
-    /// 初期化処理
+    ///
+    ///　初期化処理（Storyboard/xibから）
+    ///　- parameter aDecoder:NSCoder
+    ///
     required init?(coder aDecoder: NSCoder) {
         
         // グラデーションレイヤー初期化
@@ -30,6 +33,11 @@ class UIGradientButton : UIButton {
         super.init(coder: aDecoder)
     }
     
+    ///
+    ///　グラデーション設定
+    ///　- parameter startGradient:グラデーション開始色
+    ///　- parameter endGradient:グラデーション終了色
+    ///
     internal func setGradient(startColor startGradient : CGColor, endColor endGradient : CGColor)
     {
     

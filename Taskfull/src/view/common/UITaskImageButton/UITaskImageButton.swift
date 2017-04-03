@@ -47,7 +47,7 @@ class UITaskImageButton : UIView
      * プロパティ
      */
     // ラベルタイトル文字列
-    @IBInspectable var labelTitle: String = "" {
+    @IBInspectable var labelTitle: String = StringUtility.EMPTY {
         didSet{
             self.txtLabel.text = labelTitle
             self.intCurrentLabel = 0
@@ -55,12 +55,15 @@ class UITaskImageButton : UIView
     }
     
     // ラベルメモ文字列
-    @IBInspectable var labelMemo: String = ""
+    @IBInspectable var labelMemo: String = StringUtility.EMPTY
     
     // ラベル日時文字列
-    @IBInspectable var labelDateTime: String = ""
+    @IBInspectable var labelDateTime: String = StringUtility.EMPTY
     
-    // 初期化処理（Storyboard/xibから）
+    ///
+    ///　初期化処理（Storyboard/xibから）
+    ///　- parameter aDecoder:NSCoder
+    ///
     required init?(coder aDecoder: NSCoder) {
         // 基底の初期化処理
         super.init(coder: aDecoder)
@@ -69,7 +72,10 @@ class UITaskImageButton : UIView
         self.initCustumControl()
     }
     
-    // 初期化処理（コードから）
+    ///
+    ///　初期化処理（コードから）
+    ///　- parameter frame:位置・サイズ
+    ///
     override init(frame: CGRect) {
         // 基底の初期化処理
         super.init(frame: frame)
@@ -77,8 +83,22 @@ class UITaskImageButton : UIView
         // 初期化処理
         self.initCustumControl()
     }
+    
+    ///
+    ///　表示位置設定
+    ///　- parameter frame:位置・サイズ
+    ///
+    public func setLocation(frame : CGRect) {
+        // 表示位置設定
+        self.layer.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height)
+        
+        // 初期化処理
+        self.initCustumControl()
+    }
 
-    // 初期化処理
+    ///
+    ///　初期化処理
+    ///
     private func initCustumControl(){
         // xib からカスタムViewをロードする
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -94,8 +114,9 @@ class UITaskImageButton : UIView
         let height = self.layer.frame.size.height
 
         // 子コントロールのサイズを設定する
+        let txtMargin : CGFloat = 6
         view.layer.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        self.txtLabel.layer.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        self.txtLabel.layer.frame = CGRect(x: txtMargin, y: 0, width: width - (txtMargin * 2), height: height)
         self.btnImage.layer.frame = CGRect(x: 0, y: 0, width: width, height: height)
 
         // アニメーション設定
@@ -105,7 +126,9 @@ class UITaskImageButton : UIView
         startTimerForLabel()
     }
     
-    // アニメーション設定
+    ///
+    ///　アニメーション設定
+    ///
     private func setViewAnimation(){
         // アニメーション削除
         self.layer.removeAllAnimations()
@@ -125,21 +148,28 @@ class UITaskImageButton : UIView
         self.layer.addAnimation(animation, forKey: UITaskImageButton.AnimationLayerIdentifier)
     }
     
-    // ラベル用　タイマー開始
+    ///
+    ///　ラベル用　タイマー開始
+    ///
     private func startTimerForLabel() {
         self.timLabel = NSTimer.scheduledTimerWithTimeInterval(UITaskImageButton.IntervalForTitleTimer, target: self, selector: #selector(UITaskImageButton.updateForLabel(_:)), userInfo: nil, repeats: true)
     }
     
-    // ラベル用　タイマー停止
+    ///
+    ///　ラベル用　タイマー停止
+    ///
     private func stopTimerForLabel() {
         self.timLabel?.invalidate()
     }
     
-    // ラベル用　タイマー更新処理
+    ///
+    ///　ラベル用　タイマー更新処理
+    ///　- parameter timer:タイマー
+    ///
     @objc func updateForLabel(timer: NSTimer) {
-        var label : String = ""
+        var label : String = StringUtility.EMPTY
         
-        switch(intCurrentLabel) {
+        switch(self.intCurrentLabel) {
         // メモ表示の場合
         case 1:
             label = self.labelTitle
@@ -161,7 +191,10 @@ class UITaskImageButton : UIView
             }
             break;
         }
+        
+        // ラベル表示文字列が有効な場合
         if(false == label.isEmpty){
+            // 文字列設定
             self.txtLabel.text = label
         }
     }

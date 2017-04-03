@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ * タスク情報ヘッダー部
+ */
 public class TaskInfoHeaderEntity {
     /**
      * 定数定義
@@ -23,13 +26,24 @@ public class TaskInfoHeaderEntity {
     /**
      * ファイルバージョン
      */
-    public var Version : String = VERSION
+    var Version : String
     /**
      * 採番ID（データを追加するたびにインクリメントする）
      */
-    public var AssignmentId : Int = 0
+    var AssignmentId : Int
     /**
      * TaskInfoDataEntityデータ配列
      */
-    public var Data : [TaskInfoDataEntity] = []
+    var Data : [TaskInfoDataEntity]
+    
+    /**
+     * イニシャライズ
+     */
+    init()
+    {
+        // 変数初期化
+        self.Version = TaskInfoHeaderEntity.VERSION
+        self.AssignmentId = 0
+        self.Data = []
+    }
 }

@@ -17,6 +17,12 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
      * 定数
      */
 
+    /**
+     * 画面遷移Identifier定義
+     */
+    // タスク追加画面への遷移定義文字列
+    static internal let SEGUE_IDENTIFIER_TASK_INPUT = "toTaskInputViewController"
+    
     
     /**
      * 変数
@@ -28,16 +34,15 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     private let mImageModeChangeButton : UIImage = UIImage(named: "modechg.png")!
     private let mImageModeChangeButtonDown : UIImage = UIImage(named: "modechg_down.png")!
 
-    
     /**
      * 動作モード
      */
     private var mActionMode : CommonConst.ActionType = CommonConst.ActionType.Reference
     
     /**
-     * タスクイメージボタン配列
+     * タスク表示項目配列
      */
-    private var mArrayTaskImageButton : [UITaskImageButton] = []
+    private var mArrayViewTaskItem : [ViewTaskItemEntity] = []
     
     /**
      * メインビュー
@@ -57,7 +62,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
      */
     @IBOutlet weak var ButtomButtonMenuBar: UICustomView!
     
+    ///
     /// viewDidLoadイベント処理
+    ///
     override func viewDidLoad() {
         // 基底のviewDidLoadを呼び出す
         super.viewDidLoad()
@@ -66,13 +73,18 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         initializeProc()
     }
     
+    ///
     /// didReceiveMemoryWarningイベント処理
+    ///
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    ///
     /// 初期化処理
+    ///　- returns:true:正常終了 false:異常終了
+    ///
     override func initializeProc() ->Bool
     {
         // 基底のinitializeProcを呼び出す
@@ -97,7 +109,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         return ret
     }
     
+    ///
     /// 動作モードによるメイン画面の初期化
+    ///　- parameter actionType:動作モード
+    ///
     private func initializeMain(actionType : CommonConst.ActionType)
     {
         switch(self.mActionMode){
@@ -116,6 +131,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         }
     }
     
+    ///
+    ///　タスク情報読込み
+    ///
     private func getTaskInfo() {
         // タスク情報の読込み
         TaskInfoUtility.DefaultInstance.ReadTaskInfo()
@@ -138,7 +156,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         taskInfoDataEntity.DateTime = "2017/04/02 12:13:14"
         taskInfoDataEntity.NotifiedLocation = 0
         taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.Color = 0
+        taskInfoDataEntity.ButtonColor = 0
+        taskInfoDataEntity.TextColor = 0
         taskInfoDataEntity.ParrentId = -1
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
         taskInfoDataEntity.CreateDateTime = "2017/03/02 12:13:14"
@@ -153,7 +172,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         taskInfoDataEntity.DateTime = "2017/04/12 10:11:12"
         taskInfoDataEntity.NotifiedLocation = 0
         taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.Color = 1
+        taskInfoDataEntity.ButtonColor = 1
+        taskInfoDataEntity.TextColor = 0
         taskInfoDataEntity.ParrentId = -1
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
         taskInfoDataEntity.CreateDateTime = "2017/03/05 12:13:14"
@@ -168,7 +188,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         taskInfoDataEntity.DateTime = "2017/04/12 09:30:00"
         taskInfoDataEntity.NotifiedLocation = 0
         taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.Color = 0
+        taskInfoDataEntity.ButtonColor = 0
+        taskInfoDataEntity.TextColor = 0
         taskInfoDataEntity.ParrentId = -1
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
         taskInfoDataEntity.CreateDateTime = "2017/03/11 12:13:14"
@@ -183,7 +204,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         taskInfoDataEntity.DateTime = "2017/04/05 18:30:40"
         taskInfoDataEntity.NotifiedLocation = 0
         taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.Color = 1
+        taskInfoDataEntity.ButtonColor = 1
+        taskInfoDataEntity.TextColor = 0
         taskInfoDataEntity.ParrentId = -1
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
         taskInfoDataEntity.CreateDateTime = "2017/03/12 12:13:14"
@@ -198,13 +220,15 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         taskInfoDataEntity.DateTime = "2017/02/11 18:30:40"
         taskInfoDataEntity.NotifiedLocation = 0
         taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.Color = 1
+        taskInfoDataEntity.ButtonColor = 1
+        taskInfoDataEntity.TextColor = 0
         taskInfoDataEntity.ParrentId = -1
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_VALID
         taskInfoDataEntity.CreateDateTime = "2017/01/12 12:13:14"
         taskInfoDataEntity.UpdateDateTime = "2017/01/12 12:13:14"
         
         taskInfo.append(taskInfoDataEntity)
+        
         
         // タスク情報のデータを入れ替える
         TaskInfoUtility.DefaultInstance.setTaskInfoData(taskInfo)
@@ -218,7 +242,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         
     }
     
+    ///
     /// タスクを表示する
+    ///　- parameter actionType:動作モード
+    ///
     private func displayTask(actionType : CommonConst.ActionType)
     {
         // タスクイメージボタン設定
@@ -231,80 +258,231 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         addAllTaskImageButton()
     }
     
+    ///
     /// タスク情報からタスクイメージボタン生成処理
+    ///
     private func setTaskImageButton(){
         // タスクイメージボタン配列クリア
-        self.mArrayTaskImageButton.removeAll()
+        self.mArrayViewTaskItem.removeAll()
         
-        // TODO:後で登録データから生成するようにする！！
-        var x: Double = 0
-        var y: Double = 0
-        var width: Double = 0
-        var height: Double = 0
-
-        // TODO:後で調整
-        x = 100
-        y = 50
-
         // 現在日付を取得
         let systemDate : String = FunctionUtility.DateToyyyyMMddHHmmss(NSDate(), separation: true)
         
+        var index : Int = 0
         // 表示対象データ数分処理する
         for item in getDisplayTaskData() {
-            // ボタンサイズ取得
-            let buttonSize : CGPoint = getButtonSize(systemDate, taskDate: item.DateTime, createDate: item.CreateDateTime)
+            // 表示項目情報生成
+            let taskViewItem : ViewTaskItemEntity = ViewTaskItemEntity()
             
-            width = Double(buttonSize.x)
-            height = Double(buttonSize.y)
-            // TODO:後で調整
-            let imageFile : String = "soap001.png"
-
-            // ボタンコントロール生成
-            let button : UITaskImageButton = UITaskImageButton(frame: CGRect(x: x,y: y,width: width,height: height))
+            // ID設定
+            taskViewItem.Id = item.Id
+            
+            // ボタン色設定
+            taskViewItem.Color = getButtonColor(item.ButtonColor, systemDate : systemDate, taskDate : item.DateTime)
+            
+            // ボタンサイズ取得
+            let size : CGSize = getButtonSize(systemDate, taskDate: item.DateTime, createDate: item.CreateDateTime)
+            // ボタン位置取得
+            let position : CGPoint = getButtonPosition(index, buttonSize: size)
+            
+            // ボタン位置・サイズ設定
+            taskViewItem.Location = CGRect(origin: CGPoint(x: position.x, y: position.y), size: getButtonSize(systemDate, taskDate: item.DateTime, createDate: item.CreateDateTime))
+            
+            // ボタン生成
+            taskViewItem.TaskButton = UITaskImageButton(frame: taskViewItem.Location)
             
             // ボタン情報設定
-            button.btnImage.setImageInfo(UIImage(named: imageFile), width:width , height:height)
-            button.btnImage.tag = item.Id
-            button.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
-                    self.mArrayTaskImageButton.append(button)
-            button.labelTitle = item.Title
-            button.labelMemo = item.Memo
-            button.labelDateTime = item.DateTime
+            taskViewItem.TaskButton!.btnImage.setImageInfo(getButtonResource(taskViewItem.Color) , width:Double(size.width) , height:Double(size.height))
+            taskViewItem.TaskButton!.btnImage.tag = item.Id
+            taskViewItem.TaskButton!.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
+            taskViewItem.TaskButton!.labelTitle = item.Title
+            taskViewItem.TaskButton!.labelMemo = item.Memo
+            taskViewItem.TaskButton!.labelDateTime = item.DateTime
 
-            // TODO:後で調整
-            x += 50
-            y += 100
+            // 配列に追加
+            self.mArrayViewTaskItem.append(taskViewItem)
+
+            // インデックス更新
+            index += 1
         }
     }
     
-    private func getButtonSize(systemDate : String, taskDate : String, createDate : String) -> CGPoint {
-        var ret : CGPoint = CGPoint(x: 64, y: 64)
+    ///
+    ///　ボタンサイズ取得
+    ///　- parameter systemDate:システム日付
+    ///　- parameter taskDate:タスク完了日時
+    ///　- parameter createDate:作成日時
+    ///　- returns:ボタンサイズ
+    ///
+    private func getButtonSize(systemDate : String, taskDate : String, createDate : String) -> CGSize {
+        // ボタン最小サイズを取得
+        var ret : CGSize = CGSize(width: CommonConst.TASK_BUTTON_SIZE_MIN, height: CommonConst.TASK_BUTTON_SIZE_MIN)
         
         // 時間の差取得
         let diffHour : Int = FunctionUtility.DiffHour(taskDate, date2: systemDate)
         
         // 当日の場合
-        if(24 >= diffHour) {
-            ret = CGPoint(x: 256, y: 256)
+        if(true == FunctionUtility.isToday(systemDate, date2: taskDate)) {
+            // ボタン最大サイズを設定
+            ret = CGSize(width: CommonConst.TASK_BUTTON_SIZE_MAX, height: CommonConst.TASK_BUTTON_SIZE_MAX)
             
         // 上記以外の場合
         } else {
             // 作成日からの時間の差取得
             let diffHour2 : Int = FunctionUtility.DiffHour(taskDate, date2: createDate)
 
-            let work : CGFloat = CGFloat(64) + ((CGFloat(256 - 64) / CGFloat(diffHour2)) * CGFloat(diffHour))
-            ret = CGPoint(x: work, y: work)
+            let work : CGFloat = CGFloat(CommonConst.TASK_BUTTON_SIZE_MIN) + ((CGFloat(CommonConst.TASK_BUTTON_SIZE_MAX - CommonConst.TASK_BUTTON_SIZE_MIN) / CGFloat(diffHour2)) * CGFloat(diffHour))
+            ret = CGSize(width: work, height: work)
         }
         
         return ret;
     }
     
+    ///
+    ///　ボタン位置取得
+    ///　- parameter index:表示コントロールのインデックス
+    ///　- parameter buttonSize:ボタンサイズ
+    ///　- returns:ボタン位置
+    ///
+    private func getButtonPosition(index : Int, buttonSize : CGSize) -> CGPoint {
+        var ret : CGPoint = CGPoint(x: 0, y: 0)
+
+        // imageCanvasViewのサイズを領域とする
+        let areaSize : CGSize = self.imageCanvasView.frame.size
+        
+        // 領域の中央座標を取得
+        let centerPos : CGPoint = CGPoint(x: areaSize.width / 2, y: areaSize.height / 2)
+        
+        // データがある場合
+        if(0 < mArrayViewTaskItem.count) {
+            // 先頭ボタン表示位置を取得
+            let centerButtonLocation : CGRect = self.mArrayViewTaskItem[0].Location
+            // ボタン位置取得
+            ret = getNextButtonLocation(index, centerButtonLocation: centerButtonLocation, buttonSize : buttonSize)
+            
+        // 上記以外の場合
+        } else {
+            // 中央位置に設定する
+            ret = CGPoint(x: centerPos.x - (buttonSize.width / 2), y: centerPos.y - (buttonSize.height / 2))
+        }
+        
+        return ret
+    }
+    
+    ///
+    ///　次表示ボタン位置取得
+    ///　- parameter index:表示コントロールのインデックス
+    ///　- parameter centerButtonLocation:中央ボタンサイズ
+    ///　- parameter buttonSize:ボタンサイズ
+    ///　- returns:ボタン位置
+    ///
+    private func getNextButtonLocation(index : Int, centerButtonLocation : CGRect, buttonSize : CGSize) -> CGPoint {
+        var ret : CGPoint = CGPoint(x: 0, y: 0)
+        let margin : CGFloat = 10
+        let buttonHalfSize : CGSize = CGSize(width: buttonSize.width / 2, height: buttonSize.height / 2)
+
+        // 先頭の中央サイズを取得
+        let centerButtonHalfSize : CGSize = CGSize(width: centerButtonLocation.size.width / 2, height: centerButtonLocation.size.height / 2)
+        
+        // 先頭の場合
+        if(0 == index) {
+            // 中央に表示
+            ret = CGPoint(x: centerButtonLocation.origin.x, y: centerButtonLocation.origin.y)
+
+        // 上記以外の場合
+        } else {
+            //
+            switch((index - 1) % 8) {
+            // 左上
+            case 0:
+                // 左上に表示
+                ret = CGPoint(x: ((centerButtonLocation.origin.x - margin)) - buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
+                break;
+            // 上
+            case 1:
+                // 上に表示
+                ret = CGPoint(x: (centerButtonLocation.origin.x + centerButtonHalfSize.width) - buttonHalfSize.width,
+                              y: (centerButtonLocation.origin.y - margin) - buttonSize.height)
+
+                break;
+            // 右上
+            case 2:
+                // 右上に表示
+                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width) -  buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
+                break;
+            // 右
+            case 3:
+                // 右に表示
+                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width),
+                              y: ((centerButtonLocation.origin.y) + centerButtonHalfSize.height) - buttonHalfSize.height)
+                break;
+            // 右下
+            case 4:
+                // 右下に表示
+                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width) -  buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height) - buttonHalfSize.height)
+                break;
+            // 下
+            case 5:
+                // 下に表示
+                ret = CGPoint(x: (centerButtonLocation.origin.x + centerButtonHalfSize.width) - buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height))
+                break;
+            // 左下
+            case 6:
+                // 左下に表示
+                ret = CGPoint(x: ((centerButtonLocation.origin.x - margin)) - buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height) - buttonHalfSize.height)
+                break;
+            // 左
+            case 7:
+                // 左に表示
+                ret = CGPoint(x: (centerButtonLocation.origin.x - margin) - buttonSize.width,
+                              y: ((centerButtonLocation.origin.y) + centerButtonHalfSize.height) - buttonHalfSize.height)
+                break;
+                
+            default:
+                break;
+            }
+        }
+        return ret
+    }
+    
+    
+    ///
+    /// 表示ボタン色取得
+    ///　- returns:表示ボタン色
+    ///
+    private func getButtonColor(color : Int, systemDate : String, taskDate : String) -> Int {
+        
+        // 当日の場合は緊急色（赤）、それ以外はそのままの色
+        return (true == FunctionUtility.isToday(systemDate, date2: taskDate)) ? 12 : color
+    }
+    
+    ///
+    /// 表示ボタンリソース取得
+    ///　- returns:表示ボタンリソース
+    ///
+    private func getButtonResource(color : Int) -> UIImage {
+        
+        // 指定されたインデックスのリソースを返す
+        return UIImage(named: CommonConst.TASK_BUTTON_RESOURCE[color])!
+    }
+			    
+    ///
     /// 表示タスクデータの取得
+    ///　- returns:表示タスクデータ配列
+    ///
     private func getDisplayTaskData() -> [TaskInfoDataEntity] {
         return getTopDisplayTaskData()
     }
     
+    ///
     /// 上位に表示するタスクデータの取得
+    ///　- returns:表示タスクデータ配列
+    ///
     private func getTopDisplayTaskData() -> [TaskInfoDataEntity] {
         var taskData : [TaskInfoDataEntity] = [TaskInfoDataEntity]()
         var dicParrentId : Dictionary<Int, Int> = Dictionary<Int, Int>()
@@ -328,7 +506,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         return taskData
     }
     
+    ///
     /// キャンバスビューからタスクイメージボタンを全削除処理
+    ///　- returns:表示タスクデータ配列
+    ///
     private func removeAllTaskImageButton(){
         // キャンバスビューのコントロール数分処理する
         for view in self.imageCanvasView.subviews {
@@ -337,16 +518,21 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         }
     }
     
+    ///
     /// キャンバスビューへタスクイメージボタンの全追加処理
+    ///
     private func addAllTaskImageButton(){
         // キャンバスビューにコントロールを追加
-        for view in self.mArrayTaskImageButton {
-            self.imageCanvasView.addSubview(view)
+        for view in self.mArrayViewTaskItem {
+            self.imageCanvasView.addSubview(view.TaskButton!)
         }
     }
     
     
+    ///
     /// モード切り替えボタン押下イベント
+    ///　- parameter sender:イベントが発生したオブジェクト
+    ///
     @IBAction func onTouchDown_ModeButton(sender: AnyObject) {
         
         switch(self.mActionMode){
@@ -366,23 +552,33 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         initializeMain(self.mActionMode)
     }
     
+    ///
     /// タスクイメージボタン押下イベント
+    ///　- parameter sender:イベントが発生したオブジェクト
+    ///
     @IBAction func onTouchDown_TaskCirclrImageButton(sendar : UITaskImageButton){
         // TODO:押下時の処理を記述する
         print(sendar.tag.description)
     }
 
+    ///
     /// タスク追加ボタン押下イベント
+    ///　- parameter sender:イベントが発生したオブジェクト
+    ///
     @IBAction func onTouchDown_AddTask(sender: AnyObject) {
         // TODO:押下時の処理を記述する
         // タスク入力画面を表示
-        self.performSegueWithIdentifier("toTaskInputViewController", sender: self)
+        self.performSegueWithIdentifier(MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
     }
 
+    ///
     /// 画面遷移前イベント
+    ///　- parameter segue:イベントのUIStoryboardSegue
+    ///　- parameter sender:イベントが発生したオブジェクト
+    ///
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // タスク入力画面へ遷移する場合
-        if(segue.identifier == "toTaskInputViewController"){
+        if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_INPUT){
             // タスク入力画面のコントローラを取得
             let dvc : TaskInputViewController = (segue.destinationViewController as AnyObject as? TaskInputViewController)!
 

@@ -21,6 +21,18 @@
 		631372FA1E8F2E8F0089C19E /* TaskInfoHeaderEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631372F91E8F2E8F0089C19E /* TaskInfoHeaderEntity.swift */; };
 		631372FD1E8F2F0A0089C19E /* TaskInfoDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631372FC1E8F2F0A0089C19E /* TaskInfoDataEntity.swift */; };
 		631372FF1E8F334F0089C19E /* TaskInfoUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631372FE1E8F334F0089C19E /* TaskInfoUtility.swift */; };
+		631373011E91EBBF0089C19E /* ViewTaskItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631373001E91EBBF0089C19E /* ViewTaskItemEntity.swift */; };
+		6313730D1E92325C0089C19E /* soap003.png in Resources */ = {isa = PBXBuildFile; fileRef = 631373021E92325C0089C19E /* soap003.png */; };
+		6313730E1E92325C0089C19E /* soap004.png in Resources */ = {isa = PBXBuildFile; fileRef = 631373031E92325C0089C19E /* soap004.png */; };
+		6313730F1E92325C0089C19E /* soap005.png in Resources */ = {isa = PBXBuildFile; fileRef = 631373041E92325C0089C19E /* soap005.png */; };
+		631373101E92325C0089C19E /* soap006.png in Resources */ = {isa = PBXBuildFile; fileRef = 631373051E92325C0089C19E /* soap006.png */; };
+		631373111E92325C0089C19E /* soap007.png in Resources */ = {isa = PBXBuildFile; fileRef = 631373061E92325C0089C19E /* soap007.png */; };
+		631373121E92325C0089C19E /* soap008.png in Resources */ = {isa = PBXBuildFile; fileRef = 631373071E92325C0089C19E /* soap008.png */; };
+		631373131E92325C0089C19E /* soap009.png in Resources */ = {isa = PBXBuildFile; fileRef = 631373081E92325C0089C19E /* soap009.png */; };
+		631373141E92325C0089C19E /* soap010.png in Resources */ = {isa = PBXBuildFile; fileRef = 631373091E92325C0089C19E /* soap010.png */; };
+		631373151E92325C0089C19E /* soap011.png in Resources */ = {isa = PBXBuildFile; fileRef = 6313730A1E92325C0089C19E /* soap011.png */; };
+		631373161E92325C0089C19E /* soap012.png in Resources */ = {isa = PBXBuildFile; fileRef = 6313730B1E92325C0089C19E /* soap012.png */; };
+		631373171E92325C0089C19E /* soap013.png in Resources */ = {isa = PBXBuildFile; fileRef = 6313730C1E92325C0089C19E /* soap013.png */; };
 		633187271E85256D00D0A9BE /* UITaskImageButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633187261E85256D00D0A9BE /* UITaskImageButton.xib */; };
 		6338B8B31E7421F4008103D0 /* TaskInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338B8B21E7421F4008103D0 /* TaskInputViewController.swift */; };
 		635DCE711E739F1700F6F325 /* CommonConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE701E739F1700F6F325 /* CommonConst.swift */; };
@@ -82,6 +94,18 @@
 		631372F91E8F2E8F0089C19E /* TaskInfoHeaderEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInfoHeaderEntity.swift; sourceTree = "<group>"; };
 		631372FC1E8F2F0A0089C19E /* TaskInfoDataEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInfoDataEntity.swift; sourceTree = "<group>"; };
 		631372FE1E8F334F0089C19E /* TaskInfoUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInfoUtility.swift; sourceTree = "<group>"; };
+		631373001E91EBBF0089C19E /* ViewTaskItemEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewTaskItemEntity.swift; sourceTree = "<group>"; };
+		631373021E92325C0089C19E /* soap003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap003.png; sourceTree = "<group>"; };
+		631373031E92325C0089C19E /* soap004.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap004.png; sourceTree = "<group>"; };
+		631373041E92325C0089C19E /* soap005.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap005.png; sourceTree = "<group>"; };
+		631373051E92325C0089C19E /* soap006.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap006.png; sourceTree = "<group>"; };
+		631373061E92325C0089C19E /* soap007.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap007.png; sourceTree = "<group>"; };
+		631373071E92325C0089C19E /* soap008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap008.png; sourceTree = "<group>"; };
+		631373081E92325C0089C19E /* soap009.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap009.png; sourceTree = "<group>"; };
+		631373091E92325C0089C19E /* soap010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap010.png; sourceTree = "<group>"; };
+		6313730A1E92325C0089C19E /* soap011.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap011.png; sourceTree = "<group>"; };
+		6313730B1E92325C0089C19E /* soap012.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap012.png; sourceTree = "<group>"; };
+		6313730C1E92325C0089C19E /* soap013.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap013.png; sourceTree = "<group>"; };
 		633187261E85256D00D0A9BE /* UITaskImageButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UITaskImageButton.xib; sourceTree = "<group>"; };
 		6338B8B21E7421F4008103D0 /* TaskInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInputViewController.swift; sourceTree = "<group>"; };
 		635DCE701E739F1700F6F325 /* CommonConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonConst.swift; sourceTree = "<group>"; };
@@ -163,6 +187,17 @@
 		635DCE651E739C9A00F6F325 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				631373021E92325C0089C19E /* soap003.png */,
+				631373031E92325C0089C19E /* soap004.png */,
+				631373041E92325C0089C19E /* soap005.png */,
+				631373051E92325C0089C19E /* soap006.png */,
+				631373061E92325C0089C19E /* soap007.png */,
+				631373071E92325C0089C19E /* soap008.png */,
+				631373081E92325C0089C19E /* soap009.png */,
+				631373091E92325C0089C19E /* soap010.png */,
+				6313730A1E92325C0089C19E /* soap011.png */,
+				6313730B1E92325C0089C19E /* soap012.png */,
+				6313730C1E92325C0089C19E /* soap013.png */,
 				63C5CF0A1E8DEB6700055DE2 /* シャボン玉_サンプル.png */,
 				631238A91E73EA180054AC30 /* add_down.png */,
 				631238AA1E73EA180054AC30 /* modechg_down.png */,
@@ -248,6 +283,7 @@
 				635DCE741E73A04300F6F325 /* LatLngForSerializable.swift */,
 				631372F91E8F2E8F0089C19E /* TaskInfoHeaderEntity.swift */,
 				631372FC1E8F2F0A0089C19E /* TaskInfoDataEntity.swift */,
+				631373001E91EBBF0089C19E /* ViewTaskItemEntity.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -507,16 +543,27 @@
 			files = (
 				636CE3BD1E6010CE002273BE /* LaunchScreen.storyboard in Resources */,
 				631238AC1E73EA180054AC30 /* modechg_down.png in Resources */,
+				631373161E92325C0089C19E /* soap012.png in Resources */,
+				631373141E92325C0089C19E /* soap010.png in Resources */,
+				631373111E92325C0089C19E /* soap007.png in Resources */,
 				631238AB1E73EA180054AC30 /* add_down.png in Resources */,
+				6313730E1E92325C0089C19E /* soap004.png in Resources */,
 				631238A71E73E4960054AC30 /* soap001.png in Resources */,
+				631373171E92325C0089C19E /* soap013.png in Resources */,
 				631238A61E73E4960054AC30 /* modechg.png in Resources */,
 				631238A81E73E4960054AC30 /* soap002.png in Resources */,
+				631373151E92325C0089C19E /* soap011.png in Resources */,
+				631373101E92325C0089C19E /* soap006.png in Resources */,
+				631373121E92325C0089C19E /* soap008.png in Resources */,
 				63C5CF0B1E8DEB6800055DE2 /* シャボン玉_サンプル.png in Resources */,
 				636CE3BA1E6010CE002273BE /* Assets.xcassets in Resources */,
+				6313730F1E92325C0089C19E /* soap005.png in Resources */,
 				633187271E85256D00D0A9BE /* UITaskImageButton.xib in Resources */,
 				635DCE8B1E73A19400F6F325 /* ViewSwitchButton.xib in Resources */,
 				631238A51E73E4960054AC30 /* add.png in Resources */,
+				6313730D1E92325C0089C19E /* soap003.png in Resources */,
 				636CE3B81E6010CE002273BE /* Main.storyboard in Resources */,
+				631373131E92325C0089C19E /* soap009.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,6 +597,7 @@
 				631238AE1E73F5F90054AC30 /* UIColorUtility.swift in Sources */,
 				6338B8B31E7421F4008103D0 /* TaskInputViewController.swift in Sources */,
 				631238A01E73CB940054AC30 /* UICircleImageButton.swift in Sources */,
+				631373011E91EBBF0089C19E /* ViewTaskItemEntity.swift in Sources */,
 				636CE3B51E6010CD002273BE /* ViewController.swift in Sources */,
 				631372FF1E8F334F0089C19E /* TaskInfoUtility.swift in Sources */,
 				635DCE751E73A04300F6F325 /* LatLngForSerializable.swift in Sources */,

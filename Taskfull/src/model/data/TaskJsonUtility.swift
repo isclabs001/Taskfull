@@ -38,7 +38,8 @@ public class TaskJsonUtility : BaseJsonDataUtility
     static internal let JSON_FIELD_DATA_DATETIME : String = "datetime";
     static internal let JSON_FIELD_DATA_NOTIFIED_LOCATION : String = "notified_location";
     static internal let JSON_FIELD_DATA_IMPORTANCE : String = "importance";
-    static internal let JSON_FIELD_DATA_COLOR : String = "color";
+    static internal let JSON_FIELD_DATA_BUTTON_COLOR : String = "button_color";
+    static internal let JSON_FIELD_DATA_TEXT_COLOR : String = "text_color";
     static internal let JSON_FIELD_DATA_PARRENT_ID : String = "parrent_id";
     static internal let JSON_FIELD_DATA_COMPLETE_FLAG : String = "complete_flag";
     static internal let JSON_FIELD_DATA_CREATE_DATETIME : String = "create_datetime";
@@ -161,9 +162,13 @@ public class TaskJsonUtility : BaseJsonDataUtility
                                     case TaskJsonUtility.JSON_FIELD_DATA_IMPORTANCE:
                                         data.Importance = dataValue as! Int
                                         break
-                                    // キー項目がJSON_FIELD_DATA_COLOR
-                                    case TaskJsonUtility.JSON_FIELD_DATA_COLOR:
-                                        data.Color = dataValue as! Int
+                                    // キー項目がJSON_FIELD_DATA_BUTTON_COLOR
+                                    case TaskJsonUtility.JSON_FIELD_DATA_BUTTON_COLOR:
+                                        data.ButtonColor = dataValue as! Int
+                                        break
+                                    // キー項目がJSON_FIELD_DATA_TEXT_COLOR
+                                    case TaskJsonUtility.JSON_FIELD_DATA_TEXT_COLOR:
+                                        data.TextColor = dataValue as! Int
                                         break
                                     // キー項目がJSON_FIELD_DATA_PARRENT_ID
                                     case TaskJsonUtility.JSON_FIELD_DATA_PARRENT_ID:
@@ -279,8 +284,10 @@ public class TaskJsonUtility : BaseJsonDataUtility
             jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_NOTIFIED_LOCATION, value: data.NotifiedLocation, isComma: true))
             // 重要度設定
             jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_IMPORTANCE, value: data.Importance, isComma: true))
-            // 色設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_COLOR, value: data.Color, isComma: true))
+            // ボタン色設定
+            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_BUTTON_COLOR, value: data.ButtonColor, isComma: true))
+            // 文字色設定
+            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_TEXT_COLOR, value: data.TextColor, isComma: true))
             // 親ID設定
             jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_PARRENT_ID, value: data.ParrentId, isComma: true))
             // 完了フラグ設定

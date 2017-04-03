@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ * タスク情報データ部
+ */
 public class TaskInfoDataEntity : Comparable {
     /**
      * 定数定義
@@ -18,33 +21,37 @@ public class TaskInfoDataEntity : Comparable {
      * 変数定義
      */
     /**
-     * ファイルバージョン
+     * ID
      */
-    public var Id : Int = 0
+    var Id : Int
     /**
-     *
+     * タイトル
      */
-    public var Title : String = StringUtility.EMPTY
+    var Title : String
     /**
-     *
+     * メモ
      */
-    public var Memo : String = StringUtility.EMPTY
+    var Memo : String
     /**
      * タスク完了予定日時（yyyy/MM/dd HH:mm:ss形式で格納）
      */
-    public var DateTime : String = StringUtility.EMPTY
+    var DateTime : String
     /**
      * 通知場所
      */
-    public var NotifiedLocation : Int = 0
+    var NotifiedLocation : Int
     /**
      * 重要度
      */
-    public var Importance : Int = 0
+    var Importance : Int
     /**
-     * 色
+     * ボタン色
      */
-    public var Color : Int = 0
+    var ButtonColor : Int
+    /**
+     * テキスト色
+     */
+    var TextColor : Int
     
     /**
      * システム情報領域
@@ -52,19 +59,39 @@ public class TaskInfoDataEntity : Comparable {
     /**
      * 親ID
      */
-    public var ParrentId : Int = -1
+    var ParrentId : Int
     /**
      * 完了フラグ（0:未完了 1:完了）
      */
-    public var CompleteFlag : Int = CommonConst.TASK_COMPLETE_FLAG_INVALID
+    var CompleteFlag : Int
     /**
      * 作成日時（yyyy/MM/dd HH:mm:ss形式で格納）
      */
-    public var CreateDateTime : String = StringUtility.EMPTY
+    var CreateDateTime : String
     /**
      * 更新日時（yyyy/MM/dd HH:mm:ss形式で格納）
      */
-    public var UpdateDateTime : String = StringUtility.EMPTY
+    var UpdateDateTime : String
+    
+    /**
+     * イニシャライズ
+     */
+    init()
+    {
+        // 変数初期化
+        self.Id = 0
+        self.Title = StringUtility.EMPTY
+        self.Memo = StringUtility.EMPTY
+        self.DateTime = StringUtility.EMPTY
+        self.NotifiedLocation = 0
+        self.Importance = 0
+        self.ButtonColor = 0
+        self.TextColor = 0
+        self.ParrentId = -1
+        self.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+        self.CreateDateTime = StringUtility.EMPTY
+        self.UpdateDateTime = StringUtility.EMPTY
+    }
 }
 
 public func ==(cmp1: TaskInfoDataEntity, cmp2: TaskInfoDataEntity) -> Bool {

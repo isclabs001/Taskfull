@@ -103,6 +103,37 @@ class FunctionUtility
     }
     
     ///
+    ///　本日以降かどうかの判断
+    ///　- parameter date1:基準日付
+    ///　- parameter date2:対象日付
+    ///　- returns:true:本日以降である false:本日以降ではない
+    ///
+    static func isToday(date1 : String, date2 : String) -> Bool {
+        // 引数が有効な場合
+        if(10 <= date1.length && 10 <= date2.length) {
+            // yyyy/MM/ddを取得
+            let workDate1 : String = date1.substringToIndex(10)
+            // yyyy/MM/ddを取得
+            let workDate2 : String = date2.substringToIndex(10)
+        
+            // 本日以降の場合
+            if(workDate1 >= workDate2){
+                // true
+                return true
+            // 上記以外の場合
+            } else {
+                // false
+                return false
+            }
+            
+        // 上記以外の場合
+        } else {
+            // false
+            return false
+        }
+    }
+    
+    ///
     ///　NSDictionaryに指定されたキーが存在するかの判断処理
     ///　- parameter response:NSDictionaryオブジェクト
     ///　- parameter key:キー

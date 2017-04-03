@@ -81,4 +81,35 @@ class CommonConst
      */
     static internal let TASK_COMPLETE_FLAG_VALID : Int = 1;
     
+    /**
+     * タスクボタンサイズ
+     */
+    /**
+     * 最小サイズ
+     */
+    static internal let TASK_BUTTON_SIZE_MIN : Double = 64;
+    /**
+     * 最大サイズ
+     */
+    static internal let TASK_BUTTON_SIZE_MAX : Double = 192;
+    
+    /**
+     * タスクボタンリソース配列
+     */
+    static internal let TASK_BUTTON_RESOURCE : Array<String> = [
+        "soap001.png",
+        "soap002.png",
+        "soap003.png",
+        "soap004.png",
+        "soap005.png",
+        "soap006.png",
+        "soap007.png",
+        "soap008.png",
+        "soap009.png",
+        "soap010.png",
+        "soap011.png",
+        "soap012.png",
+        "soap013.png",
+        ]
+
 }
