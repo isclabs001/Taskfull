@@ -29,7 +29,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
  */
 
     /**
-     * 登録内容入力欄
+     * 各登録内容入力欄
      */
     @IBOutlet weak var InputTaskNameField: UITextField!
     @IBOutlet weak var InputPointListField: UITextField!
@@ -37,7 +37,10 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     @IBOutlet weak var InputTaskMemoView: UIPlaceHolderTextView!
     @IBOutlet weak var InputTaskDateField: UITextField!
     @IBOutlet weak var AddAfterTask: UIButton!
-
+    @IBOutlet weak var InputImportanceSegment: UISegmentedControl!
+    @IBOutlet weak var InputTaskColorBtn_1: UICustomButton!
+    @IBOutlet weak var InputTaskColorBtn_2: UICustomButton!
+    @IBOutlet weak var InputTaskColorBtn_3: UICustomButton!
     
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
@@ -57,10 +60,9 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         //　正常な場合
         if(true == ret)
         {
-            // 登録内容入力欄の初期化
+            // 登録内容入力欄の初期化(不要？)
             
             
-
             //viewからフォーカスが外れた際の動作
             let tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskInputViewController.missFocusView))
             view.addGestureRecognizer(tap)
@@ -70,6 +72,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             
             // 登録内容入力欄を設定　※詳細表示画面との要分岐処理
             displayInputField()
+            
             
             // 戻り値にtrueを設定
             ret = true
@@ -109,16 +112,83 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         //重要度:初期設定
         displayInputImportanceSegment()
         
+        //タスクカラーボタン:初期設定
+        dispayInputTaskColorBtn()
+        
         //後続タスクボタン:初期設定
         displayAddAfterTaskBtn()
         
     }
     
+    //タスクカラーボタン:初期設定
+    private func dispayInputTaskColorBtn(){
+        
+        InputTaskColorBtn_1.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputTaskColorBtn_1(_:)), forControlEvents: .TouchUpInside)
+        
+        
+        InputTaskColorBtn_2.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputTaskColorBtn_2(_:)), forControlEvents: .TouchUpInside)
+        
+        InputTaskColorBtn_3.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputTaskColorBtn_3(_:)), forControlEvents: .TouchUpInside)
+        
+    }
+    
+    func onTouchDown_InputTaskColorBtn_1(sender:UIButton){
+        InputTaskColorBtn_1.selected = true
+        InputTaskColorBtn_2.selected = false
+        InputTaskColorBtn_3.selected = false
+        
+    }
+    
+    func onTouchDown_InputTaskColorBtn_2(sender:UIButton){
+        InputTaskColorBtn_1.highlighted = false
+        InputTaskColorBtn_2.highlighted = true
+        InputTaskColorBtn_3.highlighted = false
+        
+    }
+    
+    func onTouchDown_InputTaskColorBtn_3(sender:UIButton){
+        InputTaskColorBtn_1.highlighted = false
+        InputTaskColorBtn_2.highlighted = false
+        InputTaskColorBtn_3.highlighted = true
+        
+    }
+    
+    
     //重要度:初期設定
     private func displayInputImportanceSegment(){
         
+        //重要度:セグメント値変更時イベント
+        InputImportanceSegment.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputInportanceSegment(_:)), forControlEvents: .ValueChanged)
 
     }
+    
+    //重要度:セグメント値変更時イベント
+    func onTouchDown_InputInportanceSegment(segcon:UISegmentedControl){
+        
+        //各セグメント選択時分岐処理
+        switch segcon.selectedSegmentIndex {
+            
+        //"低"の場合
+        case 0:
+            //要実装:カラーボタン変更イベント(横展開)
+            InputTaskNameField.text = "低"
+        //"中"の場合
+        case 1:
+            InputTaskNameField.text = "中"
+        //"高"の場合
+        case 2:
+            InputTaskNameField.text = "高"
+        //"至急"の場合
+        case 3:
+            InputTaskNameField.text = "至急"
+        default:
+            //要エラー対応時イベント
+            break
+        }
+    
+    
+    }
+    
     
     //項目名入力欄,メモ入力欄:初期設定
     private func displayInputTaskNameMemo(){
@@ -204,14 +274,11 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     //後続タスクボタン：タップ時イベント
     func onTouchDown_addAfterTaskButton(sender : UIButton){
-        
-        //let AddAfterTaskInputView = TaskInputViewController()
-        //AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.PartialCurl
-        //self.navigationController?.pushViewController(AddAfterTaskInputView, animated: true)
-        
-        
-        //後続タスク作成イベント
-        
+        /*
+        let AddAfterTaskInputView = TESTViewController()
+        AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+self.presentViewController(AddAfterTaskInputView, animated: true, completion: nil)
+ */
     }
     
     //フォーカスが外れた際、viewを閉じる
@@ -233,16 +300,18 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         //タスク登録イベント実装
         
     }
-
     
     
-    //リターンキー：タップ時イベント
+    //キーボード「リターンキー」：タップ時イベント
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         //キーボードを閉じる
         textField.resignFirstResponder()
         return false
     }
 
+    
+    
+    
     //PicerView　表示列
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
@@ -267,6 +336,9 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+
+    
     
 }
 
