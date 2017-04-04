@@ -134,4 +134,17 @@ class CommonConst
         "soap013.png",      // 濃い赤
         ]
 
+    /**
+     * タスク重要度定数
+     */
+    // 重要度：低
+    static internal let TASK_IMPORTANCE_VALID_LOW: Int = 0;
+    // 重要度：中
+    static internal let TASK_COMPLETE_FLAG_VALID_MEDIUM : Int = 1;
+    // 重要度：高
+    static internal let TASK_COMPLETE_FLAG_VALID_HIGH : Int = 2;
+    // 重要度：至急
+    static internal let TASK_COMPLETE_FLAG_VALID_URGENT : Int = 3;
+    // 重要度：大至急
+    static internal let TASK_COMPLETE_FLAG_VALID_ASAP : Int = 4;
 }
