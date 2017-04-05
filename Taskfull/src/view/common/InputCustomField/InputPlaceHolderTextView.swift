@@ -33,6 +33,7 @@ public class UIPlaceHolderTextView: UITextView {
     }
     */
 
+    //オブザーバ解除
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }

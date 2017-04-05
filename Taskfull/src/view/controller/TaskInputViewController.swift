@@ -401,7 +401,6 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         
         //通知場所名ラベル
         lblInputPointList.text = "通知場所"
-        lblInputPointList.font = UIFont.systemFontOfSize(15)
         //lblInputPointList.sizeToFit()
         
         //登録地点リスト:要素追加イベント(未実装)
@@ -478,7 +477,7 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         //重要度登録処理
         
         //タスクカラー登録処理
-        //選択されているボタンのタイトル(タスクボタン色定数)を　Intに変換後返す
+        //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
         if (InputTaskColorBtn_1.selected == true){
             InputTaskMemoView.text = InputTaskColorBtn_1.currentTitle
             //InputTaskMemoView.text = Int(InputTaskColorBtn_1.currentTitle!)

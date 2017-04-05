@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -256,41 +257,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-hO-Ucy" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="20" y="256" width="288" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-hO-Ucy" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                <rect key="frame" x="40" y="253" width="520" height="30"/>
                                 <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="U3q-Pe-z5y"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="test:" destination="shW-Sx-7tf" eventType="valueChanged" id="hEQ-Ip-SE5"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDS-U9-Hn2">
-                                <rect key="frame" x="20" y="309" width="69" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aPD-ts-pDm" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="97" y="305" width="211" height="30"/>
-                                <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="重要度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIh-Xc-XlL">
-                                <rect key="frame" x="20" y="357" width="52" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDS-U9-Hn2">
+                                <rect key="frame" x="40" y="298" width="64" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
-                                <rect key="frame" x="20" y="420" width="52" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aPD-ts-pDm" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                <rect key="frame" x="124" y="298" width="436" height="30"/>
+                                <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="重要度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIh-Xc-XlL">
+                                <rect key="frame" x="40" y="343" width="48" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-y1-WJP" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="97" y="404" width="52" height="53"/>
+                                <rect key="frame" x="127" y="408" width="52" height="53"/>
                                 <state key="normal" title="Button" image="soap002.png"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -302,8 +300,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="g4e-Va-Zua">
-                                <rect key="frame" x="97" y="353" width="211" height="29"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="g4e-Va-Zua">
+                                <rect key="frame" x="108" y="343" width="452" height="29"/>
                                 <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <segments>
                                     <segment title="低"/>
@@ -312,8 +310,8 @@
                                     <segment title="至急"/>
                                 </segments>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="176" y="404" width="52" height="53"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                <rect key="frame" x="274" y="408" width="52" height="53"/>
                                 <state key="normal" title="Button" image="soap002.png"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -326,7 +324,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-cs-b7O" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="256" y="404" width="52" height="53"/>
+                                <rect key="frame" x="421" y="408" width="52" height="53"/>
                                 <state key="normal" title="Button" image="soap002.png"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -338,8 +336,12 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2T-Od-cqa" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="46" y="465" width="236" height="28"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2T-Od-cqa" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                <rect key="frame" x="127" y="482" width="346" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="T7F-ra-Dvg"/>
+                                    <constraint firstAttribute="width" secondItem="w2T-Od-cqa" secondAttribute="height" multiplier="173:14" id="x64-mK-MiN"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -360,20 +362,58 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tM4-dB-mS2" customClass="UIPlaceHolderTextView" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="20" y="137" width="288" height="111"/>
-                                <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
-                            </textView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SsX-6L-Joj">
-                                <rect key="frame" x="20" y="99" width="288" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SsX-6L-Joj">
+                                <rect key="frame" x="40" y="94" width="520" height="22"/>
                                 <color key="backgroundColor" red="0.95999370805973161" green="1" blue="0.89272231540000013" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="z7D-hn-fzf"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tM4-dB-mS2" customClass="UIPlaceHolderTextView" customModule="Taskfull" customModuleProvider="target">
+                                <rect key="frame" x="40" y="131" width="520" height="107"/>
+                                <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="107" id="G2r-vG-sCz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" fixedFrame="YES" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
+                                <rect key="frame" x="40" y="424" width="52" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.84600461409395677" green="1" blue="0.89272231543624159" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="g4e-Va-Zua" firstAttribute="leading" secondItem="AIh-Xc-XlL" secondAttribute="trailing" constant="20" id="2Ed-pW-uJR"/>
+                            <constraint firstItem="SsX-6L-Joj" firstAttribute="leading" secondItem="bq6-y5-sSE" secondAttribute="leadingMargin" constant="20" id="6nR-Qm-bhe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="g4e-Va-Zua" secondAttribute="trailing" constant="20" id="7Gp-hb-umn"/>
+                            <constraint firstItem="AIh-Xc-XlL" firstAttribute="top" secondItem="UDS-U9-Hn2" secondAttribute="bottom" constant="15" id="B0X-Rj-chg"/>
+                            <constraint firstAttribute="trailing" secondItem="w2T-Od-cqa" secondAttribute="trailing" constant="127" id="Ez7-bS-Zgh"/>
+                            <constraint firstItem="S8d-Ur-KzQ" firstAttribute="top" secondItem="w2T-Od-cqa" secondAttribute="bottom" constant="90" id="H3S-hz-2r7"/>
+                            <constraint firstItem="AIh-Xc-XlL" firstAttribute="leading" secondItem="bq6-y5-sSE" secondAttribute="leadingMargin" constant="20" id="LcU-8v-hex"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aPD-ts-pDm" secondAttribute="trailing" constant="20" id="OZO-xQ-NRW"/>
+                            <constraint firstItem="g4e-Va-Zua" firstAttribute="top" secondItem="aPD-ts-pDm" secondAttribute="bottom" constant="15" id="Qca-7R-r54"/>
+                            <constraint firstItem="UDS-U9-Hn2" firstAttribute="leading" secondItem="bq6-y5-sSE" secondAttribute="leadingMargin" constant="20" id="Sf1-VX-EYd"/>
+                            <constraint firstItem="aPD-ts-pDm" firstAttribute="leading" secondItem="UDS-U9-Hn2" secondAttribute="trailing" constant="20" id="SsZ-hO-QF9"/>
+                            <constraint firstItem="UDS-U9-Hn2" firstAttribute="top" secondItem="6S7-hO-Ucy" secondAttribute="bottom" constant="15" id="VcU-5V-45Z"/>
+                            <constraint firstItem="w2T-Od-cqa" firstAttribute="leading" secondItem="bq6-y5-sSE" secondAttribute="leading" constant="127" id="a8f-NA-Zim"/>
+                            <constraint firstItem="SsX-6L-Joj" firstAttribute="top" secondItem="qvn-id-M8r" secondAttribute="bottom" constant="30" id="eBh-fB-cua"/>
+                            <constraint firstItem="aPD-ts-pDm" firstAttribute="height" secondItem="UDS-U9-Hn2" secondAttribute="height" id="fsg-z5-pzp"/>
+                            <constraint firstItem="tM4-dB-mS2" firstAttribute="top" secondItem="SsX-6L-Joj" secondAttribute="bottom" constant="15" id="fw4-O4-VTC"/>
+                            <constraint firstItem="aPD-ts-pDm" firstAttribute="top" secondItem="6S7-hO-Ucy" secondAttribute="bottom" constant="15" id="jcJ-m6-rBB"/>
+                            <constraint firstItem="6S7-hO-Ucy" firstAttribute="top" secondItem="tM4-dB-mS2" secondAttribute="bottom" constant="15" id="kQ6-gY-jbp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tM4-dB-mS2" secondAttribute="trailing" constant="20" id="khz-BF-epk"/>
+                            <constraint firstItem="tM4-dB-mS2" firstAttribute="leading" secondItem="bq6-y5-sSE" secondAttribute="leadingMargin" constant="20" id="koE-HB-od3"/>
+                            <constraint firstItem="6S7-hO-Ucy" firstAttribute="leading" secondItem="bq6-y5-sSE" secondAttribute="leadingMargin" constant="20" id="mNo-Tm-iy2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6S7-hO-Ucy" secondAttribute="trailing" constant="20" id="pjU-RB-p4j"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SsX-6L-Joj" secondAttribute="trailing" constant="20" id="xbd-Ry-r3u"/>
+                            <constraint firstItem="g4e-Va-Zua" firstAttribute="height" secondItem="AIh-Xc-XlL" secondAttribute="height" id="zHm-7W-cDO"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="AddAfterTask" destination="w2T-Od-cqa" id="Ya9-y6-kNy"/>
