@@ -147,4 +147,15 @@ class CommonConst
     static internal let TASK_COMPLETE_FLAG_VALID_URGENT : Int = 3;
     // 重要度：大至急
     static internal let TASK_COMPLETE_FLAG_VALID_ASAP : Int = 4;
+    
+    /**
+     * 文字列入力制限数定数
+     */
+    // タスク登録画面:項目名入力制限数
+    static internal let INPUT_TASK_NAME_STRING_LIMIT: Int = 10;
+    // タスク登録画面:メモ入力制限数
+    static internal let INPUT_TASK_MEMO_STRING_LIMIT: Int = 200;
+
+    
+    
 }

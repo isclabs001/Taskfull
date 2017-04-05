@@ -47,16 +47,16 @@ class FunctionUtility
     static func DateToyyyyMMddHHmm_JP(date : NSDate) -> String
     {
         //曜日インデックス取得
-        let cal : NSCalendar = NSCalendar(identifier : NSCalendarIdentifierGregorian)!
-        let comp : NSDateComponents = cal.components([NSCalendarUnit.Weekday], fromDate: date)
-        let weekday : Int = comp.weekday
-        let weekdaySymbolIndex : Int  = weekday - 1
+        let calendar : NSCalendar = NSCalendar(identifier : NSCalendarIdentifierGregorian)!
+        let component : NSDateComponents = calendar.components([NSCalendarUnit.Weekday], fromDate: date)
+        let weekDay : Int = component.weekday
+        let weekDaySymbolIndex : Int  = weekDay - 1
         
         //曜日名取得の為JPにロケール変更
         let dateFormatter = NSDateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
         //文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
-        dateFormatter.dateFormat = "yyyy年MM月dd日(\(dateFormatter.shortWeekdaySymbols[weekdaySymbolIndex]))HH時mm分"
+        dateFormatter.dateFormat = "yyyy年MM月dd日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex]))HH時mm分"
         return dateFormatter.stringFromDate(date)
     }
     

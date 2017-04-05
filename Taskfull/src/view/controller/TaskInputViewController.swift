@@ -5,14 +5,14 @@
 //  Created by IscIsc on 2017/03/11.
 //  Copyright © 2017年 isc. All rights reserved.
 //
-//TODO:文字の定数化,登録データ型,登録地点リスト,AutoLayout,入力方法最適化
+//TODO:文字の定数化,登録データ型,登録地点リスト,AutoLayout,入力方法最適化,メソッド順整理
 
 import UIKit
 
 ///
 /// タスク入力画面
 ///
-class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate
+class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,UITextViewDelegate
 {
 /**
  * 定数
@@ -62,12 +62,14 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
+        
         // 基底のviewDidLoadを呼び出す
         super.viewDidLoad()
         
         // 初期化
         initializeProc()
     }
+    
     
     /// 初期化処理
     override func initializeProc() ->Bool
@@ -80,8 +82,9 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         {
             // 登録内容入力欄の初期化(不要？)
             
+
             
-            //viewからフォーカスが外れた際の動作
+            //view:フォーカスが外れた際のイベント
             let tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskInputViewController.missFocusView))
             view.addGestureRecognizer(tap)
             
@@ -90,13 +93,79 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             
             // 登録内容入力欄を設定　※詳細表示画面との要分岐処理
             displayInputField()
-            
+
             // 戻り値にtrueを設定
             ret = true
         }
         
         return ret
     }
+    
+    //textView:値変更確定時イベント
+    func textViewDidChange(textView: UITextView) {
+        
+        //　文字列変換完了後(== nil)かつ制限文字数を超えていた場合
+        if textView.markedTextRange == nil && textView.text.characters.count > CommonConst.INPUT_TASK_NAME_STRING_LIMIT {
+            
+            //　制限文字数より後ろの文字列を削除
+            textView.text = textView.text.substringToIndex(textView.text.startIndex.advancedBy(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
+            
+            
+            // 文字数制限アラート生成
+            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_NAME_STRING_LIMIT)文字以内で入力して下さい※後で制限数変更",preferredStyle: .Alert)
+            
+            // OKActionタップ時処理
+            let OkAlertAction = UIAlertAction(title: "OK", style: .Default) {
+                //UIAlertを閉じる(不要？？)
+                action in stringLimitAlert.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+            // OKActionをUIAlertに追加
+            stringLimitAlert.addAction(OkAlertAction)
+            
+            // UIAlert表示処理
+            presentViewController(stringLimitAlert, animated: true, completion: nil)
+            
+        }
+    }
+
+
+
+    // textField:編集完了時イベント
+    func textFieldDidChange(nsNotification: NSNotification) {
+        
+        //　UITextFieldへ変換
+        let inputTextField = nsNotification.object as! UITextField
+        
+        // 変数に代入
+        if let copyText = inputTextField.text {
+            
+            //　文字列変換完了後(== nil)かつ制限文字数を超えていた場合
+            if inputTextField.markedTextRange == nil && copyText.characters.count > CommonConst.INPUT_TASK_NAME_STRING_LIMIT {
+                
+                //　制限文字数より後ろの文字列を削除
+                inputTextField.text = copyText.substringToIndex(copyText.startIndex.advancedBy(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
+                
+                
+                // 文字数制限アラート生成
+                let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_NAME_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .Alert)
+                
+                // OKActionタップ時処理
+                let OkAlertAction = UIAlertAction(title: "OK", style: .Default) {
+                    //UIAlertを閉じる(不要？？)
+                    action in stringLimitAlert.dismissViewControllerAnimated(true, completion: nil)
+                }
+                
+                // OKActionをUIAlertに追加
+                stringLimitAlert.addAction(OkAlertAction)
+                
+                // UIAlert表示処理
+                presentViewController(stringLimitAlert, animated: true, completion: nil)
+
+            }
+        }
+    }
+
     
     
     // 登録画面用ナビゲーションバー：初期設定
@@ -110,7 +179,6 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
 
         //ボタンをナビゲーションバー右側に配置
         self.navigationItem.setRightBarButtonItems([addInputTaskButton], animated: true)
-        
         
     }
     
@@ -290,14 +358,16 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     //項目名入力欄,メモ入力欄:初期設定
     private func displayInputTaskNameMemo(){
         
+        //項目名入力欄:delegate設定
+        InputTaskNameField.delegate  = self
         //項目名入力欄(透かし文字,左寄せ)要定数化
         InputTaskNameField.placeholder = "項目名:"
         InputTaskNameField.textAlignment = NSTextAlignment.Left
-        //項目名入力欄:delegate設定
-        InputTaskNameField.delegate  = self
-        //リターンキー(完了)タップ時イベント
-        textFieldShouldReturn(InputTaskNameField)
+        //項目名入力欄:編集完了時イベント(TODO:textView同様デリゲートメソッドにて実装？)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TaskInputViewController.textFieldDidChange(_:)), name: UITextFieldTextDidChangeNotification, object: InputTaskNameField)
         
+        //メモ入力欄:delegate設定
+        InputTaskMemoView.delegate = self
         //メモ入力欄(透かし文字"メモ:",左寄せ,上寄せ)
         InputTaskMemoView.textAlignment = NSTextAlignment.Left
         InputTaskMemoView.layer.borderWidth = 1
@@ -305,7 +375,6 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskMemoView.placeHolder = "メモ:"
 
     }
-    
     
     //タスク終了時刻欄:初期設定
     private func diplayInputTaskDate(){
@@ -409,7 +478,7 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         //重要度登録処理
         
         //タスクカラー登録処理
-        //選択されているボタンのタイトルを　Intに変換後返す
+        //選択されているボタンのタイトル(タスクボタン色定数)を　Intに変換後返す
         if (InputTaskColorBtn_1.selected == true){
             InputTaskMemoView.text = InputTaskColorBtn_1.currentTitle
             //InputTaskMemoView.text = Int(InputTaskColorBtn_1.currentTitle!)
@@ -476,7 +545,6 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         
     }
     
-    
     //キーボード「リターンキー」：タップ時イベント
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         //キーボードを閉じる
@@ -508,9 +576,12 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    
+    //オブザーバ解除
+    deinit{
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
     
 }
 

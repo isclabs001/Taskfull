@@ -13,7 +13,6 @@ import UIKit
 //
 class InputDisabledTextField : UITextField
 {
-
     
     //コピー,ペースト,メニュー表示を非表示
     override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
