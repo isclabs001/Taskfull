@@ -22,6 +22,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     // 登録地点リスト入力PickerView
     let inputPointPicker : UIPickerView! = UIPickerView()
     
+    var inputTaskEndDate : NSDate = NSDate()
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
 /**
@@ -434,6 +435,11 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     func inputDatePickerEdit(sender: UIDatePicker){
         //値をタスク終了時刻入力欄に表示
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(sender.date)
+        
+        //同一の日付を変数に格納
+        inputTaskEndDate = sender.date
+        
+        
     }
     
     
@@ -455,93 +461,107 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
     
     //登録確定ボタン：タップ時イベント
     func onTouchDown_addInputTaskButton(){
-        
-        //項目名未入力時
-        if(false == StringUtility.isEmpty(InputTaskNameField.text)){
-            //代入文字：要定数化
-            InputTaskNameField.text = "項目名未入力"
-        }
-        
-        
         /*
         **タスク登録イベント実装
         */
-        //項目名登録処理
         
+        //TEST START
+        // タスク情報のクリア
+        //TaskInfoUtility.DefaultInstance.ClearTaskInfo()
+        
+        // TODO:後で登録できるようになったら消す！！
+        // タスク情報の取得
+        var taskInfo : [TaskInfoDataEntity] = TaskInfoUtility.DefaultInstance.getTaskInfoData()
+        //taskInfo.removeAll()
+        
+        // タスク情報追加
+        var taskInfoDataEntity : TaskInfoDataEntity
+        
+        taskInfoDataEntity = TaskInfoDataEntity()
+        //新規ID
+        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
+        //項目名登録
+        //項目名未入力時チェック
+        if(false == StringUtility.isEmpty(InputTaskNameField.text)){
+            //代入文字：要定数化
+            taskInfoDataEntity.Title = "項目名未入力"
+        }
+        else{
+            
+            taskInfoDataEntity.Title = InputTaskNameField.text! as String
+        }
         //メモ
-        
-        //タスク終了時刻登録処理
-        
-        //通知場所登録処理
-        
-        //重要度登録処理
-        
-        //タスクカラー登録処理
+        taskInfoDataEntity.Memo = InputTaskMemoView.text! as String
+        //タスク終了時刻
+        //taskInfoDataEntity.DateTime = "2017/04/02 12:13:14"
+        taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
+        //通知場所
+        taskInfoDataEntity.NotifiedLocation = 0
+        //重要度(セグメントのインデックス)
+        taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
+        //タスクカラー
         //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
         if (InputTaskColorBtn_1.selected == true){
-            InputTaskMemoView.text = InputTaskColorBtn_1.currentTitle
-            //InputTaskMemoView.text = Int(InputTaskColorBtn_1.currentTitle!)
+            taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_1.currentTitle!)!
         }
         else if(InputTaskColorBtn_2.selected == true){
-            InputTaskMemoView.text = InputTaskColorBtn_2.currentTitle
+            taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_2.currentTitle!)!
         }
         else if(InputTaskColorBtn_3.selected == true){
-            InputTaskMemoView.text = InputTaskColorBtn_3.currentTitle
+            taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_3.currentTitle!)!
         }
+        //テキストカラー
+        taskInfoDataEntity.TextColor = 0
+        //親ID（-1 = 親（先頭）、それ以外＝親のID）
+        taskInfoDataEntity.ParrentId = -1
+        //完了フラグ
+        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+        //作成日時
+        taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(NSDate(), separation: true)
+        //更新日時
+        taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(NSDate(), separation: true)
         
-        /*タイトルを用いない場合
-        if (InputTaskColorBtn_1.selected == true){
-            //重要度別処理
-            switch InputImportanceSegment.selectedSegmentIndex{
-                //各重要度別の1番目の色を返す
-                case CommonConst.TASK_IMPORTANCE_VALID_LOW:
-                    InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_WHITE)
-                case CommonConst.TASK_COMPLETE_FLAG_VALID_MEDIUM:
-                    InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_GREEN)
-                case CommonConst.TASK_COMPLETE_FLAG_VALID_HIGH:
-                    InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_YELLOW)
-                case CommonConst.TASK_COMPLETE_FLAG_VALID_URGENT:
-                    InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_DARK_YELLOW)
-                default:
-                    break
-            }
-        }
-        else if(InputTaskColorBtn_2.selected == true){
-            InputTaskMemoView.text = "2"
-            //重要度別処理
-            switch InputImportanceSegment.selectedSegmentIndex{
-            //各重要度別の1番目の色を返す
-            case CommonConst.TASK_IMPORTANCE_VALID_LOW:
-                InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_LIGHT_BLUE)
-            case CommonConst.TASK_COMPLETE_FLAG_VALID_MEDIUM:
-                InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_ORANGE)
-            case CommonConst.TASK_COMPLETE_FLAG_VALID_HIGH:
-                InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_PINK)
-            case CommonConst.TASK_COMPLETE_FLAG_VALID_URGENT:
-                InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_DARK_PINK)
-            default:
-                break
-            }
-        }
-        else if(InputTaskColorBtn_3.selected == true){
-            InputTaskMemoView.text = "3"
-            //重要度別処理
-            switch InputImportanceSegment.selectedSegmentIndex{
-            //各重要度別の1番目の色を返す
-            case CommonConst.TASK_IMPORTANCE_VALID_LOW:
-                InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_GLAY)
-            case CommonConst.TASK_COMPLETE_FLAG_VALID_MEDIUM:
-                InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_BLUE)
-            case CommonConst.TASK_COMPLETE_FLAG_VALID_HIGH:
-                InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_PURPLE)
-            case CommonConst.TASK_COMPLETE_FLAG_VALID_URGENT:
-                InputTaskMemoView .text = String(CommonConst.TASK_BUTTON_COLOR_DARK_PURPLE)
-            default:
-                break
-            }
-        }
-        */
+        taskInfo.append(taskInfoDataEntity)
         
+        
+        // タスク情報のデータを入れ替える
+        TaskInfoUtility.DefaultInstance.setTaskInfoData(taskInfo)
+        
+        // タスク情報の書込み
+        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+
+        // タスク情報の読込み
+        //TaskInfoUtility.DefaultInstance.ReadTaskInfo()
+        //TEST END
+        
+        
+        // TODO:押下時の処理を記述する
+        // タスク入力画面を表示
+        //self.performSegueWithIdentifier(MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
+        
+        //メイン画面へ遷移
+        self.navigationController?.popViewControllerAnimated(true)
+
+        
+    }
+    
+    
+    ///
+    /// 画面遷移前イベント
+    ///　- parameter segue:イベントのUIStoryboardSegue
+    ///　- parameter sender:イベントが発生したオブジェクト
+    ///
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // タスク入力画面へ遷移する場合
+        if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_INPUT){
+            // タスク入力画面のコントローラを取得
+            let dvc : TaskInputViewController = (segue.destinationViewController as AnyObject as? TaskInputViewController)!
+            
+            // TODO:画面表示時に必要なパラメータを設定する記述をする
+            //dvc.
+            
+            
+        }
     }
     
     //キーボード「リターンキー」：タップ時イベント

@@ -138,9 +138,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         // タスク情報の読込み
         TaskInfoUtility.DefaultInstance.ReadTaskInfo()
         
+        /*
         //TEST START
         // タスク情報のクリア
         TaskInfoUtility.DefaultInstance.ClearTaskInfo()
+        
         
         // TODO:後で登録できるようになったら消す！！
         // タスク情報の取得
@@ -238,7 +240,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
 
         // タスク情報の読込み
         TaskInfoUtility.DefaultInstance.ReadTaskInfo()
-        //TEST END
+        //TEST END*/
         
     }
     
@@ -292,6 +294,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
             taskViewItem.TaskButton = UITaskImageButton(frame: taskViewItem.Location)
             
             // ボタン情報設定
+            //taskViewItem.TaskButton!.btnImage.setImageInfo(getButtonResource(taskViewItem.Color) , width:Double(size.width) , height:Double(size.height))
             taskViewItem.TaskButton!.btnImage.setImageInfo(getButtonResource(taskViewItem.Color) , width:Double(size.width) , height:Double(size.height))
             taskViewItem.TaskButton!.btnImage.tag = item.Id
             taskViewItem.TaskButton!.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
@@ -589,4 +592,21 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
             
         }
     }
+    
+    //　画面表示直後時処理 タイミング要再考
+    override func viewDidAppear(animated: Bool) {
+        
+        // 動作モードによるメイン画面の初期化
+        initializeMain(self.mActionMode)
+        
+        // 登録タスク情報の取得
+        getTaskInfo()
+        
+        // タスクを表示する
+        displayTask(self.mActionMode)
+    }
+    
+    
+    
+    
 }

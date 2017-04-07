@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -357,8 +356,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFr-HC-1HV" userLabel="BaseAddBtnview">
                                 <rect key="frame" x="0.0" y="546" width="600" height="54"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2T-Od-cqa" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="127" y="10" width="346" height="28"/>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2T-Od-cqa" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="127" y="8" width="346" height="28"/>
                                         <state key="normal" title="Button"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -416,20 +415,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s43-CE-MyA" userLabel="BaseTaskColorBtnView">
                                 <rect key="frame" x="0.0" y="441" width="600" height="107"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
-                                        <rect key="frame" x="40" y="43" width="51" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" misplaced="YES" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
+                                        <rect key="frame" x="40" y="43" width="52" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xPJ-L0-xZJ" userLabel="BaseColorBtnView_1">
-                                        <rect key="frame" x="107" y="0.0" width="452" height="107"/>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xPJ-L0-xZJ" userLabel="BaseColorBtnView_1">
+                                        <rect key="frame" x="108" y="0.0" width="451" height="107"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-y1-WJP" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="16" width="76" height="76"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="Zh2-y1-WJP" secondAttribute="height" multiplier="1:1" id="NwL-tQ-ph8"/>
-                                                </constraints>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-cs-b7O" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                                <rect key="frame" x="375" y="16" width="76" height="76"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -441,11 +437,8 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-cs-b7O" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="376" y="16" width="76" height="76"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="vhD-cs-b7O" secondAttribute="height" multiplier="1:1" id="5ZD-Qb-0DM"/>
-                                                </constraints>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                                <rect key="frame" x="187" y="16" width="76" height="76"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -457,11 +450,8 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" misplaced="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="188" y="16" width="76" height="76"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="7dZ-PZ-lc6" secondAttribute="height" multiplier="1:1" id="39B-Py-Xlq"/>
-                                                </constraints>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-y1-WJP" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="16" width="75" height="76"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -475,33 +465,17 @@
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="Zh2-y1-WJP" firstAttribute="top" secondItem="xPJ-L0-xZJ" secondAttribute="top" constant="16" id="2HO-23-yYu"/>
-                                            <constraint firstAttribute="trailing" secondItem="vhD-cs-b7O" secondAttribute="trailing" id="66Q-2P-y0q"/>
-                                            <constraint firstAttribute="bottom" secondItem="vhD-cs-b7O" secondAttribute="bottom" constant="15" id="FIA-rH-Jfw"/>
-                                            <constraint firstAttribute="bottom" secondItem="7dZ-PZ-lc6" secondAttribute="bottom" constant="15" id="Gir-g0-TrX"/>
-                                            <constraint firstItem="7dZ-PZ-lc6" firstAttribute="width" secondItem="Zh2-y1-WJP" secondAttribute="width" id="JBP-n2-EEw"/>
-                                            <constraint firstItem="vhD-cs-b7O" firstAttribute="leading" secondItem="7dZ-PZ-lc6" secondAttribute="trailing" constant="188" id="Lh6-hj-X8t"/>
-                                            <constraint firstItem="vhD-cs-b7O" firstAttribute="width" secondItem="Zh2-y1-WJP" secondAttribute="width" id="LqD-IQ-8NZ"/>
-                                            <constraint firstAttribute="bottom" secondItem="Zh2-y1-WJP" secondAttribute="bottom" constant="15" id="RIP-y5-Ibq"/>
-                                            <constraint firstItem="Zh2-y1-WJP" firstAttribute="leading" secondItem="xPJ-L0-xZJ" secondAttribute="leading" id="WXB-sR-8z2"/>
-                                            <constraint firstItem="7dZ-PZ-lc6" firstAttribute="top" secondItem="xPJ-L0-xZJ" secondAttribute="top" constant="16" id="iN4-TA-hF7"/>
-                                            <constraint firstItem="vhD-cs-b7O" firstAttribute="height" secondItem="Zh2-y1-WJP" secondAttribute="height" id="lLv-EO-ZGu"/>
-                                            <constraint firstItem="7dZ-PZ-lc6" firstAttribute="height" secondItem="Zh2-y1-WJP" secondAttribute="height" id="nmh-8e-pQd"/>
-                                            <constraint firstItem="vhD-cs-b7O" firstAttribute="top" secondItem="xPJ-L0-xZJ" secondAttribute="top" constant="16" id="nqI-jf-fAl"/>
-                                            <constraint firstItem="7dZ-PZ-lc6" firstAttribute="leading" secondItem="Zh2-y1-WJP" secondAttribute="trailing" constant="188" id="pcf-RK-aLh"/>
-                                        </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.70915478190000003" green="0.86346476510000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="FWJ-ru-Ymb" firstAttribute="leading" secondItem="s43-CE-MyA" secondAttribute="leading" constant="40" id="90U-K4-MeW"/>
-                                    <constraint firstAttribute="trailing" secondItem="xPJ-L0-xZJ" secondAttribute="trailing" constant="41" id="FmX-TH-gtR"/>
-                                    <constraint firstItem="FWJ-ru-Ymb" firstAttribute="top" secondItem="s43-CE-MyA" secondAttribute="top" constant="43" id="OOF-Fy-AU4"/>
-                                    <constraint firstAttribute="bottom" secondItem="FWJ-ru-Ymb" secondAttribute="bottom" constant="43" id="QXk-NB-a50"/>
-                                    <constraint firstItem="xPJ-L0-xZJ" firstAttribute="top" secondItem="s43-CE-MyA" secondAttribute="top" id="eU0-Et-Yns"/>
-                                    <constraint firstItem="xPJ-L0-xZJ" firstAttribute="leading" secondItem="FWJ-ru-Ymb" secondAttribute="trailing" constant="16" id="jJp-oN-dGK"/>
-                                    <constraint firstAttribute="bottom" secondItem="xPJ-L0-xZJ" secondAttribute="bottom" id="tnX-fQ-8dD"/>
+                                    <constraint firstItem="xPJ-L0-xZJ" firstAttribute="top" secondItem="s43-CE-MyA" secondAttribute="top" id="B4s-48-X9q"/>
+                                    <constraint firstItem="xPJ-L0-xZJ" firstAttribute="leading" secondItem="FWJ-ru-Ymb" secondAttribute="trailing" constant="16" id="Hpp-zH-9sA"/>
+                                    <constraint firstItem="FWJ-ru-Ymb" firstAttribute="top" secondItem="s43-CE-MyA" secondAttribute="top" constant="43" id="dMP-t9-76H"/>
+                                    <constraint firstAttribute="trailing" secondItem="xPJ-L0-xZJ" secondAttribute="trailing" constant="41" id="qz8-Wz-tDk"/>
+                                    <constraint firstItem="FWJ-ru-Ymb" firstAttribute="leading" secondItem="s43-CE-MyA" secondAttribute="leading" constant="40" id="t73-T9-lcP"/>
+                                    <constraint firstAttribute="bottom" secondItem="FWJ-ru-Ymb" secondAttribute="bottom" constant="43" id="wUS-sD-v8b"/>
+                                    <constraint firstAttribute="bottom" secondItem="xPJ-L0-xZJ" secondAttribute="bottom" id="zP4-jY-9hY"/>
                                 </constraints>
                             </view>
                         </subviews>
