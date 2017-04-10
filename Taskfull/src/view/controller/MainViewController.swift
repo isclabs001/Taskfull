@@ -288,19 +288,18 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
             let position : CGPoint = getButtonPosition(index, buttonSize: size)
             
             // ボタン位置・サイズ設定
-            taskViewItem.Location = CGRect(origin: CGPoint(x: position.x, y: position.y), size: getButtonSize(systemDate, taskDate: item.DateTime, createDate: item.CreateDateTime))
+            taskViewItem.Location = CGRect(origin: CGPoint(x: position.x, y: position.y), size: size)
             
             // ボタン生成
             taskViewItem.TaskButton = UITaskImageButton(frame: taskViewItem.Location)
             
             // ボタン情報設定
-            //taskViewItem.TaskButton!.btnImage.setImageInfo(getButtonResource(taskViewItem.Color) , width:Double(size.width) , height:Double(size.height))
             taskViewItem.TaskButton!.btnImage.setImageInfo(getButtonResource(taskViewItem.Color) , width:Double(size.width) , height:Double(size.height))
             taskViewItem.TaskButton!.btnImage.tag = item.Id
             taskViewItem.TaskButton!.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
             taskViewItem.TaskButton!.labelTitle = item.Title
             taskViewItem.TaskButton!.labelMemo = item.Memo
-            taskViewItem.TaskButton!.labelDateTime = item.DateTime
+            taskViewItem.TaskButton!.labelDateTime =  FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
             taskViewItem.TaskButton!.labelTextColor = item.TextColor
 
             // 配列に追加
@@ -322,9 +321,6 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         // ボタン最小サイズを取得
         var ret : CGSize = CGSize(width: CommonConst.TASK_BUTTON_SIZE_MIN, height: CommonConst.TASK_BUTTON_SIZE_MIN)
         
-        // 時間の差取得
-        let diffHour : Int = FunctionUtility.DiffHour(taskDate, date2: systemDate)
-        
         // 当日の場合
         if(true == FunctionUtility.isToday(systemDate, date2: taskDate)) {
             // ボタン最大サイズを設定
@@ -333,9 +329,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         // 上記以外の場合
         } else {
             // 作成日からの時間の差取得
-            let diffHour2 : Int = FunctionUtility.DiffHour(taskDate, date2: createDate)
+            let diffHour : Int = FunctionUtility.DiffHour(taskDate, date2: createDate) - FunctionUtility.DiffHour(systemDate, date2: createDate)
 
-            let work : CGFloat = CGFloat(CommonConst.TASK_BUTTON_SIZE_MIN) + ((CGFloat(CommonConst.TASK_BUTTON_SIZE_MAX - CommonConst.TASK_BUTTON_SIZE_MIN) / CGFloat(diffHour2)) * CGFloat(diffHour))
+            let work : CGFloat = CGFloat(CommonConst.TASK_BUTTON_SIZE_MIN) + ((CGFloat(CommonConst.TASK_BUTTON_SIZE_MAX - CommonConst.TASK_BUTTON_SIZE_MIN) / CGFloat(diffHour)))
             ret = CGSize(width: work, height: work)
         }
         

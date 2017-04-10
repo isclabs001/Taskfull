@@ -87,7 +87,7 @@ class CommonConst
     /**
      * 最小サイズ
      */
-    static internal let TASK_BUTTON_SIZE_MIN : Double = 64;
+    static internal let TASK_BUTTON_SIZE_MIN : Double = 96;
     /**
      * 最大サイズ
      */

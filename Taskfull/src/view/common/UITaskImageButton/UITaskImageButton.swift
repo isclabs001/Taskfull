@@ -26,6 +26,18 @@ class UITaskImageButton : UIView
     // タイトル切り替えのインターバルタイマー
     static var IntervalForTitleTimer : Double = 5.0;
     
+    // ラベルのマージン
+    static var LABEL_MARGIN : CGFloat = 6.0;
+    // ラベルの行数
+    static var LABEL_ROWS : CGFloat = 2.0;
+
+    // 表示ラベルインデックス　タイトル
+    static var DISPLAY_LABEL_TITLE : Int = 0;
+    // 表示ラベルインデックス　タスク完了日
+    static var DISPLAY_LABEL_DATE : Int = 1;
+    // 表示ラベルインデックス　メモ
+    static var DISPLAY_LABEL_MEMO : Int = 2;
+    
     /**
      * 変数
      */
@@ -117,19 +129,56 @@ class UITaskImageButton : UIView
         let height = self.layer.frame.size.height
 
         // 子コントロールのサイズを設定する
-        let txtMargin : CGFloat = 6
         view.layer.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        self.txtLabel.layer.frame = CGRect(x: txtMargin, y: 0, width: width - (txtMargin * 2), height: height)
+        self.txtLabel.layer.frame = CGRect(x: UITaskImageButton.LABEL_MARGIN, y: UITaskImageButton.LABEL_MARGIN, width: width - (UITaskImageButton.LABEL_MARGIN * 2), height: height - (UITaskImageButton.LABEL_MARGIN * 2))
         self.btnImage.layer.frame = CGRect(x: 0, y: 0, width: width, height: height)
 
         // ラベル文字色設定
         self.txtLabel.textColor = getLabelTextColor(self.labelTextColor)
+        
+        // フォントサイズ設定
+        self.txtLabel.font = self.txtLabel.font.fontWithSize(getFontSize(self.txtLabel.font.fontName, width: self.layer.frame.size.width, height: self.layer.frame.size.height, text: self.txtLabel.text!))
         
         // アニメーション設定
         setViewAnimation()
         
         // ラベル表示更新タイマー開始
         startTimerForLabel()
+    }
+    
+    ///
+    ///　ラベル用　フォントサイズ取得
+    ///　- parameter fontName:フォント名
+    ///　- parameter width:コントロール幅
+    ///　- parameter height:コントロール高さ
+    ///　- parameter text:表示文字
+    ///　- returns:フォントサイズ
+    ///
+    private func getFontSize(fontName : String, width : CGFloat, height : CGFloat, text : String) -> CGFloat {
+        var ret : CGFloat = 0
+        let work : String = text
+        let fontSizies : [CGFloat] = [42.0, 38.0, 34.0, 32.0, 28.0, 24.0, 22.0, 20.0, 18.0, 160, 14.0, 12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0]
+        let workWidth : CGFloat = width - (UITaskImageButton.LABEL_MARGIN * 2)
+        
+        // 調査するフォントサイズ数分処理する
+        for fontSize in fontSizies {
+            ret = fontSize
+            // fontを利用時のテキストサイズを取得
+            var attributes : [String: AnyObject]? = [String: AnyObject]()
+            attributes![NSFontAttributeName] = UIFont(name: fontName, size: fontSize)
+            let size = work.sizeWithAttributes(attributes)
+
+            // 表示ラベルの行数は2行固定とする
+            let workHeight : CGFloat = size.height * UITaskImageButton.LABEL_ROWS
+            
+            // コントロールの幅に収まっている、または、折り返した結果、高さに収まっている場合
+            if(workWidth >= size.width || workHeight >= (size.height * (size.width / workWidth))) {
+                // 確定
+                break
+            }
+        }
+        
+        return ret
     }
     
     ///
@@ -185,25 +234,34 @@ class UITaskImageButton : UIView
         var label : String = StringUtility.EMPTY
         
         switch(self.intCurrentLabel) {
+        // タスク完了日の場合
+        case UITaskImageButton.DISPLAY_LABEL_DATE:
+            // メモが有効な場合
+            if(false == self.labelMemo.isEmpty){
+                // メモ表示
+                label = self.labelMemo
+                self.intCurrentLabel = UITaskImageButton.DISPLAY_LABEL_MEMO
+
+            // 上記以外の場合
+            } else {
+                // タイトル表示
+                label = self.labelTitle
+                self.intCurrentLabel = UITaskImageButton.DISPLAY_LABEL_TITLE
+            }
+            break;
+            
         // メモ表示の場合
-        case 1:
+        case UITaskImageButton.DISPLAY_LABEL_MEMO:
+            // タイトル表示
             label = self.labelTitle
-            self.intCurrentLabel = 0
+            self.intCurrentLabel = UITaskImageButton.DISPLAY_LABEL_TITLE
             break;
             
         // 上記以外の場合
         default:
-            // 日時、かつ、メモが有効な場合
-            if(false == self.labelDateTime.isEmpty && false == self.labelMemo.isEmpty){
-                label = self.labelDateTime + ":" + self.labelMemo
-            } else if(false == self.labelDateTime.isEmpty && true == self.labelMemo.isEmpty){
-                label = self.labelDateTime
-            } else {
-                label = self.labelMemo
-            }
-            if(false == label.isEmpty){
-                self.intCurrentLabel = 1
-            }
+            // タスク完了日表示
+            label = self.labelDateTime
+            self.intCurrentLabel = UITaskImageButton.DISPLAY_LABEL_DATE
             break;
         }
         
@@ -211,6 +269,9 @@ class UITaskImageButton : UIView
         if(false == label.isEmpty){
             // 文字列設定
             self.txtLabel.text = label
+
+            // フォントサイズ設定
+            self.txtLabel.font = self.txtLabel.font.fontWithSize(getFontSize(self.txtLabel.font.fontName, width: self.layer.frame.size.width, height: self.layer.frame.size.height, text: label))
         }
     }
 }

@@ -15,6 +15,10 @@ public class BaseJsonDataUtility
     /**
      * 変数定義
      */
+    
+    /**
+     * JSONエスケープ対象文字
+     */
     static internal let EscapeSrc : [String] = ["\"","\\","/","\n"]
     static internal let EscapeDst : [String] = ["¥\"","¥\\","¥/","¥n"]
     
@@ -165,24 +169,34 @@ public class BaseJsonDataUtility
         return ret
     }
     
+    ///
+    ///　JSONに認識させるためのエスケープ処理
+    ///　- parameter text:文字列
+    ///　- returns:エスケープされた文字列
+    ///
     func escapeJsonString(text : String) -> String {
         var ret : String = text
         
         // エスケープ対象文字列数分処理する
         for(var i = 0 ;i < BaseJsonDataUtility.EscapeSrc.count; i += 1){
-            // "をエスケープする
+            // 文字をエスケープする
             ret = ret.stringByReplacingOccurrencesOfString(BaseJsonDataUtility.EscapeSrc[i], withString: BaseJsonDataUtility.EscapeDst[i])
         }
         
         return ret
     }
     
+    ///
+    ///　JSONのエスケープ文字の展開処理
+    ///　- parameter text:文字列
+    ///　- returns:エスケープ文字を展開した文字列
+    ///
     func decodeJsonString(text : String) -> String {
         var ret : String = text
         
         // エスケープ対象文字列数分処理する
         for(var i = 0 ;i < BaseJsonDataUtility.EscapeSrc.count; i += 1){
-            // "をエスケープする
+            // エスケープ文字を展開する
             ret = ret.stringByReplacingOccurrencesOfString(BaseJsonDataUtility.EscapeDst[i], withString: BaseJsonDataUtility.EscapeSrc[i])
         }
         

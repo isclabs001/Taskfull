@@ -78,6 +78,23 @@ class FunctionUtility
     }
     
     ///
+    ///　日付をfalse:yyyyMMddHHmm、または、yyyy/MM/dd HH:mmに変換する
+    ///　- parameter date:yyyyMMdd形式の文字列
+    ///　- parameter separation:true:yyyy/MM/dd HH:mm形式の文字列 false:yyyyMMddHHmm形式の文字列
+    ///　- returns:変換した日付
+    ///
+    static func DateToyyyyMMddHHmm(date : NSDate, separation : Bool) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        if(true == separation) {
+            dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+        } else {
+            dateFormatter.dateFormat = "yyyyMMddHHmm"
+        }
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    ///
     ///　時間の差処理
     ///　- parameter date1:基準日付
     ///　- parameter date2:対象日付
