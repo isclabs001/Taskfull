@@ -106,14 +106,14 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     func textViewDidChange(textView: UITextView) {
         
         //　文字列変換完了後(== nil)かつ制限文字数を超えていた場合
-        if textView.markedTextRange == nil && textView.text.characters.count > CommonConst.INPUT_TASK_NAME_STRING_LIMIT {
+        if textView.markedTextRange == nil && textView.text.characters.count > CommonConst.INPUT_TASK_MEMO_STRING_LIMIT {
             
             //　制限文字数より後ろの文字列を削除
-            textView.text = textView.text.substringToIndex(textView.text.startIndex.advancedBy(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
+            textView.text = textView.text.substringToIndex(textView.text.startIndex.advancedBy(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))
             
             
             // 文字数制限アラート生成
-            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_NAME_STRING_LIMIT)文字以内で入力して下さい※後で制限数変更",preferredStyle: .Alert)
+            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT)文字以内で入力して下さい※後で制限数変更",preferredStyle: .Alert)
             
             // OKActionタップ時処理
             let OkAlertAction = UIAlertAction(title: "OK", style: .Default) {

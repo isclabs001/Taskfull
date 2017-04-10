@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nae-2G-uHF">
     <dependencies>
-        <deployment identifier="iOS"/>
+        <deployment version="2304" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -269,39 +269,11 @@
                                         </connections>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="6S7-hO-Ucy" firstAttribute="leading" secondItem="5On-Nh-lw1" secondAttribute="leading" constant="40" id="2uO-go-WNQ"/>
                                     <constraint firstItem="6S7-hO-Ucy" firstAttribute="top" secondItem="5On-Nh-lw1" secondAttribute="top" constant="12" id="5kg-qF-FVn"/>
                                     <constraint firstAttribute="trailing" secondItem="6S7-hO-Ucy" secondAttribute="trailing" constant="40" id="Joh-HT-dDw"/>
                                     <constraint firstAttribute="bottom" secondItem="6S7-hO-Ucy" secondAttribute="bottom" constant="12" id="wGa-Z5-XOo"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Esl-3M-zfd" userLabel="BaseTaskPointListView">
-                                <rect key="frame" x="0.0" y="333" width="600" height="54"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDS-U9-Hn2">
-                                        <rect key="frame" x="40" y="12" width="64" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aPD-ts-pDm" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="124" y="12" width="436" height="30"/>
-                                        <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" red="0.28761514669999999" green="0.84147914199999996" blue="0.99328859059999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="aPD-ts-pDm" secondAttribute="bottom" constant="12" id="4Hm-2n-zxj"/>
-                                    <constraint firstAttribute="bottom" secondItem="UDS-U9-Hn2" secondAttribute="bottom" constant="12" id="Pg9-Ea-WXZ"/>
-                                    <constraint firstItem="UDS-U9-Hn2" firstAttribute="leading" secondItem="Esl-3M-zfd" secondAttribute="leading" constant="40" id="UIv-rk-FpE"/>
-                                    <constraint firstAttribute="trailing" secondItem="aPD-ts-pDm" secondAttribute="trailing" constant="40" id="Vkr-Ng-Fm6"/>
-                                    <constraint firstItem="aPD-ts-pDm" firstAttribute="leading" secondItem="UDS-U9-Hn2" secondAttribute="trailing" constant="20" id="ZU1-5C-pg5"/>
-                                    <constraint firstItem="aPD-ts-pDm" firstAttribute="top" secondItem="Esl-3M-zfd" secondAttribute="top" constant="12" id="eYE-vj-MtV"/>
-                                    <constraint firstItem="UDS-U9-Hn2" firstAttribute="top" secondItem="Esl-3M-zfd" secondAttribute="top" constant="12" id="fOn-rh-p73"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TEZ-4M-O0U" userLabel="BaseTaskImportanceView">
@@ -324,7 +296,6 @@
                                         </segments>
                                     </segmentedControl>
                                 </subviews>
-                                <color key="backgroundColor" red="0.52227852760000004" green="0.84147914199999996" blue="0.99328859059999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="g4e-Va-Zua" firstAttribute="leading" secondItem="AIh-Xc-XlL" secondAttribute="trailing" constant="19" id="K1x-gb-u6f"/>
                                     <constraint firstItem="AIh-Xc-XlL" firstAttribute="leading" secondItem="TEZ-4M-O0U" secondAttribute="leading" constant="40" id="T1n-Ls-6TA"/>
@@ -345,7 +316,6 @@
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" red="0.52227852760000004" green="0.76773228800000004" blue="0.99328859059999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="SsX-6L-Joj" firstAttribute="top" secondItem="aeg-2x-1ZN" secondAttribute="top" constant="16" id="4DZ-nA-tNA"/>
                                     <constraint firstItem="SsX-6L-Joj" firstAttribute="leading" secondItem="aeg-2x-1ZN" secondAttribute="leading" constant="40" id="Iph-rH-PSh"/>
@@ -356,8 +326,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFr-HC-1HV" userLabel="BaseAddBtnview">
                                 <rect key="frame" x="0.0" y="546" width="600" height="54"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2T-Od-cqa" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="127" y="8" width="346" height="28"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2T-Od-cqa" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="127" y="10" width="346" height="30"/>
                                         <state key="normal" title="Button"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -379,17 +349,14 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.58158557050000004" green="0.74923972319999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="w2T-Od-cqa" secondAttribute="trailing" constant="127" id="ELr-BO-cxc"/>
-                                    <constraint firstAttribute="bottom" secondItem="w2T-Od-cqa" secondAttribute="bottom" constant="16" id="N3a-56-nvG"/>
                                     <constraint firstItem="w2T-Od-cqa" firstAttribute="top" secondItem="oFr-HC-1HV" secondAttribute="top" constant="10" id="N7W-KD-8mk"/>
                                     <constraint firstItem="w2T-Od-cqa" firstAttribute="leading" secondItem="oFr-HC-1HV" secondAttribute="leading" constant="127" id="Rhg-cf-auz"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GzW-Rr-0C2" userLabel="DummyBaseView">
                                 <rect key="frame" x="0.0" y="64" width="0.0" height="536"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="frI-OR-qQN"/>
                                 </constraints>
@@ -404,7 +371,6 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                                     </textView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.48318725899999998" green="0.84174112710000004" blue="0.99328859059999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="tM4-dB-mS2" firstAttribute="leading" secondItem="p8W-DM-IDd" secondAttribute="leading" constant="40" id="0d1-fW-nyr"/>
                                     <constraint firstAttribute="trailing" secondItem="tM4-dB-mS2" secondAttribute="trailing" constant="40" id="0pE-qg-zKf"/>
@@ -415,17 +381,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s43-CE-MyA" userLabel="BaseTaskColorBtnView">
                                 <rect key="frame" x="0.0" y="441" width="600" height="107"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" misplaced="YES" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
-                                        <rect key="frame" x="40" y="43" width="52" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
+                                        <rect key="frame" x="40" y="43" width="51" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xPJ-L0-xZJ" userLabel="BaseColorBtnView_1">
-                                        <rect key="frame" x="108" y="0.0" width="451" height="107"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nHi-PU-jMs">
+                                        <rect key="frame" x="112" y="0.0" width="448" height="107"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-cs-b7O" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="375" y="16" width="76" height="76"/>
+                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-y1-WJP" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="20" width="143" height="67"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -437,8 +403,8 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="187" y="16" width="76" height="76"/>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                                <rect key="frame" x="153" y="20" width="142" height="67"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -450,8 +416,8 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-y1-WJP" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="16" width="75" height="76"/>
+                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-cs-b7O" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                                <rect key="frame" x="305" y="20" width="143" height="67"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -464,18 +430,51 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
+                                        <constraints>
+                                            <constraint firstItem="7dZ-PZ-lc6" firstAttribute="width" secondItem="Zh2-y1-WJP" secondAttribute="width" id="C3Q-TT-cFt"/>
+                                            <constraint firstItem="7dZ-PZ-lc6" firstAttribute="height" secondItem="Zh2-y1-WJP" secondAttribute="height" id="FTk-qk-xmY"/>
+                                            <constraint firstItem="Zh2-y1-WJP" firstAttribute="top" secondItem="nHi-PU-jMs" secondAttribute="top" constant="20" id="LpQ-eW-22n"/>
+                                            <constraint firstAttribute="bottom" secondItem="Zh2-y1-WJP" secondAttribute="bottom" constant="20" id="Q1w-n9-4jh"/>
+                                            <constraint firstItem="vhD-cs-b7O" firstAttribute="width" secondItem="Zh2-y1-WJP" secondAttribute="width" id="YP8-jR-cac"/>
+                                            <constraint firstItem="vhD-cs-b7O" firstAttribute="height" secondItem="Zh2-y1-WJP" secondAttribute="height" id="xx3-kt-aOC"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.70915478190000003" green="0.86346476510000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="xPJ-L0-xZJ" firstAttribute="top" secondItem="s43-CE-MyA" secondAttribute="top" id="B4s-48-X9q"/>
-                                    <constraint firstItem="xPJ-L0-xZJ" firstAttribute="leading" secondItem="FWJ-ru-Ymb" secondAttribute="trailing" constant="16" id="Hpp-zH-9sA"/>
+                                    <constraint firstItem="nHi-PU-jMs" firstAttribute="top" secondItem="s43-CE-MyA" secondAttribute="top" id="5nE-Cj-t4I"/>
+                                    <constraint firstItem="nHi-PU-jMs" firstAttribute="height" secondItem="s43-CE-MyA" secondAttribute="height" id="6Di-Le-NdE"/>
+                                    <constraint firstItem="nHi-PU-jMs" firstAttribute="leading" secondItem="FWJ-ru-Ymb" secondAttribute="trailing" constant="21" id="FGh-fd-Je4"/>
+                                    <constraint firstAttribute="trailing" secondItem="nHi-PU-jMs" secondAttribute="trailing" constant="40" id="XFY-9V-djc"/>
                                     <constraint firstItem="FWJ-ru-Ymb" firstAttribute="top" secondItem="s43-CE-MyA" secondAttribute="top" constant="43" id="dMP-t9-76H"/>
-                                    <constraint firstAttribute="trailing" secondItem="xPJ-L0-xZJ" secondAttribute="trailing" constant="41" id="qz8-Wz-tDk"/>
+                                    <constraint firstAttribute="bottom" secondItem="nHi-PU-jMs" secondAttribute="bottom" id="iVT-bq-5ka"/>
                                     <constraint firstItem="FWJ-ru-Ymb" firstAttribute="leading" secondItem="s43-CE-MyA" secondAttribute="leading" constant="40" id="t73-T9-lcP"/>
                                     <constraint firstAttribute="bottom" secondItem="FWJ-ru-Ymb" secondAttribute="bottom" constant="43" id="wUS-sD-v8b"/>
-                                    <constraint firstAttribute="bottom" secondItem="xPJ-L0-xZJ" secondAttribute="bottom" id="zP4-jY-9hY"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Esl-3M-zfd" userLabel="BaseTaskPointListView">
+                                <rect key="frame" x="0.0" y="333" width="600" height="54"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDS-U9-Hn2">
+                                        <rect key="frame" x="40" y="12" width="64" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aPD-ts-pDm" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="124" y="12" width="436" height="30"/>
+                                        <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="aPD-ts-pDm" secondAttribute="bottom" constant="12" id="4Hm-2n-zxj"/>
+                                    <constraint firstAttribute="bottom" secondItem="UDS-U9-Hn2" secondAttribute="bottom" constant="12" id="Pg9-Ea-WXZ"/>
+                                    <constraint firstItem="UDS-U9-Hn2" firstAttribute="leading" secondItem="Esl-3M-zfd" secondAttribute="leading" constant="40" id="UIv-rk-FpE"/>
+                                    <constraint firstAttribute="trailing" secondItem="aPD-ts-pDm" secondAttribute="trailing" constant="40" id="Vkr-Ng-Fm6"/>
+                                    <constraint firstItem="aPD-ts-pDm" firstAttribute="leading" secondItem="UDS-U9-Hn2" secondAttribute="trailing" constant="20" id="ZU1-5C-pg5"/>
+                                    <constraint firstItem="aPD-ts-pDm" firstAttribute="top" secondItem="Esl-3M-zfd" secondAttribute="top" constant="12" id="eYE-vj-MtV"/>
+                                    <constraint firstItem="UDS-U9-Hn2" firstAttribute="top" secondItem="Esl-3M-zfd" secondAttribute="top" constant="12" id="fOn-rh-p73"/>
                                 </constraints>
                             </view>
                         </subviews>
