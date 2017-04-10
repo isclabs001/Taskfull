@@ -397,53 +397,53 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         } else {
             //
             switch((index - 1) % 8) {
-            // 左上
-            case 0:
-                // 左上に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x - margin)) - buttonHalfSize.width,
-                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
-                break;
-            // 上
-            case 1:
-                // 上に表示
-                ret = CGPoint(x: (centerButtonLocation.origin.x + centerButtonHalfSize.width) - buttonHalfSize.width,
-                              y: (centerButtonLocation.origin.y - margin) - buttonSize.height)
-
-                break;
-            // 右上
-            case 2:
-                // 右上に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width) -  buttonHalfSize.width,
-                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
-                break;
-            // 右
-            case 3:
-                // 右に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width),
-                              y: ((centerButtonLocation.origin.y) + centerButtonHalfSize.height) - buttonHalfSize.height)
-                break;
             // 右下
-            case 4:
+            case 0:
                 // 右下に表示
                 ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width) -  buttonHalfSize.width,
                               y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height) - buttonHalfSize.height)
                 break;
             // 下
-            case 5:
+            case 1:
                 // 下に表示
                 ret = CGPoint(x: (centerButtonLocation.origin.x + centerButtonHalfSize.width) - buttonHalfSize.width,
                               y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height))
                 break;
             // 左下
-            case 6:
+            case 2:
                 // 左下に表示
                 ret = CGPoint(x: ((centerButtonLocation.origin.x - margin)) - buttonHalfSize.width,
                               y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height) - buttonHalfSize.height)
                 break;
             // 左
-            case 7:
+            case 3:
                 // 左に表示
                 ret = CGPoint(x: (centerButtonLocation.origin.x - margin) - buttonSize.width,
+                              y: ((centerButtonLocation.origin.y) + centerButtonHalfSize.height) - buttonHalfSize.height)
+                break;
+            // 左上
+            case 4:
+                // 左上に表示
+                ret = CGPoint(x: ((centerButtonLocation.origin.x - margin)) - buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
+                break;
+            // 上
+            case 5:
+                // 上に表示
+                ret = CGPoint(x: (centerButtonLocation.origin.x + centerButtonHalfSize.width) - buttonHalfSize.width,
+                              y: (centerButtonLocation.origin.y - margin) - buttonSize.height)
+                
+                break;
+            // 右上
+            case 6:
+                // 右上に表示
+                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width) -  buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
+                break;
+            // 右
+            case 7:
+                // 右に表示
+                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width),
                               y: ((centerButtonLocation.origin.y) + centerButtonHalfSize.height) - buttonHalfSize.height)
                 break;
                 

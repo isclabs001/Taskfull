@@ -144,11 +144,11 @@ public class TaskJsonUtility : BaseJsonDataUtility
                                         break
                                     // キー項目がJSON_FIELD_DATA_TITLE
                                     case TaskJsonUtility.JSON_FIELD_DATA_TITLE:
-                                        data.Title = dataValue as! String
+                                        data.Title = decodeJsonString(dataValue as! String)
                                         break
                                     // キー項目がJSON_FIELD_DATA_MEMO
                                     case TaskJsonUtility.JSON_FIELD_DATA_MEMO:
-                                        data.Memo = dataValue as! String
+                                        data.Memo = decodeJsonString(dataValue as! String)
                                         break
                                     // キー項目がJSON_FIELD_DATA_DATETIME
                                     case TaskJsonUtility.JSON_FIELD_DATA_DATETIME:
@@ -274,10 +274,10 @@ public class TaskJsonUtility : BaseJsonDataUtility
             
             // ID設定
             jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_ID, value: data.Id, isComma: true))
-            // タイトル設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_TITLE, value: data.Title, isComma: true))
-            // メモ設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_MEMO, value: data.Memo, isComma: true))
+            // タイトル設定（文字をエスケープする）
+            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_TITLE, value: escapeJsonString(data.Title), isComma: true))
+            // メモ設定（文字をエスケープする）
+            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_MEMO, value: escapeJsonString(data.Memo), isComma: true))
             // 日時設定
             jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_DATETIME, value: data.DateTime, isComma: true))
             // 通知場所設定

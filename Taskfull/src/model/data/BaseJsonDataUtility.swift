@@ -12,6 +12,12 @@ import Foundation
 ///
 public class BaseJsonDataUtility
 {
+    /**
+     * 変数定義
+     */
+    static internal let EscapeSrc : [String] = ["\"","\\","/","\n"]
+    static internal let EscapeDst : [String] = ["¥\"","¥\\","¥/","¥n"]
+    
     ///
     ///　JSON形式の文字列をJSON構造に変換する
     ///　- parameter data:JSON形式の文字列(NSData)
@@ -156,6 +162,30 @@ public class BaseJsonDataUtility
                 ret = dblValue
             }
         }
+        return ret
+    }
+    
+    func escapeJsonString(text : String) -> String {
+        var ret : String = text
+        
+        // エスケープ対象文字列数分処理する
+        for(var i = 0 ;i < BaseJsonDataUtility.EscapeSrc.count; i += 1){
+            // "をエスケープする
+            ret = ret.stringByReplacingOccurrencesOfString(BaseJsonDataUtility.EscapeSrc[i], withString: BaseJsonDataUtility.EscapeDst[i])
+        }
+        
+        return ret
+    }
+    
+    func decodeJsonString(text : String) -> String {
+        var ret : String = text
+        
+        // エスケープ対象文字列数分処理する
+        for(var i = 0 ;i < BaseJsonDataUtility.EscapeSrc.count; i += 1){
+            // "をエスケープする
+            ret = ret.stringByReplacingOccurrencesOfString(BaseJsonDataUtility.EscapeDst[i], withString: BaseJsonDataUtility.EscapeSrc[i])
+        }
+        
         return ret
     }
 }

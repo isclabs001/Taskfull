@@ -469,11 +469,6 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         // タスク情報のクリア
         //TaskInfoUtility.DefaultInstance.ClearTaskInfo()
         
-        // TODO:後で登録できるようになったら消す！！
-        // タスク情報の取得
-        var taskInfo : [TaskInfoDataEntity] = TaskInfoUtility.DefaultInstance.getTaskInfoData()
-        //taskInfo.removeAll()
-        
         // タスク情報追加
         var taskInfoDataEntity : TaskInfoDataEntity
         
@@ -521,19 +516,11 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         //更新日時
         taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(NSDate(), separation: true)
         
-        taskInfo.append(taskInfoDataEntity)
-        
-        
-        // タスク情報のデータを入れ替える
-        TaskInfoUtility.DefaultInstance.setTaskInfoData(taskInfo)
+        // タスク情報のデータを追加する
+        TaskInfoUtility.DefaultInstance.AddTaskInfo(taskInfoDataEntity)
         
         // タスク情報の書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-
-        // タスク情報の読込み
-        //TaskInfoUtility.DefaultInstance.ReadTaskInfo()
-        //TEST END
-        
         
         // TODO:押下時の処理を記述する
         // タスク入力画面を表示

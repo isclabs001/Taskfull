@@ -85,6 +85,86 @@ public class TaskInfoUtility {
     }
     
     ///
+    /// タスク登録情報の追加
+    ///　- parameter:taskInfoDataEntity:TaskInfoDataEntity
+    ///
+    public func AddTaskInfo(taskInfoDataEntity : TaskInfoDataEntity) {
+        self._taskInfo.Data.append(taskInfoDataEntity)
+    }
+    
+    ///
+    /// タスク登録情報の削除
+    ///　- parameter:id:削除対象のID
+    ///
+    public func RemoveTaskInfo(id : Int) {
+        
+        // IDに紐付いているのインデックスを取得
+        let index : Int = GetIndex(id)
+        
+        // IDに紐付いているデータが見つかった場合
+        if(-1 != index) {
+            // 削除する
+            self._taskInfo.Data.removeAtIndex(index)
+        }
+    }
+    
+    ///
+    /// 親IDに紐付いているタスク登録情報の削除
+    ///　- parameter:id:削除対象の親ID
+    ///
+    private func RemoveTaskInfoForChild(parrentId : Int) {
+
+        // 親IDに紐付いている子供のインデックスを取得
+        let index : Int = GetParrentIndex(parrentId)
+
+        // 親IDに紐付いている子供が見つかった場合
+        if(-1 != index) {
+            // 削除する
+            self._taskInfo.Data.removeAtIndex(index)
+        }
+    }
+    
+    ///
+    /// 指定したIDと一致したIDのタスク登録情報インデックスを取得
+    ///　- parameter:id:検索対象のID
+    ///　- returns:-1以外:見つかったIDのインデックス -1:見つからなかった
+    ///
+    private func GetIndex(id : Int) -> Int {
+        
+        // データ数分処理する
+        for(var i = 0 ; i < self._taskInfo.Data.count ; i += 1) {
+            // IDが見つかった場合
+            if(self._taskInfo.Data[i].Id == id) {
+                // インデックスを返す
+                return i
+            }
+        }
+            
+        // 見つからない場合は「-1」を返す
+        return -1
+    }
+    
+    ///
+    /// 指定した親IDと一致した親IDのタスク登録情報インデックスを取得
+    ///　- parameter:id:検索対象のID
+    ///　- returns:-1以外:見つかったIDのインデックス -1:見つからなかった
+    ///
+    private func GetParrentIndex(parrentId : Int) -> Int {
+        
+        // データ数分処理する
+        for(var i = 0 ; i < self._taskInfo.Data.count ; i += 1) {
+            // 親IDが見つかった場合
+            if(self._taskInfo.Data[i].ParrentId == parrentId) {
+                // インデックスを返す
+                return i
+            }
+        }
+        
+        // 見つからない場合は「-1」を返す
+        return -1
+    }
+    
+    ///
     /// タスク登録情報のクリア
     ///
     public func ClearTaskInfo() {
