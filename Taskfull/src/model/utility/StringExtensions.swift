@@ -18,16 +18,16 @@ extension String {
         return (self as NSString)
     }
     
-    func substringFromIndex(index: Int) -> String {
-        return to_ns().substringFromIndex(index)
+    func substringFromIndex(_ index: Int) -> String {
+        return to_ns().substring(from: index)
     }
     
-    func substringToIndex(index: Int) -> String {
-        return to_ns().substringToIndex(index)
+    func substringToIndex(_ index: Int) -> String {
+        return to_ns().substring(to: index)
     }
     
-    func substringWithRange(range: NSRange) -> String {
-        return to_ns().substringWithRange(range)
+    func substringWithRange(_ range: NSRange) -> String {
+        return to_ns().substring(with: range)
     }
     
     var lastPathComponent: String {
@@ -39,11 +39,11 @@ extension String {
     }
     
     var stringByDeletingLastPathComponent: String {
-        return to_ns().stringByDeletingLastPathComponent
+        return to_ns().deletingLastPathComponent
     }
     
     var stringByDeletingPathExtension: String {
-        return to_ns().stringByDeletingPathExtension
+        return to_ns().deletingPathExtension
     }
     
     var pathComponents: [String] {
@@ -54,12 +54,12 @@ extension String {
         return self.characters.count
     }
     
-    func stringByAppendingPathComponent(path: String) -> String {
-        return to_ns().stringByAppendingPathComponent(path)
+    func stringByAppendingPathComponent(_ path: String) -> String {
+        return to_ns().appendingPathComponent(path)
     }
     
-    func stringByAppendingPathExtension(ext: String) -> String? {
-        return to_ns().stringByAppendingPathExtension(ext)
+    func stringByAppendingPathExtension(_ ext: String) -> String? {
+        return to_ns().appendingPathExtension(ext)
     }
     
 }

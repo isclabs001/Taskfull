@@ -13,18 +13,18 @@ import Foundation
 ///
 class FunctionUtility
 {
-    static internal let DefaultDate : NSDate = FunctionUtility.yyyyMMddToDate("19000101")
+    static internal let DefaultDate : Date = FunctionUtility.yyyyMMddToDate("19000101")
     
     ///
     ///　yyyyMMdd形式の文字列を日付に変換する
     ///　- parameter date:yyyyMMdd形式の文字列
     ///　- returns:変換した日付
     ///
-    static func yyyyMMddToDate(date : String) -> NSDate
+    static func yyyyMMddToDate(_ date : String) -> Date
     {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
-        return NSDate(timeInterval: 0, sinceDate: dateFormatter.dateFromString(date)!)
+        return Date(timeInterval: 0, since: dateFormatter.date(from: date)!)
     }
  
     ///
@@ -32,11 +32,11 @@ class FunctionUtility
     ///　- parameter date:yyyyMMddHHmmss形式の文字列
     ///　- returns:変換した日付
     ///
-    static func yyyyMMddHHmmssToDate(date : String) -> NSDate
+    static func yyyyMMddHHmmssToDate(_ date : String) -> Date
     {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
-        return NSDate(timeInterval: 0, sinceDate: dateFormatter.dateFromString(date.stringByReplacingOccurrencesOfString("/", withString: StringUtility.EMPTY).stringByReplacingOccurrencesOfString(":", withString: StringUtility.EMPTY).stringByReplacingOccurrencesOfString(" ", withString: StringUtility.EMPTY))!)
+        return Date(timeInterval: 0, since: dateFormatter.date(from: date.replacingOccurrences(of: "/", with: StringUtility.EMPTY).replacingOccurrences(of: ":", with: StringUtility.EMPTY).replacingOccurrences(of: " ", with: StringUtility.EMPTY))!)
     }
     
     ///
@@ -44,20 +44,20 @@ class FunctionUtility
     ///　- parameter date:日付日時
     ///　- returns:変換した文字列&曜日
     ///
-    static func DateToyyyyMMddHHmm_JP(date : NSDate) -> String
+    static func DateToyyyyMMddHHmm_JP(_ date : Date) -> String
     {
         //曜日インデックス取得
-        let calendar : NSCalendar = NSCalendar(identifier : NSCalendarIdentifierGregorian)!
-        let component : NSDateComponents = calendar.components([NSCalendarUnit.Weekday], fromDate: date)
-        let weekDay : Int = component.weekday
+        let calendar : Calendar = Calendar(identifier : Calendar.Identifier.gregorian)
+        let component : DateComponents = (calendar as NSCalendar).components([NSCalendar.Unit.weekday], from: date)
+        let weekDay : Int = component.weekday!
         let weekDaySymbolIndex : Int  = weekDay - 1
         
         //曜日名取得の為JPにロケール変更
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ja_JP")
         //文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
         dateFormatter.dateFormat = "yyyy年MM月dd日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex]))HH時mm分"
-        return dateFormatter.stringFromDate(date)
+        return dateFormatter.string(from: date)
     }
     
     ///
@@ -66,15 +66,15 @@ class FunctionUtility
     ///　- parameter separation:true:yyyy/MM/dd HH:mm:ss形式の文字列 false:yyyyMMddHHmmss形式の文字列
     ///　- returns:変換した日付
     ///
-    static func DateToyyyyMMddHHmmss(date : NSDate, separation : Bool) -> String
+    static func DateToyyyyMMddHHmmss(_ date : Date, separation : Bool) -> String
     {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         if(true == separation) {
             dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         } else {
             dateFormatter.dateFormat = "yyyyMMddHHmmss"
         }
-        return dateFormatter.stringFromDate(date)
+        return dateFormatter.string(from: date)
     }
     
     ///
@@ -83,15 +83,15 @@ class FunctionUtility
     ///　- parameter separation:true:yyyy/MM/dd HH:mm形式の文字列 false:yyyyMMddHHmm形式の文字列
     ///　- returns:変換した日付
     ///
-    static func DateToyyyyMMddHHmm(date : NSDate, separation : Bool) -> String
+    static func DateToyyyyMMddHHmm(_ date : Date, separation : Bool) -> String
     {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         if(true == separation) {
             dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
         } else {
             dateFormatter.dateFormat = "yyyyMMddHHmm"
         }
-        return dateFormatter.stringFromDate(date)
+        return dateFormatter.string(from: date)
     }
     
     ///
@@ -100,12 +100,12 @@ class FunctionUtility
     ///　- parameter date2:対象日付
     ///　- returns:時間数差
     ///
-    static func DiffHour(date1 : String, date2 : String) -> Int {
-        let date1Work : NSDate = yyyyMMddHHmmssToDate(date1)
-        let date2Work : NSDate = yyyyMMddHHmmssToDate(date2)
+    static func DiffHour(_ date1 : String, date2 : String) -> Int {
+        let date1Work : Date = yyyyMMddHHmmssToDate(date1)
+        let date2Work : Date = yyyyMMddHHmmssToDate(date2)
         
         // 秒の差を時間に変換
-        return Int(date1Work.timeIntervalSinceDate(date2Work) / 60 / 60)
+        return Int(date1Work.timeIntervalSince(date2Work) / 60 / 60)
     }
     
     ///
@@ -114,7 +114,7 @@ class FunctionUtility
     ///　- parameter date2:対象日付
     ///　- returns:日数差
     ///
-    static func DiffDate(date1 : String, date2 : String) -> Int {
+    static func DiffDate(_ date1 : String, date2 : String) -> Int {
         // 秒の差を日に変換
         return Int(DiffHour(date1, date2: date2) / 24)
     }
@@ -125,7 +125,7 @@ class FunctionUtility
     ///　- parameter date2:対象日付
     ///　- returns:true:本日以降である false:本日以降ではない
     ///
-    static func isToday(date1 : String, date2 : String) -> Bool {
+    static func isToday(_ date1 : String, date2 : String) -> Bool {
         // 引数が有効な場合
         if(10 <= date1.length && 10 <= date2.length) {
             // yyyy/MM/ddを取得
@@ -156,7 +156,7 @@ class FunctionUtility
     ///　- parameter key:キー
     ///　- returns:true:存在する false:存在しない
     ///
-    static func isContains(dic : NSDictionary, key : String) -> Bool
+    static func isContains(_ dic : NSDictionary, key : String) -> Bool
     {
         var ret = false
         
@@ -177,7 +177,7 @@ class FunctionUtility
     ///　- parameter defaultValue:デフォルト値
     ///　- returns:値
     ///
-    static func getStriing(dic : NSDictionary, key : String, defaultValue : String) -> String
+    static func getStriing(_ dic : NSDictionary, key : String, defaultValue : String) -> String
     {
         var ret : String = defaultValue
         
@@ -203,7 +203,7 @@ class FunctionUtility
     ///　- parameter key:キー
     ///　- returns:値
     ///
-    static func getStriing(dic : NSDictionary, key : String) -> String
+    static func getStriing(_ dic : NSDictionary, key : String) -> String
     {
         return getStriing(dic, key: key, defaultValue: StringUtility.EMPTY)
     }
@@ -213,7 +213,7 @@ class FunctionUtility
     ///　- parameter kana:全角カタカナ
     ///　- returns:全角ひらがな
     ///
-    static func zenkakuKatakanaToZenkakuHiragana(kana : String) -> String
+    static func zenkakuKatakanaToZenkakuHiragana(_ kana : String) -> String
     {
         var ret = ""
         
@@ -222,12 +222,12 @@ class FunctionUtility
             // 全角カタカナの場合
             if c.value >= 0x30A1 && c.value <= 0x30F6 {
                 // 「0x0060」を加算して、全角ひらがなに変換して追加
-                ret.append(UnicodeScalar(c.value + 0x0060))
+                ret.append(String(describing: UnicodeScalar(c.value + 0x0060)))
             
             // 上記以外の場合
             } else {
                 // そのまま追加
-                ret.append(c)
+                ret.append(String(c))
             }
         }
     

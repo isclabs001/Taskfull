@@ -7,6 +7,19 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 //
 // UIカスタムボタンクラス
@@ -15,7 +28,7 @@ import UIKit
 class UICustomButton : UIButton
 {
     // グラデーション背景色インデックス
-    private var mintGradationBackgroundColorIndex : [Int] = [-1, -1]
+    fileprivate var mintGradationBackgroundColorIndex : [Int] = [-1, -1]
     
     // ボタン角丸の設定
     @IBInspectable var cornerRadius: CGFloat = 0 {
@@ -39,9 +52,9 @@ class UICustomButton : UIButton
     }
     
     // ボタン枠の色
-    @IBInspectable var borderColor: UIColor = UIColor.clearColor() {
+    @IBInspectable var borderColor: UIColor = UIColor.clear {
         didSet {
-            layer.borderColor = borderColor.CGColor
+            layer.borderColor = borderColor.cgColor
         }
     }
     
@@ -55,7 +68,7 @@ class UICustomButton : UIButton
     // グラデーション　押下時の背景色　開始
     @IBInspectable var highlightedGradationBackgroundStartColor :UIColor?
     // グラデーション　押下時の背景色　終了
-    @IBInspectable var highlightedGradationBackgroundEndColor :UIColor? = UIColor.clearColor() {
+    @IBInspectable var highlightedGradationBackgroundEndColor :UIColor? = UIColor.clear {
         didSet {
             SetGradationLayerForHighlighted()
         }
@@ -63,17 +76,17 @@ class UICustomButton : UIButton
     // グラデーション　通常時の背景色　開始
     @IBInspectable var nonHighlightedGradationBackgroundStartColor :UIColor?
     // グラデーション　通常時の背景色　終了
-    @IBInspectable var nonHighlightedGradationBackgroundEndColor :UIColor? = UIColor.clearColor() {
+    @IBInspectable var nonHighlightedGradationBackgroundEndColor :UIColor? = UIColor.clear {
         didSet {
             SetGradationLayerForNonHighlighted()
         }
     }
     
     // highlightedプロパティ
-    override var highlighted :Bool {
+    override var isHighlighted :Bool {
         didSet {
             // 押下時の場合
-            if highlighted
+            if isHighlighted
             {
                 // 押下時の背景色を設定
                 SetBackGroundColorForHighlight(
@@ -107,8 +120,8 @@ class UICustomButton : UIButton
     /// - parameter subLayerIndex1:サブレイヤーインデックス１（グラデーション切替用）
     /// - parameter subLayerIndex2:サブレイヤーインデックス２（グラデーション切替用）
     /// - parameter subLayerIndex:サブレイヤーインデックス（グラデーション無し）
-    private func SetBackGroundColorForHighlight(
-        normalColor : UIColor?,
+    fileprivate func SetBackGroundColorForHighlight(
+        _ normalColor : UIColor?,
         gradationStartColor : UIColor?,
         gradationEndColor : UIColor?,
         subLayerIndex1 : Int,
@@ -121,15 +134,15 @@ class UICustomButton : UIButton
             // サブレイヤーが2より大きい場合（必ず１つはデフォルトで存在する）
             if(2 < self.layer.sublayers?.count){
                 // レイヤー1を表示
-                self.layer.sublayers![subLayerIndex1].hidden = false
+                self.layer.sublayers![subLayerIndex1].isHidden = false
                 // レイヤー2を非表示
-                self.layer.sublayers![subLayerIndex2].hidden = true
+                self.layer.sublayers![subLayerIndex2].isHidden = true
             }
             // 上記以外の場合
             else
             {
                 // レイヤーを表示
-                self.layer.sublayers![subLayerIndex].hidden = false
+                self.layer.sublayers![subLayerIndex].isHidden = false
             }
         }
         // 上記以外の場合
@@ -141,7 +154,7 @@ class UICustomButton : UIButton
     }
     
     // グラデーション背景色　通常時のレイアウト設定
-    private func SetGradationLayerForNonHighlighted()
+    fileprivate func SetGradationLayerForNonHighlighted()
     {
         // 通常時のグラデーション色が有効な場合
         if true == UICommon.IsGradation(nonHighlightedGradationBackgroundStartColor, endColor: nonHighlightedGradationBackgroundEndColor)
@@ -150,7 +163,7 @@ class UICustomButton : UIButton
             self.layer.insertSublayer(UICommon.CreateGradientLayer(
                 self,
                 startColor : nonHighlightedGradationBackgroundStartColor!,
-                endColor : nonHighlightedGradationBackgroundEndColor!), atIndex: 0)
+                endColor : nonHighlightedGradationBackgroundEndColor!), at: 0)
 
             // 通常時のインデックスを0に設定
             mintGradationBackgroundColorIndex[0] = 0
@@ -160,15 +173,15 @@ class UICustomButton : UIButton
                 // 押下時のインデックスを1に設定
                 mintGradationBackgroundColorIndex[1] = 1
                 // 押下時のレイヤーを非表示
-                self.layer.sublayers![mintGradationBackgroundColorIndex[1]].hidden = true
+                self.layer.sublayers![mintGradationBackgroundColorIndex[1]].isHidden = true
             }
             // 通常時のレイヤーを表示
-            self.layer.sublayers![mintGradationBackgroundColorIndex[0]].hidden = false
+            self.layer.sublayers![mintGradationBackgroundColorIndex[0]].isHidden = false
         }
     }
     
     // グラデーション背景色　押下時のレイアウト設定
-    private func SetGradationLayerForHighlighted()
+    fileprivate func SetGradationLayerForHighlighted()
     {
         // 押下時のグラデーション色が有効な場合
         if true == UICommon.IsGradation(highlightedGradationBackgroundStartColor, endColor: highlightedGradationBackgroundEndColor)
@@ -177,7 +190,7 @@ class UICustomButton : UIButton
             self.layer.insertSublayer(UICommon.CreateGradientLayer(
                 self,
                 startColor : highlightedGradationBackgroundStartColor!,
-                endColor : highlightedGradationBackgroundEndColor!), atIndex: 0)
+                endColor : highlightedGradationBackgroundEndColor!), at: 0)
                 
             // 押下時のインデックスを1に設定
             mintGradationBackgroundColorIndex[1] = 0
@@ -188,27 +201,27 @@ class UICustomButton : UIButton
                 mintGradationBackgroundColorIndex[1] = 1
             }
             // 押下時のレイヤーを非表示
-            self.layer.sublayers![mintGradationBackgroundColorIndex[1]].hidden = true
+            self.layer.sublayers![mintGradationBackgroundColorIndex[1]].isHidden = true
         }
     }
 }
 
 extension UIButton {
-    private func imageWithColor(color: UIColor) -> UIImage {
-        let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
+    fileprivate func imageWithColor(_ color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
         
-        CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextFillRect(context, rect)
+        context?.setFillColor(color.cgColor)
+        context?.fill(rect)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return image
+        return image!
     }
     
-    func setBackgroundColor(color: UIColor, forUIControlState state: UIControlState) {
-        self.setBackgroundImage(imageWithColor(color), forState: state)
+    func setBackgroundColor(_ color: UIColor, forUIControlState state: UIControlState) {
+        self.setBackgroundImage(imageWithColor(color), for: state)
     }
 }

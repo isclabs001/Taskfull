@@ -24,7 +24,7 @@ class UICircleImageView : UIImageView
     }
     
     // 画像情報設定
-    func setImageInfo(image: UIImage?, x : Double, y : Double, whidth : Double, height : Double) {
+    func setImageInfo(_ image: UIImage?, x : Double, y : Double, whidth : Double, height : Double) {
         // サイズ設定
         self.frame = CGRect(x: x,y: y,width: whidth,height: height)
         // 画像設定

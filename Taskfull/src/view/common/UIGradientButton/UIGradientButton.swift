@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class UIGradientButton : UIButton {
-    private var gradientLayer : CAGradientLayer
+    fileprivate var gradientLayer : CAGradientLayer
 
     internal var startGradient : CGColor
     internal var endGradient : CGColor
@@ -26,8 +26,8 @@ class UIGradientButton : UIButton {
         self.gradientLayer = CAGradientLayer()
         
         // グラデーションの色初期化（白）
-        self.startGradient = UIColor.init(colorLiteralRed: 255, green: 255, blue: 255, alpha: 1.0).CGColor
-        self.endGradient = UIColor.init(colorLiteralRed: 255, green: 255, blue: 255, alpha: 1.0).CGColor
+        self.startGradient = UIColor.init(colorLiteralRed: 255, green: 255, blue: 255, alpha: 1.0).cgColor
+        self.endGradient = UIColor.init(colorLiteralRed: 255, green: 255, blue: 255, alpha: 1.0).cgColor
         
         // 基底の初期化呼び出し
         super.init(coder: aDecoder)

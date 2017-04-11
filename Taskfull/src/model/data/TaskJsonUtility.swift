@@ -12,7 +12,7 @@ import Foundation
 ///
 /// TaskJsonUtilityクラス
 ///
-public class TaskJsonUtility : BaseJsonDataUtility
+open class TaskJsonUtility : BaseJsonDataUtility
 {
     /**
      * 定数定義
@@ -55,11 +55,11 @@ public class TaskJsonUtility : BaseJsonDataUtility
         let taskData : [Dictionary<String, AnyObject>] = []
         
         // バージョン設定
-        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_VERSION] = TaskInfoHeaderEntity.VERSION
+        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_VERSION] = TaskInfoHeaderEntity.VERSION as AnyObject
         // 採番ID設定
-        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_ASSIGNMENT_ID] = 0
+        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_ASSIGNMENT_ID] = 0 as AnyObject
         // データ設定
-        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_DATA] = taskData
+        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_DATA] = taskData as AnyObject
         
         return taskHeader
     }
@@ -68,25 +68,25 @@ public class TaskJsonUtility : BaseJsonDataUtility
     ///　タスク用JSONファイルからTaskInfoHeaderEntityを取得する
     ///　- returns:読み込んだJSONファイルから変換したTaskInfoHeaderEntity
     ///
-    public func readJSONFile() -> TaskInfoHeaderEntity {
+    open func readJSONFile() -> TaskInfoHeaderEntity {
         var ret : TaskInfoHeaderEntity
         let fullPath : String = TaskJsonUtility.getJSONSaveDirectory().stringByAppendingPathComponent(TaskJsonUtility.FILE_NAME_TASK_JSON)
         
         var obj : AnyObject? = nil
 
         // JSONファイルが存在する場合
-        if(NSFileManager.defaultManager().fileExistsAtPath(fullPath)){
+        if(FileManager.default.fileExists(atPath: fullPath)){
             // JSONファイルを読込む
-            let jsonData = NSData(contentsOfFile: fullPath)!
+            let jsonData = try! Data(contentsOf: URL(fileURLWithPath: fullPath))
             
             // TaskJsonUtilityオブジェクトに変換する
-            obj = NSDataToAnyObject(jsonData)
+            obj = NSDataToAnyObject(jsonData) as AnyObject
         }
         
         // データが無効な場合
         if(nil == obj){
             // 新規作成する
-            obj = super.JSONItemToObject(initData())
+            obj = super.JSONItemToObject(initData() as AnyObject)
         }
         
         // JSONからTaskInfoHeaderEntityに変換する
@@ -100,7 +100,7 @@ public class TaskJsonUtility : BaseJsonDataUtility
     ///　- parameter:obj:JSON形式データ
     ///　- returns:TaskInfoHeaderEntity
     ///
-    func JSONToTaskInfo(obj : AnyObject?) -> TaskInfoHeaderEntity {
+    func JSONToTaskInfo(_ obj : AnyObject?) -> TaskInfoHeaderEntity {
         let ret : TaskInfoHeaderEntity = TaskInfoHeaderEntity()
         
         // JSONが有効な場合
@@ -128,7 +128,7 @@ public class TaskJsonUtility : BaseJsonDataUtility
                             var workArry : [AnyObject] = [AnyObject]()
 
                             // データ部のデータ配列を取得する
-                            workArry = JSONItemToObject(value) as! [AnyObject]
+                            workArry = JSONItemToObject(value as AnyObject) as! [AnyObject]
                             
                             for workItemArry in workArry {
                                 // TaskInfoDataEntity項目生成
@@ -211,7 +211,7 @@ public class TaskJsonUtility : BaseJsonDataUtility
     ///　- parameter:taskInfoHeaderEntity:TaskInfoHeaderEntity
     ///　- returns:読み込んだJSONファイルから変換したTaskInfoHeaderEntity
     ///
-    public func writeJSONFile(taskInfoHeaderEntity : TaskInfoHeaderEntity) -> Bool {
+    open func writeJSONFile(_ taskInfoHeaderEntity : TaskInfoHeaderEntity) -> Bool {
         var ret : Bool = false
 
         // TaskInfoHeaderEntityからJSON文字列に変換する
@@ -224,10 +224,10 @@ public class TaskJsonUtility : BaseJsonDataUtility
             
             do {
                 // ディレクトリの作成
-                try NSFileManager.defaultManager().createDirectoryAtPath(BaseJsonDataUtility.getJSONSaveDirectory(), withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(atPath: BaseJsonDataUtility.getJSONSaveDirectory(), withIntermediateDirectories: true, attributes: nil)
                 
                 // ファイルの保存
-                try jsonString.writeToFile(fullPath, atomically: true, encoding: NSUTF8StringEncoding)
+                try jsonString.write(toFile: fullPath, atomically: true, encoding: String.Encoding.utf8)
                 ret = true
             } catch {
                 ret = false
@@ -243,7 +243,7 @@ public class TaskJsonUtility : BaseJsonDataUtility
     ///　- parameter:taskInfoHeaderEntity:TaskInfoHeaderEntity
     ///　- returns:JSON文字列
     ///
-    public func TaskInfoHeaderEntityTOJSONString(taskInfoHeaderEntity : TaskInfoHeaderEntity) -> String {
+    open func TaskInfoHeaderEntityTOJSONString(_ taskInfoHeaderEntity : TaskInfoHeaderEntity) -> String {
         
         var jsonBuff : String = StringUtility.EMPTY
         var jsonDataBuff : String = StringUtility.EMPTY
@@ -254,58 +254,58 @@ public class TaskJsonUtility : BaseJsonDataUtility
         let bracketsChild2 : String = "}"
         
         // JSON開始カッコ設定
-        jsonBuff.appendContentsOf(bracketsStart)
+        jsonBuff.append(bracketsStart)
         // バージョン設定
-        jsonBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_HEADER_VERSION, value: taskInfoHeaderEntity.Version, isComma: true))
+        jsonBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_HEADER_VERSION, value: taskInfoHeaderEntity.Version, isComma: true))
         
         // 採番ID設定
-        jsonBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_HEADER_ASSIGNMENT_ID, value: taskInfoHeaderEntity.AssignmentId, isComma: true))
+        jsonBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_HEADER_ASSIGNMENT_ID, value: taskInfoHeaderEntity.AssignmentId, isComma: true))
         
         // データ数分処理する
         for data in taskInfoHeaderEntity.Data {
             // 追加する場合
             if(0 < jsonDataBuff.length){
                 // カンマを追加する
-                jsonDataBuff.appendContentsOf(comma)
+                jsonDataBuff.append(comma)
             }
 
             // 子項目の配列カッコ（{）を設定
-            jsonDataBuff.appendContentsOf(bracketsChild1)
+            jsonDataBuff.append(bracketsChild1)
             
             // ID設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_ID, value: data.Id, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_ID, value: data.Id, isComma: true))
             // タイトル設定（文字をエスケープする）
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_TITLE, value: escapeJsonString(data.Title), isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_TITLE, value: escapeJsonString(data.Title), isComma: true))
             // メモ設定（文字をエスケープする）
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_MEMO, value: escapeJsonString(data.Memo), isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_MEMO, value: escapeJsonString(data.Memo), isComma: true))
             // 日時設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_DATETIME, value: data.DateTime, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_DATETIME, value: data.DateTime, isComma: true))
             // 通知場所設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_NOTIFIED_LOCATION, value: data.NotifiedLocation, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_NOTIFIED_LOCATION, value: data.NotifiedLocation, isComma: true))
             // 重要度設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_IMPORTANCE, value: data.Importance, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_IMPORTANCE, value: data.Importance, isComma: true))
             // ボタン色設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_BUTTON_COLOR, value: data.ButtonColor, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_BUTTON_COLOR, value: data.ButtonColor, isComma: true))
             // 文字色設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_TEXT_COLOR, value: data.TextColor, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_TEXT_COLOR, value: data.TextColor, isComma: true))
             // 親ID設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_PARRENT_ID, value: data.ParrentId, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_PARRENT_ID, value: data.ParrentId, isComma: true))
             // 完了フラグ設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_COMPLETE_FLAG, value: data.CompleteFlag, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_COMPLETE_FLAG, value: data.CompleteFlag, isComma: true))
             // 作成日時設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_CREATE_DATETIME, value: data.CreateDateTime, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_CREATE_DATETIME, value: data.CreateDateTime, isComma: true))
             // 更新日時設定
-            jsonDataBuff.appendContentsOf(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_UPDATE_DATETIME, value: data.UpdateDateTime, isComma: false))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_UPDATE_DATETIME, value: data.UpdateDateTime, isComma: false))
 
             // 子項目の配列カッコ（}）を設定
-            jsonDataBuff.appendContentsOf(bracketsChild2)
+            jsonDataBuff.append(bracketsChild2)
         }
 
         // データ配列部設定
-        jsonBuff.appendContentsOf(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_DATA, value: jsonDataBuff, isComma: false))
+        jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_DATA, value: jsonDataBuff, isComma: false))
 
         // JSON終了カッコ設定
-        jsonBuff.appendContentsOf(bracketsEnd)
+        jsonBuff.append(bracketsEnd)
 
         return jsonBuff
     }
@@ -317,7 +317,7 @@ public class TaskJsonUtility : BaseJsonDataUtility
     ///　- parameter:isComma:true:後ろにカンマをつける false:つけない
     ///　- returns:JSON文字列 "key":"value"
     ///
-    func formatJsonItem(key : String, value : String, isComma : Bool) -> String {
+    func formatJsonItem(_ key : String, value : String, isComma : Bool) -> String {
         let sep : String = ":"
         let dblQuart : String = "\""
         let comma : String = ","
@@ -332,7 +332,7 @@ public class TaskJsonUtility : BaseJsonDataUtility
     ///　- parameter:isComma:true:後ろにカンマをつける false:つけない
     ///　- returns:JSON文字列 "key":value
     ///
-    func formatJsonItem(key : String, value : Int, isComma : Bool) -> String {
+    func formatJsonItem(_ key : String, value : Int, isComma : Bool) -> String {
         let sep : String = ":"
         let dblQuart : String = "\""
         let comma : String = ","
@@ -347,7 +347,7 @@ public class TaskJsonUtility : BaseJsonDataUtility
     ///　- parameter:isComma:true:後ろにカンマをつける false:つけない
     ///　- returns:JSON文字列 "key":[value]
     ///
-    func formatJsonArray(key : String, value : String, isComma : Bool) -> String {
+    func formatJsonArray(_ key : String, value : String, isComma : Bool) -> String {
         let sep : String = ":"
         let dblQuart : String = "\""
         let comma : String = ","
@@ -361,7 +361,7 @@ public class TaskJsonUtility : BaseJsonDataUtility
     ///　タスク用JSONファイルからTaskInfoHeaderEntityを取得する
     ///　- returns:true:正常終了 false:異常終了
     ///
-    public func deleteJSONFile() -> Bool {
+    open func deleteJSONFile() -> Bool {
         var ret : Bool = false
         
         // 保存フルパスを取得
@@ -369,7 +369,7 @@ public class TaskJsonUtility : BaseJsonDataUtility
             
         do {
             // ファイルの削除
-            try NSFileManager.defaultManager().removeItemAtPath(fullPath)
+            try FileManager.default.removeItem(atPath: fullPath)
             ret = true
         } catch {
             ret = false

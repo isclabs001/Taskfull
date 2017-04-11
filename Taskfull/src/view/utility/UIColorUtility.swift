@@ -21,7 +21,7 @@ class UIColorUtility {
     ///　- parameter alpha:1.0 非透明 〜 0.0 透明
     ///　- returns:UIColor
     ///
-    static func hexRgb(rgb : Int) -> UIColor
+    static func hexRgb(_ rgb : Int) -> UIColor
     {
         return UIColorUtility.rgb(((rgb>>16) & 0xFF), g : ((rgb>>8) & 0xFF), b : (rgb & 0xFF))
     }
@@ -33,7 +33,7 @@ class UIColorUtility {
     ///　- parameter b:青 0 〜 255
     ///　- returns:UIColor
     ///
-    static func rgb(r : Int, g : Int, b : Int) -> UIColor
+    static func rgb(_ r : Int, g : Int, b : Int) -> UIColor
     {
         return UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: 1.0);
     }
@@ -46,17 +46,17 @@ class UIColorUtility {
     ///　- parameter alpha:1.0 非透明 〜 0.0 透明
     ///　- returns:UIColor
     ///
-    static func rgba(r : Int, g : Int, b : Int, alpha : CGFloat) -> UIColor
+    static func rgba(_ r : Int, g : Int, b : Int, alpha : CGFloat) -> UIColor
     {
         return UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: alpha);
     }
     
     
-    static func getColor(size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int) -> UIColor {
+    static func getColor(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int) -> UIColor {
         
-        let imageData = CGDataProviderCopyData(CGImageGetDataProvider(image))
+        let imageData = image.dataProvider?.data
         let data : UnsafePointer = CFDataGetBytePtr(imageData)
-        let scale = UIScreen.mainScreen().scale
+        let scale = UIScreen.main.scale
         let address : Int = ((size * Int(pos.y * scale)) + Int(pos.x * scale)) * pixelDataByteSize
         let r = CGFloat(data[address])
         let g = CGFloat(data[address+1])
@@ -67,7 +67,7 @@ class UIColorUtility {
     }
 
     
-    static func convImagePos(pos: CGPoint, orgImageSize: Int, crntImageSize: Int) -> CGPoint{
+    static func convImagePos(_ pos: CGPoint, orgImageSize: Int, crntImageSize: Int) -> CGPoint{
         
         // 縮小倍率係数取得
         let zoom = getZoomShrink(orgImageSize, crntImageSize: crntImageSize)
@@ -76,20 +76,20 @@ class UIColorUtility {
         return CGPoint(x: pos.x * zoom, y: pos.y * zoom)
     }
     
-    static func getZoom(orgImageSize: Int, crntImageSize: Int) -> CGFloat{
+    static func getZoom(_ orgImageSize: Int, crntImageSize: Int) -> CGFloat{
         //倍率を算出
         return CGFloat(orgImageSize) / CGFloat(crntImageSize)
     }
     
-    static func getZoomShrink(orgImageSize: Int, crntImageSize: Int) -> CGFloat{
+    static func getZoomShrink(_ orgImageSize: Int, crntImageSize: Int) -> CGFloat{
         //縮小倍率を算出
         return CGFloat(crntImageSize) / CGFloat(orgImageSize)
     }
 
     
-    static func getAlphaColor(size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int) -> CGFloat {
+    static func getAlphaColor(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int) -> CGFloat {
         
-        let imageData = CGDataProviderCopyData(CGImageGetDataProvider(image))
+        let imageData = image.dataProvider?.data
         let data : UnsafePointer = CFDataGetBytePtr(imageData)
 //        let scale = UIScreen.mainScreen().scale
         let scale : CGFloat = 1.0

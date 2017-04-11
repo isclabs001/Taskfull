@@ -73,7 +73,7 @@ class LatLngForSerializable
      * - parameter rang2:範囲緯度経度２
      * - returns:true:範囲内 false:範囲外
      */
-    func isLatLngInArea(rang1 : LatLngForSerializable, rang2 : LatLngForSerializable) ->Bool {
+    func isLatLngInArea(_ rang1 : LatLngForSerializable, rang2 : LatLngForSerializable) ->Bool {
         let work1 : LatLngForSerializable = LatLngForSerializable(
             latitude : (rang1.Latitude <= rang2.Latitude) ? rang1.Latitude:rang2.Latitude,
             longitude: (rang1.Longitude <= rang2.Longitude) ? rang1.Longitude:rang2.Longitude)

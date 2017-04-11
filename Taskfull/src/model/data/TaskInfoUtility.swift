@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TaskInfoUtility {
+open class TaskInfoUtility {
     /**
      * 定数定義
      */
@@ -19,12 +19,12 @@ public class TaskInfoUtility {
     /**
      * TaskInfoUtilityシングルトン変数
      */
-    public static var DefaultInstance : TaskInfoUtility = TaskInfoUtility()
+    open static var DefaultInstance : TaskInfoUtility = TaskInfoUtility()
     
     /**
      * TaskInfoHeaderEntity変数
      */
-    private var _taskInfo : TaskInfoHeaderEntity = TaskInfoHeaderEntity()
+    fileprivate var _taskInfo : TaskInfoHeaderEntity = TaskInfoHeaderEntity()
     
     /**
      * 初期化
@@ -38,7 +38,7 @@ public class TaskInfoUtility {
     /// タスク登録データ情報の取得
     ///　- returns:TaskInfoDataEntity
     ///
-    public func getTaskInfoData() -> [TaskInfoDataEntity] {
+    open func getTaskInfoData() -> [TaskInfoDataEntity] {
         return self._taskInfo.Data
     }
     
@@ -46,7 +46,7 @@ public class TaskInfoUtility {
     /// タスク登録データ情報の設定
     ///　- parameter:taskInfoDataEntity:TaskInfoDataEntity
     ///
-    public func setTaskInfoData(taskInfoDataEntity : [TaskInfoDataEntity]) {
+    open func setTaskInfoData(_ taskInfoDataEntity : [TaskInfoDataEntity]) {
         self._taskInfo.Data.removeAll()
         self._taskInfo.Data = taskInfoDataEntity
     }
@@ -55,7 +55,7 @@ public class TaskInfoUtility {
     /// バージョンの取得
     ///　- returns:バージョン情報
     ///
-    public func getVersion() -> String {
+    open func getVersion() -> String {
         return (self._taskInfo.Version)
     }
     
@@ -63,7 +63,7 @@ public class TaskInfoUtility {
     /// 次IDの採番
     ///　- returns:次ID
     ///
-    public func NextId() -> Int {
+    open func NextId() -> Int {
         self._taskInfo.AssignmentId += 1
         return (self._taskInfo.AssignmentId)
     }
@@ -71,7 +71,7 @@ public class TaskInfoUtility {
     ///
     /// タスク登録情報の読込み
     ///
-    public func ReadTaskInfo() {
+    open func ReadTaskInfo() {
         let taskJsonUtility : TaskJsonUtility = TaskJsonUtility()
         self._taskInfo = taskJsonUtility.readJSONFile()
     }
@@ -79,7 +79,7 @@ public class TaskInfoUtility {
     ///
     /// タスク登録情報の保存
     ///
-    public func WriteTaskInfo() {
+    open func WriteTaskInfo() {
         let taskJsonUtility : TaskJsonUtility = TaskJsonUtility()
         taskJsonUtility.writeJSONFile(self._taskInfo)
     }
@@ -88,7 +88,7 @@ public class TaskInfoUtility {
     /// タスク登録情報の追加
     ///　- parameter:taskInfoDataEntity:TaskInfoDataEntity
     ///
-    public func AddTaskInfo(taskInfoDataEntity : TaskInfoDataEntity) {
+    open func AddTaskInfo(_ taskInfoDataEntity : TaskInfoDataEntity) {
         self._taskInfo.Data.append(taskInfoDataEntity)
     }
     
@@ -96,7 +96,7 @@ public class TaskInfoUtility {
     /// タスク登録情報の削除
     ///　- parameter:id:削除対象のID
     ///
-    public func RemoveTaskInfo(id : Int) {
+    open func RemoveTaskInfo(_ id : Int) {
         
         // IDに紐付いているのインデックスを取得
         let index : Int = GetIndex(id)
@@ -104,7 +104,7 @@ public class TaskInfoUtility {
         // IDに紐付いているデータが見つかった場合
         if(-1 != index) {
             // 削除する
-            self._taskInfo.Data.removeAtIndex(index)
+            self._taskInfo.Data.remove(at: index)
         }
     }
     
@@ -112,7 +112,7 @@ public class TaskInfoUtility {
     /// 親IDに紐付いているタスク登録情報の削除
     ///　- parameter:id:削除対象の親ID
     ///
-    private func RemoveTaskInfoForChild(parrentId : Int) {
+    fileprivate func RemoveTaskInfoForChild(_ parrentId : Int) {
 
         // 親IDに紐付いている子供のインデックスを取得
         let index : Int = GetParrentIndex(parrentId)
@@ -120,7 +120,7 @@ public class TaskInfoUtility {
         // 親IDに紐付いている子供が見つかった場合
         if(-1 != index) {
             // 削除する
-            self._taskInfo.Data.removeAtIndex(index)
+            self._taskInfo.Data.remove(at: index)
         }
     }
     
@@ -129,10 +129,10 @@ public class TaskInfoUtility {
     ///　- parameter:id:検索対象のID
     ///　- returns:-1以外:見つかったIDのインデックス -1:見つからなかった
     ///
-    private func GetIndex(id : Int) -> Int {
+    fileprivate func GetIndex(_ id : Int) -> Int {
         
         // データ数分処理する
-        for(var i = 0 ; i < self._taskInfo.Data.count ; i += 1) {
+        for i in (0 ..< self._taskInfo.Data.count ) {
             // IDが見つかった場合
             if(self._taskInfo.Data[i].Id == id) {
                 // インデックスを返す
@@ -149,10 +149,10 @@ public class TaskInfoUtility {
     ///　- parameter:id:検索対象のID
     ///　- returns:-1以外:見つかったIDのインデックス -1:見つからなかった
     ///
-    private func GetParrentIndex(parrentId : Int) -> Int {
+    fileprivate func GetParrentIndex(_ parrentId : Int) -> Int {
         
         // データ数分処理する
-        for(var i = 0 ; i < self._taskInfo.Data.count ; i += 1) {
+        for i in (0 ..< self._taskInfo.Data.count) {
             // 親IDが見つかった場合
             if(self._taskInfo.Data[i].ParrentId == parrentId) {
                 // インデックスを返す
@@ -167,7 +167,7 @@ public class TaskInfoUtility {
     ///
     /// タスク登録情報のクリア
     ///
-    public func ClearTaskInfo() {
+    open func ClearTaskInfo() {
         // タスク登録情報のクリア
         self._taskInfo.AssignmentId = 0
         self._taskInfo.Data.removeAll()
@@ -176,7 +176,7 @@ public class TaskInfoUtility {
     ///
     /// タスク登録情報の削除
     ///
-    public func DeleteTaskInfo() {
+    open func DeleteTaskInfo() {
         let taskJsonUtility : TaskJsonUtility = TaskJsonUtility()
         taskJsonUtility.deleteJSONFile()
     }

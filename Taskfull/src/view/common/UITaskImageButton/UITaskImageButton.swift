@@ -42,9 +42,9 @@ class UITaskImageButton : UIView
      * 変数
      */
     // ラベル用　タイマー
-    weak var timLabel: NSTimer?
+    weak var timLabel: Timer?
     // ラベル用　現在表示中のラベル
-    private var intCurrentLabel: Int = 0
+    fileprivate var intCurrentLabel: Int = 0
     
     /**
      * コントロールOutlet変数
@@ -103,7 +103,7 @@ class UITaskImageButton : UIView
     ///　表示位置設定
     ///　- parameter frame:位置・サイズ
     ///
-    public func setLocation(frame : CGRect) {
+    open func setLocation(_ frame : CGRect) {
         // 表示位置設定
         self.layer.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height)
         
@@ -114,11 +114,11 @@ class UITaskImageButton : UIView
     ///
     ///　初期化処理
     ///
-    private func initCustumControl(){
+    fileprivate func initCustumControl(){
         // xib からカスタムViewをロードする
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: UITaskImageButton.UITaskImageButtonIdentifier, bundle: bundle)
-        guard let view = nib.instantiateWithOwner(self, options: nil).first as? UIView else {
+        guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
             return
         }
         // 親に追加
@@ -137,7 +137,7 @@ class UITaskImageButton : UIView
         self.txtLabel.textColor = getLabelTextColor(self.labelTextColor)
         
         // フォントサイズ設定
-        self.txtLabel.font = self.txtLabel.font.fontWithSize(getFontSize(self.txtLabel.font.fontName, width: self.layer.frame.size.width, height: self.layer.frame.size.height, text: self.txtLabel.text!))
+        self.txtLabel.font = self.txtLabel.font.withSize(getFontSize(self.txtLabel.font.fontName, width: self.layer.frame.size.width, height: self.layer.frame.size.height, text: self.txtLabel.text!))
         
         // アニメーション設定
         setViewAnimation()
@@ -154,7 +154,7 @@ class UITaskImageButton : UIView
     ///　- parameter text:表示文字
     ///　- returns:フォントサイズ
     ///
-    private func getFontSize(fontName : String, width : CGFloat, height : CGFloat, text : String) -> CGFloat {
+    fileprivate func getFontSize(_ fontName : String, width : CGFloat, height : CGFloat, text : String) -> CGFloat {
         var ret : CGFloat = 0
         let work : String = text
         let fontSizies : [CGFloat] = [42.0, 38.0, 34.0, 32.0, 28.0, 24.0, 22.0, 20.0, 18.0, 160, 14.0, 12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0]
@@ -166,7 +166,7 @@ class UITaskImageButton : UIView
             // fontを利用時のテキストサイズを取得
             var attributes : [String: AnyObject]? = [String: AnyObject]()
             attributes![NSFontAttributeName] = UIFont(name: fontName, size: fontSize)
-            let size = work.sizeWithAttributes(attributes)
+            let size = work.size(attributes: attributes)
 
             // 表示ラベルの行数は2行固定とする
             let workHeight : CGFloat = size.height * UITaskImageButton.LABEL_ROWS
@@ -184,7 +184,7 @@ class UITaskImageButton : UIView
     ///
     ///　アニメーション設定
     ///
-    private func setViewAnimation(){
+    fileprivate func setViewAnimation(){
         // アニメーション削除
         self.layer.removeAllAnimations()
 
@@ -200,20 +200,20 @@ class UITaskImageButton : UIView
         animation.autoreverses = true
         animation.repeatCount = .infinity
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        self.layer.addAnimation(animation, forKey: UITaskImageButton.AnimationLayerIdentifier)
+        self.layer.add(animation, forKey: UITaskImageButton.AnimationLayerIdentifier)
     }
     
     ///
     ///　ラベル用　タイマー開始
     ///
-    private func startTimerForLabel() {
-        self.timLabel = NSTimer.scheduledTimerWithTimeInterval(UITaskImageButton.IntervalForTitleTimer, target: self, selector: #selector(UITaskImageButton.updateForLabel(_:)), userInfo: nil, repeats: true)
+    fileprivate func startTimerForLabel() {
+        self.timLabel = Timer.scheduledTimer(timeInterval: UITaskImageButton.IntervalForTitleTimer, target: self, selector: #selector(UITaskImageButton.updateForLabel(_:)), userInfo: nil, repeats: true)
     }
     
     ///
     ///　ラベル用　タイマー停止
     ///
-    private func stopTimerForLabel() {
+    fileprivate func stopTimerForLabel() {
         self.timLabel?.invalidate()
     }
     
@@ -222,7 +222,7 @@ class UITaskImageButton : UIView
     ///　- parameter textColor:テキスト色
     ///　- returns:UIColor
     ///
-    private func getLabelTextColor(textColor : Int) -> UIColor {
+    fileprivate func getLabelTextColor(_ textColor : Int) -> UIColor {
         return UIColorUtility.rgb(222, g: 255, b: 255)
     }
     
@@ -230,7 +230,7 @@ class UITaskImageButton : UIView
     ///　ラベル用　タイマー更新処理
     ///　- parameter timer:タイマー
     ///
-    @objc func updateForLabel(timer: NSTimer) {
+    @objc func updateForLabel(_ timer: Timer) {
         var label : String = StringUtility.EMPTY
         
         switch(self.intCurrentLabel) {
@@ -271,7 +271,7 @@ class UITaskImageButton : UIView
             self.txtLabel.text = label
 
             // フォントサイズ設定
-            self.txtLabel.font = self.txtLabel.font.fontWithSize(getFontSize(self.txtLabel.font.fontName, width: self.layer.frame.size.width, height: self.layer.frame.size.height, text: label))
+            self.txtLabel.font = self.txtLabel.font.withSize(getFontSize(self.txtLabel.font.fontName, width: self.layer.frame.size.width, height: self.layer.frame.size.height, text: label))
         }
     }
 }

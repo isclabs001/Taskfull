@@ -22,7 +22,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     // 登録地点リスト入力PickerView
     let inputPointPicker : UIPickerView! = UIPickerView()
     
-    var inputTaskEndDate : NSDate = NSDate()
+    var inputTaskEndDate : Date = Date()
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
 /**
@@ -30,21 +30,21 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
  */
     // カラーボタンイメージ(全１２色)
     // 重要度：低
-    private let mImageTaskColorBtn_WHITE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_WHITE])!
-    private let mImageTaskColorBtn_LIGHT_BLUE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_LIGHT_BLUE])!
-    private let mImageTaskColorBtn_GLAY : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_GLAY])!
+    fileprivate let mImageTaskColorBtn_WHITE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_WHITE])!
+    fileprivate let mImageTaskColorBtn_LIGHT_BLUE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_LIGHT_BLUE])!
+    fileprivate let mImageTaskColorBtn_GLAY : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_GLAY])!
     // 重要度：中
-    private let mImageTaskColorBtn_GREEN : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_GREEN])!
-    private let mImageTaskColorBtn_ORANGE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_ORANGE])!
-    private let mImageTaskColorBtn_BLUE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_BLUE])!
+    fileprivate let mImageTaskColorBtn_GREEN : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_GREEN])!
+    fileprivate let mImageTaskColorBtn_ORANGE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_ORANGE])!
+    fileprivate let mImageTaskColorBtn_BLUE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_BLUE])!
     // 重要度：高
-    private let mImageTaskColorBtn_YELLOW : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_YELLOW])!
-    private let mImageTaskColorBtn_PINK : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_PINK])!
-    private let mImageTaskColorBtn_PURPLE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_PURPLE])!
+    fileprivate let mImageTaskColorBtn_YELLOW : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_YELLOW])!
+    fileprivate let mImageTaskColorBtn_PINK : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_PINK])!
+    fileprivate let mImageTaskColorBtn_PURPLE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_PURPLE])!
     // 重要度：至急
-    private let mImageTaskColorBtn_DARK_YELLOW : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_YELLOW])!
-    private let mImageTaskColorBtn_DARK_PINK : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_PINK])!
-    private let mImageTaskColorBtn_DARK_PURPLE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_PURPLE])!
+    fileprivate let mImageTaskColorBtn_DARK_YELLOW : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_YELLOW])!
+    fileprivate let mImageTaskColorBtn_DARK_PINK : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_PINK])!
+    fileprivate let mImageTaskColorBtn_DARK_PURPLE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_PURPLE])!
     
     
     /**
@@ -103,29 +103,29 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     }
     
     //textView:値変更確定時イベント
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         
         //　文字列変換完了後(== nil)かつ制限文字数を超えていた場合
         if textView.markedTextRange == nil && textView.text.characters.count > CommonConst.INPUT_TASK_MEMO_STRING_LIMIT {
             
             //　制限文字数より後ろの文字列を削除
-            textView.text = textView.text.substringToIndex(textView.text.startIndex.advancedBy(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))
+            textView.text = textView.text.substring(to: textView.text.index(textView.text.startIndex, offsetBy: CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))
             
             
             // 文字数制限アラート生成
-            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT)文字以内で入力して下さい※後で制限数変更",preferredStyle: .Alert)
+            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT)文字以内で入力して下さい※後で制限数変更",preferredStyle: .alert)
             
             // OKActionタップ時処理
-            let OkAlertAction = UIAlertAction(title: "OK", style: .Default) {
+            let OkAlertAction = UIAlertAction(title: "OK", style: .default) {
                 //UIAlertを閉じる(不要？？)
-                action in stringLimitAlert.dismissViewControllerAnimated(true, completion: nil)
+                action in stringLimitAlert.dismiss(animated: true, completion: nil)
             }
             
             // OKActionをUIAlertに追加
             stringLimitAlert.addAction(OkAlertAction)
             
             // UIAlert表示処理
-            presentViewController(stringLimitAlert, animated: true, completion: nil)
+            present(stringLimitAlert, animated: true, completion: nil)
             
         }
     }
@@ -133,7 +133,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
 
 
     // textField:編集完了時イベント
-    func textFieldDidChange(nsNotification: NSNotification) {
+    func textFieldDidChange(_ nsNotification: Notification) {
         
         //　UITextFieldへ変換
         let inputTextField = nsNotification.object as! UITextField
@@ -145,23 +145,23 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             if inputTextField.markedTextRange == nil && copyText.characters.count > CommonConst.INPUT_TASK_NAME_STRING_LIMIT {
                 
                 //　制限文字数より後ろの文字列を削除
-                inputTextField.text = copyText.substringToIndex(copyText.startIndex.advancedBy(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
+                inputTextField.text = copyText.substring(to: copyText.characters.index(copyText.startIndex, offsetBy: CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
                 
                 
                 // 文字数制限アラート生成
-                let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_NAME_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .Alert)
+                let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_NAME_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .alert)
                 
                 // OKActionタップ時処理
-                let OkAlertAction = UIAlertAction(title: "OK", style: .Default) {
+                let OkAlertAction = UIAlertAction(title: "OK", style: .default) {
                     //UIAlertを閉じる(不要？？)
-                    action in stringLimitAlert.dismissViewControllerAnimated(true, completion: nil)
+                    action in stringLimitAlert.dismiss(animated: true, completion: nil)
                 }
                 
                 // OKActionをUIAlertに追加
                 stringLimitAlert.addAction(OkAlertAction)
                 
                 // UIAlert表示処理
-                presentViewController(stringLimitAlert, animated: true, completion: nil)
+                present(stringLimitAlert, animated: true, completion: nil)
 
             }
         }
@@ -170,10 +170,10 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     
     // 登録画面用ナビゲーションバー：初期設定
-    private func displayInputTopMenu(){
+    fileprivate func displayInputTopMenu(){
 
         //登録確定ボタン生成("OK")
-        let addInputTaskButton : UIBarButtonItem = UIBarButtonItem(title:"OK",style : UIBarButtonItemStyle.Plain,target: self,action:#selector(TaskInputViewController.onTouchDown_addInputTaskButton))
+        let addInputTaskButton : UIBarButtonItem = UIBarButtonItem(title:"OK",style : UIBarButtonItemStyle.plain,target: self,action:#selector(TaskInputViewController.onTouchDown_addInputTaskButton))
         
         //タイトル名設定
         self.title = CommonConst.VIW_TITLE_INPUT_TASK
@@ -184,7 +184,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     }
     
     //登録内容入力欄設定
-    private func displayInputField(){
+    fileprivate func displayInputField(){
         
         //項目名入力欄,メモ入力欄:初期設定
         displayInputTaskNameMemo()
@@ -207,72 +207,72 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     }
     
     //タスクカラーボタン:初期設定
-    private func dispayInputTaskColorBtn(){
+    fileprivate func dispayInputTaskColorBtn(){
         
         //タスクカラーボタン:初期値設定
         changeColorBtn(InputImportanceSegment.selectedSegmentIndex)
         
         //タスクカラーボタン_1:タップ時イベント設定
-        InputTaskColorBtn_1.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputTaskColorBtn_1(_:)), forControlEvents: .TouchUpInside)
+        InputTaskColorBtn_1.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputTaskColorBtn_1(_:)), for: .touchUpInside)
         
         //タスクカラーボタン_2:タップ時イベント設定
-        InputTaskColorBtn_2.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputTaskColorBtn_2(_:)), forControlEvents: .TouchUpInside)
+        InputTaskColorBtn_2.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputTaskColorBtn_2(_:)), for: .touchUpInside)
         
         //タスクカラーボタン_3:タップ時イベント設定
-        InputTaskColorBtn_3.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputTaskColorBtn_3(_:)), forControlEvents: .TouchUpInside)
+        InputTaskColorBtn_3.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputTaskColorBtn_3(_:)), for: .touchUpInside)
         
         //タスクカラーボタン:初期値設定
-        InputTaskColorBtn_1.selected = false
-        InputTaskColorBtn_2.selected = true
-        InputTaskColorBtn_3.selected = false
-        InputTaskColorBtn_1.setBackgroundColor(UIColor.clearColor(), forUIControlState: .Normal)
-        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: .Normal)
-        InputTaskColorBtn_3.setBackgroundColor(UIColor.clearColor(), forUIControlState: .Normal)
+        InputTaskColorBtn_1.isSelected = false
+        InputTaskColorBtn_2.isSelected = true
+        InputTaskColorBtn_3.isSelected = false
+        InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: UIControlState())
+        InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         
         
     }
     
     //タスクカラーボタン_1:タップ時イベント
-    func onTouchDown_InputTaskColorBtn_1(sender:UIButton){
-        InputTaskColorBtn_1.selected = true
-        InputTaskColorBtn_2.selected = false
-        InputTaskColorBtn_3.selected = false
-        InputTaskColorBtn_1.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: .Normal)
-        InputTaskColorBtn_2.setBackgroundColor(UIColor.clearColor(), forUIControlState: .Normal)
-        InputTaskColorBtn_3.setBackgroundColor(UIColor.clearColor(), forUIControlState: .Normal)
+    func onTouchDown_InputTaskColorBtn_1(_ sender:UIButton){
+        InputTaskColorBtn_1.isSelected = true
+        InputTaskColorBtn_2.isSelected = false
+        InputTaskColorBtn_3.isSelected = false
+        InputTaskColorBtn_1.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+        InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
     }
     
     //タスクカラーボタン_2:タップ時イベント
-    func onTouchDown_InputTaskColorBtn_2(sender:UIButton){
-        InputTaskColorBtn_1.selected = false
-        InputTaskColorBtn_2.selected = true
-        InputTaskColorBtn_3.selected = false
-        InputTaskColorBtn_1.setBackgroundColor(UIColor.clearColor(), forUIControlState: .Normal)
-        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: .Normal)
-        InputTaskColorBtn_3.setBackgroundColor(UIColor.clearColor(), forUIControlState: .Normal)
+    func onTouchDown_InputTaskColorBtn_2(_ sender:UIButton){
+        InputTaskColorBtn_1.isSelected = false
+        InputTaskColorBtn_2.isSelected = true
+        InputTaskColorBtn_3.isSelected = false
+        InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: UIControlState())
+        InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
     }
     
     //タスクカラーボタン_3:タップ時イベント
-    func onTouchDown_InputTaskColorBtn_3(sender:UIButton){
-        InputTaskColorBtn_1.selected = false
-        InputTaskColorBtn_2.selected = false
-        InputTaskColorBtn_3.selected = true
-        InputTaskColorBtn_1.setBackgroundColor(UIColor.clearColor(), forUIControlState: .Normal)
-        InputTaskColorBtn_2.setBackgroundColor(UIColor.clearColor(), forUIControlState: .Normal)
-        InputTaskColorBtn_3.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: .Normal)
+    func onTouchDown_InputTaskColorBtn_3(_ sender:UIButton){
+        InputTaskColorBtn_1.isSelected = false
+        InputTaskColorBtn_2.isSelected = false
+        InputTaskColorBtn_3.isSelected = true
+        InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+        InputTaskColorBtn_3.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: UIControlState())
     }
     
     
     //重要度:初期設定
-    private func displayInputImportanceSegment(){
+    fileprivate func displayInputImportanceSegment(){
         
         //重要度:セグメント値変更時イベント
-        InputImportanceSegment.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputInportanceSegment(_:)), forControlEvents: .ValueChanged)
+        InputImportanceSegment.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputInportanceSegment(_:)), for: .valueChanged)
 
     }
     
     //重要度:セグメント値変更時イベント
-    func onTouchDown_InputInportanceSegment(segcon:UISegmentedControl){
+    func onTouchDown_InputInportanceSegment(_ segcon:UISegmentedControl){
         
         //各セグメント選択時分岐処理
         switch segcon.selectedSegmentIndex {
@@ -306,49 +306,49 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     }
     
     //カラーボタン変更処理(引数:重要度)
-    private func changeColorBtn(caseNumber : Int){
+    fileprivate func changeColorBtn(_ caseNumber : Int){
     
         switch caseNumber {
             
         //"低"の場合
         case CommonConst.TASK_IMPORTANCE_VALID_LOW:
             // カラーボタン色変更
-            InputTaskColorBtn_1.setImage(mImageTaskColorBtn_WHITE, forState: .Normal)
-            InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_WHITE), forState: .Normal)
-            InputTaskColorBtn_2.setImage(mImageTaskColorBtn_LIGHT_BLUE, forState: .Normal)
-            InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_LIGHT_BLUE), forState: .Normal)
-            InputTaskColorBtn_3.setImage(mImageTaskColorBtn_GLAY, forState: .Normal)
-            InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_GLAY), forState: .Normal)
+            InputTaskColorBtn_1.setImage(mImageTaskColorBtn_WHITE, for: UIControlState())
+            InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_WHITE), for: UIControlState())
+            InputTaskColorBtn_2.setImage(mImageTaskColorBtn_LIGHT_BLUE, for: UIControlState())
+            InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_LIGHT_BLUE), for: UIControlState())
+            InputTaskColorBtn_3.setImage(mImageTaskColorBtn_GLAY, for: UIControlState())
+            InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_GLAY), for: UIControlState())
             
         //"中"の場合
         case CommonConst.TASK_COMPLETE_FLAG_VALID_MEDIUM:
             // カラーボタン色変更
-            InputTaskColorBtn_1.setImage(mImageTaskColorBtn_GREEN, forState: .Normal)
-            InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_GREEN), forState: .Normal)
-            InputTaskColorBtn_2.setImage(mImageTaskColorBtn_ORANGE, forState: .Normal)
-            InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_ORANGE), forState: .Normal)
-            InputTaskColorBtn_3.setImage(mImageTaskColorBtn_BLUE, forState: .Normal)
-            InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_BLUE), forState: .Normal)
+            InputTaskColorBtn_1.setImage(mImageTaskColorBtn_GREEN, for: UIControlState())
+            InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_GREEN), for: UIControlState())
+            InputTaskColorBtn_2.setImage(mImageTaskColorBtn_ORANGE, for: UIControlState())
+            InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_ORANGE), for: UIControlState())
+            InputTaskColorBtn_3.setImage(mImageTaskColorBtn_BLUE, for: UIControlState())
+            InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_BLUE), for: UIControlState())
             
         //"高"の場合
         case CommonConst.TASK_COMPLETE_FLAG_VALID_HIGH:
             // カラーボタン色変更
-            InputTaskColorBtn_1.setImage(mImageTaskColorBtn_YELLOW, forState: .Normal)
-            InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_YELLOW), forState: .Normal)
-            InputTaskColorBtn_2.setImage(mImageTaskColorBtn_PINK, forState: .Normal)
-            InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_PINK), forState: .Normal)
-            InputTaskColorBtn_3.setImage(mImageTaskColorBtn_PURPLE, forState: .Normal)
-            InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_PURPLE), forState: .Normal)
+            InputTaskColorBtn_1.setImage(mImageTaskColorBtn_YELLOW, for: UIControlState())
+            InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_YELLOW), for: UIControlState())
+            InputTaskColorBtn_2.setImage(mImageTaskColorBtn_PINK, for: UIControlState())
+            InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_PINK), for: UIControlState())
+            InputTaskColorBtn_3.setImage(mImageTaskColorBtn_PURPLE, for: UIControlState())
+            InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_PURPLE), for: UIControlState())
             
         //"至急"の場合
         case CommonConst.TASK_COMPLETE_FLAG_VALID_URGENT:
             // カラーボタン色変更
-            InputTaskColorBtn_1.setImage(mImageTaskColorBtn_DARK_YELLOW, forState: .Normal)
-            InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_DARK_YELLOW), forState: .Normal)
-            InputTaskColorBtn_2.setImage(mImageTaskColorBtn_DARK_PINK, forState: .Normal)
-            InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_DARK_PINK), forState: .Normal)
-            InputTaskColorBtn_3.setImage(mImageTaskColorBtn_DARK_PURPLE, forState: .Normal)
-            InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_DARK_PURPLE), forState: .Normal)
+            InputTaskColorBtn_1.setImage(mImageTaskColorBtn_DARK_YELLOW, for: UIControlState())
+            InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_DARK_YELLOW), for: UIControlState())
+            InputTaskColorBtn_2.setImage(mImageTaskColorBtn_DARK_PINK, for: UIControlState())
+            InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_DARK_PINK), for: UIControlState())
+            InputTaskColorBtn_3.setImage(mImageTaskColorBtn_DARK_PURPLE, for: UIControlState())
+            InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_DARK_PURPLE), for: UIControlState())
             
         default:
             break
@@ -357,48 +357,48 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     
     //項目名入力欄,メモ入力欄:初期設定
-    private func displayInputTaskNameMemo(){
+    fileprivate func displayInputTaskNameMemo(){
         
         //項目名入力欄:delegate設定
         InputTaskNameField.delegate  = self
         //項目名入力欄(透かし文字,左寄せ)要定数化
         InputTaskNameField.placeholder = "項目名:"
-        InputTaskNameField.textAlignment = NSTextAlignment.Left
+        InputTaskNameField.textAlignment = NSTextAlignment.left
         //項目名入力欄:編集完了時イベント(TODO:textView同様デリゲートメソッドにて実装？)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TaskInputViewController.textFieldDidChange(_:)), name: UITextFieldTextDidChangeNotification, object: InputTaskNameField)
+        NotificationCenter.default.addObserver(self, selector: #selector(TaskInputViewController.textFieldDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: InputTaskNameField)
         
         //メモ入力欄:delegate設定
         InputTaskMemoView.delegate = self
         //メモ入力欄(透かし文字"メモ:",左寄せ,上寄せ)
-        InputTaskMemoView.textAlignment = NSTextAlignment.Left
+        InputTaskMemoView.textAlignment = NSTextAlignment.left
         InputTaskMemoView.layer.borderWidth = 1
-        InputTaskMemoView.layer.borderColor = UIColor.grayColor().CGColor
+        InputTaskMemoView.layer.borderColor = UIColor.gray.cgColor
         InputTaskMemoView.placeHolder = "メモ:"
 
     }
     
     //タスク終了時刻欄:初期設定
-    private func diplayInputTaskDate(){
+    fileprivate func diplayInputTaskDate(){
         
         //タスク終了時刻入力欄（現在日付,中央寄せ,サイズ自動調整）
-        InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(NSDate())
-        InputTaskDateField.textAlignment = NSTextAlignment.Center
+        InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(Date())
+        InputTaskDateField.textAlignment = NSTextAlignment.center
         InputTaskDateField.sizeToFit()
         
         //タスク終了時刻入力欄 入力方法：DatePicker
         InputTaskDateField.inputView = inputDatePicker
         //DatePiceker設定（日付時刻,JP）
-        inputDatePicker.datePickerMode = UIDatePickerMode.DateAndTime
-        inputDatePicker.locale = NSLocale(localeIdentifier : "ja_JP")
+        inputDatePicker.datePickerMode = UIDatePickerMode.dateAndTime
+        inputDatePicker.locale = Locale(identifier : "ja_JP")
         
         //DatePiceker値変更時イベント
-        inputDatePicker.addTarget(self, action: #selector(TaskInputViewController.inputDatePickerEdit(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        inputDatePicker.addTarget(self, action: #selector(TaskInputViewController.inputDatePickerEdit(_:)), for: UIControlEvents.valueChanged)
         
     }
     
     
     //通知場所(登録地点リスト):初期設定
-    private func displayInputPoint(){
+    fileprivate func displayInputPoint(){
         
         //通知場所名ラベル
         lblInputPointList.text = "通知場所"
@@ -413,7 +413,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         
         //登録地点リスト入力欄　入力方法:PickerView
         InputPointListField.inputView = inputPointPicker
-        InputPointListField.textAlignment = NSTextAlignment.Center
+        InputPointListField.textAlignment = NSTextAlignment.center
         
         //登録地点リスト入力欄 リロード
         inputPointPicker.reloadAllComponents()
@@ -422,17 +422,17 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     
     //後続タスク追加ボタン:初期設定
-    private func displayAddAfterTaskBtn() {
-        AddAfterTask.setTitle("後続タスク追加", forState: UIControlState.Normal)
+    fileprivate func displayAddAfterTaskBtn() {
+        AddAfterTask.setTitle("後続タスク追加", for: UIControlState())
         
         //後続タスク追加ボタン:タップ時イベント
-        AddAfterTask.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_addAfterTaskButton(_:)), forControlEvents:.TouchUpInside)
+        AddAfterTask.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
     }
     
     
     //Datepicer：値変更時イベント
-    func inputDatePickerEdit(sender: UIDatePicker){
+    func inputDatePickerEdit(_ sender: UIDatePicker){
         //値をタスク終了時刻入力欄に表示
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(sender.date)
         
@@ -444,7 +444,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     
     //後続タスクボタン：タップ時イベント
-    func onTouchDown_addAfterTaskButton(sender : UIButton){
+    func onTouchDown_addAfterTaskButton(_ sender : UIButton){
         /*
         let AddAfterTaskInputView = TESTViewController()
         AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
@@ -496,13 +496,13 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
         //タスクカラー
         //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
-        if (InputTaskColorBtn_1.selected == true){
+        if (InputTaskColorBtn_1.isSelected == true){
             taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_1.currentTitle!)!
         }
-        else if(InputTaskColorBtn_2.selected == true){
+        else if(InputTaskColorBtn_2.isSelected == true){
             taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_2.currentTitle!)!
         }
-        else if(InputTaskColorBtn_3.selected == true){
+        else if(InputTaskColorBtn_3.isSelected == true){
             taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_3.currentTitle!)!
         }
         //テキストカラー
@@ -512,9 +512,9 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         //完了フラグ
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
         //作成日時
-        taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(NSDate(), separation: true)
+        taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
         //更新日時
-        taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(NSDate(), separation: true)
+        taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
         
         // タスク情報のデータを追加する
         TaskInfoUtility.DefaultInstance.AddTaskInfo(taskInfoDataEntity)
@@ -527,7 +527,7 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         //self.performSegueWithIdentifier(MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
         
         //メイン画面へ遷移
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
 
         
     }
@@ -538,11 +538,11 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
     ///　- parameter segue:イベントのUIStoryboardSegue
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // タスク入力画面へ遷移する場合
         if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_INPUT){
             // タスク入力画面のコントローラを取得
-            let dvc : TaskInputViewController = (segue.destinationViewController as AnyObject as? TaskInputViewController)!
+            let dvc : TaskInputViewController = (segue.destination as AnyObject as? TaskInputViewController)!
             
             // TODO:画面表示時に必要なパラメータを設定する記述をする
             //dvc.
@@ -552,27 +552,27 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
     }
     
     //キーボード「リターンキー」：タップ時イベント
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //キーボードを閉じる
         textField.resignFirstResponder()
         return false
     }
 
     //PicerView　表示列
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     //PicerView　表示行（要素数）
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         //要素数(仮　要)
         return aaa.count
     }
     //PicerView　表示要素
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return aaa[row] as? String
     }
     //PicerView　値選択時イベント
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         InputPointListField.text = aaa[row] as? String
     }
  
@@ -585,7 +585,7 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
 
     //オブザーバ解除
     deinit{
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     

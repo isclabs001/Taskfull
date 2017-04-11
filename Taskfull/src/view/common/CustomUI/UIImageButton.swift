@@ -24,7 +24,7 @@ class UIImageButton : UICustomButton
         self.clipsToBounds = true
 
         // 通常時の背景画像に変更する
-        self.setBackgroundImage(nonHighlightedBackgroundImage, forState: UIControlState.Normal)
+        self.setBackgroundImage(nonHighlightedBackgroundImage, for: UIControlState())
     }
     
     // 押下時の背景画像
@@ -33,25 +33,25 @@ class UIImageButton : UICustomButton
     @IBInspectable var nonHighlightedBackgroundImage :UIImage?
     
     // highlightedプロパティ
-    override var highlighted :Bool {
+    override var isHighlighted :Bool {
         didSet {
             // 押下時の場合
-            if highlighted
+            if isHighlighted
             {
                 // 押下時の背景画像に変更する
-                self.setBackgroundImage(highlightedBackgroundImage, forState: UIControlState.Normal)
+                self.setBackgroundImage(highlightedBackgroundImage, for: UIControlState())
             }
             // 上記以外の場合
             else
             {
                 // 通常時の背景画像に変更する
-                self.setBackgroundImage(nonHighlightedBackgroundImage, forState: UIControlState.Normal)
+                self.setBackgroundImage(nonHighlightedBackgroundImage, for: UIControlState())
             }
         }
     }
     
     // 画像情報設定
-    func setImageInfo(image: UIImage?, width : Double, height : Double) {
+    func setImageInfo(_ image: UIImage?, width : Double, height : Double) {
         // サイズ設定
         self.frame = CGRect(x: 0,y: 0,width: width,height: height)
         // 画像設定

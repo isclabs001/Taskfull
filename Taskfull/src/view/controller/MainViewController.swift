@@ -28,21 +28,21 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
      * 変数
      */
     // 追加ボタンイメージ
-    private let mImageAddButton : UIImage = UIImage(named: "add.png")!
-    private let mImageAddButtonDown : UIImage = UIImage(named: "add_down.png")!
+    fileprivate let mImageAddButton : UIImage = UIImage(named: "add.png")!
+    fileprivate let mImageAddButtonDown : UIImage = UIImage(named: "add_down.png")!
     // モード変更ボタンイメージ
-    private let mImageModeChangeButton : UIImage = UIImage(named: "modechg.png")!
-    private let mImageModeChangeButtonDown : UIImage = UIImage(named: "modechg_down.png")!
+    fileprivate let mImageModeChangeButton : UIImage = UIImage(named: "modechg.png")!
+    fileprivate let mImageModeChangeButtonDown : UIImage = UIImage(named: "modechg_down.png")!
 
     /**
      * 動作モード
      */
-    private var mActionMode : CommonConst.ActionType = CommonConst.ActionType.Reference
+    fileprivate var mActionMode : CommonConst.ActionType = CommonConst.ActionType.reference
     
     /**
      * タスク表示項目配列
      */
-    private var mArrayViewTaskItem : [ViewTaskItemEntity] = []
+    fileprivate var mArrayViewTaskItem : [ViewTaskItemEntity] = []
     
     /**
      * メインビュー
@@ -113,20 +113,20 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// 動作モードによるメイン画面の初期化
     ///　- parameter actionType:動作モード
     ///
-    private func initializeMain(actionType : CommonConst.ActionType)
+    fileprivate func initializeMain(_ actionType : CommonConst.ActionType)
     {
         switch(self.mActionMode){
         // 現在編集モードの場合
-        case CommonConst.ActionType.Edit:
+        case CommonConst.ActionType.edit:
             self.mainView.gradationBackgroundStartColor = UIColorUtility.rgb(255, g: 128, b: 0)
             self.mainView.gradationBackgroundEndColor = UIColorUtility.rgb(255, g: 218, b: 128)
-            ButtomButtonMenuBar.hidden = false;
+            ButtomButtonMenuBar.isHidden = false;
             break;
         // 上記以外の場合
         default:
             self.mainView.gradationBackgroundStartColor = UIColorUtility.rgb(0, g: 30, b: 183)
             self.mainView.gradationBackgroundEndColor = UIColorUtility.rgb(222, g: 255, b: 255)
-            ButtomButtonMenuBar.hidden = true;
+            ButtomButtonMenuBar.isHidden = true;
             break;
         }
     }
@@ -134,7 +134,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     ///
     ///　タスク情報読込み
     ///
-    private func getTaskInfo() {
+    fileprivate func getTaskInfo() {
         // タスク情報の読込み
         TaskInfoUtility.DefaultInstance.ReadTaskInfo()
         
@@ -248,7 +248,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// タスクを表示する
     ///　- parameter actionType:動作モード
     ///
-    private func displayTask(actionType : CommonConst.ActionType)
+    fileprivate func displayTask(_ actionType : CommonConst.ActionType)
     {
         // タスクイメージボタン設定
         setTaskImageButton()
@@ -263,12 +263,12 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     ///
     /// タスク情報からタスクイメージボタン生成処理
     ///
-    private func setTaskImageButton(){
+    fileprivate func setTaskImageButton(){
         // タスクイメージボタン配列クリア
         self.mArrayViewTaskItem.removeAll()
         
         // 現在日付を取得
-        let systemDate : String = FunctionUtility.DateToyyyyMMddHHmmss(NSDate(), separation: true)
+        let systemDate : String = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
         
         var index : Int = 0
         // 表示対象データ数分処理する
@@ -296,7 +296,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
             // ボタン情報設定
             taskViewItem.TaskButton!.btnImage.setImageInfo(getButtonResource(taskViewItem.Color) , width:Double(size.width) , height:Double(size.height))
             taskViewItem.TaskButton!.btnImage.tag = item.Id
-            taskViewItem.TaskButton!.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), forControlEvents: .TouchDown)
+            taskViewItem.TaskButton!.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), for: .touchDown)
             taskViewItem.TaskButton!.labelTitle = item.Title
             taskViewItem.TaskButton!.labelMemo = item.Memo
             taskViewItem.TaskButton!.labelDateTime =  FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
@@ -317,7 +317,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     ///　- parameter createDate:作成日時
     ///　- returns:ボタンサイズ
     ///
-    private func getButtonSize(systemDate : String, taskDate : String, createDate : String) -> CGSize {
+    fileprivate func getButtonSize(_ systemDate : String, taskDate : String, createDate : String) -> CGSize {
         // ボタン最小サイズを取得
         var ret : CGSize = CGSize(width: CommonConst.TASK_BUTTON_SIZE_MIN, height: CommonConst.TASK_BUTTON_SIZE_MIN)
         
@@ -344,7 +344,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     ///　- parameter buttonSize:ボタンサイズ
     ///　- returns:ボタン位置
     ///
-    private func getButtonPosition(index : Int, buttonSize : CGSize) -> CGPoint {
+    fileprivate func getButtonPosition(_ index : Int, buttonSize : CGSize) -> CGPoint {
         var ret : CGPoint = CGPoint(x: 0, y: 0)
 
         // imageCanvasViewのサイズを領域とする
@@ -376,7 +376,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     ///　- parameter buttonSize:ボタンサイズ
     ///　- returns:ボタン位置
     ///
-    private func getNextButtonLocation(index : Int, centerButtonLocation : CGRect, buttonSize : CGSize) -> CGPoint {
+    fileprivate func getNextButtonLocation(_ index : Int, centerButtonLocation : CGRect, buttonSize : CGSize) -> CGPoint {
         var ret : CGPoint = CGPoint(x: 0, y: 0)
         let margin : CGFloat = 10
         let buttonHalfSize : CGSize = CGSize(width: buttonSize.width / 2, height: buttonSize.height / 2)
@@ -455,7 +455,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// 表示ボタン色取得
     ///　- returns:表示ボタン色
     ///
-    private func getButtonColor(color : Int, systemDate : String, taskDate : String) -> Int {
+    fileprivate func getButtonColor(_ color : Int, systemDate : String, taskDate : String) -> Int {
         
         // 当日の場合は緊急色（赤）、それ以外はそのままの色
         return (true == FunctionUtility.isToday(systemDate, date2: taskDate)) ? CommonConst.TASK_BUTTON_COLOR_RED : color
@@ -465,7 +465,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// 表示ボタンリソース取得
     ///　- returns:表示ボタンリソース
     ///
-    private func getButtonResource(color : Int) -> UIImage {
+    fileprivate func getButtonResource(_ color : Int) -> UIImage {
         
         // 指定されたインデックスのリソースを返す
         return UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[color])!
@@ -475,7 +475,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// 表示タスクデータの取得
     ///　- returns:表示タスクデータ配列
     ///
-    private func getDisplayTaskData() -> [TaskInfoDataEntity] {
+    fileprivate func getDisplayTaskData() -> [TaskInfoDataEntity] {
         return getTopDisplayTaskData()
     }
     
@@ -483,7 +483,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// 上位に表示するタスクデータの取得
     ///　- returns:表示タスクデータ配列
     ///
-    private func getTopDisplayTaskData() -> [TaskInfoDataEntity] {
+    fileprivate func getTopDisplayTaskData() -> [TaskInfoDataEntity] {
         var taskData : [TaskInfoDataEntity] = [TaskInfoDataEntity]()
         var dicParrentId : Dictionary<Int, Int> = Dictionary<Int, Int>()
         
@@ -500,7 +500,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         }
         
         // 完了日の昇順でソートする
-        taskData.sortInPlace(<)
+        taskData.sort(by: <)
         
         // 結果を返す
         return taskData
@@ -510,7 +510,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// キャンバスビューからタスクイメージボタンを全削除処理
     ///　- returns:表示タスクデータ配列
     ///
-    private func removeAllTaskImageButton(){
+    fileprivate func removeAllTaskImageButton(){
         // キャンバスビューのコントロール数分処理する
         for view in self.imageCanvasView.subviews {
             // 削除
@@ -521,7 +521,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     ///
     /// キャンバスビューへタスクイメージボタンの全追加処理
     ///
-    private func addAllTaskImageButton(){
+    fileprivate func addAllTaskImageButton(){
         // キャンバスビューにコントロールを追加
         for view in self.mArrayViewTaskItem {
             self.imageCanvasView.addSubview(view.TaskButton!)
@@ -533,18 +533,18 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// モード切り替えボタン押下イベント
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
-    @IBAction func onTouchDown_ModeButton(sender: AnyObject) {
+    @IBAction func onTouchDown_ModeButton(_ sender: AnyObject) {
         
         switch(self.mActionMode){
             // 現在編集モードの場合
-            case CommonConst.ActionType.Edit:
+            case CommonConst.ActionType.edit:
                 // 参照モードに切り替える
-                self.mActionMode = CommonConst.ActionType.Reference
+                self.mActionMode = CommonConst.ActionType.reference
                 break;
             // 上記以外の場合
             default:
                 // 編集モードに切り替える
-                self.mActionMode = CommonConst.ActionType.Edit
+                self.mActionMode = CommonConst.ActionType.edit
                 break;
         }
         
@@ -556,7 +556,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// タスクイメージボタン押下イベント
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
-    @IBAction func onTouchDown_TaskCirclrImageButton(sendar : UITaskImageButton){
+    @IBAction func onTouchDown_TaskCirclrImageButton(_ sendar : UITaskImageButton){
         // TODO:押下時の処理を記述する
         print(sendar.tag.description)
     }
@@ -565,10 +565,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /// タスク追加ボタン押下イベント
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
-    @IBAction func onTouchDown_AddTask(sender: AnyObject) {
+    @IBAction func onTouchDown_AddTask(_ sender: AnyObject) {
         // TODO:押下時の処理を記述する
         // タスク入力画面を表示
-        self.performSegueWithIdentifier(MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
+        self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
     }
 
     ///
@@ -576,11 +576,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     ///　- parameter segue:イベントのUIStoryboardSegue
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // タスク入力画面へ遷移する場合
         if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_INPUT){
             // タスク入力画面のコントローラを取得
-            let dvc : TaskInputViewController = (segue.destinationViewController as AnyObject as? TaskInputViewController)!
+            let dvc : TaskInputViewController = (segue.destination as AnyObject as? TaskInputViewController)!
 
             // TODO:画面表示時に必要なパラメータを設定する記述をする
             //dvc.
@@ -590,7 +590,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     }
     
     //　画面表示直後時処理 タイミング要再考
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         // 動作モードによるメイン画面の初期化
         initializeMain(self.mActionMode)

@@ -15,13 +15,13 @@ class InputDisabledTextField : UITextField
 {
     
     //コピー,ペースト,メニュー表示を非表示
-    override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
-        UIMenuController.sharedMenuController().menuVisible = false
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        UIMenuController.shared.isMenuVisible = false
         return false
     }
     
     //キャレット（入力棒）を非表示
-    override func caretRectForPosition(position: UITextPosition) -> CGRect {
-        return CGRectZero
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        return CGRect.zero
     }
 }

@@ -1,10 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nae-2G-uHF">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nae-2G-uHF">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
@@ -16,21 +20,40 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="UICustomView" customModule="Taskfull" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yuf-aY-2H9" customClass="UICustomView" customModule="Taskfull" customModuleProvider="target">
+                                <rect key="frame" x="-2" y="77" width="378" height="512"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXR-Lq-i1V" customClass="UICircleImageButton" customModule="Taskfull" customModuleProvider="target">
+                                <rect key="frame" x="155" y="440" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title=" "/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="highlightedBackgroundImage" value="modechg.png"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="nonHighlightedBackgroundImage" value="modechg_down.png"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onTouchDown_ModeButton:" destination="BYZ-38-t0r" eventType="touchDown" id="LcL-kb-c7J"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T2D-of-bB7">
+                                <rect key="frame" x="0.0" y="34" width="420" height="567"/>
+                            </scrollView>
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qvc-ev-WMf" userLabel="ScaleViewV">
-                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="667"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gl3-VP-dYJ" userLabel="TopView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rKM-3y-WXi" customClass="UICustomView" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="540" width="420" height="60"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rKM-3y-WXi" customClass="UICustomView" customModule="Taskfull" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="601" width="420" height="66"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EaN-pe-x5q" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="315" y="0.0" width="105" height="60"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EaN-pe-x5q" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="315" y="0.0" width="105" height="66"/>
                                         <state key="normal" title="設定"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -41,24 +64,24 @@
                                                 <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="value" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5a-PH-FyS" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="210" y="0.0" width="105" height="60"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5a-PH-FyS" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="210" y="0.0" width="105" height="66"/>
                                         <state key="normal" title="ボタン３"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -69,24 +92,24 @@
                                                 <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="value" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sec-wz-6mv" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="105" y="0.0" width="105" height="60"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sec-wz-6mv" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="105" y="0.0" width="105" height="66"/>
                                         <state key="normal" title="ボタン２"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -97,24 +120,24 @@
                                                 <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="value" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4U2-s3-rB5" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="105" height="60"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4U2-s3-rB5" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="105" height="66"/>
                                         <state key="normal" title="タスク追加"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -125,19 +148,19 @@
                                                 <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="value" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
@@ -175,37 +198,18 @@
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="value" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="gradationBackgroundStartColor">
-                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="value" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="gradationBackgroundEndColor">
-                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="value" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T2D-of-bB7">
-                                <rect key="frame" x="0.0" y="20" width="420" height="512"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yuf-aY-2H9" customClass="UICustomView" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="420" height="512"/>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXR-Lq-i1V" customClass="UICircleImageButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="178" y="448" width="64" height="64"/>
-                                        <state key="normal" title=" "/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="highlightedBackgroundImage" value="modechg.png"/>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="nonHighlightedBackgroundImage" value="modechg_down.png"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="onTouchDown_ModeButton:" destination="BYZ-38-t0r" eventType="touchDown" id="LcL-kb-c7J"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="T2D-of-bB7" firstAttribute="height" secondItem="qvc-ev-WMf" secondAttribute="height" multiplier="0.85" id="4nc-is-eJB"/>
                             <constraint firstItem="qvc-ev-WMf" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottomMargin" id="5br-Mp-1sI"/>
@@ -224,10 +228,10 @@
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="gradationBackgroundStartColor">
-                                <color key="value" red="0.87156204763784717" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="value" red="0.87156204763784717" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="gradationBackgroundEndColor">
-                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
@@ -242,7 +246,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1117" y="399"/>
+            <point key="canvasLocation" x="1116" y="398.95052473763121"/>
         </scene>
         <!--Task Input View Controller-->
         <scene sceneID="DJn-sY-cPL">
@@ -253,15 +257,15 @@
                         <viewControllerLayoutGuide type="bottom" id="S8d-Ur-KzQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bq6-y5-sSE">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5On-Nh-lw1" userLabel="BaseTaskDateView">
-                                <rect key="frame" x="0.0" y="279" width="600" height="54"/>
+                                <rect key="frame" x="0.0" y="306" width="375" height="61"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-hO-Ucy" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="40" y="12" width="520" height="30"/>
-                                        <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="40" y="12" width="295" height="37"/>
+                                        <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -277,17 +281,17 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TEZ-4M-O0U" userLabel="BaseTaskImportanceView">
-                                <rect key="frame" x="0.0" y="387" width="600" height="54"/>
+                                <rect key="frame" x="0.0" y="427" width="375" height="61"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="重要度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIh-Xc-XlL">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="重要度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIh-Xc-XlL">
                                         <rect key="frame" x="40" y="13" width="48" height="28"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="g4e-Va-Zua">
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="g4e-Va-Zua">
                                         <rect key="frame" x="107" y="13" width="453" height="29"/>
-                                        <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <segments>
                                             <segment title="低"/>
                                             <segment title="中"/>
@@ -307,11 +311,11 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeg-2x-1ZN" userLabel="BaseTaskNameView">
-                                <rect key="frame" x="0.0" y="64" width="600" height="54"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="61"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SsX-6L-Joj">
-                                        <rect key="frame" x="40" y="16" width="520" height="22"/>
-                                        <color key="backgroundColor" red="0.95999370805973161" green="1" blue="0.89272231540000013" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="40" y="16" width="295" height="29"/>
+                                        <color key="backgroundColor" red="0.95999370805973161" green="1" blue="0.89272231540000013" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
@@ -324,10 +328,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFr-HC-1HV" userLabel="BaseAddBtnview">
-                                <rect key="frame" x="0.0" y="546" width="600" height="54"/>
+                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2T-Od-cqa" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="127" y="10" width="346" height="30"/>
+                                        <rect key="frame" x="127" y="10" width="121" height="30"/>
                                         <state key="normal" title="Button"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -335,16 +339,16 @@
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.52227852758859061" green="0.84147914200805374" blue="0.99328859060402674" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.52227852758859061" green="0.84147914200805374" blue="0.99328859060402674" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.54053062080536896" green="0.9420454171758389" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.54053062080536896" green="0.9420454171758389" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundStartColor">
-                                                <color key="value" red="0.68901980569094634" green="0.85318581716389885" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.68901980569094634" green="0.85318581716389885" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="highlightedGradationBackgroundEndColor">
-                                                <color key="value" red="0.48318725897489295" green="0.84174112706595239" blue="0.99328859059999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.48318725897489295" green="0.84174112706595239" blue="0.99328859059999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
@@ -356,17 +360,17 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GzW-Rr-0C2" userLabel="DummyBaseView">
-                                <rect key="frame" x="0.0" y="64" width="0.0" height="536"/>
+                                <rect key="frame" x="0.0" y="64" width="0.0" height="603"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="frI-OR-qQN"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p8W-DM-IDd" userLabel="BaseTaskMemoView">
-                                <rect key="frame" x="0.0" y="118" width="600" height="161"/>
+                                <rect key="frame" x="0.0" y="125" width="375" height="181"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tM4-dB-mS2" customClass="UIPlaceHolderTextView" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="40" y="4" width="520" height="153"/>
-                                        <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="40" y="4" width="295" height="173"/>
+                                        <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                                     </textView>
@@ -379,19 +383,19 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s43-CE-MyA" userLabel="BaseTaskColorBtnView">
-                                <rect key="frame" x="0.0" y="441" width="600" height="107"/>
+                                <rect key="frame" x="0.0" y="488" width="375" height="121"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" misplaced="YES" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
                                         <rect key="frame" x="40" y="43" width="51" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nHi-PU-jMs">
-                                        <rect key="frame" x="112" y="0.0" width="448" height="107"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" alignment="firstBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nHi-PU-jMs">
+                                        <rect key="frame" x="112" y="0.0" width="222" height="121"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-y1-WJP" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="20" width="143" height="67"/>
+                                                <rect key="frame" x="0.0" y="20" width="67.5" height="81"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -399,12 +403,12 @@
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
-                                                        <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="153" y="20" width="142" height="67"/>
+                                                <rect key="frame" x="77.5" y="20" width="67" height="81"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -412,12 +416,12 @@
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
-                                                        <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-cs-b7O" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="305" y="20" width="143" height="67"/>
+                                                <rect key="frame" x="154.5" y="20" width="67.5" height="81"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -425,7 +429,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
-                                                        <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="value" red="0.50196078430000002" green="0.83137254900000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
@@ -452,17 +456,17 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Esl-3M-zfd" userLabel="BaseTaskPointListView">
-                                <rect key="frame" x="0.0" y="333" width="600" height="54"/>
+                                <rect key="frame" x="0.0" y="367" width="375" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDS-U9-Hn2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDS-U9-Hn2">
                                         <rect key="frame" x="40" y="12" width="64" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aPD-ts-pDm" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aPD-ts-pDm" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="124" y="12" width="436" height="30"/>
-                                        <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -478,7 +482,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.84600461409395677" green="1" blue="0.89272231543624159" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.84600461409395677" green="1" blue="0.89272231543624159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="5On-Nh-lw1" firstAttribute="top" secondItem="p8W-DM-IDd" secondAttribute="bottom" id="1AZ-8g-CPu"/>
                             <constraint firstAttribute="trailing" secondItem="TEZ-4M-O0U" secondAttribute="trailing" id="32Z-XY-soG"/>

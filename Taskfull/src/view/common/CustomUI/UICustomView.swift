@@ -15,7 +15,7 @@ import UIKit
 class UICustomView : UIView
 {
     // グラデーションレイヤー
-    private var mGradientLayer : CAGradientLayer? = nil
+    fileprivate var mGradientLayer : CAGradientLayer? = nil
     
     // テキスト文字列色
     @IBInspectable var textColor: UIColor?
@@ -42,23 +42,23 @@ class UICustomView : UIView
     }
     
     // 枠の色
-    @IBInspectable var borderColor: UIColor = UIColor.clearColor() {
+    @IBInspectable var borderColor: UIColor = UIColor.clear {
         didSet {
-            layer.borderColor = borderColor.CGColor
+            layer.borderColor = borderColor.cgColor
         }
     }
 
     // グラデーション　通常時の背景色　開始
     @IBInspectable var gradationBackgroundStartColor :UIColor?
     // グラデーション　通常時の背景色　終了
-    @IBInspectable var gradationBackgroundEndColor :UIColor? = UIColor.clearColor() {
+    @IBInspectable var gradationBackgroundEndColor :UIColor? = UIColor.clear {
         didSet {
             SetGradationLayerForNonHighlighted()
         }
     }
     
     // グラデーション背景色　通常時のレイアウト設定
-    private func SetGradationLayerForNonHighlighted()
+    fileprivate func SetGradationLayerForNonHighlighted()
     {
         // グラデーション色が有効な場合
         if true == UICommon.IsGradation(gradationBackgroundStartColor, endColor: gradationBackgroundEndColor)
@@ -73,7 +73,7 @@ class UICustomView : UIView
             if(nil != self.mGradientLayer){
                 self.layer.replaceSublayer(self.mGradientLayer!, with: gradientLayer)
             } else {
-                self.layer.insertSublayer(gradientLayer, atIndex: 0)
+                self.layer.insertSublayer(gradientLayer, at: 0)
             }
             self.mGradientLayer = gradientLayer
         }

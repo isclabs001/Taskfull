@@ -53,11 +53,11 @@ class StringUtility
      * - param value:チェックする文字列
      * - returns: {@code value} が {@code null} であるか空文字列の場合は {@code true}、そうでない場合は {@code false}
      */
-    static internal func isEmpty(value : String?) -> Bool
+    static internal func isEmpty(_ value : String?) -> Bool
     {
         return nil == value || false == isEmpty(value!);
     }
-    static internal func isEmpty(value : String) -> Bool
+    static internal func isEmpty(_ value : String) -> Bool
     {
         return 0 == value.characters.count;
     }
@@ -68,11 +68,11 @@ class StringUtility
      * @param value チェックする文字列
      * @return {@code value} が {@code null} でも空文字列でもない場合は　{@code　true}、そうでない場合は{@code　false}
      */
-    static internal func isNotEmpty(value : String?) -> Bool
+    static internal func isNotEmpty(_ value : String?) -> Bool
     {
         return nil != value && true == isNotEmpty(value!);
     }
-    static internal func isNotEmpty(value : String) -> Bool
+    static internal func isNotEmpty(_ value : String) -> Bool
     {
         return value.characters.count > 0;
     }

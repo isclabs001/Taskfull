@@ -25,9 +25,9 @@ class CommonConst
      */
     enum ActionType {
         // 参照
-        case Reference
+        case reference
         // 編集
-        case Edit
+        case edit
     }
     
     /**

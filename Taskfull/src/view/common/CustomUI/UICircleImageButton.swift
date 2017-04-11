@@ -26,7 +26,7 @@ class UICircleImageButton : UIImageButton
         super.clipsToBounds = true
     }
     
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         // 押下ポイントがコントロールに入っていない場合
         if(false == self.bounds.contains(point)){
             // 処理しない
@@ -41,7 +41,7 @@ class UICircleImageButton : UIImageButton
         // 透過色（Alpha）を取得
         let pixelAlphaColor = UIColorUtility.getAlphaColor(
             imageSize,
-            image: (self.currentBackgroundImage?.CGImage)!,
+            image: (self.currentBackgroundImage?.cgImage)!,
             pos: UIColorUtility.convImagePos(point, orgImageSize: ctrlSize, crntImageSize: imageSize), pixelDataByteSize: 4)
         
         // 透明な場合

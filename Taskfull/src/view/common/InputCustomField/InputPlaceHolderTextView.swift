@@ -11,11 +11,11 @@ import UIKit
 //
 // UIテキストビュークラス
 //
-public class UIPlaceHolderTextView: UITextView {
+open class UIPlaceHolderTextView: UITextView {
     
     //プレースホルダー実装用設定項目
     lazy var placeHolderLabel:UILabel = UILabel()
-    var placeHolderColor:UIColor      = UIColor.lightGrayColor()
+    var placeHolderColor:UIColor      = UIColor.lightGray
     var placeHolder:NSString          = ""
     
     required public init(coder aDecoder: NSCoder) {
@@ -35,27 +35,27 @@ public class UIPlaceHolderTextView: UITextView {
 
     //オブザーバ解除
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UIPlaceHolderTextView.textChanged(_:)), name: UITextViewTextDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UIPlaceHolderTextView.textChanged(_:)), name: NSNotification.Name.UITextViewTextDidChange, object: nil)
     }
     
-    func seetText(text:NSString) {
+    func seetText(_ text:NSString) {
         super.text = text as String
         self.textChanged(nil)
     }
     
-    override public func drawRect(rect: CGRect) {
+    override open func draw(_ rect: CGRect) {
         if(self.placeHolder.length > 0) {
-            self.placeHolderLabel.frame           = CGRectMake(8,8,self.bounds.size.width - 16,0)
-            self.placeHolderLabel.lineBreakMode   = NSLineBreakMode.ByWordWrapping
+            self.placeHolderLabel.frame           = CGRect(x: 8,y: 8,width: self.bounds.size.width - 16,height: 0)
+            self.placeHolderLabel.lineBreakMode   = NSLineBreakMode.byWordWrapping
             self.placeHolderLabel.numberOfLines   = 0
             self.placeHolderLabel.font            = self.font
-            self.placeHolderLabel.backgroundColor = UIColor.clearColor()
+            self.placeHolderLabel.backgroundColor = UIColor.clear
             self.placeHolderLabel.textColor       = self.placeHolderColor
             self.placeHolderLabel.alpha           = 0
             self.placeHolderLabel.tag             = 999
@@ -65,17 +65,17 @@ public class UIPlaceHolderTextView: UITextView {
             self.addSubview(placeHolderLabel)
         }
         
-        self.sendSubviewToBack(placeHolderLabel)
+        self.sendSubview(toBack: placeHolderLabel)
         
         // swift2.0 エラー対策(utf16Count)
         if(self.text.utf16.count == 0 && self.placeHolder.length > 0){
             self.viewWithTag(999)?.alpha = 1
         }
         
-        super.drawRect(rect)
+        super.draw(rect)
     }
     
-    public func textChanged(notification:NSNotification?) -> (Void) {
+    open func textChanged(_ notification:Notification?) -> (Void) {
         if(self.placeHolder.length == 0){
             return
         }

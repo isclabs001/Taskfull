@@ -10,7 +10,7 @@ import Foundation
 ///
 /// BaseJsonDataUtilityクラス
 ///
-public class BaseJsonDataUtility
+open class BaseJsonDataUtility
 {
     /**
      * 変数定義
@@ -27,11 +27,11 @@ public class BaseJsonDataUtility
     ///　- parameter data:JSON形式の文字列(NSData)
     ///　- returns:JSON構造のDirectory
     ///
-    func NSDataToAnyObject(data:NSData) -> AnyObject? {
-        var obj:AnyObject?
+    func NSDataToAnyObject(_ data:Data) -> Any? {
+        var obj:Any?
         do {
-            obj = try NSJSONSerialization.JSONObjectWithData(
-                data, options:NSJSONReadingOptions.MutableContainers)
+            obj = try JSONSerialization.jsonObject(
+                with: data, options:JSONSerialization.ReadingOptions.mutableContainers)
         } catch {
             obj = nil
         }
@@ -44,16 +44,16 @@ public class BaseJsonDataUtility
     ///　- parameter itemObj:JSON項目の値(AnyObject)
     ///　- returns:JSON項目の値
     ///
-    func JSONItemToObject(itemObj:AnyObject) -> AnyObject {
+    func JSONItemToObject(_ itemObj:AnyObject) -> AnyObject {
         switch itemObj {
         // JSON項目の値がNSArrayの場合
         case let ary as NSArray:
             // 配列で格納する
             var ret = [AnyObject]()
             for v in ary {
-                ret.append(JSONItemToObject(v))
+                ret.append(JSONItemToObject(v as AnyObject))
             }
-            return ret
+            return ret as AnyObject
             
         // JSON項目の値がNSDictionaryの場合
         case let dict as NSDictionary:
@@ -61,10 +61,10 @@ public class BaseJsonDataUtility
             var ret = [String:AnyObject]()
             for (ko, v) in dict {
                 if let k = ko as? String {
-                    ret[k] = JSONItemToObject(v)
+                    ret[k] = JSONItemToObject(v as AnyObject)
                 }
             }
-            return ret
+            return ret as AnyObject
             
         // 上記以外の場合
         default:
@@ -79,7 +79,7 @@ public class BaseJsonDataUtility
     ///　- parameter key:キー
     ///　- returns:値
     ///
-    func getStringForResponse(response : NSDictionary, key : String) -> String {
+    func getStringForResponse(_ response : NSDictionary, key : String) -> String {
         return getStringForResponse(response, key: key, defaultValue: StringUtility.EMPTY);
     }
     
@@ -90,7 +90,7 @@ public class BaseJsonDataUtility
     ///　- parameter defaultValue デフォルト値
     ///　- returns:値
     ///
-    func getStringForResponse(response : NSDictionary, key : String, defaultValue : String) -> String
+    func getStringForResponse(_ response : NSDictionary, key : String, defaultValue : String) -> String
     {
         return FunctionUtility.getStriing(response, key: key, defaultValue: defaultValue)
     }
@@ -101,9 +101,9 @@ public class BaseJsonDataUtility
     ///　- parameter key:キー
     ///　- returns:値
     ///
-    func getDateForResponse(response : NSDictionary, key : String) -> NSDate
+    func getDateForResponse(_ response : NSDictionary, key : String) -> Date
     {
-        var ret : NSDate = FunctionUtility.DefaultDate;
+        var ret : Date = FunctionUtility.DefaultDate;
     
         // キーに対する文字列取得
         let strValue : String = FunctionUtility.getStriing(response, key: key)
@@ -124,7 +124,7 @@ public class BaseJsonDataUtility
     ///　- parameter defaultValue:デフォルト値
     ///　- returns:値
     ///
-    func getIntForResponse(response : NSDictionary, key : String, defaultValue : Int) -> Int
+    func getIntForResponse(_ response : NSDictionary, key : String, defaultValue : Int) -> Int
     {
         var ret : Int = defaultValue;
     
@@ -150,7 +150,7 @@ public class BaseJsonDataUtility
     ///　- parameter defaultValue:デフォルト値
     ///　- returns:値
     ///
-    func getDoubleForResponse(response : NSDictionary, key : String, defaultValue : Double) -> Double
+    func getDoubleForResponse(_ response : NSDictionary, key : String, defaultValue : Double) -> Double
     {
         var ret : Double = defaultValue;
 
@@ -174,13 +174,13 @@ public class BaseJsonDataUtility
     ///　- parameter text:文字列
     ///　- returns:エスケープされた文字列
     ///
-    func escapeJsonString(text : String) -> String {
+    func escapeJsonString(_ text : String) -> String {
         var ret : String = text
         
         // エスケープ対象文字列数分処理する
-        for(var i = 0 ;i < BaseJsonDataUtility.EscapeSrc.count; i += 1){
+        for i in (0 ..< BaseJsonDataUtility.EscapeSrc.count){
             // 文字をエスケープする
-            ret = ret.stringByReplacingOccurrencesOfString(BaseJsonDataUtility.EscapeSrc[i], withString: BaseJsonDataUtility.EscapeDst[i])
+            ret = ret.replacingOccurrences(of: BaseJsonDataUtility.EscapeSrc[i], with: BaseJsonDataUtility.EscapeDst[i])
         }
         
         return ret
@@ -191,13 +191,13 @@ public class BaseJsonDataUtility
     ///　- parameter text:文字列
     ///　- returns:エスケープ文字を展開した文字列
     ///
-    func decodeJsonString(text : String) -> String {
+    func decodeJsonString(_ text : String) -> String {
         var ret : String = text
         
         // エスケープ対象文字列数分処理する
-        for(var i = 0 ;i < BaseJsonDataUtility.EscapeSrc.count; i += 1){
+        for i in (0 ..< BaseJsonDataUtility.EscapeSrc.count){
             // エスケープ文字を展開する
-            ret = ret.stringByReplacingOccurrencesOfString(BaseJsonDataUtility.EscapeDst[i], withString: BaseJsonDataUtility.EscapeSrc[i])
+            ret = ret.replacingOccurrences(of: BaseJsonDataUtility.EscapeDst[i], with: BaseJsonDataUtility.EscapeSrc[i])
         }
         
         return ret

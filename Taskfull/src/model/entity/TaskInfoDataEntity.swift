@@ -11,7 +11,7 @@ import Foundation
 /**
  * タスク情報データ部
  */
-public class TaskInfoDataEntity : Comparable {
+open class TaskInfoDataEntity : Comparable {
     /**
      * 定数定義
      */

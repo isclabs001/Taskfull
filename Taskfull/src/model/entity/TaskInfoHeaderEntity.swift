@@ -11,7 +11,7 @@ import Foundation
 /**
  * タスク情報ヘッダー部
  */
-public class TaskInfoHeaderEntity {
+open class TaskInfoHeaderEntity {
     /**
      * 定数定義
      */

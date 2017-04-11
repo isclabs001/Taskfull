@@ -11,7 +11,7 @@ import UIKit
 /**
  * 表示タスク項目
  */
-public class ViewTaskItemEntity {
+open class ViewTaskItemEntity {
     /**
      * 定数定義
      */
