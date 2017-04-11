@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		427952D41E9C84560064CE2E /* MapConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427952D31E9C84560064CE2E /* MapConfigViewController.swift */; };
+		427952D71E9C99F00064CE2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427952D61E9C99F00064CE2E /* CoreLocation.framework */; };
 		6312389C1E73C6730054AC30 /* UICircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6312389B1E73C6730054AC30 /* UICircleImageView.swift */; };
 		6312389E1E73C7C20054AC30 /* UIImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6312389D1E73C7C20054AC30 /* UIImageButton.swift */; };
 		631238A01E73CB940054AC30 /* UICircleImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6312389F1E73CB940054AC30 /* UICircleImageButton.swift */; };
@@ -80,6 +82,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		427952D31E9C84560064CE2E /* MapConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapConfigViewController.swift; sourceTree = "<group>"; };
+		427952D61E9C99F00064CE2E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6312389B1E73C6730054AC30 /* UICircleImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircleImageView.swift; sourceTree = "<group>"; };
 		6312389D1E73C7C20054AC30 /* UIImageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageButton.swift; sourceTree = "<group>"; };
 		6312389F1E73CB940054AC30 /* UICircleImageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircleImageButton.swift; sourceTree = "<group>"; };
@@ -146,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				427952D71E9C99F00064CE2E /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +171,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		427952D51E9C99F00064CE2E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				427952D61E9C99F00064CE2E /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		631238AF1E7410310054AC30 /* UITaskImageButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +336,7 @@
 				635DCE8C1E73A1FB00F6F325 /* BaseViewController.swift */,
 				635DCE8D1E73A1FB00F6F325 /* MainViewController.swift */,
 				6338B8B21E7421F4008103D0 /* TaskInputViewController.swift */,
+				427952D31E9C84560064CE2E /* MapConfigViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -381,6 +395,7 @@
 				636CE3C61E6010CE002273BE /* TaskfullTests */,
 				636CE3D11E6010CE002273BE /* TaskfullUITests */,
 				636CE3B01E6010CD002273BE /* Products */,
+				427952D51E9C99F00064CE2E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -615,6 +630,7 @@
 				635DCE731E73A03600F6F325 /* BaseJsonDataUtility.swift in Sources */,
 				635DCE791E73A05500F6F325 /* StringUtility.swift in Sources */,
 				6312389C1E73C6730054AC30 /* UICircleImageView.swift in Sources */,
+				427952D41E9C84560064CE2E /* MapConfigViewController.swift in Sources */,
 				631238B11E7410730054AC30 /* UITaskImageButton.swift in Sources */,
 				63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */,
 				63C942401E8E69260052AB80 /* TaskJsonUtility.swift in Sources */,

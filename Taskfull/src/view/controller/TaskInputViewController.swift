@@ -226,7 +226,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskColorBtn_2.isSelected = true
         InputTaskColorBtn_3.isSelected = false
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         
         
@@ -237,7 +237,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskColorBtn_1.isSelected = true
         InputTaskColorBtn_2.isSelected = false
         InputTaskColorBtn_3.isSelected = false
-        InputTaskColorBtn_1.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: UIControlState())
+        InputTaskColorBtn_1.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
     }
@@ -248,7 +248,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskColorBtn_2.isSelected = true
         InputTaskColorBtn_3.isSelected = false
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
     }
     
@@ -259,7 +259,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskColorBtn_3.isSelected = true
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-        InputTaskColorBtn_3.setBackgroundColor(UIColorUtility.rgb(179, g: 246, b: 250), forUIControlState: UIControlState())
+        InputTaskColorBtn_3.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
     }
     
     
