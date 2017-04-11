@@ -23,6 +23,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T2D-of-bB7">
+                                <rect key="frame" x="-4" y="34" width="424" height="567"/>
+                            </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qvc-ev-WMf" userLabel="ScaleViewV">
+                                <rect key="frame" x="-4" y="0.0" width="0.0" height="667"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gl3-VP-dYJ" userLabel="TopView">
+                                <rect key="frame" x="16" y="0.0" width="343" height="34"/>
+                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yuf-aY-2H9" customClass="UICustomView" customModule="Taskfull" customModuleProvider="target">
                                 <rect key="frame" x="-2" y="77" width="378" height="512"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -39,21 +49,11 @@
                                     <action selector="onTouchDown_ModeButton:" destination="BYZ-38-t0r" eventType="touchDown" id="LcL-kb-c7J"/>
                                 </connections>
                             </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T2D-of-bB7">
-                                <rect key="frame" x="0.0" y="34" width="420" height="567"/>
-                            </scrollView>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qvc-ev-WMf" userLabel="ScaleViewV">
-                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="667"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gl3-VP-dYJ" userLabel="TopView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
-                            </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rKM-3y-WXi" customClass="UICustomView" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="601" width="420" height="66"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rKM-3y-WXi" customClass="UICustomView" customModule="Taskfull" customModuleProvider="target">
+                                <rect key="frame" x="-4" y="601" width="424" height="66"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EaN-pe-x5q" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="315" y="0.0" width="105" height="66"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EaN-pe-x5q" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="318" y="0.0" width="106" height="66"/>
                                         <state key="normal" title="設定"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -83,8 +83,8 @@
                                             <segue destination="GuG-Ie-jQR" kind="show" identifier="toMapConfigViewController" id="XlA-Mp-Wl3"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5a-PH-FyS" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="210" y="0.0" width="105" height="66"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5a-PH-FyS" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="212" y="0.0" width="106" height="66"/>
                                         <state key="normal" title="ボタン３"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -111,8 +111,8 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sec-wz-6mv" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="105" y="0.0" width="105" height="66"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sec-wz-6mv" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="106" y="0.0" width="106" height="66"/>
                                         <state key="normal" title="ボタン２"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -139,8 +139,8 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4U2-s3-rB5" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="105" height="66"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4U2-s3-rB5" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="106" height="66"/>
                                         <state key="normal" title="タスク追加"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -223,11 +223,14 @@
                             <constraint firstItem="rKM-3y-WXi" firstAttribute="height" secondItem="qvc-ev-WMf" secondAttribute="height" multiplier="0.1" id="RJE-Un-Wip"/>
                             <constraint firstItem="qvc-ev-WMf" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="TIC-ls-yod"/>
                             <constraint firstItem="T2D-of-bB7" firstAttribute="top" secondItem="Gl3-VP-dYJ" secondAttribute="bottom" id="WnG-b4-F1G"/>
+                            <constraint firstItem="T2D-of-bB7" firstAttribute="leading" secondItem="qvc-ev-WMf" secondAttribute="leading" id="YAL-Ph-vkv"/>
                             <constraint firstItem="Gl3-VP-dYJ" firstAttribute="height" secondItem="qvc-ev-WMf" secondAttribute="height" multiplier="0.05" id="f0m-MZ-23W"/>
                             <constraint firstItem="Gl3-VP-dYJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="gKN-0f-t8x"/>
                             <constraint firstItem="rKM-3y-WXi" firstAttribute="leading" secondItem="qvc-ev-WMf" secondAttribute="trailing" id="jRQ-qp-a1s"/>
+                            <constraint firstItem="T2D-of-bB7" firstAttribute="trailing" secondItem="rKM-3y-WXi" secondAttribute="trailing" id="rdE-V6-F92"/>
                             <constraint firstItem="Gl3-VP-dYJ" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="sCx-xq-avb"/>
                             <constraint firstItem="rKM-3y-WXi" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="skB-Lo-3dV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="T2D-of-bB7" secondAttribute="trailing" constant="-61" id="usy-az-6Lt"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="gradationBackgroundStartColor">
