@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 ///
 /// メイン画面
@@ -600,9 +601,86 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         
         // タスクを表示する
         displayTask(self.mActionMode)
+        
+        taskExpirationNotification()
     }
     
     
+    
+    // タスク通知用メソッド:要修正　TODO：通知権限を認証デリゲートに移植、iOS９以下の対応、、
+    fileprivate func taskExpirationNotification(){
+        
+        
+        if #available(iOS 10.0, *) {
+            // iOS 10
+            let center = UNUserNotificationCenter.current()
+            // 通知種類(バッチ,サウンド,アラート)
+            center.requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (granted, error) in
+                if error != nil {
+                    return
+                }
+                
+                if granted {
+                    debugPrint("通知許可")
+                } else {
+                    debugPrint("通知拒否")
+                }
+                
+                //通知設定：START
+                
+                let calender  =  Calendar.current
+                
+                
+                //表示タスク数分処理
+                for item in self.getDisplayTaskData() {
+
+                    // UNMutableNotificationContent作成
+                    let content = UNMutableNotificationContent()
+                    //通知タイトル設定
+                    content.title = String(item.Title)
+                    
+                    //メモが空欄である場合
+                    if(true == StringUtility.isEmpty(item.Memo)){
+                        //空白文字挿入
+                        content.body = " "
+                    }
+                    else{
+                        //通知ボディ＝メモ設定
+                        content.body = String(item.Memo)
+                    }
+                    //通知サウンド:デフォルト
+                    content.sound = UNNotificationSound.default()
+                    
+                    // タスク日時をdateComponetsへ変換
+                    let dateComponents =   calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
+                    
+                    // 変換したタスク日時をトリガーに設定
+                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: dateComponents, repeats: false)
+                    
+                    //　TEST確認用：要削除
+                    print(calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime)))
+
+                
+                    // UNNotificationRequest作成(identifier:タスクID,content: タスク内容,trigger: 設定日時)
+                    let request = UNNotificationRequest.init(identifier: String(item.Id), content: content, trigger: trigger)
+                
+                    // UNUserNotificationCenterに作成したUNNotificationRequestを追加
+                    let center = UNUserNotificationCenter.current()
+                    center.add(request)
+ 
+
+                }
+                //通知設定：END
+            })
+            
+        } else {
+            // iOS 9
+            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+            
+            
+        }
+    }
     
     
 }

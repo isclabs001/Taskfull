@@ -272,16 +272,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TEZ-4M-O0U" userLabel="BaseTaskImportanceView">
-                                <rect key="frame" x="0.0" y="469.33333333333337" width="414" height="68.000000000000114"/>
+                                <rect key="frame" x="0.0" y="469" width="414" height="68"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="重要度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIh-Xc-XlL">
-                                        <rect key="frame" x="25" y="13" width="49" height="42.000000000000057"/>
+                                        <rect key="frame" x="25" y="13" width="49" height="42"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="g4e-Va-Zua">
-                                        <rect key="frame" x="93" y="13" width="296" height="43.000000000000057"/>
+                                        <rect key="frame" x="93" y="13" width="296" height="43"/>
                                         <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <segments>
                                             <segment title="低"/>
@@ -374,7 +374,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s43-CE-MyA" userLabel="BaseTaskColorBtnView">
-                                <rect key="frame" x="0.0" y="537.33333333333337" width="414" height="134"/>
+                                <rect key="frame" x="0.0" y="537" width="414" height="134"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
                                         <rect key="frame" x="25" y="43" width="52" height="48"/>
@@ -447,16 +447,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Esl-3M-zfd" userLabel="BaseTaskPointListView">
-                                <rect key="frame" x="0.0" y="402" width="414" height="67.333333333333314"/>
+                                <rect key="frame" x="0.0" y="402" width="414" height="67"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDS-U9-Hn2">
-                                        <rect key="frame" x="25" y="12" width="65.333333333333329" height="43.333333333333314"/>
+                                        <rect key="frame" x="25" y="12" width="65.333333333333329" height="43"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aPD-ts-pDm" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="110.33333333333334" y="12" width="278.66666666666663" height="43.333333333333314"/>
+                                        <rect key="frame" x="110.33333333333334" y="12" width="278.66666666666663" height="43"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>

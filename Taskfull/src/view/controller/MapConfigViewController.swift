@@ -268,8 +268,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // annotationを設定.
         myPinView.annotation = annotation
         return myPinView
-        
+
     }
+
     
     
     // MapView:addOverlay時イベント
@@ -301,5 +302,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // Dispose of any resources that can be recreated.
     }
 
+    
+    
+    
     
 }

@@ -84,7 +84,6 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         {
             // 登録内容入力欄の初期化(不要？)
             
-
             
             //view:フォーカスが外れた際のイベント
             let tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskInputViewController.missFocusView))
@@ -114,7 +113,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             
             
             // 文字数制限アラート生成
-            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT)文字以内で入力して下さい※後で制限数変更",preferredStyle: .alert)
+            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .alert)
             
             // OKActionタップ時処理
             let OkAlertAction = UIAlertAction(title: "OK", style: .default) {
@@ -530,7 +529,7 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         //self.performSegueWithIdentifier(MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
         
         // バイブレーション作動：テスト実装
-        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        //AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
         
         //メイン画面へ遷移
         self.navigationController?.popViewController(animated: true)
@@ -538,24 +537,6 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         
     }
     
-    
-    ///
-    /// 画面遷移前イベント
-    ///　- parameter segue:イベントのUIStoryboardSegue
-    ///　- parameter sender:イベントが発生したオブジェクト
-    ///
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // タスク入力画面へ遷移する場合
-        if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_INPUT){
-            // タスク入力画面のコントローラを取得
-            let dvc : TaskInputViewController = (segue.destination as AnyObject as? TaskInputViewController)!
-            
-            // TODO:画面表示時に必要なパラメータを設定する記述をする
-            //dvc.
-            
-            
-        }
-    }
     
     //キーボード「リターンキー」：タップ時イベント
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
