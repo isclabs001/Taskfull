@@ -26,8 +26,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
      * 変数
      */
     
-    //ユーザ現在位置格納変数
-    var selfLocation : CLLocationManager!
+    //ユーザ現在位置格納変数：権限通知対策の為、プロパティで宣言
+    var selfLocation : CLLocationManager! = CLLocationManager()
+    
+    //selfLocation = CLLocationManager()
     
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
@@ -50,7 +52,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         if(true == ret)
         {
 
-            selfLocation = CLLocationManager()
+            //ローカルで宣言した場合、権限確認通知が消える
+            //selfLocation = CLLocationManager()
             
             //delegate設定
             GPSMapView.delegate = self
@@ -62,7 +65,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             // まだ認証が得られていない場合は、認証ダイアログを表示
             // (このAppの使用中のみ許可の設定)
             if(status == .notDetermined) {
+                
                 selfLocation.requestAlwaysAuthorization()
+                
             }
             
             //認証状態取得
@@ -99,13 +104,11 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         //delegate設定
         //GPSMapView.delegate = self as? MKMapViewDelegate
         
-        // 現在地の取得
-        selfLocation = CLLocationManager()
+        //ローカルで宣言した場合、権限確認通知が消える
+        //selfLocation = CLLocationManager()
+        
+        //delegate設定
         selfLocation.delegate = self
-        
-        // 精度.
-        selfLocation.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        
         
         //　TODO：要修正
         if(CLLocationManager.locationServicesEnabled() == true){
@@ -146,11 +149,11 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
          // Fallback on earlier versions
          }*/
         
-        // 現在地取得
-        selfLocation.desiredAccuracy = kCLLocationAccuracyBest
-        // 位置情報取得精度
-        selfLocation.distanceFilter = 100
-        // 位置情報更新
+        // 位置情報取得精度(10m)
+        selfLocation.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        // 位置情報取得間隔(10m移動したら位置補足)
+        selfLocation.distanceFilter = 10
+        // 現在位置取得(位置情報更新)
         selfLocation.startUpdatingLocation()
         
         

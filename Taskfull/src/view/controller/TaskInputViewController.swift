@@ -8,6 +8,7 @@
 //TODO:文字の定数化,登録データ型,登録地点リスト,AutoLayout,入力方法最適化,メソッド順整理
 
 import UIKit
+import AudioToolbox
 
 ///
 /// タスク入力画面
@@ -472,9 +473,12 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         // タスク情報追加
         var taskInfoDataEntity : TaskInfoDataEntity
         
+        // タスクEntity
         taskInfoDataEntity = TaskInfoDataEntity()
+        
         //新規ID
         taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
+        
         //項目名登録
         //項目名未入力時チェック
         if(false == StringUtility.isEmpty(InputTaskNameField.text)){
@@ -488,7 +492,6 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         //メモ
         taskInfoDataEntity.Memo = InputTaskMemoView.text! as String
         //タスク終了時刻
-        //taskInfoDataEntity.DateTime = "2017/04/02 12:13:14"
         taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
         //通知場所
         taskInfoDataEntity.NotifiedLocation = 0
@@ -525,6 +528,9 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         // TODO:押下時の処理を記述する
         // タスク入力画面を表示
         //self.performSegueWithIdentifier(MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
+        
+        // バイブレーション作動：テスト実装
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
         
         //メイン画面へ遷移
         self.navigationController?.popViewController(animated: true)
