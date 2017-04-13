@@ -8,11 +8,12 @@
 
 import UIKit
 import UserNotifications
+import NotificationCenter
 
 ///
 /// メイン画面
 ///
-class MainViewController : BaseViewController, NSURLConnectionDelegate
+class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNotificationCenterDelegate,UIApplicationDelegate
 {
     /**
      * 定数
@@ -602,18 +603,30 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         // タスクを表示する
         displayTask(self.mActionMode)
         
+        // タスク通知生成処理
         taskExpirationNotification()
+        
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
     
-    
-    // タスク通知用メソッド:要修正　TODO：通知権限を認証デリゲートに移植、iOS９以下の対応、、
+    //**通知関連メソッド:START
+    // タスク通知生成処理:要修正　TODO：AppDelegateへ移動、通知、iOS９以下の対応、、
     fileprivate func taskExpirationNotification(){
+        
+        
+        //　現在の通知全削除
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        } else {
+            // Fallback on earlier versions
+        };
         
         
         if #available(iOS 10.0, *) {
             // iOS 10
             let center = UNUserNotificationCenter.current()
+            center.delegate = self
             // 通知種類(バッチ,サウンド,アラート)
             center.requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (granted, error) in
                 if error != nil {
@@ -627,9 +640,13 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
                 }
                 
                 //通知設定：START
-                
+
                 let calender  =  Calendar.current
                 
+                //let center = UNUserNotificationCenter.current()
+                //center.delegate = self
+
+
                 
                 //表示タスク数分処理
                 for item in self.getDisplayTaskData() {
@@ -641,33 +658,38 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
                     
                     //メモが空欄である場合
                     if(true == StringUtility.isEmpty(item.Memo)){
-                        //空白文字挿入
+                        //通知ボディ = 空白文字挿入
                         content.body = " "
                     }
                     else{
-                        //通知ボディ＝メモ設定
+                        //通知ボディ ＝ メモ設定
                         content.body = String(item.Memo)
                     }
+                    
+                    //アイコンバッジ：数
+                    //content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber
+                    
                     //通知サウンド:デフォルト
                     content.sound = UNNotificationSound.default()
+                    
                     
                     // タスク日時をdateComponetsへ変換
                     let dateComponents =   calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
                     
-                    // 変換したタスク日時をトリガーに設定
+                    // 変換したタスク日時をトリガーに設定(リピート:なし)
                     let trigger = UNCalendarNotificationTrigger.init(dateMatching: dateComponents, repeats: false)
                     
                     //　TEST確認用：要削除
                     print(calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime)))
-
+                    
                 
                     // UNNotificationRequest作成(identifier:タスクID,content: タスク内容,trigger: 設定日時)
                     let request = UNNotificationRequest.init(identifier: String(item.Id), content: content, trigger: trigger)
+
                 
                     // UNUserNotificationCenterに作成したUNNotificationRequestを追加
-                    let center = UNUserNotificationCenter.current()
                     center.add(request)
- 
+
 
                 }
                 //通知設定：END
@@ -682,5 +704,30 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         }
     }
     
+    
+    // アプリ(フォアグラウンド)時、通知受信時イベント
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        // 通知：バッジ、サウンド、アラート
+        completionHandler([.badge,.sound, .alert])
+
+    }
+    
+
+    
+    
+    // 通知タップ時イベント
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        //UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        //通知：なし
+        completionHandler()
+    }
+    //**END
     
 }

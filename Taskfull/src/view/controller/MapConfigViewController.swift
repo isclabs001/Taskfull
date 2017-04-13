@@ -239,7 +239,31 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // mapViewへ円追加：addOverlayイベント処理開始
         GPSMapView.add(selfCircle)
         
-        
+        /*
+        if #available(iOS 10.0, *) {
+            
+            let center = UNUserNotificationCenter.current()
+            center.delegate = self
+            
+            let content = UNMutableNotificationContent()
+            
+            content.title = "新横"
+            content.body = " "
+            content.sound = UNNotificationSound.default()
+            
+            let region = CLCircularRegion.init(center:tapLocation,radius:100,identifier:"testmap")
+            //region.notifyOnEntry = true
+            //region.notifyOnExit = false
+            let trigger = UNLocationNotificationTrigger.init(region : region,repeats:false)
+            
+            let request = UNNotificationRequest.init(identifier:"testmap",content:content,trigger:trigger)
+            
+            center.add(request)
+        } else {
+            // Fallback on earlier versions
+        }
+ */
+
     }
     
     // MapView:addAnnotation時イベント
@@ -303,7 +327,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     }
 
     
-    
+
     
     
 }

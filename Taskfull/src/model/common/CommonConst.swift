@@ -152,7 +152,7 @@ class CommonConst
      * 文字列入力制限数定数
      */
     // タスク登録画面:項目名入力制限数
-    static internal let INPUT_TASK_NAME_STRING_LIMIT: Int = 10;
+    static internal let INPUT_TASK_NAME_STRING_LIMIT: Int = 20;
     // タスク登録画面:メモ入力制限数
     static internal let INPUT_TASK_MEMO_STRING_LIMIT: Int = 200;
 
