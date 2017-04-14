@@ -41,6 +41,11 @@ open class ViewTaskItemEntity {
     var TaskButton : UITaskImageButton?
     
     /**
+     * 表示フラグ
+     */
+    var IsDisplay : Bool
+    
+    /**
      * イニシャライズ
      */
     init()
@@ -49,6 +54,7 @@ open class ViewTaskItemEntity {
         self.Color = 0
         self.Location = CGRect(x: 0, y: 0, width: 0, height: 0)
         self.TaskButton = nil
+        self.IsDisplay = true
     }
 }
 

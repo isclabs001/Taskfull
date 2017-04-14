@@ -298,7 +298,18 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // ボタン情報設定
             taskViewItem.TaskButton!.btnImage.setImageInfo(getButtonResource(taskViewItem.Color) , width:Double(size.width) , height:Double(size.height))
             taskViewItem.TaskButton!.btnImage.tag = item.Id
-            taskViewItem.TaskButton!.btnImage.addTarget(self, action: #selector(MainViewController.onTouchDown_TaskCirclrImageButton(_:)), for: .touchDown)
+            taskViewItem.TaskButton!.btnImage.addTarget(self, action: #selector(MainViewController.onTouchUp_TaskCirclrImageButton(_:)), for: .touchUpInside)
+            
+            // 長押しイベント設定
+            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(MainViewController.onLongPressGestureRecognizer_TaskCirclrImageButton(_:)))
+            // 長押し-最低2秒間は長押しする.
+            longPressGesture.minimumPressDuration = 2.0
+            // 長押し-指のズレは15pxまで.
+            longPressGesture.allowableMovement = 150
+            // ID設定
+            //longPressGesture.setValue(item.Id, forKey: "id")
+            taskViewItem.TaskButton!.btnImage.addGestureRecognizer(longPressGesture)
+            
             taskViewItem.TaskButton!.labelTitle = item.Title
             taskViewItem.TaskButton!.labelMemo = item.Memo
             taskViewItem.TaskButton!.labelDateTime =  FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
@@ -524,12 +535,52 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     /// キャンバスビューへタスクイメージボタンの全追加処理
     ///
     fileprivate func addAllTaskImageButton(){
-        // キャンバスビューにコントロールを追加
-        for view in self.mArrayViewTaskItem {
-            self.imageCanvasView.addSubview(view.TaskButton!)
+        // キャンバスビューにコントロール数分処理する
+        for item in self.mArrayViewTaskItem {
+            // 表示する場合
+            if (item.IsDisplay) {
+                // キャンバスビューにコントロールを追加
+                self.imageCanvasView.addSubview(item.TaskButton!)
+            }
         }
     }
     
+    ///
+    /// 表示用　タスクイメージボタンの表示フラグクリア処理
+    ///
+    fileprivate func clearTaskImageButtonDisplayFlag(){
+        // キャンバスビューにコントロール数分処理する
+        for item in self.mArrayViewTaskItem {
+            // 表示する
+            item.IsDisplay = true
+        }
+    }
+    
+    ///
+    /// 表示用　タスクイメージボタンの割れた処理
+    ///
+    fileprivate func clashTaskImageButton(id : Int){
+        // キャンバスビューにコントロール数分処理する
+        for item in self.mArrayViewTaskItem {
+            // ボタンが有効な場合
+            if nil != item.TaskButton {
+                // IDが一致した場合
+                if item.TaskButton!.btnImage.tag == id {
+                    //　シャボン玉が割れたアニメーションを表示
+                    item.TaskButton?.clashAnimation()
+                    // 非表示する
+                    item.IsDisplay = false
+                    // キャンバスから削除する
+                    //item.TaskButton?.removeFromSuperview()
+
+                    // 子がいる場合は子を表示する
+                    //TODO
+                    
+                    break;
+                }
+            }
+        }
+    }
     
     ///
     /// モード切り替えボタン押下イベント
@@ -558,9 +609,45 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     /// タスクイメージボタン押下イベント
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
-    @IBAction func onTouchDown_TaskCirclrImageButton(_ sendar : UITaskImageButton){
-        // TODO:押下時の処理を記述する
-        print(sendar.tag.description)
+    @IBAction func onTouchUp_TaskCirclrImageButton(_ sender : UITaskImageButton){
+        
+        print(sender.tag.description)
+
+        switch(self.mActionMode){
+        // 現在編集モードの場合
+        case CommonConst.ActionType.edit:
+            // TODO:
+            // メッセージ確認
+            // タスクを完了してもよろしいですか。
+            
+            break;
+        // 上記以外の場合
+        default:
+            // シャボン玉を割る処理を実行
+            clashTaskImageButton(id: sender.tag)
+            break;
+        }
+    }
+    
+    ///
+    /// 長押しイベント
+    ///　- parameter sender:UILongPressGestureRecognizer
+    ///
+    @IBAction func onLongPressGestureRecognizer_TaskCirclrImageButton(_ sender : UILongPressGestureRecognizer){
+
+        // 長押しされた場合
+        if(sender.state == UIGestureRecognizerState.began && nil != sender.view){
+            if nil != sender.view {
+                // VIEWがUICircleImageButtonの場合
+                if let view = sender.view! as? UICircleImageButton {
+                    // TODO:押下時の処理を記述する
+                    print(view.tag.description)
+                
+                    // TODO:
+                    // タスク編集画面を表示する
+                }
+            }
+        }
     }
 
     ///
