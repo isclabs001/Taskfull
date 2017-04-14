@@ -61,7 +61,8 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     @IBOutlet weak var InputTaskColorBtn_1: UICustomButton!
     @IBOutlet weak var InputTaskColorBtn_2: UICustomButton!
     @IBOutlet weak var InputTaskColorBtn_3: UICustomButton!
-    
+    @IBOutlet weak var MainView: UICustomView!
+
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
         
@@ -82,6 +83,11 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         //　正常な場合
         if(true == ret)
         {
+            // 背景色設定（緑のグラデーション）
+            self.MainView.gradationBackgroundStartColor = UIColorUtility.rgb(222, g: 255, b: 255)
+            self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(10, g: 209, b: 47)
+            //self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(0, g: 30, b: 183)
+
             // 登録内容入力欄の初期化(不要？)
             
             

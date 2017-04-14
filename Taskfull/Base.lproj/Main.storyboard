@@ -247,15 +247,15 @@
                         <viewControllerLayoutGuide type="top" id="qvn-id-M8r"/>
                         <viewControllerLayoutGuide type="bottom" id="S8d-Ur-KzQ"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="bq6-y5-sSE">
+                    <view key="view" contentMode="scaleToFill" id="bq6-y5-sSE" customClass="UICustomView" customModule="Taskfull" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5On-Nh-lw1" userLabel="BaseTaskDateView">
-                                <rect key="frame" x="0.0" y="334" width="414" height="68"/>
+                                <rect key="frame" x="0.0" y="333" width="414" height="67"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-hO-Ucy" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="25" y="12" width="364" height="44"/>
+                                        <rect key="frame" x="25" y="12" width="364" height="43"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -272,16 +272,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TEZ-4M-O0U" userLabel="BaseTaskImportanceView">
-                                <rect key="frame" x="0.0" y="469" width="414" height="68"/>
+                                <rect key="frame" x="0.0" y="467" width="414" height="67"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="重要度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIh-Xc-XlL">
-                                        <rect key="frame" x="25" y="13" width="49" height="42"/>
+                                        <rect key="frame" x="25" y="13" width="49" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="g4e-Va-Zua">
-                                        <rect key="frame" x="93" y="13" width="296" height="43"/>
+                                        <rect key="frame" x="93" y="13" width="296" height="42"/>
                                         <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <segments>
                                             <segment title="低"/>
@@ -302,10 +302,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeg-2x-1ZN" userLabel="BaseTaskNameView">
-                                <rect key="frame" x="0.0" y="64" width="414" height="68"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="67"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SsX-6L-Joj">
-                                        <rect key="frame" x="25" y="16" width="364" height="44"/>
+                                        <rect key="frame" x="25" y="16" width="364" height="43"/>
                                         <color key="backgroundColor" red="0.95999370805973161" green="1" blue="0.89272231540000013" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -357,7 +357,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p8W-DM-IDd" userLabel="BaseTaskMemoView">
-                                <rect key="frame" x="0.0" y="132" width="414" height="202"/>
+                                <rect key="frame" x="0.0" y="131" width="414" height="202"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tM4-dB-mS2" customClass="UIPlaceHolderTextView" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="25" y="2" width="364" height="196"/>
@@ -374,19 +374,19 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s43-CE-MyA" userLabel="BaseTaskColorBtnView">
-                                <rect key="frame" x="0.0" y="537" width="414" height="134"/>
+                                <rect key="frame" x="0.0" y="534" width="414" height="135"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWJ-ru-Ymb">
-                                        <rect key="frame" x="25" y="43" width="52" height="48"/>
+                                        <rect key="frame" x="25" y="43" width="52" height="49"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nHi-PU-jMs">
-                                        <rect key="frame" x="98" y="0.0" width="286" height="134"/>
+                                        <rect key="frame" x="98" y="0.0" width="286" height="135"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-y1-WJP" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="22" width="88.666666666666657" height="90"/>
+                                                <rect key="frame" x="0.0" y="22" width="88.666666666666657" height="91"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -399,7 +399,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="98.666666666666671" y="22" width="88.666666666666643" height="90"/>
+                                                <rect key="frame" x="98.666666666666671" y="22" width="88.666666666666643" height="91"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -412,7 +412,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-cs-b7O" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="197.33333333333331" y="22" width="88.666666666666686" height="90"/>
+                                                <rect key="frame" x="197.33333333333331" y="22" width="88.666666666666686" height="91"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -447,7 +447,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Esl-3M-zfd" userLabel="BaseTaskPointListView">
-                                <rect key="frame" x="0.0" y="402" width="414" height="67"/>
+                                <rect key="frame" x="0.0" y="400" width="414" height="67"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDS-U9-Hn2">
                                         <rect key="frame" x="25" y="12" width="65.333333333333329" height="43"/>
@@ -473,7 +473,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.84600461409395677" green="1" blue="0.89272231543624159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="5On-Nh-lw1" firstAttribute="top" secondItem="p8W-DM-IDd" secondAttribute="bottom" id="1AZ-8g-CPu"/>
                             <constraint firstAttribute="trailing" secondItem="TEZ-4M-O0U" secondAttribute="trailing" id="32Z-XY-soG"/>
@@ -488,18 +488,18 @@
                             <constraint firstItem="TEZ-4M-O0U" firstAttribute="top" secondItem="Esl-3M-zfd" secondAttribute="bottom" id="GeE-kg-bAa"/>
                             <constraint firstItem="Esl-3M-zfd" firstAttribute="height" secondItem="GzW-Rr-0C2" secondAttribute="height" multiplier="0.1" id="HHG-ab-Phx"/>
                             <constraint firstItem="s43-CE-MyA" firstAttribute="height" secondItem="GzW-Rr-0C2" secondAttribute="height" multiplier="0.2" id="IuT-mi-UUc"/>
+                            <constraint firstItem="aeg-2x-1ZN" firstAttribute="top" secondItem="qvn-id-M8r" secondAttribute="bottom" id="JTO-c3-1f7"/>
                             <constraint firstAttribute="trailing" secondItem="oFr-HC-1HV" secondAttribute="trailing" id="Kqf-6l-fu3"/>
                             <constraint firstItem="p8W-DM-IDd" firstAttribute="height" secondItem="GzW-Rr-0C2" secondAttribute="height" multiplier="0.3" id="Kum-Yc-oVM"/>
                             <constraint firstAttribute="trailing" secondItem="Esl-3M-zfd" secondAttribute="trailing" id="ONk-jE-yJT"/>
-                            <constraint firstItem="S8d-Ur-KzQ" firstAttribute="top" secondItem="GzW-Rr-0C2" secondAttribute="bottom" id="OTY-Js-GCq"/>
-                            <constraint firstItem="GzW-Rr-0C2" firstAttribute="top" secondItem="qvn-id-M8r" secondAttribute="bottom" id="OaA-tb-ETn"/>
+                            <constraint firstItem="GzW-Rr-0C2" firstAttribute="top" secondItem="qvn-id-M8r" secondAttribute="bottom" id="Oik-eD-yLQ"/>
                             <constraint firstItem="5On-Nh-lw1" firstAttribute="leading" secondItem="GzW-Rr-0C2" secondAttribute="trailing" id="P2C-YT-nG0"/>
+                            <constraint firstItem="S8d-Ur-KzQ" firstAttribute="top" secondItem="GzW-Rr-0C2" secondAttribute="bottom" id="S3I-ug-ezZ"/>
                             <constraint firstItem="p8W-DM-IDd" firstAttribute="top" secondItem="aeg-2x-1ZN" secondAttribute="bottom" id="ZnN-e2-fit"/>
                             <constraint firstItem="Esl-3M-zfd" firstAttribute="leading" secondItem="GzW-Rr-0C2" secondAttribute="trailing" id="aJr-DI-vtE"/>
                             <constraint firstAttribute="trailing" secondItem="p8W-DM-IDd" secondAttribute="trailing" id="bUC-4O-wUh"/>
                             <constraint firstItem="TEZ-4M-O0U" firstAttribute="leading" secondItem="GzW-Rr-0C2" secondAttribute="trailing" id="bkx-45-pLx"/>
                             <constraint firstItem="Esl-3M-zfd" firstAttribute="top" secondItem="5On-Nh-lw1" secondAttribute="bottom" id="cjb-G7-x0X"/>
-                            <constraint firstItem="aeg-2x-1ZN" firstAttribute="top" secondItem="qvn-id-M8r" secondAttribute="bottom" id="dit-vu-keR"/>
                             <constraint firstItem="GzW-Rr-0C2" firstAttribute="leading" secondItem="bq6-y5-sSE" secondAttribute="leading" id="duY-pj-akl"/>
                             <constraint firstItem="s43-CE-MyA" firstAttribute="leading" secondItem="GzW-Rr-0C2" secondAttribute="trailing" id="fNU-zw-UzO"/>
                             <constraint firstAttribute="trailing" secondItem="5On-Nh-lw1" secondAttribute="trailing" id="fPx-D4-nTB"/>
@@ -507,6 +507,14 @@
                             <constraint firstItem="5On-Nh-lw1" firstAttribute="height" secondItem="GzW-Rr-0C2" secondAttribute="height" multiplier="0.1" id="sT9-fV-gX1"/>
                             <constraint firstItem="aeg-2x-1ZN" firstAttribute="leading" secondItem="GzW-Rr-0C2" secondAttribute="trailing" id="sWa-Gr-qJ5"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="gradationBackgroundStartColor">
+                                <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="gradationBackgroundEndColor">
+                                <color key="value" red="0.039215686274509803" green="0.81960784313725488" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="AddAfterTask" destination="w2T-Od-cqa" id="Ya9-y6-kNy"/>
@@ -518,6 +526,7 @@
                         <outlet property="InputTaskDateField" destination="6S7-hO-Ucy" id="wNr-GR-voi"/>
                         <outlet property="InputTaskMemoView" destination="tM4-dB-mS2" id="dh0-Q5-206"/>
                         <outlet property="InputTaskNameField" destination="SsX-6L-Joj" id="yD0-w4-4l7"/>
+                        <outlet property="MainView" destination="bq6-y5-sSE" id="tQR-74-gxL"/>
                         <outlet property="lblInputPointList" destination="UDS-U9-Hn2" id="NIh-WO-Xph"/>
                     </connections>
                 </viewController>
@@ -554,7 +563,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jNQ-oQ-Fjv">
-                                        <rect key="frame" x="321" y="21" width="51" height="31"/>
+                                        <rect key="frame" x="321" y="22" width="51" height="31"/>
                                     </switch>
                                 </subviews>
                                 <color key="backgroundColor" red="0.36010122299194336" green="0.65859571430418229" blue="0.89897107415729094" alpha="1" colorSpace="calibratedRGB"/>
