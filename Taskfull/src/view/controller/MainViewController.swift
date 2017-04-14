@@ -606,7 +606,6 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // タスク通知生成処理
         taskExpirationNotification()
         
-        UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
     
@@ -627,6 +626,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // iOS 10
             let center = UNUserNotificationCenter.current()
             center.delegate = self
+            
             // 通知種類(バッチ,サウンド,アラート)
             center.requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (granted, error) in
                 if error != nil {
@@ -653,6 +653,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
 
                     // UNMutableNotificationContent作成
                     let content = UNMutableNotificationContent()
+                    
                     //通知タイトル設定
                     content.title = String(item.Title)
                     
@@ -671,7 +672,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     
                     //通知サウンド:デフォルト
                     content.sound = UNNotificationSound.default()
-                    
+
                     
                     // タスク日時をdateComponetsへ変換
                     let dateComponents =   calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
@@ -689,7 +690,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 
                     // UNUserNotificationCenterに作成したUNNotificationRequestを追加
                     center.add(request)
-
+ 
 
                 }
                 //通知設定：END
@@ -713,8 +714,6 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         completionHandler([.badge,.sound, .alert])
 
     }
-    
-
     
     
     // 通知タップ時イベント
