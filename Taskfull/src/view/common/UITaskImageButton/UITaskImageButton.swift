@@ -23,6 +23,9 @@ class UITaskImageButton : UIView
     // アニメーションレイヤーの一意名
     static var AnimationLayerIdentifier : String = "AnimationLayerIdentifier";
     
+    // アニメーションレイヤーの一意名
+    static var AnimationLayerClashIdentifier : String = "AnimationLayerClashIdentifier";
+    
     // タイトル切り替えのインターバルタイマー
     static var IntervalForTitleTimer : Double = 5.0;
     
@@ -185,8 +188,8 @@ class UITaskImageButton : UIView
     ///　アニメーション設定
     ///
     fileprivate func setViewAnimation(){
-        // アニメーション削除
-        self.layer.removeAllAnimations()
+        // アニメーション停止
+        stopViewAnimation()
 
         // 開始インターバル設定
         let interval = (CFTimeInterval(arc4random() % 200) / 100)
@@ -201,6 +204,14 @@ class UITaskImageButton : UIView
         animation.repeatCount = .infinity
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         self.layer.add(animation, forKey: UITaskImageButton.AnimationLayerIdentifier)
+    }
+    
+    ///
+    ///　アニメーション停止
+    ///
+    fileprivate func stopViewAnimation(){
+        // アニメーション削除
+        self.layer.removeAllAnimations()
     }
     
     ///
@@ -273,6 +284,43 @@ class UITaskImageButton : UIView
             // フォントサイズ設定
             self.txtLabel.font = self.txtLabel.font.withSize(getFontSize(self.txtLabel.font.fontName, width: self.layer.frame.size.width, height: self.layer.frame.size.height, text: label))
         }
+    }
+    
+    ///
+    ///　アニメーション停止処理
+    ///
+    open func stopAnimation() {
+        // アニメーション停止
+        stopViewAnimation()
+        // ラベル用　タイマー停止
+        stopTimerForLabel()
+    }
+    
+    ///
+    ///　シャボン玉が割れたアニメーション処理
+    ///
+    open func clashAnimation() {
+        // アニメーション停止処理
+        stopAnimation()
+        
+        // シャボン玉が割れたアニメーション設定
+        setClashAnimation()
+    }
+    
+    ///
+    ///　シャボン玉が割れたアニメーション設定処理
+    ///
+    fileprivate func setClashAnimation(){
+        
+        // TODO:割れたアニメーションにする！！
+        // 徐々に消えるアニメーション
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fromValue = 1.0
+        animation.toValue = 0.0
+        animation.duration = 0.75
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        self.layer.add(animation, forKey: UITaskImageButton.AnimationLayerClashIdentifier)
+        self.layer.opacity = 0
     }
 }
 
