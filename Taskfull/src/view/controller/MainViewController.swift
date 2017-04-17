@@ -275,52 +275,90 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         var index : Int = 0
         // 表示対象データ数分処理する
         for item in getDisplayTaskData() {
-            // 表示項目情報生成
-            let taskViewItem : ViewTaskItemEntity = ViewTaskItemEntity()
+            // タスクイメージボタンを生成し配列に追加
+            self.mArrayViewTaskItem.append(createViewTaskItemEntity(index: index, systemDate: systemDate, item: item))
             
-            // ID設定
-            taskViewItem.Id = item.Id
-            
-            // ボタン色設定
-            taskViewItem.Color = getButtonColor(item.ButtonColor, systemDate : systemDate, taskDate : item.DateTime)
-            
-            // ボタンサイズ取得
-            let size : CGSize = getButtonSize(systemDate, taskDate: item.DateTime, createDate: item.CreateDateTime)
-            // ボタン位置取得
-            let position : CGPoint = getButtonPosition(index, buttonSize: size)
-            
-            // ボタン位置・サイズ設定
-            taskViewItem.Location = CGRect(origin: CGPoint(x: position.x, y: position.y), size: size)
-            
-            // ボタン生成
-            taskViewItem.TaskButton = UITaskImageButton(frame: taskViewItem.Location)
-            
-            // ボタン情報設定
-            taskViewItem.TaskButton!.btnImage.setImageInfo(getButtonResource(taskViewItem.Color) , width:Double(size.width) , height:Double(size.height))
-            taskViewItem.TaskButton!.btnImage.tag = item.Id
-            taskViewItem.TaskButton!.btnImage.addTarget(self, action: #selector(MainViewController.onTouchUp_TaskCirclrImageButton(_:)), for: .touchUpInside)
-            
-            // 長押しイベント設定
-            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(MainViewController.onLongPressGestureRecognizer_TaskCirclrImageButton(_:)))
-            // 長押し-最低2秒間は長押しする.
-            longPressGesture.minimumPressDuration = 2.0
-            // 長押し-指のズレは15pxまで.
-            longPressGesture.allowableMovement = 150
-            // ID設定
-            //longPressGesture.setValue(item.Id, forKey: "id")
-            taskViewItem.TaskButton!.btnImage.addGestureRecognizer(longPressGesture)
-            
-            taskViewItem.TaskButton!.labelTitle = item.Title
-            taskViewItem.TaskButton!.labelMemo = item.Memo
-            taskViewItem.TaskButton!.labelDateTime =  FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
-            taskViewItem.TaskButton!.labelTextColor = item.TextColor
-
-            // 配列に追加
-            self.mArrayViewTaskItem.append(taskViewItem)
-
             // インデックス更新
             index += 1
         }
+    }
+    
+    ///
+    /// タスクイメージボタン生成処理
+    ///
+    fileprivate func createViewTaskItemEntity(index : Int, systemDate : String, item : TaskInfoDataEntity) -> ViewTaskItemEntity {
+
+        return createViewTaskItemEntity(index : index, systemDate : systemDate, id : item.Id, title : item.Title, memo : item.Memo, dateTime : item.DateTime, buttonColor : item.ButtonColor, textColor : item.TextColor, createDateTime : item.CreateDateTime)
+    }
+    
+    ///
+    /// タスクイメージボタン生成処理
+    ///
+    fileprivate func createViewTaskItemEntity(parrentIndex : Int, systemDate : String, item : ViewTaskItemEntity) -> ViewTaskItemEntity {
+
+        // IDのタスク情報取得
+        let data = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(item.Id)
+
+        // 取得できた場合
+        if nil != data {
+            // タスクイメージボタン生成
+            return createViewTaskItemEntity(index : parrentIndex, systemDate : systemDate, id : data!.Id, title : data!.Title, memo : data!.Memo, dateTime : data!.DateTime, buttonColor : data!.ButtonColor, textColor : data!.TextColor, createDateTime : data!.CreateDateTime)
+        } else {
+            return ViewTaskItemEntity()
+        }
+    }
+
+    ///
+    /// タスクイメージボタン生成処理
+    ///
+    fileprivate func createViewTaskItemEntity(index : Int, systemDate : String, id : Int, title : String, memo : String, dateTime : String, buttonColor : Int, textColor : Int, createDateTime : String) -> ViewTaskItemEntity {
+        
+        // 表示項目情報生成
+        let taskViewItem : ViewTaskItemEntity = ViewTaskItemEntity()
+        
+        // ID設定
+        taskViewItem.Id = id
+        // 表示インデックス設定
+        taskViewItem.Index = index
+        
+        // ボタン色設定
+        taskViewItem.Color = getButtonColor(buttonColor, systemDate : systemDate, taskDate : dateTime)
+        
+        // ボタンサイズ取得
+        let size : CGSize = getButtonSize(systemDate, taskDate: dateTime, createDate: createDateTime)
+        // ボタン位置取得
+        let position : CGPoint = getButtonPosition(index, buttonSize: size)
+        
+        // ボタン位置・サイズ設定
+        taskViewItem.Location = CGRect(origin: CGPoint(x: position.x, y: position.y), size: size)
+        
+        // ボタン生成
+        taskViewItem.TaskButton = UITaskImageButton(frame: taskViewItem.Location)
+        
+        // ボタン情報設定
+        taskViewItem.TaskButton!.btnImage.setImageInfo(getButtonResource(taskViewItem.Color) , width:Double(size.width) , height:Double(size.height))
+        taskViewItem.TaskButton!.btnImage.tag = id
+        taskViewItem.TaskButton!.btnImage.addTarget(self, action: #selector(MainViewController.onTouchUp_TaskCirclrImageButton(_:)), for: .touchUpInside)
+        
+        // 長押しイベント設定
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(MainViewController.onLongPressGestureRecognizer_TaskCirclrImageButton(_:)))
+        // 長押し-最低2秒間は長押しする.
+        longPressGesture.minimumPressDuration = 2.0
+        // 長押し-指のズレは15pxまで.
+        longPressGesture.allowableMovement = 150
+        // 長押しイベント追加
+        taskViewItem.TaskButton!.btnImage.addGestureRecognizer(longPressGesture)
+        
+        // タイトル設定
+        taskViewItem.TaskButton!.labelTitle = title
+        // メモ設定
+        taskViewItem.TaskButton!.labelMemo = memo
+        // 完了日付設定
+        taskViewItem.TaskButton!.labelDateTime =  FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(dateTime))
+        // 文字色設定
+        taskViewItem.TaskButton!.labelTextColor = textColor
+        
+        return taskViewItem
     }
     
     ///
@@ -568,16 +606,40 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 if item.TaskButton!.btnImage.tag == id {
                     //　シャボン玉が割れたアニメーションを表示
                     item.TaskButton?.clashAnimation()
-                    // 非表示する
-                    item.IsDisplay = false
-                    // キャンバスから削除する
-                    //item.TaskButton?.removeFromSuperview()
-
                     // 子がいる場合は子を表示する
-                    //TODO
-                    
+                    displayTaskImageButtonForChild(parrentItem: item)
+
+                    // 親の場合
+                    if(false == item.IsChild){
+                        // 非表示にする
+                        item.IsDisplay = false
+
+                    // 上記以外の場合
+                    } else {
+                        // キャンバスから削除する
+                        item.TaskButton?.removeFromSuperview()
+                    }
                     break;
                 }
+            }
+        }
+    }
+    
+    ///
+    /// 表示用　子のタスクイメージボタン表示処理
+    ///
+    fileprivate func displayTaskImageButtonForChild(parrentItem : ViewTaskItemEntity) {
+        // データ数分表示する
+        for data in TaskInfoUtility.DefaultInstance.getTaskInfoData() {
+            // 未完了、かつ、親IDが一致した場合
+            if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
+                && parrentItem.Id == data.ParrentId) {
+                
+                // 現在日付を取得
+                let systemDate : String = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+
+                // タスクイメージボタンを生成し配列に追加
+                self.mArrayViewTaskItem.append(createViewTaskItemEntity(index: parrentItem.Index, systemDate: systemDate, item: data))
             }
         }
     }
