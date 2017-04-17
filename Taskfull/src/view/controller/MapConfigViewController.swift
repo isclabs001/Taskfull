@@ -52,6 +52,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         if(true == ret)
         {
 
+            // ナビゲーションバー表示
+            navigationController?.setNavigationBarHidden(false, animated: true)
+            
+            
             //ローカルで宣言した場合、権限確認通知が消える
             //selfLocation = CLLocationManager()
             

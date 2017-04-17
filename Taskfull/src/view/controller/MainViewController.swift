@@ -103,7 +103,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 
             // タスクを表示する
             displayTask(self.mActionMode)
- 
+
             // 戻り値にtrueを設定
             ret = true
         }
@@ -720,7 +720,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // タスク通知生成処理
         taskExpirationNotification()
         
-        UIApplication.shared.applicationIconBadgeNumber = 0
+        // ナビゲーションバー非表示
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
     }
     
     
@@ -738,9 +740,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         
         if #available(iOS 10.0, *) {
-            // iOS 10
+            
+            // 通知デリゲート設定
             let center = UNUserNotificationCenter.current()
             center.delegate = self
+            
             // 通知種類(バッチ,サウンド,アラート)
             center.requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (granted, error) in
                 if error != nil {
@@ -755,7 +759,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 
                 //通知設定：START
 
-                let calender  =  Calendar.current
+                //　変換用カレンダー生成(西暦)
+                let calender  =  Calendar(identifier:.gregorian)
                 
                 //let center = UNUserNotificationCenter.current()
                 //center.delegate = self
@@ -767,6 +772,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
 
                     // UNMutableNotificationContent作成
                     let content = UNMutableNotificationContent()
+                    
                     //通知タイトル設定
                     content.title = String(item.Title)
                     
@@ -785,9 +791,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     
                     //通知サウンド:デフォルト
                     content.sound = UNNotificationSound.default()
-                    
-                    
-                    // タスク日時をdateComponetsへ変換
+
+                    // タスク終了日時をdateComponetsへ変換
                     let dateComponents =   calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
                     
                     // 変換したタスク日時をトリガーに設定(リピート:なし)
@@ -803,7 +808,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 
                     // UNUserNotificationCenterに作成したUNNotificationRequestを追加
                     center.add(request)
-
+ 
 
                 }
                 //通知設定：END
@@ -819,7 +824,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     
     
-    // アプリ(フォアグラウンド)時、通知受信時イベント
+    // フォアグラウンド時:通知受信時イベント
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
@@ -827,8 +832,6 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         completionHandler([.badge,.sound, .alert])
 
     }
-    
-
     
     
     // 通知タップ時イベント
