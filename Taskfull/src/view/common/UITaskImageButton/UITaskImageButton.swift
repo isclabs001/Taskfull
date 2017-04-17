@@ -66,6 +66,9 @@ class UITaskImageButton : UIView
         didSet{
             self.txtLabel.text = labelTitle
             self.intCurrentLabel = 0
+            
+            // フォントサイズ設定
+            self.txtLabel.font = self.txtLabel.font.withSize(getFontSize(self.txtLabel.font.fontName, width: self.layer.frame.size.width, height: self.layer.frame.size.height, text: self.txtLabel.text!))
         }
     }
     
@@ -139,9 +142,6 @@ class UITaskImageButton : UIView
         // ラベル文字色設定
         self.txtLabel.textColor = getLabelTextColor(self.labelTextColor)
         
-        // フォントサイズ設定
-        self.txtLabel.font = self.txtLabel.font.withSize(getFontSize(self.txtLabel.font.fontName, width: self.layer.frame.size.width, height: self.layer.frame.size.height, text: self.txtLabel.text!))
-        
         // アニメーション設定
         setViewAnimation()
         
@@ -160,8 +160,8 @@ class UITaskImageButton : UIView
     fileprivate func getFontSize(_ fontName : String, width : CGFloat, height : CGFloat, text : String) -> CGFloat {
         var ret : CGFloat = 0
         let work : String = text
-        let fontSizies : [CGFloat] = [42.0, 38.0, 34.0, 32.0, 28.0, 24.0, 22.0, 20.0, 18.0, 160, 14.0, 12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0]
-        let workWidth : CGFloat = width - (UITaskImageButton.LABEL_MARGIN * 2)
+        let fontSizies : [CGFloat] = [42.0, 38.0, 34.0, 32.0, 28.0, 24.0, 22.0, 20.0, 18.0, 16.0, 14.0, 12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0]
+        let workWidth : CGFloat = width - (UITaskImageButton.LABEL_MARGIN * 2 + 6.0)
         
         // 調査するフォントサイズ数分処理する
         for fontSize in fontSizies {
@@ -171,13 +171,24 @@ class UITaskImageButton : UIView
             attributes![NSFontAttributeName] = UIFont(name: fontName, size: fontSize)
             let size = work.size(attributes: attributes)
 
-            // 表示ラベルの行数は2行固定とする
-            let workHeight : CGFloat = size.height * UITaskImageButton.LABEL_ROWS
-            
-            // コントロールの幅に収まっている、または、折り返した結果、高さに収まっている場合
-            if(workWidth >= size.width || workHeight >= (size.height * (size.width / workWidth))) {
+            // 表示行数取得
+            let workRows : CGFloat = CGFloat(Int(size.width / workWidth))
+                
+            // 表示行が０の場合
+            if(0 == workRows) {
                 // 確定
                 break
+
+            // 上記以外の場合
+            } else {
+                // 表示ラベルの行数は最大2行固定とする
+                let workHeight : CGFloat = (height >= size.height * UITaskImageButton.LABEL_ROWS) ? size.height * UITaskImageButton.LABEL_ROWS : size.height
+            
+                // コントロールの幅に収まっている、または、折り返した結果、高さに収まっている場合
+                if(workWidth >= size.width || (1 < workRows && workHeight >= (size.height * workRows))) {
+                    // 確定
+                    break
+                }
             }
         }
         

@@ -367,7 +367,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         let centerPos : CGPoint = CGPoint(x: areaSize.width / 2, y: areaSize.height / 2)
         
         // データがある場合
-        if(0 < mArrayViewTaskItem.count) {
+        if(0 < self.mArrayViewTaskItem.count) {
             // 先頭ボタン表示位置を取得
             let centerButtonLocation : CGRect = self.mArrayViewTaskItem[0].Location
             // ボタン位置取得
@@ -583,6 +583,25 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     
     ///
+    /// 表示用　タスクイメージボタン全表示かのチェック
+    ///
+    fileprivate func isAllDisplayFlag() -> Bool{
+        var ret : Bool = true
+        
+        // キャンバスビューにコントロール数分処理する
+        for item in self.mArrayViewTaskItem {
+            // 非表示データがある場合
+            if(false == item.IsDisplay) {
+                // 戻り値にfalseを設定する
+                ret = false
+                break
+            }
+        }
+        
+        return ret
+    }
+    
+    ///
     /// モード切り替えボタン押下イベント
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
@@ -603,6 +622,14 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         // 動作モードによるメイン画面の初期化
         initializeMain(self.mActionMode)
+        
+        // 参照時に割ったシャボン玉がある場合
+        if(false == isAllDisplayFlag()){
+            // 表示フラグの初期化
+            clearTaskImageButtonDisplayFlag()
+            // タスクを表示する
+            displayTask(self.mActionMode)
+        }
     }
     
     ///
