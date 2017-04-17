@@ -103,7 +103,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 
             // タスクを表示する
             displayTask(self.mActionMode)
- 
+
             // 戻り値にtrueを設定
             ret = true
         }
@@ -693,6 +693,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // タスク通知生成処理
         taskExpirationNotification()
         
+        // ナビゲーションバー非表示
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
     }
     
     
@@ -710,7 +713,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         
         if #available(iOS 10.0, *) {
-            // iOS 10
+            
+            // 通知デリゲート設定
             let center = UNUserNotificationCenter.current()
             center.delegate = self
             
@@ -728,7 +732,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 
                 //通知設定：START
 
-                let calender  =  Calendar.current
+                //　変換用カレンダー生成(西暦)
+                let calender  =  Calendar(identifier:.gregorian)
                 
                 //let center = UNUserNotificationCenter.current()
                 //center.delegate = self
@@ -760,8 +765,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     //通知サウンド:デフォルト
                     content.sound = UNNotificationSound.default()
 
-                    
-                    // タスク日時をdateComponetsへ変換
+                    // タスク終了日時をdateComponetsへ変換
                     let dateComponents =   calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
                     
                     // 変換したタスク日時をトリガーに設定(リピート:なし)
@@ -793,7 +797,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     
     
-    // アプリ(フォアグラウンド)時、通知受信時イベント
+    // フォアグラウンド時:通知受信時イベント
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         

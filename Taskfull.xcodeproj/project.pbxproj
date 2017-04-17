@@ -62,6 +62,7 @@
 		63C5CF0D1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */; };
 		63C9423E1E8E5E450052AB80 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9423D1E8E5E450052AB80 /* StringExtensions.swift */; };
 		63C942401E8E69260052AB80 /* TaskJsonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9423F1E8E69260052AB80 /* TaskJsonUtility.swift */; };
+		63D24F7D1EA45FAF00D473A7 /* TaskEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D24F7C1EA45FAF00D473A7 /* TaskEditViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPlaceHolderTextView.swift; sourceTree = "<group>"; };
 		63C9423D1E8E5E450052AB80 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		63C9423F1E8E69260052AB80 /* TaskJsonUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskJsonUtility.swift; sourceTree = "<group>"; };
+		63D24F7C1EA45FAF00D473A7 /* TaskEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -337,6 +339,7 @@
 				635DCE8D1E73A1FB00F6F325 /* MainViewController.swift */,
 				6338B8B21E7421F4008103D0 /* TaskInputViewController.swift */,
 				427952D31E9C84560064CE2E /* MapConfigViewController.swift */,
+				63D24F7C1EA45FAF00D473A7 /* TaskEditViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				631238AE1E73F5F90054AC30 /* UIColorUtility.swift in Sources */,
 				6338B8B31E7421F4008103D0 /* TaskInputViewController.swift in Sources */,
 				631238A01E73CB940054AC30 /* UICircleImageButton.swift in Sources */,
+				63D24F7D1EA45FAF00D473A7 /* TaskEditViewController.swift in Sources */,
 				631373011E91EBBF0089C19E /* ViewTaskItemEntity.swift in Sources */,
 				636CE3B51E6010CD002273BE /* ViewController.swift in Sources */,
 				631372FF1E8F334F0089C19E /* TaskInfoUtility.swift in Sources */,

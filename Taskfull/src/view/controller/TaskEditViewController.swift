@@ -5,19 +5,18 @@
 //  Created by IscIsc on 2017/03/11.
 //  Copyright © 2017年 isc. All rights reserved.
 //
-//TODO:文字の定数化,登録データ型,登録地点リスト,AutoLayout,入力方法最適化,メソッド順整理
+//TODO:変数名変更　削除ボタン処理　表示処理
 
 import UIKit
-import AudioToolbox
 
 ///
 /// タスク入力画面
 ///
-class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,UITextViewDelegate
+class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,UITextViewDelegate
 {
-/**
- * 定数
- */
+    /**
+     * 定数
+     */
     // タスク終了時刻入力DatePiceker
     let inputDatePicker : UIDatePicker = UIDatePicker()
     // 登録地点リスト入力PickerView
@@ -25,11 +24,12 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     // 設定日時取得変数
     var inputTaskEndDate : Date = Date()
+    
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
-/**
- * 変数
- */
+    /**
+     * 変数
+     */
     // カラーボタンイメージ(全１２色)
     // 重要度：低
     fileprivate let mImageTaskColorBtn_WHITE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_WHITE])!
@@ -52,17 +52,18 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     /**
      * 各登録内容入力欄
      */
+
     @IBOutlet weak var InputTaskNameField: UITextField!
-    @IBOutlet weak var InputPointListField: UITextField!
+    @IBOutlet weak var InputPointListField: InputDisabledTextField!
     @IBOutlet weak var InputTaskMemoView: UIPlaceHolderTextView!
-    @IBOutlet weak var InputTaskDateField: UITextField!
-    @IBOutlet weak var AddAfterTask: UIButton!
+    @IBOutlet weak var InputTaskDateField: InputDisabledTextField!
+    @IBOutlet weak var AddAfterTask: UICustomButton!
     @IBOutlet weak var InputImportanceSegment: UISegmentedControl!
     @IBOutlet weak var InputTaskColorBtn_1: UICustomButton!
     @IBOutlet weak var InputTaskColorBtn_2: UICustomButton!
     @IBOutlet weak var InputTaskColorBtn_3: UICustomButton!
-    @IBOutlet weak var MainView: UICustomView!
-
+    @IBOutlet var MainView: UICustomView!
+    
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
         
@@ -73,6 +74,36 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         initializeProc()
     }
     
+    // 削除ボタンタップ時動作
+    @IBAction func TouchUpInside_DeleteTaskBtn(_ sender: Any) {
+        
+        // アラート作成
+        let deleteAlert: UIAlertController = UIAlertController(title: "削除確認", message: "編集中のタスク及び後続タスクを削除します。よろしいですか？", preferredStyle:  UIAlertControllerStyle.alert)
+        
+        // アクション:OKボタン
+        let okAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+            
+            (action: UIAlertAction!) -> Void in
+            //　OK時アクション
+            print("OK")
+        })
+        
+        // アクション:キャンセルボタン
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler:{
+            
+            (action: UIAlertAction!) -> Void in
+            
+        })
+        
+        // 生成アクション追加
+        deleteAlert.addAction(okAction)
+        deleteAlert.addAction(cancelAction)
+        
+        // 生成アラート表示
+        present(deleteAlert, animated: true, completion: nil)
+        
+    }
+
     
     /// 初期化処理
     override func initializeProc() ->Bool
@@ -87,26 +118,95 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             self.MainView.gradationBackgroundStartColor = UIColorUtility.rgb(222, g: 255, b: 255)
             self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(10, g: 209, b: 47)
             //self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(0, g: 30, b: 183)
-
+            
             // 登録内容入力欄の初期化(不要？)
-
+            
             
             //view:フォーカスが外れた際のイベント
             let tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskInputViewController.missFocusView))
             view.addGestureRecognizer(tap)
             
             // 登録画面用ナビゲーションバー：初期設定
-            displayInputTopMenu()
+            displayEditTopMenu()
             
-            // 登録内容入力欄を設定　※詳細表示画面との要分岐処理
+            // 登録内容入力欄を設定
             displayInputField()
-
+            
+            // タスク内容初期表示処理
+            //displayTaskContent()
+            
             // 戻り値にtrueを設定
             ret = true
         }
         
         return ret
     }
+    
+    
+    
+    // タスク内容初期表示処理
+    func displayTaskContent(){
+        
+        // 選択されたタスク読込処理
+        
+        // 項目名入力欄
+        //InputTaskNameField.text =
+        
+        // メモ入力欄
+        
+            // メモが空欄である場合
+        
+        
+        // タスク終了日時欄
+        //InputTaskDateField.text =
+        
+        // 通知場所リスト欄
+        //InputPointListField.text =
+        
+        
+        // 重要度欄
+        //InputImportanceSegment.selectedSegmentIndex =
+        //各セグメント分岐処理(ボタン色変更)
+        //didChengeImportanceSegmentValue(InputImportanceSegment.selectedSegmentIndex)
+
+ 
+        // カラー欄
+        /*
+        if( = 0 OR  = 3 OR = 6 OR = 9 ){
+            // ボタン1.isSelected
+            InputTaskColorBtn_1.isSelected = true
+            InputTaskColorBtn_2.isSelected = false
+            InputTaskColorBtn_3.isSelected = false
+            InputTaskColorBtn_1.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+            InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+            InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+        }
+        else if( = 1 OR  = 4 OR = 7 OR = 10 )
+        {
+            // ボタン2.isSelected
+            InputTaskColorBtn_1.isSelected = false
+            InputTaskColorBtn_2.isSelected = true
+            InputTaskColorBtn_3.isSelected = false
+            InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+            InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+            InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+            
+        }
+        else if( = 2 OR  = 5 OR = 8 OR = 11 ){
+            // ボタン3.isSelected
+            InputTaskColorBtn_1.isSelected = false
+            InputTaskColorBtn_2.isSelected = false
+            InputTaskColorBtn_3.isSelected = true
+            InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+            InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+            InputTaskColorBtn_3.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+        }
+        */
+    }
+    
+    
+    
+    
     
     //textView:値変更確定時イベント
     func textViewDidChange(_ textView: UITextView) {
@@ -135,9 +235,9 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             
         }
     }
-
-
-
+    
+    
+    
     // textField:編集完了時イベント
     func textFieldDidChange(_ nsNotification: Notification) {
         
@@ -168,27 +268,32 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
                 
                 // UIAlert表示処理
                 present(stringLimitAlert, animated: true, completion: nil)
-
+                
             }
         }
     }
-
     
     
-    // 登録画面用ナビゲーションバー：初期設定
-    fileprivate func displayInputTopMenu(){
-
-        // ナビゲーションバー表示
-        navigationController?.setNavigationBarHidden(false, animated: true)
+    
+    // 編集画面用ナビゲーションバー：初期設定
+    fileprivate func displayEditTopMenu(){
         
-        //登録確定ボタン生成("OK")
-        let addInputTaskButton : UIBarButtonItem = UIBarButtonItem(title:"OK",style : UIBarButtonItemStyle.plain,target: self,action:#selector(TaskInputViewController.onTouchDown_addInputTaskButton))
+        // ナビゲーションバー表示
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        //self.navigationController?.navigationBar.appearance().backgroundColor = UIColor.green
+        //UINavigationBar.titleTextAttributes = UIColor.white
+        //UINavigationBar.appearance().tintColor = UIColor.white
+        
+        
+        //編集確定ボタン生成("OK")
+        let addEditTaskButton : UIBarButtonItem = UIBarButtonItem(title:"OK",style : UIBarButtonItemStyle.plain,target: self,action:#selector(TaskEditViewController.onTouchDown_addEditTaskButton))
         
         //タイトル名設定
-        self.title = CommonConst.VIW_TITLE_INPUT_TASK
-
+        self.title = CommonConst.VIW_TITLE_EDIT_TASK
+        
         //ボタンをナビゲーションバー右側に配置
-        self.navigationItem.setRightBarButtonItems([addInputTaskButton], animated: true)
+        self.navigationItem.setRightBarButtonItems([addEditTaskButton], animated: true)
         
     }
     
@@ -276,15 +381,15 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     fileprivate func displayInputImportanceSegment(){
         
         //重要度:セグメント値変更時イベント
-        InputImportanceSegment.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_InputImportanceSegment(_:)), for: .valueChanged)
-
+        InputImportanceSegment.addTarget(self, action: #selector(TaskEditViewController.onTouchDown_InputImportanceSegment(_:)), for: .valueChanged)
+        
     }
     
-    //重要度:セグメント値変更時イベント
-    func onTouchDown_InputImportanceSegment(_ segcon:UISegmentedControl){
+    // 重要度:セグメント値変更時処理
+    fileprivate func didChengeImportanceSegmentValue(_ importanceSegmentIndex: Int){
         
         //各セグメント選択時分岐処理
-        switch segcon.selectedSegmentIndex {
+        switch importanceSegmentIndex {
             
         //"低"の場合
         case CommonConst.TASK_IMPORTANCE_VALID_LOW:
@@ -310,13 +415,22 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             //要エラー対応時イベント
             break
         }
+        
+        
+    }
     
     
+    //重要度:セグメント値変更時イベント
+    func onTouchDown_InputImportanceSegment(_ segcon:UISegmentedControl){
+        
+        // 重要度:セグメント値変更時処理
+        didChengeImportanceSegmentValue(segcon.selectedSegmentIndex)
+        
     }
     
     //カラーボタン変更処理(引数:重要度)
     fileprivate func changeColorBtn(_ caseNumber : Int){
-    
+        
         switch caseNumber {
             
         //"低"の場合
@@ -383,7 +497,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskMemoView.layer.borderWidth = 1
         InputTaskMemoView.layer.borderColor = UIColor.gray.cgColor
         InputTaskMemoView.placeHolder = "メモ:"
-
+        
     }
     
     //タスク終了時刻欄:初期設定
@@ -408,7 +522,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     //通知場所(登録地点リスト):初期設定
     fileprivate func displayInputPoint(){
-
+        
         //登録地点リスト:要素追加イベント(未実装)
         
         
@@ -428,6 +542,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     //後続タスク追加ボタン:初期設定
     fileprivate func displayAddAfterTaskBtn() {
+        
         AddAfterTask.setTitle("後続タスク追加", for: UIControlState())
         
         //後続タスク追加ボタン:タップ時イベント
@@ -451,10 +566,10 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     //後続タスクボタン：タップ時イベント
     func onTouchDown_addAfterTaskButton(_ sender : UIButton){
         /*
-        let AddAfterTaskInputView = TESTViewController()
-        AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
-self.presentViewController(AddAfterTaskInputView, animated: true, completion: nil)
- */
+         let AddAfterTaskInputView = TESTViewController()
+         AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+         self.presentViewController(AddAfterTaskInputView, animated: true, completion: nil)
+         */
     }
     
     
@@ -462,13 +577,13 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
     func missFocusView(){
         view.endEditing(true)
     }
-
     
-    //登録確定ボタン：タップ時イベント
-    func onTouchDown_addInputTaskButton(){
+    
+    //編集確定ボタン：タップ時イベント
+    func onTouchDown_addEditTaskButton(){
         /*
-        **タスク登録イベント実装
-        */
+         **タスク編集イベント実装
+         */
         
         //TEST START
         // タスク情報のクリア
@@ -538,7 +653,7 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         
         //メイン画面へ遷移
         self.navigationController?.popViewController(animated: true)
-
+        
         
     }
     
@@ -549,7 +664,7 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         textField.resignFirstResponder()
         return false
     }
-
+    
     //PicerView　表示列
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -567,20 +682,19 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         InputPointListField.text = aaa[row] as? String
     }
- 
+    
     
     /// didReceiveMemoryWarningイベント処理
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     //オブザーバ解除
     deinit{
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     
 }
-
 
