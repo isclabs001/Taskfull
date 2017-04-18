@@ -28,9 +28,9 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     
-    // 受け取り用パラメータ:選択タスクID
+    // 受け取り用パラメータ:選択タスクID,メイン画面:動作モード
     var paramTaskId : Int = 0
-    
+    var paramMainViewMode : CommonConst.ActionType = CommonConst.ActionType.edit
     
     /**
      * 変数
@@ -47,6 +47,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     // 重要度：高
     fileprivate let mImageTaskColorBtn_YELLOW : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_YELLOW])!
     fileprivate let mImageTaskColorBtn_PINK : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_PINK])!
+    @IBOutlet weak var DeleteTaskBtn: UICustomButton!
     fileprivate let mImageTaskColorBtn_PURPLE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_PURPLE])!
     // 重要度：至急
     fileprivate let mImageTaskColorBtn_DARK_YELLOW : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_YELLOW])!
@@ -68,6 +69,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     @IBOutlet weak var InputTaskColorBtn_2: UICustomButton!
     @IBOutlet weak var InputTaskColorBtn_3: UICustomButton!
     @IBOutlet var MainView: UICustomView!
+    @IBOutlet weak var HiddenContentClearView: UIView!
     
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
@@ -144,6 +146,9 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             // 編集内容:初期表示処理
             displayTaskContent()
             
+            // 遷移先モード分岐処理
+            displayTaskModeChange()
+            
             // 戻り値にtrueを設定
             ret = true
         }
@@ -151,7 +156,54 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         return ret
     }
     
-    
+    // 遷移先モード分岐処理
+    fileprivate func displayTaskModeChange(){
+        // メイン画面モード
+        switch(self.paramMainViewMode){
+        // 現在編集モードの場合
+        case CommonConst.ActionType.edit:
+            // 編集不可用Viewを非表示
+            HiddenContentClearView.isHidden = true
+            // 削除ボタン有効化
+            DeleteTaskBtn.isHidden = false
+            DeleteTaskBtn.isEnabled = true
+            /*
+            InputTaskNameField.isEnabled = true
+            InputTaskMemoView.isEditable = true
+            InputTaskDateField.isEnabled = true
+            InputPointListField.isEnabled = true
+            InputImportanceSegment.isEnabled = true
+            InputTaskColorBtn_1.isEnabled = true
+            InputTaskColorBtn_2.isEnabled = true
+            InputTaskColorBtn_3.isEnabled = true
+            DeleteTaskBtn.isHidden = false
+            DeleteTaskBtn.isEnabled = true
+            */
+            break;
+        // 上記以外の場合(参照)
+        default:
+            // 編集不可用Viewを表示
+            HiddenContentClearView.isHidden = false
+            // 削除ボタン無効化
+            DeleteTaskBtn.isHidden = true
+            DeleteTaskBtn.isEnabled = false
+            /*
+            InputTaskNameField.isEnabled = false
+            InputTaskMemoView.isEditable = false
+            InputTaskMemoView.isOpaque = false
+            InputTaskDateField.isEnabled = false
+            InputPointListField.isEnabled = false
+            InputImportanceSegment.isEnabled = false
+            InputImportanceSegment.isEnabled = false
+            InputTaskColorBtn_1.isEnabled = false
+            InputTaskColorBtn_2.isEnabled = false
+            InputTaskColorBtn_3.isEnabled = false
+            DeleteTaskBtn.isHidden = true
+            DeleteTaskBtn.isEnabled = false
+            */
+            break;
+        }
+    }
     
     // タスク内容初期表示処理
     func displayTaskContent(){
@@ -183,6 +235,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
 
  
         // カラー欄
+        // ボタンカラー分岐処理
         switch taskInfo.ButtonColor {
         case 0,3,6,9:
             // ボタン1.isSelected
@@ -192,7 +245,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             InputTaskColorBtn_1.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
             InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
             InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-            
+        
         case 1,4,7,10:
             // ボタン2.isSelected
             InputTaskColorBtn_1.isSelected = false
@@ -214,7 +267,6 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         default:
             break;
         }
-        
     }
     
     //textView:値変更確定時イベント
@@ -294,16 +346,30 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         //self.navigationController?.navigationBar.tintColor = UIColor.white
         //self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
 
-        
-        
-        //編集確定ボタン生成("OK")
-        let addEditTaskButton : UIBarButtonItem = UIBarButtonItem(title:"OK",style : UIBarButtonItemStyle.plain,target: self,action:#selector(TaskEditViewController.onTouchDown_addEditTaskButton))
-        
-        //タイトル名設定
-        self.title = CommonConst.VIW_TITLE_EDIT_TASK
-        
-        //ボタンをナビゲーションバー右側に配置
-        self.navigationItem.setRightBarButtonItems([addEditTaskButton], animated: true)
+        // メイン画面モード
+        switch(self.paramMainViewMode){
+        // 現在編集モードの場合
+        case CommonConst.ActionType.edit:
+            
+            //タイトル名設定(編集)
+            self.title = CommonConst.VIW_TITLE_EDIT_TASK
+            
+            //編集確定ボタン生成("OK")
+            let addEditTaskButton : UIBarButtonItem = UIBarButtonItem(title:"OK",style : UIBarButtonItemStyle.plain,target: self,action:#selector(TaskEditViewController.onTouchDown_addEditTaskButton))
+            
+            //ボタンをナビゲーションバー右側に配置
+            self.navigationItem.setRightBarButtonItems([addEditTaskButton], animated: true)
+            
+            break;
+        // 上記以外の場合(参照モード)
+        default:
+            
+            //タイトル名設定(タスク内容)
+            self.title = CommonConst.VIW_TITLE_CONTENT_TASK
+            
+            break;
+        }
+
         
     }
     
@@ -350,7 +416,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_2.isSelected = true
         InputTaskColorBtn_3.isSelected = false
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         
         
@@ -361,7 +427,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_1.isSelected = true
         InputTaskColorBtn_2.isSelected = false
         InputTaskColorBtn_3.isSelected = false
-        InputTaskColorBtn_1.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+        InputTaskColorBtn_1.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
     }
@@ -372,7 +438,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_2.isSelected = true
         InputTaskColorBtn_3.isSelected = false
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
     }
     
@@ -383,7 +449,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_3.isSelected = true
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-        InputTaskColorBtn_3.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+        InputTaskColorBtn_3.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
     }
     
     
@@ -444,27 +510,27 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             
         //"低"の場合
         case CommonConst.TASK_IMPORTANCE_VALID_LOW:
-            // カラーボタン色変更
+            // カラーボタン色変更(画像セット,タイトル:定数)
             InputTaskColorBtn_1.setImage(mImageTaskColorBtn_WHITE, for: UIControlState())
             InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_WHITE), for: UIControlState())
             InputTaskColorBtn_2.setImage(mImageTaskColorBtn_LIGHT_BLUE, for: UIControlState())
             InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_LIGHT_BLUE), for: UIControlState())
             InputTaskColorBtn_3.setImage(mImageTaskColorBtn_GLAY, for: UIControlState())
             InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_GLAY), for: UIControlState())
-            
+
         //"中"の場合
         case CommonConst.TASK_COMPLETE_FLAG_VALID_MEDIUM:
-            // カラーボタン色変更
+            // カラーボタン色変更(画像セット,タイトル:定数)
             InputTaskColorBtn_1.setImage(mImageTaskColorBtn_GREEN, for: UIControlState())
             InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_GREEN), for: UIControlState())
             InputTaskColorBtn_2.setImage(mImageTaskColorBtn_ORANGE, for: UIControlState())
             InputTaskColorBtn_2.setTitle(String(CommonConst.TASK_BUTTON_COLOR_ORANGE), for: UIControlState())
             InputTaskColorBtn_3.setImage(mImageTaskColorBtn_BLUE, for: UIControlState())
             InputTaskColorBtn_3.setTitle(String(CommonConst.TASK_BUTTON_COLOR_BLUE), for: UIControlState())
-            
+
         //"高"の場合
         case CommonConst.TASK_COMPLETE_FLAG_VALID_HIGH:
-            // カラーボタン色変更
+            // カラーボタン色変更(画像セット,タイトル:定数)
             InputTaskColorBtn_1.setImage(mImageTaskColorBtn_YELLOW, for: UIControlState())
             InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_YELLOW), for: UIControlState())
             InputTaskColorBtn_2.setImage(mImageTaskColorBtn_PINK, for: UIControlState())
@@ -474,7 +540,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             
         //"至急"の場合
         case CommonConst.TASK_COMPLETE_FLAG_VALID_URGENT:
-            // カラーボタン色変更
+            // カラーボタン色変更(画像セット,タイトル:定数)
             InputTaskColorBtn_1.setImage(mImageTaskColorBtn_DARK_YELLOW, for: UIControlState())
             InputTaskColorBtn_1.setTitle(String(CommonConst.TASK_BUTTON_COLOR_DARK_YELLOW), for: UIControlState())
             InputTaskColorBtn_2.setImage(mImageTaskColorBtn_DARK_PINK, for: UIControlState())
@@ -485,6 +551,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         default:
             break
         }
+        
     }
     
     
@@ -494,7 +561,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         //項目名入力欄:delegate設定
         InputTaskNameField.delegate  = self
         //項目名入力欄(透かし文字,左寄せ)要定数化
-        InputTaskNameField.placeholder = "項目名:"
+        InputTaskNameField.placeholder = CommonConst.INPUT_TASK_NAME_PLACE_HOLDER
         InputTaskNameField.textAlignment = NSTextAlignment.left
         //項目名入力欄:編集完了時イベント(TODO:textView同様デリゲートメソッドにて実装？)
         NotificationCenter.default.addObserver(self, selector: #selector(TaskInputViewController.textFieldDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: InputTaskNameField)
@@ -505,7 +572,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskMemoView.textAlignment = NSTextAlignment.left
         InputTaskMemoView.layer.borderWidth = 1
         InputTaskMemoView.layer.borderColor = UIColor.gray.cgColor
-        InputTaskMemoView.placeHolder = "メモ:"
+        InputTaskMemoView.placeHolder = CommonConst.INPUT_TASK_MEMO_PLACE_HOLDER as NSString
         
     }
     
@@ -552,15 +619,27 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     //後続タスク追加ボタン:初期設定
     fileprivate func displayAddAfterTaskBtn() {
         
-        AddAfterTask.setTitle("後続タスク追加", for: UIControlState())
+        // メイン画面モード
+        switch(self.paramMainViewMode){
+        // 現在編集モードの場合
+        case CommonConst.ActionType.edit:
+            // 後続ボタン:タイトル設定(追加)
+            AddAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
+            break;
+        // 上記以外の場合(参照モード)
+        default:
+            // 後続ボタン:タイトル設定(表示)
+            AddAfterTask.setTitle(CommonConst.AFTER_DISPLAY_TASK_BTN_TITLE, for: UIControlState())
+            break;
+        }
         
-        //後続タスク追加ボタン:タップ時イベント
+        //後続タスクボタン:タップ時イベント
         AddAfterTask.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
     }
     
     
-    //Datepicer：値変更時イベント
+    //DatePicker：値変更時イベント
     func inputDatePickerEdit(_ sender: UIDatePicker){
         //値をタスク終了時刻入力欄に表示
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(sender.date)
@@ -595,8 +674,6 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
          */
         
         //TEST START
-        // タスク情報のクリア
-        //TaskInfoUtility.DefaultInstance.ClearTaskInfo()
         
         // タスク情報追加
         var taskInfoDataEntity : TaskInfoDataEntity
@@ -610,21 +687,26 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         //項目名登録
         //項目名未入力時チェック
         if(false == StringUtility.isEmpty(InputTaskNameField.text)){
-            //代入文字：要定数化
-            taskInfoDataEntity.Title = "項目名未入力"
+            // 空白の場合、代入文字
+            taskInfoDataEntity.Title = CommonConst.INPUT_TASK_NAME_EMPTY_STRING
         }
         else{
-            
+            // 空白ではない場合、入力値
             taskInfoDataEntity.Title = InputTaskNameField.text! as String
         }
+        
         //メモ
         taskInfoDataEntity.Memo = InputTaskMemoView.text! as String
+        
         //タスク終了時刻
         taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
+        
         //通知場所
         taskInfoDataEntity.NotifiedLocation = 0
+        
         //重要度(セグメントのインデックス)
         taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
+        
         //タスクカラー
         //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
         if (InputTaskColorBtn_1.isSelected == true){
@@ -636,14 +718,19 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         else if(InputTaskColorBtn_3.isSelected == true){
             taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_3.currentTitle!)!
         }
+        
         //テキストカラー
         taskInfoDataEntity.TextColor = 0
+        
         //親ID（-1 = 親（先頭）、それ以外＝親のID）
         taskInfoDataEntity.ParrentId = -1
+        
         //完了フラグ
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+        
         //作成日時
         taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+        
         //更新日時
         taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
         
@@ -691,7 +778,6 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         InputPointListField.text = aaa[row] as? String
     }
-    
     
     /// didReceiveMemoryWarningイベント処理
     override func didReceiveMemoryWarning() {

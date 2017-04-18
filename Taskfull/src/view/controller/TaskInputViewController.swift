@@ -25,8 +25,10 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     // 設定日時取得変数
     var inputTaskEndDate : Date = Date()
+    
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
+    
 /**
  * 変数
  */
@@ -237,7 +239,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskColorBtn_2.isSelected = true
         InputTaskColorBtn_3.isSelected = false
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         
         
@@ -248,7 +250,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskColorBtn_1.isSelected = true
         InputTaskColorBtn_2.isSelected = false
         InputTaskColorBtn_3.isSelected = false
-        InputTaskColorBtn_1.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+        InputTaskColorBtn_1.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
     }
@@ -259,7 +261,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskColorBtn_2.isSelected = true
         InputTaskColorBtn_3.isSelected = false
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-        InputTaskColorBtn_2.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+        InputTaskColorBtn_2.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
     }
     
@@ -270,7 +272,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskColorBtn_3.isSelected = true
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
-        InputTaskColorBtn_3.setBackgroundColor(UIColorUtility.rgb(102, g: 153, b: 255), forUIControlState: UIControlState())
+        InputTaskColorBtn_3.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
     }
     
     
@@ -373,7 +375,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         //項目名入力欄:delegate設定
         InputTaskNameField.delegate  = self
         //項目名入力欄(透かし文字,左寄せ)要定数化
-        InputTaskNameField.placeholder = "項目名:"
+        InputTaskNameField.placeholder = CommonConst.INPUT_TASK_NAME_PLACE_HOLDER
         InputTaskNameField.textAlignment = NSTextAlignment.left
         //項目名入力欄:編集完了時イベント(TODO:textView同様デリゲートメソッドにて実装？)
         NotificationCenter.default.addObserver(self, selector: #selector(TaskInputViewController.textFieldDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: InputTaskNameField)
@@ -384,7 +386,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         InputTaskMemoView.textAlignment = NSTextAlignment.left
         InputTaskMemoView.layer.borderWidth = 1
         InputTaskMemoView.layer.borderColor = UIColor.gray.cgColor
-        InputTaskMemoView.placeHolder = "メモ:"
+        InputTaskMemoView.placeHolder = CommonConst.INPUT_TASK_MEMO_PLACE_HOLDER as NSString
 
     }
     
@@ -430,9 +432,10 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     //後続タスク追加ボタン:初期設定
     fileprivate func displayAddAfterTaskBtn() {
-        AddAfterTask.setTitle("後続タスク追加", for: UIControlState())
+        // タイトル設定
+        AddAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
         
-        //後続タスク追加ボタン:タップ時イベント
+        // 後続タスク追加ボタン:タップ時イベント
         AddAfterTask.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
     }
@@ -473,8 +476,6 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         */
         
         //TEST START
-        // タスク情報のクリア
-        //TaskInfoUtility.DefaultInstance.ClearTaskInfo()
         
         // タスク情報追加
         var taskInfoDataEntity : TaskInfoDataEntity
@@ -488,21 +489,26 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         //項目名登録
         //項目名未入力時チェック
         if(false == StringUtility.isEmpty(InputTaskNameField.text)){
-            //代入文字：要定数化
-            taskInfoDataEntity.Title = "項目名未入力"
+            // 空白の場合、代入文字
+            taskInfoDataEntity.Title = CommonConst.INPUT_TASK_NAME_EMPTY_STRING
         }
         else{
-            
+            // 空白ではない場合、入力値
             taskInfoDataEntity.Title = InputTaskNameField.text! as String
         }
+        
         //メモ
         taskInfoDataEntity.Memo = InputTaskMemoView.text! as String
+        
         //タスク終了時刻
         taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
+        
         //通知場所
         taskInfoDataEntity.NotifiedLocation = 0
+        
         //重要度(セグメントのインデックス)
         taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
+        
         //タスクカラー
         //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
         if (InputTaskColorBtn_1.isSelected == true){
@@ -514,14 +520,19 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         else if(InputTaskColorBtn_3.isSelected == true){
             taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_3.currentTitle!)!
         }
+        
         //テキストカラー
         taskInfoDataEntity.TextColor = 0
+        
         //親ID（-1 = 親（先頭）、それ以外＝親のID）
         taskInfoDataEntity.ParrentId = -1
+        
         //完了フラグ
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+        
         //作成日時
         taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+        
         //更新日時
         taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
         

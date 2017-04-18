@@ -130,9 +130,6 @@
                                                                         <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
-                                                                <connections>
-                                                                    <segue destination="cWF-5s-J59" kind="show" identifier="toTaskEditViewController" id="geY-ec-Cgz"/>
-                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EaN-pe-x5q" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
                                                                 <rect key="frame" x="310.66666666666674" y="0.0" width="103.33333333333331" height="66"/>
@@ -236,6 +233,7 @@
                         <outlet property="mainView" destination="8bC-Xf-vdC" id="ATd-hy-9gO"/>
                         <outlet property="modeButton" destination="SXR-Lq-i1V" id="hT3-Ny-xN4"/>
                         <segue destination="shW-Sx-7tf" kind="show" identifier="toTaskInputViewController" id="AuN-5W-GDq"/>
+                        <segue destination="cWF-5s-J59" kind="show" identifier="toTaskEditViewController" id="FqB-Ea-tP0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -1119,6 +1117,9 @@
                                     <constraint firstItem="702-8F-eoS" firstAttribute="top" secondItem="2bA-Ur-Mkc" secondAttribute="top" constant="12" id="kiI-Dz-mLf"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WPG-qN-HLE" userLabel="HiddenContentClearView">
+                                <rect key="frame" x="0.0" y="64" width="414" height="605"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -1128,6 +1129,8 @@
                             <constraint firstItem="itA-BU-Zhc" firstAttribute="top" secondItem="QeW-1a-lSM" secondAttribute="bottom" id="G2F-K6-snn"/>
                             <constraint firstItem="xFm-Rz-a1k" firstAttribute="leading" secondItem="v4R-sx-YnS" secondAttribute="trailing" id="GrB-8z-ueL"/>
                             <constraint firstItem="Z7q-qG-2R4" firstAttribute="leading" secondItem="v4R-sx-YnS" secondAttribute="trailing" id="Hwr-hg-eRL"/>
+                            <constraint firstAttribute="trailing" secondItem="WPG-qN-HLE" secondAttribute="trailing" id="HxR-il-3qY"/>
+                            <constraint firstItem="WPG-qN-HLE" firstAttribute="leading" secondItem="v4R-sx-YnS" secondAttribute="trailing" id="JgU-kK-aJG"/>
                             <constraint firstAttribute="trailing" secondItem="itA-BU-Zhc" secondAttribute="trailing" id="Lrj-yl-fnU"/>
                             <constraint firstItem="2bA-Ur-Mkc" firstAttribute="top" secondItem="xFm-Rz-a1k" secondAttribute="bottom" id="MoP-yo-bsQ"/>
                             <constraint firstItem="xFm-Rz-a1k" firstAttribute="top" secondItem="itA-BU-Zhc" secondAttribute="bottom" id="NKh-Zm-Tli"/>
@@ -1146,10 +1149,12 @@
                             <constraint firstAttribute="trailing" secondItem="Z7q-qG-2R4" secondAttribute="trailing" id="iad-SN-RIB"/>
                             <constraint firstItem="QeW-1a-lSM" firstAttribute="leading" secondItem="v4R-sx-YnS" secondAttribute="trailing" id="j9y-Lk-ftn"/>
                             <constraint firstAttribute="trailing" secondItem="dU8-qb-Rwu" secondAttribute="trailing" id="kv1-TM-7ee"/>
+                            <constraint firstItem="WPG-qN-HLE" firstAttribute="height" secondItem="v4R-sx-YnS" secondAttribute="height" multiplier="0.9" id="qgS-LO-qgA"/>
                             <constraint firstItem="QeW-1a-lSM" firstAttribute="height" secondItem="v4R-sx-YnS" secondAttribute="height" multiplier="0.1" id="rnX-X6-pxX"/>
                             <constraint firstItem="Z7q-qG-2R4" firstAttribute="height" secondItem="v4R-sx-YnS" secondAttribute="height" multiplier="0.1" id="sEI-L3-XvE"/>
                             <constraint firstItem="dU8-qb-Rwu" firstAttribute="leading" secondItem="v4R-sx-YnS" secondAttribute="trailing" id="tb2-hG-OKv"/>
                             <constraint firstItem="Z7q-qG-2R4" firstAttribute="top" secondItem="2bA-Ur-Mkc" secondAttribute="bottom" id="tiB-zB-Ikz"/>
+                            <constraint firstItem="WPG-qN-HLE" firstAttribute="top" secondItem="YZl-MN-6Q7" secondAttribute="bottom" id="vbE-Gd-b0G"/>
                             <constraint firstItem="dU8-qb-Rwu" firstAttribute="top" secondItem="Z7q-qG-2R4" secondAttribute="bottom" id="wWP-fO-GKu"/>
                             <constraint firstAttribute="trailing" secondItem="QeW-1a-lSM" secondAttribute="trailing" id="wY0-Lc-Qyh"/>
                             <constraint firstItem="2bA-Ur-Mkc" firstAttribute="leading" secondItem="v4R-sx-YnS" secondAttribute="trailing" id="wof-Mb-eV6"/>
@@ -1165,6 +1170,8 @@
                     </view>
                     <connections>
                         <outlet property="AddAfterTask" destination="5jP-bL-5xk" id="5ai-ZN-Pad"/>
+                        <outlet property="DeleteTaskBtn" destination="4G2-4B-50l" id="Ggz-rY-oD0"/>
+                        <outlet property="HiddenContentClearView" destination="WPG-qN-HLE" id="yBg-dT-geT"/>
                         <outlet property="InputImportanceSegment" destination="LBd-6C-BTm" id="dwR-BI-lA5"/>
                         <outlet property="InputPointListField" destination="702-8F-eoS" id="7N9-sI-Xj0"/>
                         <outlet property="InputTaskColorBtn_1" destination="Zak-Zi-z4b" id="YhR-fH-C91"/>

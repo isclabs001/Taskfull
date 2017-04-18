@@ -753,7 +753,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     // 上記以外の場合
                     default:
                         // 詳細表示画面表示
-
+                        // TODO:
+                        // 長押しボタンのタグ格納
+                        self.paramTaskId = (sender.view?.tag)!
+                        // タスク編集画面を表示
+                        self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_TASK_EDIT, sender: self)
                         break;
                     }
                  }
@@ -799,7 +803,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             
             // 長押しボタンのタスクIDを渡す
             dvc.paramTaskId = paramTaskId
-            
+            dvc.paramMainViewMode = self.mActionMode
         }
         
     }

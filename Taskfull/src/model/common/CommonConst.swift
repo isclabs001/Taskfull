@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CommonConst
 {
@@ -153,11 +154,36 @@ class CommonConst
     /**
      * 文字列入力制限数定数
      */
-    // タスク登録画面:項目名入力制限数
+    // 項目名入力制限数
     static internal let INPUT_TASK_NAME_STRING_LIMIT: Int = 20;
-    // タスク登録画面:メモ入力制限数
+    // メモ入力制限数
     static internal let INPUT_TASK_MEMO_STRING_LIMIT: Int = 200;
 
+    /**
+     * 項目名未入力時代入定数
+     */
+    static internal let INPUT_TASK_NAME_EMPTY_STRING : String = "項目名未入力"
     
+    
+    /**
+     * 入力欄プレースホルダー用定数
+     */
+    // 項目名プレースホルダー用定数
+    static internal let INPUT_TASK_NAME_PLACE_HOLDER : String = "項目名:"
+    // メモ欄プレースホルダー用定数
+    static internal let INPUT_TASK_MEMO_PLACE_HOLDER : String = "メモ:"
+    
+    /**
+     * 後続タスク追加ボタンタイトル定数
+     */
+    // 後続ボタン追加タイトル定数
+    static internal let AFTER_ADD_TASK_BTN_TITLE : String = "後続タスク追加"
+    // 後続ボタン表示タイトル定数
+    static internal let AFTER_DISPLAY_TASK_BTN_TITLE : String = "後続タスク表示"
+
+    /**
+     * カラーボタン選択時背景色定数
+     */
+    static internal let CL_TASK_BTN_BACK_GROUND_COLOR : UIColor = UIColorUtility.rgb(102, g: 153, b: 255)
     
 }
