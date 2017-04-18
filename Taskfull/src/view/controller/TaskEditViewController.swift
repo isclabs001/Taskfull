@@ -281,9 +281,10 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         // ナビゲーションバー表示
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
-        //self.navigationController?.navigationBar.appearance().backgroundColor = UIColor.green
-        //UINavigationBar.titleTextAttributes = UIColor.white
-        //UINavigationBar.appearance().tintColor = UIColor.white
+        self.navigationController?.navigationBar.backgroundColor = UIColor.green
+        //self.navigationController?.navigationBar.tintColor = UIColor.white
+        //self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+
         
         
         //編集確定ボタン生成("OK")

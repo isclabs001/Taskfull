@@ -180,6 +180,8 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
 
         // ナビゲーションバー表示
         navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.backgroundColor = UIColor.green
+        
         
         //登録確定ボタン生成("OK")
         let addInputTaskButton : UIBarButtonItem = UIBarButtonItem(title:"OK",style : UIBarButtonItemStyle.plain,target: self,action:#selector(TaskInputViewController.onTouchDown_addInputTaskButton))
