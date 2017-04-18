@@ -165,6 +165,23 @@ open class TaskInfoUtility {
     }
     
     ///
+    /// 指定したIDのタスク登録情報を取得
+    ///　- parameter:id:検索対象のID
+    ///　- returns:nil以外:見つかったIDのタスク登録情報 nil:見つからなかった
+    ///
+    open func GetTaskInfoDataForId(_ id : Int) -> TaskInfoDataEntity? {
+
+        var ret : TaskInfoDataEntity? = nil
+        let index = GetIndex(id)
+        
+        if(-1 < index) {
+            ret = getTaskInfoData()[index]
+        }
+        
+        return ret
+    }
+    
+    ///
     /// タスク登録情報のクリア
     ///
     open func ClearTaskInfo() {
