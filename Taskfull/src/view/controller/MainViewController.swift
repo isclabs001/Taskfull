@@ -25,6 +25,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     // タスク追加画面への遷移定義文字列
     static internal let SEGUE_IDENTIFIER_TASK_INPUT = "toTaskInputViewController"
     
+    static internal let SEGUE_IDENTIFIER_TASK_EDIT = "toTaskEditViewController"
+    
     
     /**
      * 変数
@@ -36,6 +38,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     fileprivate let mImageModeChangeButton : UIImage = UIImage(named: "modechg.png")!
     fileprivate let mImageModeChangeButtonDown : UIImage = UIImage(named: "modechg_down.png")!
 
+    // パラメータ用タスクID格納変数
+    var paramTaskId : Int = 0
+    
     /**
      * 動作モード
      */
@@ -343,7 +348,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // 長押しイベント設定
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(MainViewController.onLongPressGestureRecognizer_TaskCirclrImageButton(_:)))
         // 長押し-最低2秒間は長押しする.
-        longPressGesture.minimumPressDuration = 2.0
+        longPressGesture.minimumPressDuration = 1.5
         // 長押し-指のズレは15pxまで.
         longPressGesture.allowableMovement = 150
         // 長押しイベント追加
@@ -729,12 +734,29 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             if nil != sender.view {
                 // VIEWがUICircleImageButtonの場合
                 if let view = sender.view! as? UICircleImageButton {
-                    // TODO:押下時の処理を記述する
-                    print(view.tag.description)
-                
-                    // TODO:
-                    // タスク編集画面を表示する
-                }
+                    
+                    switch(self.mActionMode){
+                        
+                    // 現在編集モードの場合
+                    case CommonConst.ActionType.edit:
+                        
+                        // TODO:押下時の処理を記述する
+                        print(view.tag.description)
+                        
+                        // TODO:
+                        // 長押しボタンのタグ格納
+                        self.paramTaskId = (sender.view?.tag)!
+                        // タスク編集画面を表示
+                        self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_TASK_EDIT, sender: self)
+                        
+                        break;
+                    // 上記以外の場合
+                    default:
+                        // 詳細表示画面表示
+
+                        break;
+                    }
+                 }
             }
         }
     }
@@ -757,6 +779,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // タスク入力画面へ遷移する場合
         if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_INPUT){
+            
             // タスク入力画面のコントローラを取得
             let dvc : TaskInputViewController = (segue.destination as AnyObject as? TaskInputViewController)!
 
@@ -765,7 +788,22 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             
             
         }
+        // タスク編集画面へ遷移する場合
+        else if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_EDIT){
+            
+            // タスク編集画面のコントローラを取得
+            let dvc : TaskEditViewController = (segue.destination as AnyObject as? TaskEditViewController)!
+            
+            // ここでParamTaskId指定できず,,,
+            //dvc.paramTaskId = sender.TaskButton.btnImage.tag
+            
+            // 長押しボタンのタスクIDを渡す
+            dvc.paramTaskId = paramTaskId
+            
+        }
+        
     }
+    
     
     //　画面表示直後時処理 タイミング要再考
     override func viewDidAppear(_ animated: Bool) {

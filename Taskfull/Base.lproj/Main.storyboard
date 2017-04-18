@@ -131,7 +131,7 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                                 <connections>
-                                                                    <segue destination="cWF-5s-J59" kind="show" id="geY-ec-Cgz"/>
+                                                                    <segue destination="cWF-5s-J59" kind="show" identifier="toTaskEditViewController" id="geY-ec-Cgz"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EaN-pe-x5q" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
@@ -682,10 +682,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pou-gr-iiE">
-                                <rect key="frame" x="0.0" y="91" width="414" height="216"/>
+                                <rect key="frame" x="0.0" y="91" width="414" height="215"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="35Q-e8-8Zw">
-                                        <rect key="frame" x="25" y="2" width="364" height="210"/>
+                                        <rect key="frame" x="25" y="2" width="364" height="209"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -700,7 +700,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LAA-nE-nig">
-                                <rect key="frame" x="0.0" y="307" width="414" height="71"/>
+                                <rect key="frame" x="0.0" y="306" width="414" height="71"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CnI-3s-9Kr">
                                         <rect key="frame" x="25" y="12" width="364" height="47"/>
@@ -718,7 +718,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wua-pU-vga">
-                                <rect key="frame" x="0.0" y="378" width="414" height="71"/>
+                                <rect key="frame" x="0.0" y="377" width="414" height="71"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IM1-NW-4dt">
                                         <rect key="frame" x="25" y="12" width="66" height="47"/>
@@ -745,7 +745,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T89-dG-2yx">
-                                <rect key="frame" x="0.0" y="449" width="414" height="72"/>
+                                <rect key="frame" x="0.0" y="448" width="414" height="72"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="重要度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5rZ-02-EM2">
                                         <rect key="frame" x="25" y="13" width="49" height="46"/>
@@ -776,17 +776,17 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jf8-34-LRM">
-                                <rect key="frame" x="0.0" y="521" width="414" height="143"/>
+                                <rect key="frame" x="0.0" y="520" width="414" height="143"/>
                                 <color key="backgroundColor" red="0.7843137255" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" text="カラー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uaB-DV-3gD">
-                                <rect key="frame" x="25" y="564" width="52" height="57"/>
+                                <rect key="frame" x="25" y="563" width="52" height="57"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MPl-vO-TOY">
-                                <rect key="frame" x="0.0" y="664" width="414" height="71"/>
+                                <rect key="frame" x="0.0" y="663" width="414" height="71"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
