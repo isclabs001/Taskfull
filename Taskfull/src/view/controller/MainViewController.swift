@@ -773,6 +773,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // TODO:押下時の処理を記述する
         // タスク入力画面を表示
         self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
+        
+        
     }
 
     ///
@@ -786,7 +788,14 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             
             // タスク入力画面のコントローラを取得
             let dvc : TaskInputViewController = (segue.destination as AnyObject as? TaskInputViewController)!
-
+            
+            // モーダル表示用テスト
+            // ナビゲーションコントローラー作成
+            //let nav = UINavigationController(rootViewController: dvc)
+            //self.present(nav,animated:true,completion:nil)
+            //
+            
+            
             // TODO:画面表示時に必要なパラメータを設定する記述をする
             //dvc.
             
@@ -866,16 +875,25 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 //　変換用カレンダー生成(西暦)
                 let calender  =  Calendar(identifier:.gregorian)
                 
-                //let center = UNUserNotificationCenter.current()
-                //center.delegate = self
 
-
+                // カスタム通知実装:START
+                let completeTask = UNNotificationAction(identifier: "completeTask",
+                                                        title: "完了", options: [])
+                let inCompleteTask = UNNotificationAction(identifier: "inCompleteTask",
+                                                          title: "未完了",
+                                                          options: [])
+                let category = UNNotificationCategory(identifier: "message", actions: [completeTask, inCompleteTask], intentIdentifiers: [], options: [])
+                UNUserNotificationCenter.current().setNotificationCategories([category])
+                // END
                 
                 //表示タスク数分処理
                 for item in self.getDisplayTaskData() {
 
                     // UNMutableNotificationContent作成
                     let content = UNMutableNotificationContent()
+                    
+                    // カスタム通知設定
+                    content.categoryIdentifier = "message"
                     
                     //通知タイトル設定
                     content.title = String(item.Title)

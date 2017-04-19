@@ -8,6 +8,7 @@
 //TODO:変数名変更　削除ボタン処理　表示処理
 
 import UIKit
+import AudioToolbox
 
 ///
 /// タスク入力画面
@@ -430,6 +431,10 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_1.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+        
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
     }
     
     //タスクカラーボタン_2:タップ時イベント
@@ -440,6 +445,10 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_2.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
+        
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
     }
     
     //タスクカラーボタン_3:タップ時イベント
@@ -450,6 +459,10 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_1.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
+        
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
     }
     
     
@@ -492,6 +505,9 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             break
         }
         
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
         
     }
     
@@ -647,6 +663,10 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         //同一の日付を変数に格納
         inputTaskEndDate = sender.date
         
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
+        
         
     }
     
@@ -676,13 +696,13 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         //TEST START
         
         // タスク情報追加
-        var taskInfoDataEntity : TaskInfoDataEntity
+        //var taskInfoDataEntity : TaskInfoDataEntity
         
         // タスクEntity
-        taskInfoDataEntity = TaskInfoDataEntity()
+        let taskInfoDataEntity : TaskInfoDataEntity = TaskInfoDataEntity()
         
-        //新規ID
-        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
+        // 既存ID
+        taskInfoDataEntity.Id = self.paramTaskId
         
         //項目名登録
         //項目名未入力時チェック
@@ -735,7 +755,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
         
         // タスク情報のデータを追加する
-        TaskInfoUtility.DefaultInstance.AddTaskInfo(taskInfoDataEntity)
+        //TaskInfoUtility.DefaultInstance.AddTaskInfo(taskInfoDataEntity)
         
         // タスク情報の書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
@@ -777,6 +797,10 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     //PicerView　値選択時イベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         InputPointListField.text = aaa[row] as? String
+        
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
     }
     
     /// didReceiveMemoryWarningイベント処理

@@ -182,7 +182,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
 
         // ナビゲーションバー表示
         navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.navigationBar.backgroundColor = UIColor.green
+        self.navigationController?.navigationBar.backgroundColor = UIColor.orange
         
         
         //登録確定ボタン生成("OK")
@@ -449,6 +449,9 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         //同一の日付を変数に格納
         inputTaskEndDate = sender.date
         
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
         
     }
     
@@ -460,6 +463,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
 self.presentViewController(AddAfterTaskInputView, animated: true, completion: nil)
  */
+        
     }
     
     
@@ -549,7 +553,10 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         // バイブレーション作動：テスト実装
         //AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
         
-        //メイン画面へ遷移
+        // モーダル表示用
+        //self.navigationController?.dismiss(animated: true, completion: nil)
+        
+        // ナビゲーションバー用
         self.navigationController?.popViewController(animated: true)
 
         
@@ -579,6 +586,10 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
     //PicerView　値選択時イベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         InputPointListField.text = aaa[row] as? String
+        
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
     }
  
     
