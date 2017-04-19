@@ -255,7 +255,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5On-Nh-lw1" userLabel="BaseTaskDateView">
                                 <rect key="frame" x="0.0" y="333" width="414" height="67"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-hO-Ucy" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="通知時刻" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-hO-Ucy" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="25" y="14" width="364" height="45"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -648,7 +648,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFm-Rz-a1k" userLabel="BaseTaskDateView">
                                 <rect key="frame" x="0.0" y="333" width="414" height="67"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-Lc-c3N" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="通知時刻" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-Lc-c3N" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="25" y="14" width="364" height="45"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -669,7 +669,7 @@
                                 <rect key="frame" x="0.0" y="467" width="414" height="67"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="LBd-6C-BTm">
-                                        <rect key="frame" x="30" y="10" width="359" height="48"/>
+                                        <rect key="frame" x="25" y="10" width="364" height="48"/>
                                         <segments>
                                             <segment title="低"/>
                                             <segment title="中"/>
@@ -682,7 +682,7 @@
                                 <constraints>
                                     <constraint firstItem="LBd-6C-BTm" firstAttribute="top" secondItem="Z7q-qG-2R4" secondAttribute="top" constant="10" id="79F-4f-5dj"/>
                                     <constraint firstAttribute="trailing" secondItem="LBd-6C-BTm" secondAttribute="trailing" constant="25" id="9zk-kL-X19"/>
-                                    <constraint firstItem="LBd-6C-BTm" firstAttribute="leading" secondItem="Z7q-qG-2R4" secondAttribute="leading" constant="30" id="VwQ-sC-uVL"/>
+                                    <constraint firstItem="LBd-6C-BTm" firstAttribute="leading" secondItem="Z7q-qG-2R4" secondAttribute="leading" constant="25" id="VwQ-sC-uVL"/>
                                     <constraint firstAttribute="bottom" secondItem="LBd-6C-BTm" secondAttribute="bottom" constant="10" id="WvC-wE-siA"/>
                                 </constraints>
                             </view>
@@ -860,8 +860,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2bA-Ur-Mkc" userLabel="BaseTaskPointListView">
                                 <rect key="frame" x="0.0" y="400" width="414" height="67"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="702-8F-eoS" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="30" y="10" width="359" height="45"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="通知場所" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="702-8F-eoS" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="25" y="10" width="364" height="45"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -869,7 +869,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="702-8F-eoS" secondAttribute="trailing" constant="25" id="1IO-Za-n3K"/>
-                                    <constraint firstItem="702-8F-eoS" firstAttribute="leading" secondItem="2bA-Ur-Mkc" secondAttribute="leading" constant="30" id="8s1-iQ-GXD"/>
+                                    <constraint firstItem="702-8F-eoS" firstAttribute="leading" secondItem="2bA-Ur-Mkc" secondAttribute="leading" constant="25" id="8s1-iQ-GXD"/>
                                     <constraint firstAttribute="bottom" secondItem="702-8F-eoS" secondAttribute="bottom" constant="12" id="EuB-Jh-3ss"/>
                                     <constraint firstItem="702-8F-eoS" firstAttribute="top" secondItem="2bA-Ur-Mkc" secondAttribute="top" constant="10" id="kiI-Dz-mLf"/>
                                 </constraints>

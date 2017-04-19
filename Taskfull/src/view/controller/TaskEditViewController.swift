@@ -432,9 +432,6 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         
-        // 0.1秒バイブレーション作動
-        AudioServicesPlaySystemSound(1003)
-        AudioServicesDisposeSystemSoundID(1003)
     }
     
     //タスクカラーボタン_2:タップ時イベント
@@ -446,9 +443,6 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_2.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         
-        // 0.1秒バイブレーション作動
-        AudioServicesPlaySystemSound(1003)
-        AudioServicesDisposeSystemSoundID(1003)
     }
     
     //タスクカラーボタン_3:タップ時イベント
@@ -460,9 +454,6 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         InputTaskColorBtn_2.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
         InputTaskColorBtn_3.setBackgroundColor(CommonConst.CL_TASK_BTN_BACK_GROUND_COLOR, forUIControlState: UIControlState())
         
-        // 0.1秒バイブレーション作動
-        AudioServicesPlaySystemSound(1003)
-        AudioServicesDisposeSystemSoundID(1003)
     }
     
     
@@ -504,10 +495,6 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             //要エラー対応時イベント
             break
         }
-        
-        // 0.1秒バイブレーション作動
-        AudioServicesPlaySystemSound(1003)
-        AudioServicesDisposeSystemSoundID(1003)
         
     }
     
@@ -595,6 +582,23 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     //タスク終了時刻欄:初期設定
     fileprivate func diplayInputTaskDate(){
         
+        
+        // ツールバー実装:START
+        // キーボードに表示するツールバーの表示
+        let pickerToolBar = UIToolbar(frame: CGRect(x:0,y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
+        pickerToolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
+        pickerToolBar.barStyle = .blackOpaque
+        pickerToolBar.tintColor = UIColor.white
+        pickerToolBar.backgroundColor = UIColor.blue
+        //完了ボタンを設定
+        let toolBarBtn      = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(TaskEditViewController.onTouch_ToolBarClearBtn))
+        //ツールバーにボタンを表示
+        pickerToolBar.setItems([toolBarBtn], animated: true)
+        pickerToolBar.sizeToFit()
+        InputTaskDateField.inputAccessoryView = pickerToolBar
+        // ツールバー実装:END
+        
+        
         //タスク終了時刻入力欄（現在日付,中央寄せ,サイズ自動調整）
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(Date())
         InputTaskDateField.textAlignment = NSTextAlignment.center
@@ -611,6 +615,21 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         
     }
     
+    // ツールバー：クリアボタンタップ時イベント
+    func onTouch_ToolBarClearBtn(){
+        
+        //　タスク終了時刻欄初期化
+        InputTaskDateField.text = ""
+        
+        // 日時格納変数初期化
+        
+        // picker閉じる
+        view.endEditing(true)
+        
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
+    }
     
     //通知場所(登録地点リスト):初期設定
     fileprivate func displayInputPoint(){
