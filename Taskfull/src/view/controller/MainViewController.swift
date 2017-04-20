@@ -39,7 +39,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     fileprivate let mImageModeChangeButtonDown : UIImage = UIImage(named: "modechg_down.png")!
 
     // パラメータ用タスクID格納変数
-    var paramTaskId : Int = 0
+    fileprivate var mParamTaskId : Int = 0
     
     /**
      * 動作モード
@@ -452,8 +452,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 右下
             case 0:
                 // 右下に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x) + centerButtonLocation.size.width) - buttonHalfSize.width / 2,
-                              y: ((centerButtonLocation.origin.y) + centerButtonLocation.size.height) - buttonHalfSize.height / 2)
+                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width) -  buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height) - buttonHalfSize.height)
                 break;
             // 下
             case 1:
@@ -464,8 +464,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 左下
             case 2:
                 // 左下に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x) - centerButtonLocation.size.width) + buttonHalfSize.width / 2,
-                              y: ((centerButtonLocation.origin.y) + centerButtonLocation.size.height) - buttonHalfSize.height / 2)
+                ret = CGPoint(x: ((centerButtonLocation.origin.x - margin)) - buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height) - buttonHalfSize.height)
                 break;
             // 左
             case 3:
@@ -476,8 +476,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 左上
             case 4:
                 // 左上に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x) - centerButtonLocation.size.width) + buttonHalfSize.width / 2,
-                              y: ((centerButtonLocation.origin.y) - centerButtonLocation.size.height) + buttonHalfSize.height / 2)
+                ret = CGPoint(x: ((centerButtonLocation.origin.x - margin)) - buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
                 break;
             // 上
             case 5:
@@ -489,8 +489,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 右上
             case 6:
                 // 右上に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x) + centerButtonLocation.size.width) - buttonHalfSize.width / 2,
-                              y: ((centerButtonLocation.origin.y) - centerButtonLocation.size.height) + buttonHalfSize.height / 2)
+                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width) -  buttonHalfSize.width,
+                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
                 break;
             // 右
             case 7:
@@ -601,8 +601,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     
     ///
     /// 表示用　タスクイメージボタンの割れた処理
+    ///　- parameter id:タスクID
+    ///　- parameter isComplete:true:タスク完了済にする false:タスク完了済にしない
     ///
-    fileprivate func clashTaskImageButton(id : Int){
+    fileprivate func clashTaskImageButton(id : Int, isComplete : Bool){
         // キャンバスビューにコントロール数分処理する
         for item in self.mArrayViewTaskItem {
             // ボタンが有効な場合
@@ -614,15 +616,23 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     // 子がいる場合は子を表示する
                     displayTaskImageButtonForChild(parrentItem: item)
 
-                    // 親の場合
-                    if(false == item.IsChild){
-                        // 非表示にする
-                        item.IsDisplay = false
-
-                    // 上記以外の場合
-                    } else {
+                    // 完了の場合
+                    if(true == isComplete){
                         // キャンバスから削除する
                         item.TaskButton?.removeFromSuperview()
+                    
+                    // 上記以外の場合
+                    } else {
+                        // 親の場合
+                        if(false == item.IsChild){
+                            // 非表示にする
+                            item.IsDisplay = false
+
+                        // 上記以外の場合
+                        } else {
+                            // キャンバスから削除する
+                            item.TaskButton?.removeFromSuperview()
+                        }
                     }
                     break;
                 }
@@ -632,6 +642,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     
     ///
     /// 表示用　子のタスクイメージボタン表示処理
+    ///　- parameter parrentItem:親ViewTaskItemEntity
     ///
     fileprivate func displayTaskImageButtonForChild(parrentItem : ViewTaskItemEntity) {
         // データ数分表示する
@@ -651,6 +662,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     
     ///
     /// 表示用　タスクイメージボタン全表示かのチェック
+    ///　- returns true:全表示 false:非表示あり
     ///
     fileprivate func isAllDisplayFlag() -> Bool{
         var ret : Bool = true
@@ -710,15 +722,13 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         switch(self.mActionMode){
         // 現在編集モードの場合
         case CommonConst.ActionType.edit:
-            // TODO:
             // メッセージ確認
-            // タスクを完了してもよろしいですか。
-            
+            dispAlertForTaskComplete(id: sender.tag)
             break;
         // 上記以外の場合
         default:
             // シャボン玉を割る処理を実行
-            clashTaskImageButton(id: sender.tag)
+            clashTaskImageButton(id: sender.tag, isComplete: false)
             break;
         }
     }
@@ -734,28 +744,20 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             if nil != sender.view {
                 // VIEWがUICircleImageButtonの場合
                 if let view = sender.view! as? UICircleImageButton {
-                    
                     switch(self.mActionMode){
                         
                     // 現在編集モードの場合
                     case CommonConst.ActionType.edit:
-                        
-                        // TODO:押下時の処理を記述する
-                        print(view.tag.description)
-                        
-                        // TODO:
-                        // 長押しボタンのタグ格納
-                        self.paramTaskId = (sender.view?.tag)!
+                        // 長押しボタンの対象IDをメンバ変数に格納
+                        self.mParamTaskId = view.tag
                         // タスク編集画面を表示
                         self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_TASK_EDIT, sender: self)
                         
                         break;
                     // 上記以外の場合
                     default:
-                        // 詳細表示画面表示
-                        // TODO:
-                        // 長押しボタンのタグ格納
-                        self.paramTaskId = (sender.view?.tag)!
+                        // 長押しボタンの対象IDをメンバ変数に格納
+                        self.mParamTaskId = view.tag
                         // タスク編集画面を表示
                         self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_TASK_EDIT, sender: self)
                         break;
@@ -811,14 +813,17 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             //dvc.paramTaskId = sender.TaskButton.btnImage.tag
             
             // 長押しボタンのタスクIDを渡す
-            dvc.paramTaskId = paramTaskId
+            dvc.paramTaskId = self.mParamTaskId
             dvc.paramMainViewMode = self.mActionMode
         }
         
     }
     
     
+    ///
     //　画面表示直後時処理 タイミング要再考
+    ///　- parameter animated:アニメーションフラグ
+    ///
     override func viewDidAppear(_ animated: Bool) {
         
         // 動作モードによるメイン画面の初期化
@@ -838,6 +843,46 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
     }
     
+    ///
+    /// タスク完了メッセージ表示
+    ///　- parameter id:完了対象のタスクID
+    ///
+    fileprivate func dispAlertForTaskComplete(id : Int) {
+        // 対象IDをメンバ変数に格納
+        self.mParamTaskId = id
+
+        // IDのタスク情報取得
+        let data = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(id)
+        
+        // 取得できた場合
+        if nil != data {
+            // タスク完了メッセージ表示
+            MessageUtility.dispAlertOKCancel(viewController: self, title: MessageUtility.MESSAGE_TITLE_STRING_CONFIRM_TASK_COMPLETE, message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_TASK_COMPLETE, (data?.Title)!), funcOkButton: onClickTaskCompleteOK, funcCancelButton: nil)
+        }
+    }
+    
+    ///
+    /// タスク完了メッセージ OKボタン押下イベント
+    ///　- parameter action:UIAlertActionコントロール
+    ///
+    fileprivate func onClickTaskCompleteOK(action: UIAlertAction) {
+        // タスク完了処理
+        setTaskCompleteProc(id: self.mParamTaskId)
+        
+        // シャボン玉を割る処理を実行
+        clashTaskImageButton(id: self.mParamTaskId, isComplete: true)
+    }
+    
+    ///
+    /// タスク完了処理
+    ///　- parameter id:完了対象のタスクID
+    ///
+    fileprivate func setTaskCompleteProc(id : Int) {
+        // タスク完了設定
+        TaskInfoUtility.DefaultInstance.SetTaskInfoDataForComplete(id)
+        // 変更内容書き込み
+        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+    }
     
     //**通知関連メソッド:START
     // タスク通知生成処理:要修正　TODO：AppDelegateへ移動、通知、iOS９以下の対応、、

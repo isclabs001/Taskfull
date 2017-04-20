@@ -202,7 +202,31 @@ open class TaskInfoUtility {
             self._taskInfo.Data.append(setData)
         }
     }
+
+    ///
+    /// 指定したタスク登録情報を設定
+    ///　- parameter:setData:設定対象のタスク登録情報
+    ///
+    open func SetTaskInfoDataForComplete(_ id : Int) {
+        
+        // IDに対する配列インデックスを取得する
+        let index = GetIndex(id)
+        
+        // 存在する場合
+        if(-1 < index) {
+            // 完了フラグ設定
+            self._taskInfo.Data[index].CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_VALID
+            self._taskInfo.Data[index].UpdateDateTime = GetSystemDate()
+        }
+    }
     
+    ///
+    /// システム日付取得
+    ///
+    open func GetSystemDate() -> String {
+        return FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+    }
+
     ///
     /// タスク登録情報のクリア
     ///
