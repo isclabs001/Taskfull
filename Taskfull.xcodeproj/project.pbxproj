@@ -57,6 +57,7 @@
 		636CE3BD1E6010CE002273BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 636CE3BB1E6010CE002273BE /* LaunchScreen.storyboard */; };
 		636CE3C81E6010CE002273BE /* TaskfullTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636CE3C71E6010CE002273BE /* TaskfullTests.swift */; };
 		636CE3D31E6010CE002273BE /* TaskfullUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636CE3D21E6010CE002273BE /* TaskfullUITests.swift */; };
+		63B64A4C1EA8800A004ABBC0 /* MessageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */; };
 		63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */; };
 		63C5CF0B1E8DEB6800055DE2 /* シャボン玉_サンプル.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C5CF0A1E8DEB6700055DE2 /* シャボン玉_サンプル.png */; };
 		63C5CF0D1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */; };
@@ -139,6 +140,7 @@
 		636CE3CE1E6010CE002273BE /* TaskfullUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaskfullUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		636CE3D21E6010CE002273BE /* TaskfullUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskfullUITests.swift; sourceTree = "<group>"; };
 		636CE3D41E6010CE002273BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageUtility.swift; sourceTree = "<group>"; };
 		63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDisabledTextField.swift; sourceTree = "<group>"; };
 		63C5CF0A1E8DEB6700055DE2 /* シャボン玉_サンプル.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "シャボン玉_サンプル.png"; sourceTree = "<group>"; };
 		63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPlaceHolderTextView.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				635DCE761E73A04F00F6F325 /* FunctionUtility.swift */,
 				635DCE781E73A05500F6F325 /* StringUtility.swift */,
 				63C9423D1E8E5E450052AB80 /* StringExtensions.swift */,
+				63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */,
 			);
 			path = utility;
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 				631238B11E7410730054AC30 /* UITaskImageButton.swift in Sources */,
 				63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */,
 				63C942401E8E69260052AB80 /* TaskJsonUtility.swift in Sources */,
+				63B64A4C1EA8800A004ABBC0 /* MessageUtility.swift in Sources */,
 				635DCE871E73A18D00F6F325 /* UIGradientButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
