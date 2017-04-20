@@ -790,17 +790,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             
             // タスク入力画面のコントローラを取得
             let dvc : TaskInputViewController = (segue.destination as AnyObject as? TaskInputViewController)!
-            
-            // モーダル表示用テスト
-            // ナビゲーションコントローラー作成
-            //let nav = UINavigationController(rootViewController: dvc)
-            //self.present(nav,animated:true,completion:nil)
-            //
-            
-            
-            // TODO:画面表示時に必要なパラメータを設定する記述をする
-            //dvc.
-            
+
             
         }
         // タスク編集画面へ遷移する場合

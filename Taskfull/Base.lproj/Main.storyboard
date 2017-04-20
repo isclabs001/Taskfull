@@ -14,7 +14,7 @@
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="Taskfull" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainStoryBoard" id="BYZ-38-t0r" customClass="MainViewController" customModule="Taskfull" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -243,7 +243,7 @@
         <!--Task Input View Controller-->
         <scene sceneID="DJn-sY-cPL">
             <objects>
-                <viewController id="shW-Sx-7tf" customClass="TaskInputViewController" customModule="Taskfull" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InputStoryBoard" id="shW-Sx-7tf" customClass="TaskInputViewController" customModule="Taskfull" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qvn-id-M8r"/>
                         <viewControllerLayoutGuide type="bottom" id="S8d-Ur-KzQ"/>

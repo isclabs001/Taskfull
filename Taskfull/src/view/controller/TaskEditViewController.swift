@@ -95,9 +95,15 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             // OK時アクション
             // 選択タスク削除
             TaskInfoUtility.DefaultInstance.RemoveTaskInfo(self.paramTaskId)
+            TaskInfoUtility.DefaultInstance.RemoveTaskInfoForChild(self.paramTaskId)
+            
             // 変更内容書き込み
             TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-            //メイン画面へ遷移
+            
+            // ナビゲーションバー:レイヤー追加
+            self.navigationController?.view.layer.add(self.navigationTrasitionAnimate(0.7, "suckEffect", "kCATransitionFromRight"), forKey: kCATransition)
+            
+            //メイン画面へ遷移(一つ前)
             self.navigationController?.popViewController(animated: true)
             
         })
@@ -118,6 +124,39 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         
     }
 
+    /**
+     ナビゲーションバー遷移時トランジション設定
+     @param intDuration アニメーション動作速度
+     @param strAnimationType メイン効果
+     @param strAnimationSubType サブ効果ON:指定文字列,サブ効果OFF:"false"
+     @return CATransition トランジション
+     */
+    func navigationTrasitionAnimate(_ intDuration: CFTimeInterval ,_ strAnimationType : String,_ strAnimationSubType : String) ->  CATransition{
+        
+        // 既存のアニメーション削除
+        self.view.layer.removeAllAnimations()
+        
+        // ナビゲーションバー遷移用アニメーション設定
+        let transition = CATransition()
+        
+        // アニメーション動作速度
+        transition.duration = intDuration
+        
+        // メイン効果
+        transition.type = strAnimationType
+        
+        // サブ効果有効の場合
+        if(strAnimationSubType != "false"){
+            
+            // サブ効果指定
+            transition.subtype = strAnimationSubType
+        }
+        
+        // アニメーションを返す
+        return transition
+        
+    }
+    
     
     /// 初期化処理
     override func initializeProc() ->Bool
@@ -669,13 +708,14 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         }
         
         //後続タスクボタン:タップ時イベント
-        AddAfterTask.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
+        AddAfterTask.addTarget(self, action: #selector(TaskEditViewController.onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
     }
     
     
     //DatePicker：値変更時イベント
     func inputDatePickerEdit(_ sender: UIDatePicker){
+        
         //値をタスク終了時刻入力欄に表示
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(sender.date)
         
@@ -699,7 +739,6 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
          */
     }
     
-    
     //フォーカスが外れた際、viewを閉じる
     func missFocusView(){
         view.endEditing(true)
@@ -708,15 +747,25 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     
     //編集確定ボタン：タップ時イベント
     func onTouchDown_addEditTaskButton(){
-        /*
-         **タスク編集イベント実装
-         */
         
-        //TEST START
+        // タスク編集イベント
+        inputEditTask()
         
-        // タスク情報追加
-        //var taskInfoDataEntity : TaskInfoDataEntity
+        // ナビゲーションバー:レイヤー追加
+        self.navigationController?.view.layer.add(navigationTrasitionAnimate(1.2, "rippleEffect", "false"), forKey: kCATransition)
         
+        // ナビゲーションバー:最初の画面に戻る
+        self.navigationController?.popToRootViewController(animated: true)
+        
+        
+    }
+    
+    /**
+     タスク編集イベント
+     */
+    func inputEditTask(){
+        
+        // EDIT START
         // タスクEntity
         let taskInfoDataEntity : TaskInfoDataEntity = TaskInfoDataEntity()
         
@@ -759,36 +808,25 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         }
         
         //テキストカラー
-        taskInfoDataEntity.TextColor = 0
+        //taskInfoDataEntity.TextColor = 0
         
         //親ID（-1 = 親（先頭）、それ以外＝親のID）
-        taskInfoDataEntity.ParrentId = -1
+        //taskInfoDataEntity.ParrentId = -1
         
         //完了フラグ
-        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+        //taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
         
         //作成日時
-        taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+        //taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
         
         //更新日時
         taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
         
-        // タスク情報のデータを追加する
-        //TaskInfoUtility.DefaultInstance.AddTaskInfo(taskInfoDataEntity)
+        // タスク更新処理
+        TaskInfoUtility.DefaultInstance.SetTaskInfoDataForId(taskInfoDataEntity)
         
-        // タスク情報の書込み
+        // タスク情報書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-        
-        // TODO:押下時の処理を記述する
-        // タスク入力画面を表示
-        //self.performSegueWithIdentifier(MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
-        
-        // バイブレーション作動：テスト実装
-        //AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        
-        //メイン画面へ遷移
-        self.navigationController?.popViewController(animated: true)
-        
         
     }
     

@@ -112,7 +112,7 @@ open class TaskInfoUtility {
     /// 親IDに紐付いているタスク登録情報の削除
     ///　- parameter:id:削除対象の親ID
     ///
-    fileprivate func RemoveTaskInfoForChild(_ parrentId : Int) {
+    open func RemoveTaskInfoForChild(_ parrentId : Int) {
 
         // 親IDに紐付いている子供のインデックスを取得
         let index : Int = GetParrentIndex(parrentId)

@@ -15,9 +15,9 @@ import AudioToolbox
 ///
 class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,UITextViewDelegate
 {
-/**
- * 定数
- */
+    /**
+     * 定数
+     */
     // タスク終了時刻入力DatePiceker
     let inputDatePicker : UIDatePicker = UIDatePicker()
     // 登録地点リスト入力PickerView
@@ -29,9 +29,12 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     
-/**
- * 変数
- */
+    // 受け取り用パラメータ:選択タスクID,メイン画面:動作モード
+    var paramTaskId : Int = -2
+    
+    /**
+     * 変数
+     */
     // カラーボタンイメージ(全１２色)
     // 重要度：低
     fileprivate let mImageTaskColorBtn_WHITE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_WHITE])!
@@ -470,6 +473,15 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         // 後続タスク追加ボタン:タップ時イベント
         AddAfterTask.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
+        // TODO:後続タスク制限数の為隠す(現段階)　※warming
+        if(self.paramTaskId != -2){
+            AddAfterTask.isHidden = true
+            AddAfterTask.isEnabled = false
+        }
+        else{
+            AddAfterTask.isHidden = false
+            AddAfterTask.isEnabled = true
+        }
     }
     
     
@@ -484,32 +496,95 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         // 0.1秒バイブレーション作動
         AudioServicesPlaySystemSound(1003)
         AudioServicesDisposeSystemSoundID(1003)
-        
+        print(paramTaskId)
     }
     
     
     //後続タスクボタン：タップ時イベント
     func onTouchDown_addAfterTaskButton(_ sender : UIButton){
-        /*
-        let AddAfterTaskInputView = TESTViewController()
-        AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
-self.presentViewController(AddAfterTaskInputView, animated: true, completion: nil)
- */
+
+        // タスク登録イベント
+        inputRegistrationTask()
         
+        // タスク登録画面コントローラー生成
+        let vc = storyboard?.instantiateViewController(withIdentifier: "InputStoryBoard") as! TaskInputViewController
+        vc.paramTaskId = self.paramTaskId
+        
+        // ナビゲーションバー:レイヤー追加
+        self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
+        
+        // 後続タスク追加ボタン:プッシュ遷移
+        navigationController?.pushViewController(vc, animated: true)
+        
+
     }
     
     
     //フォーカスが外れた際、viewを閉じる
     func missFocusView(){
         view.endEditing(true)
+        print(self.paramTaskId)
     }
 
     
     //登録確定ボタン：タップ時イベント
     func onTouchDown_addInputTaskButton(){
+        
+        // タスク登録イベント
+        inputRegistrationTask()
+
+        // ナビゲーションバー:レイヤー追加
+        self.navigationController?.view.layer.add(navigationTrasitionAnimate(1.2, "rippleEffect", "false"), forKey: kCATransition)
+        
+        // ナビゲーションバー:最初の画面に戻る
+        self.navigationController?.popToRootViewController(animated: true)
+ 
+        
+    }
+    
+    
+    /**
+     ナビゲーションバー遷移時トランジション設定
+     @param intDuration アニメーション動作速度
+     @param strAnimationType メイン効果
+     @param strAnimationSubType サブ効果ON:指定文字列,サブ効果OFF:"false"
+     @return CATransition トランジション
+     */
+    func navigationTrasitionAnimate(_ intDuration: CFTimeInterval ,_ strAnimationType : String,_ strAnimationSubType : String) ->  CATransition{
+        
+        // 既存のアニメーション削除
+        self.view.layer.removeAllAnimations()
+        
+        // ナビゲーションバー遷移用アニメーション設定
+        let transition = CATransition()
+        
+        // アニメーション動作速度
+        transition.duration = intDuration
+        
+        // メイン効果
+        transition.type = strAnimationType
+        
+        // サブ効果有効の場合
+        if(strAnimationSubType != "false"){
+            
+            // サブ効果指定
+            transition.subtype = strAnimationSubType
+        }
+        
+        // アニメーションを返す
+        return transition
+        
+    }
+    
+    
+    /**
+     タスク登録イベント
+    */
+    func inputRegistrationTask(){
+        
         /*
-        **タスク登録イベント実装
-        */
+         **タスク登録イベント実装
+         */
         
         //TEST START
         
@@ -561,7 +636,25 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         taskInfoDataEntity.TextColor = 0
         
         //親ID（-1 = 親（先頭）、それ以外＝親のID）
-        taskInfoDataEntity.ParrentId = -1
+        // 親タスクである場合
+        if(self.paramTaskId == -2 ){
+            
+            //　ParrentIdを定数に設定[-1 = 親（先頭）]
+            taskInfoDataEntity.ParrentId = -1
+            
+            // ParamTaskIdを自IDに設定
+            self.paramTaskId = taskInfoDataEntity.Id
+        }
+        // 後続タスクである場合
+        else{
+            
+            // ParrentIdを親IDに設定[それ以外＝親のID]
+            taskInfoDataEntity.ParrentId = self.paramTaskId
+            
+            // ParamTaskIdを自IDに設定
+            self.paramTaskId = taskInfoDataEntity.Id
+        }
+        
         
         //完了フラグ
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
@@ -578,22 +671,8 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
         // タスク情報の書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
         
-        // TODO:押下時の処理を記述する
-        // タスク入力画面を表示
-        //self.performSegueWithIdentifier(MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
-        
-        // バイブレーション作動：テスト実装
-        //AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        
-        // モーダル表示用
-        //self.navigationController?.dismiss(animated: true, completion: nil)
-        
-        // ナビゲーションバー用
-        self.navigationController?.popViewController(animated: true)
-
         
     }
-    
     
     //キーボード「リターンキー」：タップ時イベント
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -625,13 +704,13 @@ self.presentViewController(AddAfterTaskInputView, animated: true, completion: ni
     }
  
     
-    /// didReceiveMemoryWarningイベント処理
+    // didReceiveMemoryWarningイベント処理
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    //オブザーバ解除
+    //　オブザーバ解除
     deinit{
         NotificationCenter.default.removeObserver(self)
     }
