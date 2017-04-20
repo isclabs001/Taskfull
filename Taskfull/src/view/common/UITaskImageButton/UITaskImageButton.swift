@@ -30,7 +30,7 @@ class UITaskImageButton : UIView
     static var IntervalForTitleTimer : Double = 5.0;
     
     // ラベルのマージン
-    static var LABEL_MARGIN : CGFloat = 6.0;
+    static var LABEL_MARGIN : CGFloat = 8.0;
     // ラベルの行数
     static var LABEL_ROWS : CGFloat = 2.0;
 
@@ -205,6 +205,9 @@ class UITaskImageButton : UIView
         // 開始インターバル設定
         let interval = (CFTimeInterval(arc4random() % 200) / 100)
 
+        // 開始アニメーション設定
+        setStartAnimation()
+        
         // 上下アニメーション
         let animation = CABasicAnimation(keyPath: "position.y")
         animation.fromValue = self.center.y - 5
@@ -316,6 +319,20 @@ class UITaskImageButton : UIView
         
         // シャボン玉が割れたアニメーション設定
         setClashAnimation()
+    }
+    
+    ///
+    ///　シャボン玉を表示する際のアニメーション設定処理
+    ///
+    fileprivate func setStartAnimation(){
+        
+        // 徐々に表示するアニメーション
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fromValue = 0.0
+        animation.toValue = 1.0
+        animation.duration = 0.75
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        self.layer.add(animation, forKey: UITaskImageButton.AnimationLayerClashIdentifier)
     }
     
     ///
