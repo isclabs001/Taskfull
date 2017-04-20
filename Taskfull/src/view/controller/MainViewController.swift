@@ -858,7 +858,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     fileprivate func onClickTaskCompleteOK(action: UIAlertAction) {
         // タスク完了処理
         setTaskCompleteProc(id: self.mParamTaskId)
-        
+
         // シャボン玉を割る処理を実行
         clashTaskImageButton(id: self.mParamTaskId, isComplete: true)
     }

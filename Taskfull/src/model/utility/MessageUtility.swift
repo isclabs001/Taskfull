@@ -22,9 +22,11 @@ class MessageUtility
 
     // タイトル
     open static let MESSAGE_TITLE_STRING_CONFIRM_TASK_COMPLETE : String = "タスク完了確認"
+    open static let MESSAGE_TITLE_STRING_CONFIRM_TASK_DELETE : String = "削除確認"
     
     // メッセージ
     open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_COMPLETE : String = "タスク「%@」を完了してもよろしいですか？"
+    open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DELETE : String = "編集中のタスク及び後続タスクを削除します。よろしいですか？"
     
     /**
      * 変数定義

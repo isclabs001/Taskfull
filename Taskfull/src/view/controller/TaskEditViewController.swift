@@ -85,44 +85,31 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     // 削除ボタンタップ時動作
     @IBAction func TouchUpInside_DeleteTaskBtn(_ sender: Any) {
         
-        // アラート作成
-        let deleteAlert: UIAlertController = UIAlertController(title: "削除確認", message: "編集中のタスク及び後続タスクを削除します。よろしいですか？", preferredStyle:  UIAlertControllerStyle.alert)
-        
-        // アクション:OKボタン
-        let okAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
-            
-            (action: UIAlertAction!) -> Void in
-            // OK時アクション
-            // 選択タスク削除
-            TaskInfoUtility.DefaultInstance.RemoveTaskInfo(self.paramTaskId)
-            TaskInfoUtility.DefaultInstance.RemoveTaskInfoForChild(self.paramTaskId)
-            
-            // 変更内容書き込み
-            TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-            
-            // ナビゲーションバー:レイヤー追加
-            self.navigationController?.view.layer.add(self.navigationTrasitionAnimate(0.7, "suckEffect", "kCATransitionFromRight"), forKey: kCATransition)
-            
-            //メイン画面へ遷移(一つ前)
-            self.navigationController?.popViewController(animated: true)
-            
-        })
-        
-        // アクション:キャンセルボタン
-        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler:{
-            
-            (action: UIAlertAction!) -> Void in
-            
-        })
-        
-        // 生成アクション追加
-        deleteAlert.addAction(okAction)
-        deleteAlert.addAction(cancelAction)
-        
-        // 生成アラート表示
-        present(deleteAlert, animated: true, completion: nil)
+        // タスク完了メッセージ表示
+        MessageUtility.dispAlertOKCancel(viewController: self, title: MessageUtility.MESSAGE_TITLE_STRING_CONFIRM_TASK_DELETE, message: MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DELETE, funcOkButton: DeleteConfirmOKAction, funcCancelButton: nil)
         
     }
+    
+    // 削除確認OKアクション
+    fileprivate func DeleteConfirmOKAction(action: UIAlertAction){
+        
+        // OK時アクション
+        // 選択タスク削除
+        TaskInfoUtility.DefaultInstance.RemoveTaskInfo(self.paramTaskId)
+        TaskInfoUtility.DefaultInstance.RemoveTaskInfoForChild(self.paramTaskId)
+        
+        // 変更内容書き込み
+        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        
+        // ナビゲーションバー:レイヤー追加
+        self.navigationController?.view.layer.add(self.navigationTrasitionAnimate(0.7, "suckEffect", "kCATransitionFromRight"), forKey: kCATransition)
+        
+        //メイン画面へ遷移(一つ前)
+        self.navigationController?.popViewController(animated: true)
+        
+    }
+    
+    
 
     /**
      ナビゲーションバー遷移時トランジション設定

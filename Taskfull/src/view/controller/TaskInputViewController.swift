@@ -523,6 +523,8 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     //フォーカスが外れた際、viewを閉じる
     func missFocusView(){
         view.endEditing(true)
+        
+        // TODO:デバッグ用要削除
         print(self.paramTaskId)
     }
 
