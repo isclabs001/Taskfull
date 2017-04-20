@@ -182,6 +182,28 @@ open class TaskInfoUtility {
     }
     
     ///
+    /// 指定したタスク登録情報を設定
+    ///　- parameter:setData:設定対象のタスク登録情報
+    ///
+    open func SetTaskInfoDataForId(_ setData : TaskInfoDataEntity) {
+        
+        // IDに対する配列インデックスを取得する
+        let index = GetIndex(setData.Id)
+        
+        // 存在する場合
+        if(-1 < index) {
+            // 置き換える
+            self._taskInfo.Data.remove(at: index)
+            self._taskInfo.Data.insert(setData, at: index)
+            
+        // 上記以外の場合
+        } else {
+            // 追加する
+            self._taskInfo.Data.append(setData)
+        }
+    }
+    
+    ///
     /// タスク登録情報のクリア
     ///
     open func ClearTaskInfo() {
