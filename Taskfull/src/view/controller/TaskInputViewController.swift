@@ -704,13 +704,13 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     }
  
     
-    /// didReceiveMemoryWarningイベント処理
+    // didReceiveMemoryWarningイベント処理
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    //オブザーバ解除
+    //　オブザーバ解除
     deinit{
         NotificationCenter.default.removeObserver(self)
     }
