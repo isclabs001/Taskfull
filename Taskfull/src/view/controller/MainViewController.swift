@@ -452,8 +452,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 右下
             case 0:
                 // 右下に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width) -  buttonHalfSize.width,
-                              y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height) - buttonHalfSize.height)
+                ret = CGPoint(x: ((centerButtonLocation.origin.x) + centerButtonLocation.size.width) - buttonHalfSize.width / 2,
+                              y: ((centerButtonLocation.origin.y) + centerButtonLocation.size.height) - buttonHalfSize.height / 2)
                 break;
             // 下
             case 1:
@@ -464,8 +464,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 左下
             case 2:
                 // 左下に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x - margin)) - buttonHalfSize.width,
-                              y: ((centerButtonLocation.origin.y + margin) + centerButtonLocation.size.height) - buttonHalfSize.height)
+                ret = CGPoint(x: ((centerButtonLocation.origin.x) - centerButtonLocation.size.width) + buttonHalfSize.width / 2,
+                              y: ((centerButtonLocation.origin.y) + centerButtonLocation.size.height) - buttonHalfSize.height / 2)
                 break;
             // 左
             case 3:
@@ -476,8 +476,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 左上
             case 4:
                 // 左上に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x - margin)) - buttonHalfSize.width,
-                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
+                ret = CGPoint(x: ((centerButtonLocation.origin.x) - centerButtonLocation.size.width) + buttonHalfSize.width / 2,
+                              y: ((centerButtonLocation.origin.y) - centerButtonLocation.size.height) + buttonHalfSize.height / 2)
                 break;
             // 上
             case 5:
@@ -489,8 +489,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 右上
             case 6:
                 // 右上に表示
-                ret = CGPoint(x: ((centerButtonLocation.origin.x + margin) + centerButtonLocation.size.width) -  buttonHalfSize.width,
-                              y: ((centerButtonLocation.origin.y - margin)) - buttonHalfSize.height)
+                ret = CGPoint(x: ((centerButtonLocation.origin.x) + centerButtonLocation.size.width) - buttonHalfSize.width / 2,
+                              y: ((centerButtonLocation.origin.y) - centerButtonLocation.size.height) + buttonHalfSize.height / 2)
                 break;
             // 右
             case 7:
