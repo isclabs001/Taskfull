@@ -30,7 +30,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     
     // 受け取り用パラメータ:選択タスクID,メイン画面:動作モード
-    var paramTaskId : Int = 0
+    var paramTaskId : Int = -2
     
     /**
      * 変数
@@ -473,6 +473,15 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         // 後続タスク追加ボタン:タップ時イベント
         AddAfterTask.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
+        // TODO:後続タスク制限数の為隠す(現段階)　※warming
+        if(self.paramTaskId != -2){
+            AddAfterTask.isHidden = true
+            AddAfterTask.isEnabled = false
+        }
+        else{
+            AddAfterTask.isHidden = false
+            AddAfterTask.isEnabled = true
+        }
     }
     
     
@@ -499,6 +508,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         
         // タスク登録画面コントローラー生成
         let vc = storyboard?.instantiateViewController(withIdentifier: "InputStoryBoard") as! TaskInputViewController
+        vc.paramTaskId = self.paramTaskId
         
         // ナビゲーションバー:レイヤー追加
         self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
@@ -513,6 +523,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     //フォーカスが外れた際、viewを閉じる
     func missFocusView(){
         view.endEditing(true)
+        print(self.paramTaskId)
     }
 
     
@@ -564,8 +575,6 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         return transition
         
     }
-    
-    
     
     
     /**
@@ -627,7 +636,25 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         taskInfoDataEntity.TextColor = 0
         
         //親ID（-1 = 親（先頭）、それ以外＝親のID）
-        taskInfoDataEntity.ParrentId = -1
+        // 親タスクである場合
+        if(self.paramTaskId == -2 ){
+            
+            //　ParrentIdを定数に設定[-1 = 親（先頭）]
+            taskInfoDataEntity.ParrentId = -1
+            
+            // ParamTaskIdを自IDに設定
+            self.paramTaskId = taskInfoDataEntity.Id
+        }
+        // 後続タスクである場合
+        else{
+            
+            // ParrentIdを親IDに設定[それ以外＝親のID]
+            taskInfoDataEntity.ParrentId = self.paramTaskId
+            
+            // ParamTaskIdを自IDに設定
+            self.paramTaskId = taskInfoDataEntity.Id
+        }
+        
         
         //完了フラグ
         taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
