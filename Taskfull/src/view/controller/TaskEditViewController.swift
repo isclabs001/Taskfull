@@ -97,7 +97,21 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             TaskInfoUtility.DefaultInstance.RemoveTaskInfo(self.paramTaskId)
             // 変更内容書き込み
             TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-            //メイン画面へ遷移
+            
+            // 既存のアニメーション削除
+            self.view.layer.removeAllAnimations()
+            // ナビゲーションバー遷移用アニメーション設定
+            let transition = CATransition()
+            // アニメーション動作速度
+            transition.duration = 0.7
+            // 捲り効果
+            transition.type = "suckEffect"
+            // サブ効果指定(方向等)
+            transition.subtype = kCATransitionFromRight
+            // ナビゲーションバー:レイヤー追加
+            self.navigationController?.view.layer.add(transition, forKey: kCATransition)
+            
+            //メイン画面へ遷移(一つ前)
             self.navigationController?.popViewController(animated: true)
             
         })
@@ -698,6 +712,9 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
          self.presentViewController(AddAfterTaskInputView, animated: true, completion: nil)
          */
     }
+    
+    
+    
     
     
     //フォーカスが外れた際、viewを閉じる

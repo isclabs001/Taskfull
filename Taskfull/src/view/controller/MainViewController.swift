@@ -789,6 +789,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // タスク入力画面のコントローラを取得
             let dvc : TaskInputViewController = (segue.destination as AnyObject as? TaskInputViewController)!
             
+            
             // モーダル表示用テスト
             // ナビゲーションコントローラー作成
             //let nav = UINavigationController(rootViewController: dvc)
