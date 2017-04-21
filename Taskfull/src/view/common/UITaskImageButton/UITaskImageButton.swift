@@ -30,7 +30,7 @@ class UITaskImageButton : UIView
     static var IntervalForTitleTimer : Double = 5.0;
     
     // ラベルのマージン
-    static var LABEL_MARGIN : CGFloat = 8.0;
+    static var LABEL_MARGIN : CGFloat = 6.0;
     // ラベルの行数
     static var LABEL_ROWS : CGFloat = 2.0;
 
@@ -127,8 +127,10 @@ class UITaskImageButton : UIView
         guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
             return
         }
+        // 一旦非表示にする
+        self.alpha = 0
         // 親に追加
-        addSubview(view)
+        self.addSubview(view)
 
         // 親コントロールのサイズを取得する
         let width = self.layer.frame.size.width
@@ -160,22 +162,30 @@ class UITaskImageButton : UIView
     fileprivate func getFontSize(_ fontName : String, width : CGFloat, height : CGFloat, text : String) -> CGFloat {
         var ret : CGFloat = 0
         let work : String = text
-        let fontSizies : [CGFloat] = [42.0, 38.0, 34.0, 32.0, 28.0, 24.0, 22.0, 20.0, 18.0, 16.0, 14.0, 12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0]
-        let workWidth : CGFloat = width - (UITaskImageButton.LABEL_MARGIN * 2 + 6.0)
+        //let fontSizies : [CGFloat] = [24.0, 22.0, 20.0, 18.0, 16.0, 14.0, 12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0]
+        let workWidth : CGFloat = width - (UITaskImageButton.LABEL_MARGIN * 2 + 2.0)
+        
+        // 改行数チェック
+        let range = text.range(of: StringUtility.LF)
+        var lfCount : CGFloat = 0
+        if(nil != range && false == range?.isEmpty){
+            lfCount += 1
+        }
         
         // 調査するフォントサイズ数分処理する
-        for fontSize in fontSizies {
-            ret = fontSize
+        for fontSize in (5...26).reversed() {
+            ret = CGFloat(fontSize)
             // fontを利用時のテキストサイズを取得
             var attributes : [String: AnyObject]? = [String: AnyObject]()
-            attributes![NSFontAttributeName] = UIFont(name: fontName, size: fontSize)
+            attributes![NSFontAttributeName] = UIFont(name: fontName, size: CGFloat(fontSize))
             let size = work.size(attributes: attributes)
 
             // 表示行数取得
-            let workRows : CGFloat = CGFloat(Int(size.width / workWidth))
-                
+            let workRowsDown : CGFloat = CGFloat(Int(size.width / workWidth))
+            let workRows : CGFloat = size.width / workWidth + lfCount
+            
             // 表示行が０の場合
-            if(0 == workRows) {
+            if(0 == workRowsDown) {
                 // 確定
                 break
 
@@ -183,11 +193,14 @@ class UITaskImageButton : UIView
             } else {
                 // 表示ラベルの行数は最大2行固定とする
                 let workHeight : CGFloat = (height >= size.height * UITaskImageButton.LABEL_ROWS) ? size.height * UITaskImageButton.LABEL_ROWS : size.height
-            
-                // コントロールの幅に収まっている、または、折り返した結果、高さに収まっている場合
-                if(workWidth >= size.width || (1 < workRows && workHeight >= (size.height * workRows))) {
-                    // 確定
-                    break
+
+                // 幅が2行以内の場合
+                if((size.width / workWidth) <= UITaskImageButton.LABEL_ROWS && workRows <= UITaskImageButton.LABEL_ROWS) {
+                    // コントロールの幅に収まっている、または、折り返した結果、高さに収まっている場合
+                    if(workWidth >= size.width || (workHeight >= (size.height * workRowsDown))) {
+                        // 確定
+                        break
+                    }
                 }
             }
         }
@@ -206,7 +219,7 @@ class UITaskImageButton : UIView
         let interval = (CFTimeInterval(arc4random() % 200) / 100)
 
         // 開始アニメーション設定
-        setStartAnimation()
+        setStartAnimation(interval: interval)
         
         // 上下アニメーション
         let animation = CABasicAnimation(keyPath: "position.y")
@@ -322,17 +335,17 @@ class UITaskImageButton : UIView
     }
     
     ///
-    ///　シャボン玉を表示する際のアニメーション設定処理
+    ///　シャボン玉を表示する際の開始アニメーション設定処理
+    ///　- parameter interval:表示の開始時間
     ///
-    fileprivate func setStartAnimation(){
+    fileprivate func setStartAnimation(interval : CFTimeInterval){
         
         // 徐々に表示するアニメーション
-        let animation = CABasicAnimation(keyPath: "opacity")
-        animation.fromValue = 0.0
-        animation.toValue = 1.0
-        animation.duration = 0.75
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        self.layer.add(animation, forKey: UITaskImageButton.AnimationLayerClashIdentifier)
+        UIView.animate(withDuration: 0.75,
+                       delay: interval,
+                       animations: {
+                            self.alpha = 1
+                        })
     }
     
     ///
