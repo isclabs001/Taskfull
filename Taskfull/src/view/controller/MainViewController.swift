@@ -359,7 +359,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // メモ設定
         taskViewItem.TaskButton!.labelMemo = memo
         // 完了日付設定
-        taskViewItem.TaskButton!.labelDateTime =  FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(dateTime))
+        taskViewItem.TaskButton!.labelDateTime = FunctionUtility.DateToMdHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(dateTime)).replacingOccurrences(of: StringUtility.HALF_SPACE, with: StringUtility.LF)
         // 文字色設定
         taskViewItem.TaskButton!.labelTextColor = textColor
         
