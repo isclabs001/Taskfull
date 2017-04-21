@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "266"
             endingLineNumber = "266"
-            landmarkName = "setTaskImageButton()"
+            landmarkName = "displayTask(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -654,8 +654,14 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 // 現在日付を取得
                 let systemDate : String = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
 
-                // タスクイメージボタンを生成し配列に追加
-                self.mArrayViewTaskItem.append(createViewTaskItemEntity(index: parrentItem.Index, systemDate: systemDate, item: data))
+                // タスクイメージボタンを生成
+                let viewTaskItem : ViewTaskItemEntity = createViewTaskItemEntity(index: parrentItem.Index, systemDate: systemDate, item: data)
+
+                // 配列に追加
+                self.mArrayViewTaskItem.append(viewTaskItem)
+
+                // キャンバスビューにコントロールを追加
+                self.imageCanvasView.addSubview(viewTaskItem.TaskButton!)
             }
         }
     }
