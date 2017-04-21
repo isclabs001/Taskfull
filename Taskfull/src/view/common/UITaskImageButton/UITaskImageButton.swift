@@ -127,8 +127,10 @@ class UITaskImageButton : UIView
         guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
             return
         }
+        // 一旦非表示にする
+        self.alpha = 0
         // 親に追加
-        addSubview(view)
+        self.addSubview(view)
 
         // 親コントロールのサイズを取得する
         let width = self.layer.frame.size.width
@@ -206,7 +208,7 @@ class UITaskImageButton : UIView
         let interval = (CFTimeInterval(arc4random() % 200) / 100)
 
         // 開始アニメーション設定
-        setStartAnimation()
+        setStartAnimation(interval: interval)
         
         // 上下アニメーション
         let animation = CABasicAnimation(keyPath: "position.y")
@@ -322,17 +324,17 @@ class UITaskImageButton : UIView
     }
     
     ///
-    ///　シャボン玉を表示する際のアニメーション設定処理
+    ///　シャボン玉を表示する際の開始アニメーション設定処理
+    ///　- parameter interval:表示の開始時間
     ///
-    fileprivate func setStartAnimation(){
+    fileprivate func setStartAnimation(interval : CFTimeInterval){
         
         // 徐々に表示するアニメーション
-        let animation = CABasicAnimation(keyPath: "opacity")
-        animation.fromValue = 0.0
-        animation.toValue = 1.0
-        animation.duration = 0.75
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        self.layer.add(animation, forKey: UITaskImageButton.AnimationLayerClashIdentifier)
+        UIView.animate(withDuration: 0.75,
+                       delay: interval,
+                       animations: {
+                            self.alpha = 1
+                        })
     }
     
     ///
