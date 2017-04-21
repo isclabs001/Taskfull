@@ -29,7 +29,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     
-    // 受け取り用パラメータ:選択タスクID,メイン画面:動作モード
+    // 受け取り用パラメータ:　選択タスクID,メイン画面:動作モード
     var paramTaskId : Int = -2
     
     /**
