@@ -122,21 +122,8 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             //　制限文字数より後ろの文字列を削除
             textView.text = textView.text.substring(to: textView.text.index(textView.text.startIndex, offsetBy: CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))
             
-            
-            // 文字数制限アラート生成
-            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .alert)
-            
-            // OKActionタップ時処理
-            let OkAlertAction = UIAlertAction(title: "OK", style: .default) {
-                //UIAlertを閉じる(不要？？)
-                action in stringLimitAlert.dismiss(animated: true, completion: nil)
-            }
-            
-            // OKActionをUIAlertに追加
-            stringLimitAlert.addAction(OkAlertAction)
-            
-            // UIAlert表示処理
-            present(stringLimitAlert, animated: true, completion: nil)
+            // 文字数制限アラート表示
+            MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
             
         }
     }
@@ -158,26 +145,12 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
                 //　制限文字数より後ろの文字列を削除
                 inputTextField.text = copyText.substring(to: copyText.characters.index(copyText.startIndex, offsetBy: CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
                 
+                // 文字数制限アラート表示
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
                 
-                // 文字数制限アラート生成
-                let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_NAME_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .alert)
-                
-                // OKActionタップ時処理
-                let OkAlertAction = UIAlertAction(title: "OK", style: .default) {
-                    //UIAlertを閉じる(不要？？)
-                    action in stringLimitAlert.dismiss(animated: true, completion: nil)
-                }
-                
-                // OKActionをUIAlertに追加
-                stringLimitAlert.addAction(OkAlertAction)
-                
-                // UIAlert表示処理
-                present(stringLimitAlert, animated: true, completion: nil)
-
             }
         }
     }
-
     
     
     // 登録画面用ナビゲーションバー：初期設定
@@ -513,7 +486,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         // ナビゲーションバー:レイヤー追加
         self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
         
-        // 後続タスク追加ボタン:プッシュ遷移
+        // 後続タスク追加ボタン:編集画面遷移
         navigationController?.pushViewController(vc, animated: true)
         
 

@@ -719,11 +719,21 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     
     //後続タスクボタン：タップ時イベント
     func onTouchDown_addAfterTaskButton(_ sender : UIButton){
-        /*
-         let AddAfterTaskInputView = TESTViewController()
-         AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
-         self.presentViewController(AddAfterTaskInputView, animated: true, completion: nil)
-         */
+        
+        // タスク編集イベント
+        inputEditTask()
+        
+        // タスク編集画面コントローラー生成
+        let vc = storyboard?.instantiateViewController(withIdentifier: "EditStoryBoard") as! TaskEditViewController
+        vc.paramTaskId = self.paramTaskId
+        vc.paramMainViewMode = self.paramMainViewMode
+        
+        // ナビゲーションバー:レイヤー追加
+        self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
+        
+        // 後続タスク追加ボタン:編集画面遷移
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     //フォーカスが外れた際、viewを閉じる
@@ -816,7 +826,6 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
         
     }
-    
     
     //キーボード「リターンキー」：タップ時イベント
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -27,6 +27,7 @@ class MessageUtility
     // メッセージ
     open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_COMPLETE : String = "タスク「%@」を完了してもよろしいですか？"
     open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DELETE : String = "編集中のタスク及び後続タスクを削除します。よろしいですか？"
+    open static let MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT : String = "%@文字以内で入力して下さい"
     
     /**
      * 変数定義
