@@ -26,9 +26,21 @@ class UICircleImageButton : UIImageButton
         super.clipsToBounds = true
     }
     
+    //
+    // タップ座標のコントロール座標内チェック
+    ///　- parameter point:タップ座標
+    ///　- parameter event:UIEvent
+    ///　- returns event:nil:コントロール外 nil以外:タップされたコントロールオブジェクト
+    //
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         // 押下ポイントがコントロールに入っていない場合
         if(false == self.bounds.contains(point)){
+            // 処理しない
+            return nil
+        }
+
+        // 現在の背景画像が無い場合
+        if(nil == self.currentBackgroundImage) {
             // 処理しない
             return nil
         }

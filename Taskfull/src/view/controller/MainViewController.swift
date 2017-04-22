@@ -85,7 +85,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     ///
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+
+        // タスクイメージボタン全削除処理
+        removeAllTaskImageControl()
     }
     
     ///
@@ -125,14 +127,14 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         switch(self.mActionMode){
         // 現在編集モードの場合
         case CommonConst.ActionType.edit:
-            self.mainView.gradationBackgroundStartColor = UIColorUtility.rgb(255, g: 128, b: 0)
-            self.mainView.gradationBackgroundEndColor = UIColorUtility.rgb(255, g: 218, b: 128)
+            self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_1
+            self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_2
             ButtomButtonMenuBar.isHidden = false;
             break;
         // 上記以外の場合
         default:
-            self.mainView.gradationBackgroundStartColor = UIColorUtility.rgb(0, g: 30, b: 183)
-            self.mainView.gradationBackgroundEndColor = UIColorUtility.rgb(222, g: 255, b: 255)
+            self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
+            self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
             ButtomButtonMenuBar.isHidden = true;
             break;
         }
@@ -144,111 +146,6 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     fileprivate func getTaskInfo() {
         // タスク情報の読込み
         TaskInfoUtility.DefaultInstance.ReadTaskInfo()
-        
-        /*
-        //TEST START
-        // タスク情報のクリア
-        TaskInfoUtility.DefaultInstance.ClearTaskInfo()
-        
-        
-        // TODO:後で登録できるようになったら消す！！
-        // タスク情報の取得
-        var taskInfo : [TaskInfoDataEntity] = TaskInfoUtility.DefaultInstance.getTaskInfoData()
-        taskInfo.removeAll()
-
-        // タスク情報追加
-        var taskInfoDataEntity : TaskInfoDataEntity
-        taskInfoDataEntity = TaskInfoDataEntity()
-        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
-        taskInfoDataEntity.Title = "1234567890"
-        taskInfoDataEntity.Memo = "memo"
-        taskInfoDataEntity.DateTime = "2017/04/02 12:13:14"
-        taskInfoDataEntity.NotifiedLocation = 0
-        taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.ButtonColor = 0
-        taskInfoDataEntity.TextColor = 0
-        taskInfoDataEntity.ParrentId = -1
-        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
-        taskInfoDataEntity.CreateDateTime = "2017/03/02 12:13:14"
-        taskInfoDataEntity.UpdateDateTime = "2017/03/02 12:13:14"
-        
-        taskInfo.append(taskInfoDataEntity)
-        
-        taskInfoDataEntity = TaskInfoDataEntity()
-        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
-        taskInfoDataEntity.Title = "2345678901"
-        taskInfoDataEntity.Memo = "memo2"
-        taskInfoDataEntity.DateTime = "2017/04/12 10:11:12"
-        taskInfoDataEntity.NotifiedLocation = 0
-        taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.ButtonColor = 1
-        taskInfoDataEntity.TextColor = 0
-        taskInfoDataEntity.ParrentId = -1
-        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
-        taskInfoDataEntity.CreateDateTime = "2017/03/05 12:13:14"
-        taskInfoDataEntity.UpdateDateTime = "2017/03/06 12:13:14"
-        
-        taskInfo.append(taskInfoDataEntity)
-        
-        taskInfoDataEntity = TaskInfoDataEntity()
-        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
-        taskInfoDataEntity.Title = "あいおえお"
-        taskInfoDataEntity.Memo = "memo3"
-        taskInfoDataEntity.DateTime = "2017/04/12 09:30:00"
-        taskInfoDataEntity.NotifiedLocation = 0
-        taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.ButtonColor = 0
-        taskInfoDataEntity.TextColor = 0
-        taskInfoDataEntity.ParrentId = -1
-        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
-        taskInfoDataEntity.CreateDateTime = "2017/03/11 12:13:14"
-        taskInfoDataEntity.UpdateDateTime = "2017/03/11 12:13:14"
-        
-        taskInfo.append(taskInfoDataEntity)
-        
-        taskInfoDataEntity = TaskInfoDataEntity()
-        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
-        taskInfoDataEntity.Title = "あいおえおあいおえおあいおえおあいおえお"
-        taskInfoDataEntity.Memo = "memo4"
-        taskInfoDataEntity.DateTime = "2017/04/05 18:30:40"
-        taskInfoDataEntity.NotifiedLocation = 0
-        taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.ButtonColor = 1
-        taskInfoDataEntity.TextColor = 0
-        taskInfoDataEntity.ParrentId = -1
-        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
-        taskInfoDataEntity.CreateDateTime = "2017/03/12 12:13:14"
-        taskInfoDataEntity.UpdateDateTime = "2017/03/12 12:13:14"
-        
-        taskInfo.append(taskInfoDataEntity)
-        
-        taskInfoDataEntity = TaskInfoDataEntity()
-        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
-        taskInfoDataEntity.Title = "完了タスク"
-        taskInfoDataEntity.Memo = "memo5"
-        taskInfoDataEntity.DateTime = "2017/02/11 18:30:40"
-        taskInfoDataEntity.NotifiedLocation = 0
-        taskInfoDataEntity.Importance = 0
-        taskInfoDataEntity.ButtonColor = 1
-        taskInfoDataEntity.TextColor = 0
-        taskInfoDataEntity.ParrentId = -1
-        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_VALID
-        taskInfoDataEntity.CreateDateTime = "2017/01/12 12:13:14"
-        taskInfoDataEntity.UpdateDateTime = "2017/01/12 12:13:14"
-        
-        taskInfo.append(taskInfoDataEntity)
-        
-        
-        // タスク情報のデータを入れ替える
-        TaskInfoUtility.DefaultInstance.setTaskInfoData(taskInfo)
-        
-        // タスク情報の書込み
-        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-
-        // タスク情報の読込み
-        TaskInfoUtility.DefaultInstance.ReadTaskInfo()
-        //TEST END*/
-        
     }
     
     ///
@@ -260,19 +157,27 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // タスクイメージボタン設定
         setTaskImageButton()
 
-        // キャンバスビューのコントロールを全削除
-        removeAllTaskImageButton()
-
         // キャンバスビューにコントロールを追加
         addAllTaskImageButton()
+    }
+    
+    ///
+    /// タスクイメージボタン全削除処理
+    ///
+    fileprivate func removeAllTaskImageControl(){
+        // キャンバスビューのコントロールを全削除
+        removeAllTaskImageButton()
+        
+        // タスクイメージボタン配列クリア
+        self.mArrayViewTaskItem.removeAll()
     }
     
     ///
     /// タスク情報からタスクイメージボタン生成処理
     ///
     fileprivate func setTaskImageButton(){
-        // タスクイメージボタン配列クリア
-        self.mArrayViewTaskItem.removeAll()
+        // タスクイメージボタン全削除処理
+        removeAllTaskImageControl()
         
         // 現在日付を取得
         let systemDate : String = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
@@ -347,8 +252,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         // 長押しイベント設定
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(MainViewController.onLongPressGestureRecognizer_TaskCirclrImageButton(_:)))
-        // 長押し-最低2秒間は長押しする.
-        longPressGesture.minimumPressDuration = 1.5
+        // 長押し-最低1秒間は長押しする.
+        longPressGesture.minimumPressDuration = 1.0
         // 長押し-指のズレは15pxまで.
         longPressGesture.allowableMovement = 150
         // 長押しイベント追加
@@ -620,6 +525,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     if(true == isComplete){
                         // キャンバスから削除する
                         item.TaskButton?.removeFromSuperview()
+                        item.TaskButton?.allocRelease()
                     
                     // 上記以外の場合
                     } else {
@@ -632,6 +538,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                         } else {
                             // キャンバスから削除する
                             item.TaskButton?.removeFromSuperview()
+                            item.TaskButton?.allocRelease()
                         }
                     }
                     break;

@@ -18,28 +18,32 @@ class UITaskImageButton : UIView
      * 定数
      */
     // UITaskImageButtonの一意名
-    static var UITaskImageButtonIdentifier : String = "UITaskImageButton";
+    static let UITaskImageButtonIdentifier : String = "UITaskImageButton"
     
     // アニメーションレイヤーの一意名
-    static var AnimationLayerIdentifier : String = "AnimationLayerIdentifier";
+    static let AnimationLayerIdentifier : String = "AnimationLayerIdentifier"
     
     // アニメーションレイヤーの一意名
-    static var AnimationLayerClashIdentifier : String = "AnimationLayerClashIdentifier";
+    static let AnimationLayerClashIdentifier : String = "AnimationLayerClashIdentifier"
     
     // タイトル切り替えのインターバルタイマー
-    static var IntervalForTitleTimer : Double = 5.0;
+    static let IntervalForTitleTimer : Double = 5.0
     
     // ラベルのマージン
-    static var LABEL_MARGIN : CGFloat = 6.0;
+    static let LABEL_MARGIN : CGFloat = 6.0
     // ラベルの行数
-    static var LABEL_ROWS : CGFloat = 2.0;
+    static let LABEL_ROWS : CGFloat = 2.0
 
     // 表示ラベルインデックス　タイトル
-    static var DISPLAY_LABEL_TITLE : Int = 0;
+    static let DISPLAY_LABEL_TITLE : Int = 0
     // 表示ラベルインデックス　タスク完了日
-    static var DISPLAY_LABEL_DATE : Int = 1;
+    static let DISPLAY_LABEL_DATE : Int = 1
     // 表示ラベルインデックス　メモ
-    static var DISPLAY_LABEL_MEMO : Int = 2;
+    static let DISPLAY_LABEL_MEMO : Int = 2
+    
+    // 表示フォントサイズ
+    static let FONT_SIZE_MIN : Int = 5
+    static let FONT_SIZE_MAX : Int = 26
     
     /**
      * 変数
@@ -106,6 +110,22 @@ class UITaskImageButton : UIView
     }
     
     ///
+    /// デイニシャライズ（デストラクタ）
+    ///
+    deinit {
+        // メモリ解放処理
+        allocRelease()
+    }
+    
+    ///
+    /// メモリ解放処理
+    ///
+    open func allocRelease() {
+        // アニメーション停止
+        stopAnimation()
+    }
+    
+    ///
     ///　表示位置設定
     ///　- parameter frame:位置・サイズ
     ///
@@ -127,6 +147,9 @@ class UITaskImageButton : UIView
         guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
             return
         }
+        // 破裂用初期化処理
+        self.initCustumControlDiffusion()
+
         // 一旦非表示にする
         self.alpha = 0
         // 親に追加
@@ -162,7 +185,6 @@ class UITaskImageButton : UIView
     fileprivate func getFontSize(_ fontName : String, width : CGFloat, height : CGFloat, text : String) -> CGFloat {
         var ret : CGFloat = 0
         let work : String = text
-        //let fontSizies : [CGFloat] = [24.0, 22.0, 20.0, 18.0, 16.0, 14.0, 12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0]
         let workWidth : CGFloat = width - (UITaskImageButton.LABEL_MARGIN * 2 + 2.0)
         
         // 改行数チェック
@@ -172,8 +194,8 @@ class UITaskImageButton : UIView
             lfCount += 1
         }
         
-        // 調査するフォントサイズ数分処理する
-        for fontSize in (5...26).reversed() {
+        // 調査するフォントサイズ数分処理する(5ポイント〜26ポイント)
+        for fontSize in (UITaskImageButton.FONT_SIZE_MIN...UITaskImageButton.FONT_SIZE_MAX).reversed() {
             ret = CGFloat(fontSize)
             // fontを利用時のテキストサイズを取得
             var attributes : [String: AnyObject]? = [String: AnyObject]()
@@ -252,7 +274,10 @@ class UITaskImageButton : UIView
     ///　ラベル用　タイマー停止
     ///
     fileprivate func stopTimerForLabel() {
-        self.timLabel?.invalidate()
+        if(nil != self.timLabel){
+            self.timLabel?.invalidate()
+            self.timLabel = nil
+        }
     }
     
     ///
@@ -329,7 +354,6 @@ class UITaskImageButton : UIView
     open func clashAnimation() {
         // アニメーション停止処理
         stopAnimation()
-        
         // シャボン玉が割れたアニメーション設定
         setClashAnimation()
     }
@@ -354,6 +378,8 @@ class UITaskImageButton : UIView
     fileprivate func setClashAnimation(){
         
         // TODO:割れたアニメーションにする！！
+        execAnimationForDiffusion()
+        /*
         // 徐々に消えるアニメーション
         let animation = CABasicAnimation(keyPath: "opacity")
         animation.fromValue = 1.0
@@ -362,6 +388,7 @@ class UITaskImageButton : UIView
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         self.layer.add(animation, forKey: UITaskImageButton.AnimationLayerClashIdentifier)
         self.layer.opacity = 0
+        */
     }
 }
 
