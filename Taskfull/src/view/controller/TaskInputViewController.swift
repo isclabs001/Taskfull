@@ -23,13 +23,13 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     // 登録地点リスト入力PickerView
     let inputPointPicker : UIPickerView! = UIPickerView()
     
-    // 設定日時取得変数
+    // タスク終了時刻取得変数
     var inputTaskEndDate : Date = Date()
     
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     
-    // 受け取り用パラメータ:選択タスクID,メイン画面:動作モード
+    // 受け取り用パラメータ:　選択タスクID,メイン画面:動作モード
     var paramTaskId : Int = -2
     
     /**
@@ -88,9 +88,9 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         //　正常な場合
         if(true == ret)
         {
-            // 背景色設定（緑のグラデーション）
+            // 背景色設定
             self.MainView.gradationBackgroundStartColor = UIColorUtility.rgb(222, g: 255, b: 255)
-            self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(10, g: 209, b: 47)
+            self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(0, g: 30, b: 183)
             //self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(0, g: 30, b: 183)
 
             // 登録内容入力欄の初期化(不要？)
@@ -122,21 +122,8 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             //　制限文字数より後ろの文字列を削除
             textView.text = textView.text.substring(to: textView.text.index(textView.text.startIndex, offsetBy: CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))
             
-            
-            // 文字数制限アラート生成
-            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .alert)
-            
-            // OKActionタップ時処理
-            let OkAlertAction = UIAlertAction(title: "OK", style: .default) {
-                //UIAlertを閉じる(不要？？)
-                action in stringLimitAlert.dismiss(animated: true, completion: nil)
-            }
-            
-            // OKActionをUIAlertに追加
-            stringLimitAlert.addAction(OkAlertAction)
-            
-            // UIAlert表示処理
-            present(stringLimitAlert, animated: true, completion: nil)
+            // 文字数制限アラート表示
+            MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
             
         }
     }
@@ -158,26 +145,12 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
                 //　制限文字数より後ろの文字列を削除
                 inputTextField.text = copyText.substring(to: copyText.characters.index(copyText.startIndex, offsetBy: CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
                 
+                // 文字数制限アラート表示
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
                 
-                // 文字数制限アラート生成
-                let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_NAME_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .alert)
-                
-                // OKActionタップ時処理
-                let OkAlertAction = UIAlertAction(title: "OK", style: .default) {
-                    //UIAlertを閉じる(不要？？)
-                    action in stringLimitAlert.dismiss(animated: true, completion: nil)
-                }
-                
-                // OKActionをUIAlertに追加
-                stringLimitAlert.addAction(OkAlertAction)
-                
-                // UIAlert表示処理
-                present(stringLimitAlert, animated: true, completion: nil)
-
             }
         }
     }
-
     
     
     // 登録画面用ナビゲーションバー：初期設定
@@ -185,7 +158,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
 
         // ナビゲーションバー表示
         navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.navigationBar.backgroundColor = UIColor.orange
+        self.navigationController?.navigationBar.backgroundColor = UIColorUtility.rgb(107, g: 133, b: 194)
         
         
         //登録確定ボタン生成("OK")
@@ -413,9 +386,27 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         
         
         //タスク終了時刻入力欄（現在日付,中央寄せ,サイズ自動調整）
-        InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(Date())
-        InputTaskDateField.textAlignment = NSTextAlignment.center
-        InputTaskDateField.sizeToFit()
+        // 親タスクである場合
+        if(paramTaskId == -2){
+            // タスク終了時刻入力欄を現在時刻に設定
+            InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(Date())
+            InputTaskDateField.textAlignment = NSTextAlignment.center
+            InputTaskDateField.sizeToFit()
+            
+        }
+        // 子タスクである場合
+        else{
+            // 親タスクの終了時刻取得
+            let taskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(paramTaskId)!
+            InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime))
+            // タスク終了時刻取得変数へ親タスク終了時刻格納
+            inputTaskEndDate = FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime)
+            InputTaskDateField.textAlignment = NSTextAlignment.center
+            InputTaskDateField.sizeToFit()
+            // DatePicker開始時刻＝親タスク終了時刻
+            inputDatePicker.setDate(inputTaskEndDate, animated: false)
+        }
+
         
         //タスク終了時刻入力欄 入力方法：DatePicker
         InputTaskDateField.inputView = inputDatePicker
@@ -423,7 +414,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         inputDatePicker.datePickerMode = UIDatePickerMode.dateAndTime
         inputDatePicker.locale = Locale(identifier : "ja_JP")
         
-        //DatePiceker値変更時イベント
+        //DatePiceker値変更時イベント設定
         inputDatePicker.addTarget(self, action: #selector(TaskInputViewController.inputDatePickerEdit(_:)), for: UIControlEvents.valueChanged)
         
     }
@@ -473,7 +464,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         // 後続タスク追加ボタン:タップ時イベント
         AddAfterTask.addTarget(self, action: #selector(TaskInputViewController.onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
-        // TODO:後続タスク制限数の為隠す(現段階)　※warming
+        // TODO:後続タスク制限数の為後続ボタン隠す(4/21)
         if(self.paramTaskId != -2){
             AddAfterTask.isHidden = true
             AddAfterTask.isEnabled = false
@@ -487,15 +478,16 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
     
     //Datepicer：値変更時イベント
     func inputDatePickerEdit(_ sender: UIDatePicker){
-        //値をタスク終了時刻入力欄に表示
+        // 値をタスク終了時刻入力欄に表示
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(sender.date)
         
-        //同一の日付を変数に格納
+        //  同一値をタスク終了時刻取得変数に格納
         inputTaskEndDate = sender.date
         
         // 0.1秒バイブレーション作動
         AudioServicesPlaySystemSound(1003)
         AudioServicesDisposeSystemSoundID(1003)
+        // TODO: デバッグ用
         print(paramTaskId)
     }
     
@@ -513,7 +505,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         // ナビゲーションバー:レイヤー追加
         self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
         
-        // 後続タスク追加ボタン:プッシュ遷移
+        // 後続タスク追加ボタン:編集画面遷移
         navigationController?.pushViewController(vc, animated: true)
         
 

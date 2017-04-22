@@ -178,8 +178,8 @@ class CommonConst
      */
     // 後続ボタン追加タイトル定数
     static internal let AFTER_ADD_TASK_BTN_TITLE : String = "後続タスク追加"
-    // 後続ボタン表示タイトル定数
     static internal let AFTER_DISPLAY_TASK_BTN_TITLE : String = "後続タスク表示"
+    static internal let AFTER_EDIT_TASK_BTN_TITLE : String = "後続タスク編集"
 
     /**
      * カラーボタン選択時背景色定数

@@ -149,7 +149,7 @@ open class TaskInfoUtility {
     ///　- parameter:id:検索対象のID
     ///　- returns:-1以外:見つかったIDのインデックス -1:見つからなかった
     ///
-    fileprivate func GetParrentIndex(_ parrentId : Int) -> Int {
+    open func GetParrentIndex(_ parrentId : Int) -> Int {
         
         // データ数分処理する
         for i in (0 ..< self._taskInfo.Data.count) {
@@ -243,4 +243,23 @@ open class TaskInfoUtility {
         let taskJsonUtility : TaskJsonUtility = TaskJsonUtility()
         taskJsonUtility.deleteJSONFile()
     }
+    
+    
+    ///
+    /// 指定した親IDの子タスク登録情報を取得
+    ///　- parameter:id:検索対象のID
+    ///　- returns:nil以外:見つかったIDのタスク登録情報 nil:見つからなかった
+    ///
+    open func GetParrentTaskInfoDataForId(_ id : Int) -> TaskInfoDataEntity? {
+        
+        var ret : TaskInfoDataEntity? = nil
+        let index = GetParrentIndex(id)
+        
+        if(-1 < index) {
+            ret = getTaskInfoData()[index]
+        }
+        
+        return ret
+    }
+    
 }

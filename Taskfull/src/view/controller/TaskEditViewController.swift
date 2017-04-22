@@ -32,6 +32,9 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     // 受け取り用パラメータ:選択タスクID,メイン画面:動作モード
     var paramTaskId : Int = 0
     var paramMainViewMode : CommonConst.ActionType = CommonConst.ActionType.edit
+    var paramParrentId : Int = -1
+    
+    var selfParrentId : Int = Int()
     
     /**
      * 変数
@@ -90,11 +93,11 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         
     }
     
-    // 削除確認OKアクション
+    // タスク削除確認OKアクション
     fileprivate func DeleteConfirmOKAction(action: UIAlertAction){
         
         // OK時アクション
-        // 選択タスク削除
+        // 読込タスク及び子タスク削除
         TaskInfoUtility.DefaultInstance.RemoveTaskInfo(self.paramTaskId)
         TaskInfoUtility.DefaultInstance.RemoveTaskInfoForChild(self.paramTaskId)
         
@@ -154,11 +157,9 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         //　正常な場合
         if(true == ret)
         {
-            // 背景色設定（緑のグラデーション）
+            // 背景色設定
             self.MainView.gradationBackgroundStartColor = UIColorUtility.rgb(222, g: 255, b: 255)
-            self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(10, g: 209, b: 47)
-            //self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(0, g: 30, b: 183)
-            
+            self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(0, g: 30, b: 183)
             
             //view:フォーカスが外れた際のイベント
             let tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskInputViewController.missFocusView))
@@ -185,71 +186,87 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     
     // 遷移先モード分岐処理
     fileprivate func displayTaskModeChange(){
+        
         // メイン画面モード
         switch(self.paramMainViewMode){
+            
         // 現在編集モードの場合
         case CommonConst.ActionType.edit:
+            
             // 編集不可用Viewを非表示
             HiddenContentClearView.isHidden = true
+            
             // 削除ボタン有効化
             DeleteTaskBtn.isHidden = false
             DeleteTaskBtn.isEnabled = true
-            /*
-            InputTaskNameField.isEnabled = true
-            InputTaskMemoView.isEditable = true
-            InputTaskDateField.isEnabled = true
-            InputPointListField.isEnabled = true
-            InputImportanceSegment.isEnabled = true
-            InputTaskColorBtn_1.isEnabled = true
-            InputTaskColorBtn_2.isEnabled = true
-            InputTaskColorBtn_3.isEnabled = true
-            DeleteTaskBtn.isHidden = false
-            DeleteTaskBtn.isEnabled = true
-            */
             break;
+            
         // 上記以外の場合(参照)
         default:
+            
             // 編集不可用Viewを表示
             HiddenContentClearView.isHidden = false
+            
             // 削除ボタン無効化
             DeleteTaskBtn.isHidden = true
             DeleteTaskBtn.isEnabled = false
-            /*
-            InputTaskNameField.isEnabled = false
-            InputTaskMemoView.isEditable = false
-            InputTaskMemoView.isOpaque = false
-            InputTaskDateField.isEnabled = false
-            InputPointListField.isEnabled = false
-            InputImportanceSegment.isEnabled = false
-            InputImportanceSegment.isEnabled = false
-            InputTaskColorBtn_1.isEnabled = false
-            InputTaskColorBtn_2.isEnabled = false
-            InputTaskColorBtn_3.isEnabled = false
-            DeleteTaskBtn.isHidden = true
-            DeleteTaskBtn.isEnabled = false
-            */
             break;
+            
         }
+        
+        // 後続タスクが存在しない場合
+        if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1){
+            
+            //　後続タスクボタン非表示
+            AddAfterTask.isEnabled = false
+            AddAfterTask.isHidden = true
+            
+        }
+        else{
+            
+            //　後続タスクボタン表示
+            AddAfterTask.isEnabled = true
+            AddAfterTask.isHidden = false
+        }
+        
     }
     
     // タスク内容初期表示処理
     func displayTaskContent(){
+            
+        // 選択タスク読込処理開始
+        var taskInfo : TaskInfoDataEntity = TaskInfoDataEntity()
         
-        let taskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(paramTaskId)!
+        // 親もしくは、選択始めタスクである場合
+        if(paramParrentId == -1){
+            
+            // 親タスク(自身)読込処理
+            taskInfo  = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(paramTaskId)!
+            
+        }
+        // 後続タスクである場合
+        else{
+            
+            // 子タスク読込処理
+            taskInfo = TaskInfoUtility.DefaultInstance.GetParrentTaskInfoDataForId(paramTaskId)!
+            
+            // 子タスクIDを読込IDに設定
+            self.paramTaskId = taskInfo.Id
+        }
         
-        // 選択されたタスク読込処理
         
-        // 項目名入力欄
+        // 項目名入力欄 = 選択タスク項目名
         InputTaskNameField.text = taskInfo.Title
 
-        // メモ入力欄
+        // メモ入力欄 = 選択タスクメモ
         InputTaskMemoView.text = taskInfo.Memo
         
-        // タスク終了日時欄
+        // タスク終了日時欄 = 選択タスク終了日時
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime))
-        //同一の日付を変数に格納
+        // 同一日付を設定日時取得変数に格納
         inputTaskEndDate = FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime)
-        
+        // DatePicker開始時刻　＝　選択タスク終了日時
+        inputDatePicker.setDate(inputTaskEndDate, animated: false)
         
         // 通知場所リスト欄(要変更)
         InputPointListField.text = String(taskInfo.NotifiedLocation)
@@ -260,6 +277,10 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         //各セグメント分岐処理(ボタン色変更)
         didChengeImportanceSegmentValue(InputImportanceSegment.selectedSegmentIndex)
 
+        // 親ID
+        // 親ID格納変数へ親IDを格納
+        self.selfParrentId = taskInfo.ParrentId
+    
  
         // カラー欄
         // ボタンカラー分岐処理
@@ -368,8 +389,8 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         
         // ナビゲーションバー表示
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        // ナビゲーションバー背景色：緑
-        self.navigationController?.navigationBar.backgroundColor = UIColor.green
+        // ナビゲーションバー背景色
+        self.navigationController?.navigationBar.backgroundColor = UIColorUtility.rgb(107, g: 133, b: 194)
         //self.navigationController?.navigationBar.tintColor = UIColor.white
         //self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
 
@@ -684,8 +705,8 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         switch(self.paramMainViewMode){
         // 現在編集モードの場合
         case CommonConst.ActionType.edit:
-            // 後続ボタン:タイトル設定(追加)
-            AddAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
+            // 後続ボタン:タイトル設定(編集)
+            AddAfterTask.setTitle(CommonConst.AFTER_EDIT_TASK_BTN_TITLE, for: UIControlState())
             break;
         // 上記以外の場合(参照モード)
         default:
@@ -719,11 +740,22 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     
     //後続タスクボタン：タップ時イベント
     func onTouchDown_addAfterTaskButton(_ sender : UIButton){
-        /*
-         let AddAfterTaskInputView = TESTViewController()
-         AddAfterTaskInputView.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
-         self.presentViewController(AddAfterTaskInputView, animated: true, completion: nil)
-         */
+        
+        // タスク編集イベント
+        inputEditTask()
+        
+        // タスク編集画面コントローラー生成
+        let vc = storyboard?.instantiateViewController(withIdentifier: "EditStoryBoard") as! TaskEditViewController
+        vc.paramTaskId = self.paramTaskId
+        vc.paramMainViewMode = self.paramMainViewMode
+        vc.paramParrentId = self.paramParrentId
+        
+        // ナビゲーションバー:レイヤー追加
+        self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
+        
+        // 後続タスク追加ボタン:編集画面遷移
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     //フォーカスが外れた際、viewを閉じる
@@ -756,7 +788,8 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         // タスクEntity
         let taskInfoDataEntity : TaskInfoDataEntity = TaskInfoDataEntity()
         
-        // 既存ID
+        // タスクID設定
+        // 読込タスクIDを設定
         taskInfoDataEntity.Id = self.paramTaskId
         
         //項目名登録
@@ -794,20 +827,22 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_3.currentTitle!)!
         }
         
-        //テキストカラー
+        // テキストカラー
         //taskInfoDataEntity.TextColor = 0
         
-        //親ID（-1 = 親（先頭）、それ以外＝親のID）
-        //taskInfoDataEntity.ParrentId = -1
+        // 親ID
+        // 読込タスクの親IDを再設定
+        taskInfoDataEntity.ParrentId = self.selfParrentId
+        // 中間タスク判別用変数に読込IDを設定
+        self.paramParrentId = taskInfoDataEntity.Id
         
-        //完了フラグ
-        //taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
         
-        //作成日時
-        //taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
-        
-        //更新日時
-        taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+        // 編集モードである場合
+        if(self.paramMainViewMode == CommonConst.ActionType.edit){
+            //更新日時
+            taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+
+        }
         
         // タスク更新処理
         TaskInfoUtility.DefaultInstance.SetTaskInfoDataForId(taskInfoDataEntity)
@@ -817,10 +852,9 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         
     }
     
-    
     //キーボード「リターンキー」：タップ時イベント
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //キーボードを閉じる
+        // キーボードを閉じる
         textField.resignFirstResponder()
         return false
     }
