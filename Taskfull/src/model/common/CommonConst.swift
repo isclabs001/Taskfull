@@ -192,7 +192,7 @@ class CommonConst
     // 青
     static internal let CL_BACKGROUND_GRADIATION_BLUE_1 : UIColor = UIColorUtility.rgb(0, g: 30, b: 183)
     //static internal let CL_BACKGROUND_GRADIATION_BLUE_2 : UIColor = UIColorUtility.rgb(222, g: 255, b: 255)
-    static internal let CL_BACKGROUND_GRADIATION_BLUE_2 : UIColor = UIColorUtility.rgb(154, g: 154, b: 225)
+    static internal let CL_BACKGROUND_GRADIATION_BLUE_2 : UIColor = UIColorUtility.rgb(222, g: 222, b: 255)
     // オレンジ
     static internal let CL_BACKGROUND_GRADIATION_ORANGE_1 : UIColor = UIColorUtility.rgb(255, g: 128, b: 0)
     static internal let CL_BACKGROUND_GRADIATION_ORANGE_2 : UIColor = UIColorUtility.rgb(255, g: 218, b: 128)

@@ -89,9 +89,8 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         if(true == ret)
         {
             // 背景色設定
-            self.MainView.gradationBackgroundStartColor = UIColorUtility.rgb(222, g: 255, b: 255)
-            self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(0, g: 30, b: 183)
-            //self.MainView.gradationBackgroundEndColor = UIColorUtility.rgb(0, g: 30, b: 183)
+            self.MainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
+            self.MainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
 
             // 登録内容入力欄の初期化(不要？)
 
