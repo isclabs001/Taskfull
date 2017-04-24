@@ -121,7 +121,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             //　制限文字数より後ろの文字列を削除
             textView.text = textView.text.substring(to: textView.text.index(textView.text.startIndex, offsetBy: CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))
             
-            // 文字数制限アラート表示
+            // 文字数制限アラート表示(メモ)
             MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
             
         }
@@ -144,7 +144,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
                 //　制限文字数より後ろの文字列を削除
                 inputTextField.text = copyText.substring(to: copyText.characters.index(copyText.startIndex, offsetBy: CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
                 
-                // 文字数制限アラート表示
+                // 文字数制限アラート表示(項目名)
                 MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
                 
             }
@@ -159,6 +159,8 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.backgroundColor = UIColorUtility.rgb(107, g: 133, b: 194)
         
+        // ナビゲーションバーBACKボタンタイトル設定
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back",style:.plain,target:nil,action:nil)
         
         //登録確定ボタン生成("OK")
         let addInputTaskButton : UIBarButtonItem = UIBarButtonItem(title:"OK",style : UIBarButtonItemStyle.plain,target: self,action:#selector(TaskInputViewController.onTouchDown_addInputTaskButton))
@@ -259,11 +261,11 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
 
     }
     
-    //重要度:セグメント値変更時イベント
-    func onTouchDown_InputImportanceSegment(_ segcon:UISegmentedControl){
+    // 重要度:セグメント値変更時処理
+    fileprivate func didChengeImportanceSegmentValue(_ importanceSegmentIndex: Int){
         
         //各セグメント選択時分岐処理
-        switch segcon.selectedSegmentIndex {
+        switch importanceSegmentIndex {
             
         //"低"の場合
         case CommonConst.TASK_IMPORTANCE_VALID_LOW:
@@ -289,9 +291,19 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
             //要エラー対応時イベント
             break
         }
-    
-    
+        
     }
+    
+    
+    
+    //重要度:セグメント値変更時イベント
+    func onTouchDown_InputImportanceSegment(_ segcon:UISegmentedControl){
+        
+        // 重要度:セグメント値変更時処理
+        didChengeImportanceSegmentValue(segcon.selectedSegmentIndex)
+        
+    }
+    
     
     //カラーボタン変更処理(引数:重要度)
     fileprivate func changeColorBtn(_ caseNumber : Int){
@@ -632,7 +644,7 @@ class TaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPicker
         // 親タスクである場合
         if(self.paramTaskId == -2 ){
             
-            //　ParrentIdを定数に設定[-1 = 親（先頭）]
+            //　ParrentIdを親ID定数に設定[-1 = 親（先頭）]
             taskInfoDataEntity.ParrentId = -1
             
             // ParamTaskIdを自IDに設定

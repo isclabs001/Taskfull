@@ -29,12 +29,15 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     
-    // 受け取り用パラメータ:選択タスクID,メイン画面:動作モード
+    // パラメータ:読込タスクID,メイン画面:動作モード
     var paramTaskId : Int = 0
+    // パラメータ:メイン画面動作モード
     var paramMainViewMode : CommonConst.ActionType = CommonConst.ActionType.edit
+    // パラメータ:中間タスク判別用変数
     var paramParrentId : Int = -1
-    
+    // パラメータ: 読込タスク親ID保存用変数
     var selfParrentId : Int = Int()
+
     
     /**
      * 変数
@@ -327,20 +330,8 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
             textView.text = textView.text.substring(to: textView.text.index(textView.text.startIndex, offsetBy: CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))
             
             
-            // 文字数制限アラート生成
-            let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .alert)
-            
-            // OKActionタップ時処理
-            let OkAlertAction = UIAlertAction(title: "OK", style: .default) {
-                //UIAlertを閉じる(不要？？)
-                action in stringLimitAlert.dismiss(animated: true, completion: nil)
-            }
-            
-            // OKActionをUIAlertに追加
-            stringLimitAlert.addAction(OkAlertAction)
-            
-            // UIAlert表示処理
-            present(stringLimitAlert, animated: true, completion: nil)
+            // 文字数制限アラート表示(メモ)
+            MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
             
         }
     }
@@ -362,21 +353,8 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
                 //　制限文字数より後ろの文字列を削除
                 inputTextField.text = copyText.substring(to: copyText.characters.index(copyText.startIndex, offsetBy: CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
                 
-                
-                // 文字数制限アラート生成
-                let stringLimitAlert: UIAlertController = UIAlertController(title: "", message: "\(CommonConst.INPUT_TASK_NAME_STRING_LIMIT)文字以内で入力して下さい",preferredStyle: .alert)
-                
-                // OKActionタップ時処理
-                let OkAlertAction = UIAlertAction(title: "OK", style: .default) {
-                    //UIAlertを閉じる(不要？？)
-                    action in stringLimitAlert.dismiss(animated: true, completion: nil)
-                }
-                
-                // OKActionをUIAlertに追加
-                stringLimitAlert.addAction(OkAlertAction)
-                
-                // UIAlert表示処理
-                present(stringLimitAlert, animated: true, completion: nil)
+                // 文字数制限アラート表示(項目名)
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
                 
             }
         }
@@ -391,9 +369,11 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         // ナビゲーションバー背景色
         self.navigationController?.navigationBar.backgroundColor = UIColorUtility.rgb(107, g: 133, b: 194)
-        //self.navigationController?.navigationBar.tintColor = UIColor.white
-        //self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
 
+        // ナビゲーションバーBACKボタンタイトル設定
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back",style:.plain,target:nil,action:nil)
+        
+        
         // メイン画面モード
         switch(self.paramMainViewMode){
         // 現在編集モードの場合
@@ -746,8 +726,12 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         
         // タスク編集画面コントローラー生成
         let vc = storyboard?.instantiateViewController(withIdentifier: "EditStoryBoard") as! TaskEditViewController
+        
+        // 読込タスクID
         vc.paramTaskId = self.paramTaskId
+        // メイン画面:モード
         vc.paramMainViewMode = self.paramMainViewMode
+        // 中間タスク判別用変数
         vc.paramParrentId = self.paramParrentId
         
         // ナビゲーションバー:レイヤー追加
@@ -760,6 +744,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     
     //フォーカスが外れた際、viewを閉じる
     func missFocusView(){
+        // Viewを閉じる
         view.endEditing(true)
     }
     
@@ -839,7 +824,7 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
         
         // 編集モードである場合
         if(self.paramMainViewMode == CommonConst.ActionType.edit){
-            //更新日時
+            //　更新日時更新
             taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
 
         }
