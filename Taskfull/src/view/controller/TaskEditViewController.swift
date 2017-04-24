@@ -704,10 +704,10 @@ class TaskEditViewController : BaseViewController,UIPickerViewDelegate,UIPickerV
     //DatePicker：値変更時イベント
     func inputDatePickerEdit(_ sender: UIDatePicker){
         
-        //値をタスク終了時刻入力欄に表示
+        //　値をタスク終了時刻入力欄に表示
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(sender.date)
         
-        //同一の日付を変数に格納
+        //　同一値をタスク終了時刻取得変数に格納
         inputTaskEndDate = sender.date
         
         // 0.1秒バイブレーション作動
