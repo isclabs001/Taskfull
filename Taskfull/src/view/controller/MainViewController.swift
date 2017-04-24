@@ -704,16 +704,14 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // タスク入力画面のコントローラを取得
             let dvc : TaskInputViewController = (segue.destination as AnyObject as? TaskInputViewController)!
 
-            
+            // タスク登録モード
+            dvc.paramMainViewMode = CommonConst.ActionType.add
         }
         // タスク編集画面へ遷移する場合
         else if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_EDIT){
             
             // タスク編集画面のコントローラを取得
             let dvc : TaskEditViewController = (segue.destination as AnyObject as? TaskEditViewController)!
-            
-            // ここでParamTaskId指定できず,,,
-            //dvc.paramTaskId = sender.TaskButton.btnImage.tag
             
             // 長押しボタンのタスクIDを渡す
             dvc.paramTaskId = self.mParamTaskId

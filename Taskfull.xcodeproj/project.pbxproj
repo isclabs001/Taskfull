@@ -37,6 +37,7 @@
 		631373171E92325C0089C19E /* soap013.png in Resources */ = {isa = PBXBuildFile; fileRef = 6313730C1E92325C0089C19E /* soap013.png */; };
 		633187271E85256D00D0A9BE /* UITaskImageButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633187261E85256D00D0A9BE /* UITaskImageButton.xib */; };
 		6338B8B31E7421F4008103D0 /* TaskInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338B8B21E7421F4008103D0 /* TaskInputViewController.swift */; };
+		635669611EADA2DA0008F57C /* BaseTaskInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635669601EADA2DA0008F57C /* BaseTaskInputViewController.swift */; };
 		635DCE711E739F1700F6F325 /* CommonConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE701E739F1700F6F325 /* CommonConst.swift */; };
 		635DCE731E73A03600F6F325 /* BaseJsonDataUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE721E73A03600F6F325 /* BaseJsonDataUtility.swift */; };
 		635DCE751E73A04300F6F325 /* LatLngForSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE741E73A04300F6F325 /* LatLngForSerializable.swift */; };
@@ -115,6 +116,7 @@
 		6313730C1E92325C0089C19E /* soap013.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soap013.png; sourceTree = "<group>"; };
 		633187261E85256D00D0A9BE /* UITaskImageButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UITaskImageButton.xib; sourceTree = "<group>"; };
 		6338B8B21E7421F4008103D0 /* TaskInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInputViewController.swift; sourceTree = "<group>"; };
+		635669601EADA2DA0008F57C /* BaseTaskInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTaskInputViewController.swift; sourceTree = "<group>"; };
 		635DCE701E739F1700F6F325 /* CommonConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonConst.swift; sourceTree = "<group>"; };
 		635DCE721E73A03600F6F325 /* BaseJsonDataUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseJsonDataUtility.swift; sourceTree = "<group>"; };
 		635DCE741E73A04300F6F325 /* LatLngForSerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatLngForSerializable.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				6338B8B21E7421F4008103D0 /* TaskInputViewController.swift */,
 				427952D31E9C84560064CE2E /* MapConfigViewController.swift */,
 				63D24F7C1EA45FAF00D473A7 /* TaskEditViewController.swift */,
+				635669601EADA2DA0008F57C /* BaseTaskInputViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				631238AE1E73F5F90054AC30 /* UIColorUtility.swift in Sources */,
 				6338B8B31E7421F4008103D0 /* TaskInputViewController.swift in Sources */,
 				631238A01E73CB940054AC30 /* UICircleImageButton.swift in Sources */,
+				635669611EADA2DA0008F57C /* BaseTaskInputViewController.swift in Sources */,
 				63D24F7D1EA45FAF00D473A7 /* TaskEditViewController.swift in Sources */,
 				631373011E91EBBF0089C19E /* ViewTaskItemEntity.swift in Sources */,
 				636CE3B51E6010CD002273BE /* ViewController.swift in Sources */,
