@@ -34,7 +34,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     
-    // パラメータ:読込タスクID,メイン画面:動作モード
+    // パラメータ:読込タスクID
     var paramTaskId : Int = -2
     // パラメータ:メイン画面動作モード
     var paramMainViewMode : CommonConst.ActionType = CommonConst.ActionType.add
@@ -511,7 +511,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
         // メイン画面モード
         switch(self.paramMainViewMode){
-        // 現在編集モードの場合
+        // 現在登録モードの場合
         case CommonConst.ActionType.add:
             // 後続ボタン:タイトル設定(登録)
             addAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
