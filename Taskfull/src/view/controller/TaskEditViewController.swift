@@ -112,12 +112,14 @@ class TaskEditViewController : BaseTaskInputViewController
             DeleteTaskBtn.isEnabled = true
             
             // TEST:START
+            // 編集モード時後続タスク追加処理対策
             // 読込ID:後続タスクが存在しないかつ子タスクではない場合
             if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1 && self.paramParrentId == -1){
                 
                 // 後続タスク追加ボタン表示
                 AddAfterTask.isEnabled = true
                 AddAfterTask.isHidden = false
+                
                 // 後続タスク追加ボタン:タイトル再設定(登録)
                 AddAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
 
@@ -183,7 +185,7 @@ class TaskEditViewController : BaseTaskInputViewController
     // タスク内容初期表示処理
     override func displayTaskContent(){
         
-        // 選択タスク読込処理開始
+        // 読込タスク読込処理開始
         let taskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(paramTaskId)!
         
         // 項目名入力欄 = 選択タスク項目名
@@ -192,12 +194,57 @@ class TaskEditViewController : BaseTaskInputViewController
         // メモ入力欄 = 選択タスクメモ
         InputTaskMemoView.text = taskInfo.Memo
         
-        // タスク終了日時欄 = 選択タスク終了日時
+        // タスク終了日時欄 = 読込タスク終了日時
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime))
         // 同一日付を設定日時取得変数に格納
         inputTaskEndDate = FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime)
         // DatePicker開始時刻　＝　選択タスク終了日時
         inputDatePicker.setDate(inputTaskEndDate, animated: false)
+        
+        
+        // TEST:START
+        // Datepicker制限再設定処理
+        // 読込ID:子タスクが存在する場合
+        if(TaskInfoUtility.DefaultInstance.GetParrentIndex(taskInfo.Id) != -1){
+            
+            // 読込ID:子タスク読込処理開始
+            let parrentTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetParrentTaskInfoDataForId(taskInfo.Id)!
+            
+            // 設定最大日 ＝ 読込ID:子タスク終了日付
+            inputDatePicker.maximumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
+            
+        }
+        // 読込ID:親タスクが存在する場合
+        else if(TaskInfoUtility.DefaultInstance.GetIndex(taskInfo.ParrentId) != -1){
+            
+            // 読込ID:親タスク読込処理開始
+            let parrentTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(taskInfo.ParrentId)!
+            
+            // 親タスクが完了していない場合
+            if(parrentTaskInfo.CompleteFlag != 1){
+                
+                // 設定最小日 ＝ 読込ID:親タスク終了日付
+                inputDatePicker.minimumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
+                
+            }
+            // 親タスクが完了している場合 (暫定単独タスク)
+            else{
+                
+                // Datepicker設定制限初期化
+                inputDatePicker.minimumDate = nil
+                
+            }
+            
+        }
+        // 単独タスクである場合(親タスク,子タスクなし)
+        else{
+            
+            // 設定制限初期化
+            inputDatePicker.minimumDate = nil
+            
+        }
+        // TEST:END
+        
         
         // 通知場所リスト欄(要変更)
         InputPointListField.text = String(taskInfo.NotifiedLocation)
@@ -209,7 +256,7 @@ class TaskEditViewController : BaseTaskInputViewController
         didChengeImportanceSegmentValue(InputImportanceSegment.selectedSegmentIndex, btn1 : self.InputTaskColorBtn_1, btn2 : self.InputTaskColorBtn_2, btn3 : self.InputTaskColorBtn_3)
         
         // 親ID
-        // 親ID格納変数へ親IDを格納
+        // 読込タスク親ID格納変数へ読込タスク親IDを格納
         self.selfParrentId = taskInfo.ParrentId
         
         

@@ -129,7 +129,7 @@ open class TaskInfoUtility {
     ///　- parameter:id:検索対象のID
     ///　- returns:-1以外:見つかったIDのインデックス -1:見つからなかった
     ///
-    fileprivate func GetIndex(_ id : Int) -> Int {
+    open func GetIndex(_ id : Int) -> Int {
         
         // データ数分処理する
         for i in (0 ..< self._taskInfo.Data.count ) {
@@ -147,7 +147,7 @@ open class TaskInfoUtility {
     ///
     /// 指定した親IDと一致した親IDのタスク登録情報インデックスを取得
     ///　- parameter:id:検索対象のID
-    ///　- returns:-1以外:見つかったIDのインデックス -1:見つからなかった
+    ///　- returns:-1以外:見つかった親IDのインデックス -1:見つからなかった
     ///
     open func GetParrentIndex(_ parrentId : Int) -> Int {
         

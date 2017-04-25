@@ -275,6 +275,7 @@ class TaskInputViewController : BaseTaskInputViewController
             
             // 読込タスクIDを作成タスクIDに設定
             self.paramTaskId = taskInfoDataEntity.Id
+            
         }
         // 後続タスクである場合
         else{

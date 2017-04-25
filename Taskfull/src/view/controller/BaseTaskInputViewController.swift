@@ -34,13 +34,13 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     
-    // パラメータ:読込タスクID
+    // パラメータ:読込タスクID(Add:親タスクID,Edit:自身タスクID)
     var paramTaskId : Int = -2
     // パラメータ:メイン画面動作モード
     var paramMainViewMode : CommonConst.ActionType = CommonConst.ActionType.add
     // パラメータ:中間タスク判別用変数
     var paramParrentId : Int = -1
-    // パラメータ: 読込タスク親ID保存用変数
+    // パラメータ: 読込タスク親ID格納変数
     var selfParrentId : Int = Int()
     
     // カラーボタンイメージ(全１２色)
@@ -156,6 +156,10 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         // ナビゲーションバー背景色
         self.navigationController?.navigationBar.backgroundColor = UIColorUtility.rgb(107, g: 133, b: 194)
+        // ナビゲーションバー透過度
+        self.navigationController?.navigationBar.alpha = 0.9
+        // ナビゲーションバー透過フラグ
+        self.navigationController?.navigationBar.isTranslucent = true
         
         // ナビゲーションバーBACKボタンタイトル設定
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back",style:.plain,target:nil,action:nil)
@@ -165,11 +169,13 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         switch(self.paramMainViewMode){
         // 現在登録・編集モードの場合
         case CommonConst.ActionType.add, CommonConst.ActionType.edit:
+            
             //編集確定ボタン生成("OK")
             let decideEditTaskButton : UIBarButtonItem = UIBarButtonItem(title:"OK",style : UIBarButtonItemStyle.plain,target: self,action:#selector(TaskEditViewController.onTouchDown_decideEditTaskButton))
             
             //ボタンをナビゲーションバー右側に配置
             self.navigationItem.setRightBarButtonItems([decideEditTaskButton], animated: true)
+            
             break;
             
         // 上記以外の場合(参照モード)
@@ -181,18 +187,21 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         switch(self.paramMainViewMode){
         // 現在登録モードの場合
         case CommonConst.ActionType.add:
-            //タイトル名設定
+            
+            //タイトル名設定(タスク登録)
             self.title = CommonConst.VIW_TITLE_INPUT_TASK
             break;
             
         // 現在編集モードの場合
         case CommonConst.ActionType.edit:
-            //タイトル名設定(編集)
+            
+            //タイトル名設定(タスク編集)
             self.title = CommonConst.VIW_TITLE_EDIT_TASK
             break;
             
         // 上記以外の場合(参照モード)
         default:
+            
             //タイトル名設定(タスク内容)
             self.title = CommonConst.VIW_TITLE_CONTENT_TASK
             break;
@@ -376,25 +385,53 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
         
         //タスク終了時刻入力欄（現在日付,中央寄せ,サイズ自動調整）
-        // 親タスクである場合
-        if(paramTaskId == -2){
-            // タスク終了時刻入力欄を現在時刻に設定
+        // 登録開始タスクである場合
+        if(paramTaskId == -2 ){
+            
+            // タスク終了時刻入力欄を現在時刻に設定()
             taskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(Date())
             taskDateField.textAlignment = NSTextAlignment.center
             taskDateField.sizeToFit()
             
         }
-            // 子タスクである場合
+        // TEST:START
+        // 読込ID:子タスクが存在する場合
+        //
+        else if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) != -1){
+            
+            // 読込ID:子タスク読込処理開始
+            let parrentTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetParrentTaskInfoDataForId(self.paramTaskId)!
+            
+            // 設定最大日 ＝ 読込ID:子タスク終了日付
+            inputDatePicker.maximumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
+            
+        }
+        // TEST:END
+        // 子タスクである場合
         else{
-            // 親タスクの終了時刻取得
+            
+            // 読込タスク(親タスク)の終了時刻取得
             let taskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(paramTaskId)!
+            
+            
+            // タスク終了時刻入力欄を読込タスク(親タスク)の終了時刻取得に設定
             taskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime))
+            
             // タスク終了時刻取得変数へ親タスク終了時刻格納
             inputTaskEndDate = FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime)
             taskDateField.textAlignment = NSTextAlignment.center
             taskDateField.sizeToFit()
+            
             // DatePicker開始時刻＝親タスク終了時刻
             inputDatePicker.setDate(inputTaskEndDate, animated: false)
+            
+            
+            // TEST:START
+            // 設定最小日 ＝ 読込ID:親タスク終了日付
+            inputDatePicker.minimumDate = FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime)
+            
+            // TEST:END
+            
         }
         
         
