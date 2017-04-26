@@ -34,14 +34,16 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     //登録地点用要素配列（テスト用）
     let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     
-    // パラメータ:読込タスクID(Add:親タスクID,Edit:自身タスクID)
+    /// パラメータ:読込タスクID(Add:親タスクID,Edit:自身タスクID)
     var paramTaskId : Int = -2
-    // パラメータ:メイン画面動作モード
+    /// パラメータ:メイン画面動作モード
     var paramMainViewMode : CommonConst.ActionType = CommonConst.ActionType.add
-    // パラメータ:中間タスク判別用変数
+    /// パラメータ:中間タスク判別用変数(タスク選択時)
     var paramParrentId : Int = -1
-    // パラメータ: 読込タスク親ID格納変数
+    /// パラメータ:読込タスク親ID格納変数
     var selfParrentId : Int = Int()
+    /// パラメータ:登録画面表示ステータス(false:初期表示,true:表示済み)
+    var paramBackStatus : Bool = false
     
     // カラーボタンイメージ(全１２色)
     // 重要度：低
@@ -396,7 +398,6 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         }
         // TEST:START
         // 読込ID:子タスクが存在する場合
-        //
         else if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) != -1){
             
             // 読込ID:子タスク読込処理開始
@@ -568,7 +569,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         // 後続タスク追加ボタン:タップ時イベント
         addAfterTask.addTarget(self, action: #selector(onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
-        // TODO:後続タスク制限数の為後続ボタン隠す(4/21)
+        // TODO:後続タスク制限数の為後続ボタン隠す(4/21)※作成上限撤廃する場合、諸問題クリアする必要あり
         if(self.paramTaskId != -2){
             addAfterTask.isHidden = true
             addAfterTask.isEnabled = false
