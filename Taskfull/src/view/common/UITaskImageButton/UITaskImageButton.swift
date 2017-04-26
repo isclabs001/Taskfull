@@ -219,7 +219,7 @@ class UITaskImageButton : UIView
                 // 幅が2行以内の場合
                 if((size.width / workWidth) <= UITaskImageButton.LABEL_ROWS && workRows <= UITaskImageButton.LABEL_ROWS) {
                     // コントロールの幅に収まっている、または、折り返した結果、高さに収まっている場合
-                    if(workWidth >= size.width || (workHeight >= (size.height * workRowsDown))) {
+                    if(workWidth >= size.width || ((workWidth >= (size.width / workRowsDown)) && (workHeight >= (size.height * workRowsDown)))) {
                         // 確定
                         break
                     }
