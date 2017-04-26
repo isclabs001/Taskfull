@@ -26,7 +26,6 @@
 	<string>タスクの通知に使用されます</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>audio</string>
 		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

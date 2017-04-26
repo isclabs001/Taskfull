@@ -9,11 +9,12 @@
 import UIKit
 import UserNotifications
 import NotificationCenter
+import CoreLocation //TEST:ジオフェンス※CLLocationManagerDelegate同様
 
 ///
 /// メイン画面
 ///
-class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNotificationCenterDelegate,UIApplicationDelegate
+class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNotificationCenterDelegate,UIApplicationDelegate,CLLocationManagerDelegate
 {
     /**
      * 定数
@@ -876,8 +877,43 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 
                     // UNUserNotificationCenterに作成したUNNotificationRequestを追加
                     center.add(request)
- 
 
+                    
+                    
+                    
+                    // TEST:START
+                    // GPS 通知設定
+                    let locationManager : CLLocationManager! = CLLocationManager()
+                    locationManager.requestAlwaysAuthorization()
+                    locationManager.delegate = self
+                    // バックグラウンド状態時、位置情報取得
+                    locationManager.allowsBackgroundLocationUpdates = true
+                    locationManager.pausesLocationUpdatesAutomatically = false
+                    
+                    //　デバッグ用位置情報print
+                    print(locationManager.location?.coordinate.longitude,"+++",locationManager.location?.coordinate.latitude)
+                    
+                    // UNMutableNotificationContent 作成
+                    content.title = String(item.Title)
+                    content.body = String(" ")
+                    content.sound = UNNotificationSound.default()
+                    
+                    // 通知座標指定
+                    let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(35.702069100000003,139.77532690000001)
+                    // 通知範囲指定
+                    let region = CLCircularRegion(center: coordinate, radius: 100.0, identifier: "test")
+                    // 通知範囲in
+                    region.notifyOnEntry = true
+                    // 通知範囲out
+                    region.notifyOnExit = true
+                    // 通知トリガー作成
+                    let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
+                    // 通知リクエスト作成
+                    let locationRequest = UNNotificationRequest(identifier: String(item.Id) + "_GPS",content: content,trigger: locationTrigger)
+                    // UNUserNotificationCenterに作成したUNNotificationRequestを追加
+                    center.add(locationRequest)
+                    // TEST:END
+                    
                 }
                 //通知設定：END
             })
