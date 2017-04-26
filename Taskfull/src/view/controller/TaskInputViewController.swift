@@ -64,6 +64,21 @@ class TaskInputViewController : BaseTaskInputViewController
         return ret
     }
     
+    //textView:値変更確定時イベント
+    override func textViewDidChange(_ textView: UITextView) {
+        
+        //　文字列変換完了後(== nil)かつ制限文字数を超えていた場合
+        if textView.markedTextRange == nil && textView.text.characters.count > CommonConst.INPUT_TASK_MEMO_STRING_LIMIT {
+            
+            //　制限文字数より後ろの文字列を削除
+            textView.text = textView.text.substring(to: textView.text.index(textView.text.startIndex, offsetBy: CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))
+            
+            
+            // 文字数制限アラート表示(メモ)
+            MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
+            
+        }
+    }
     
     // textField:編集完了時イベント
     override func textFieldDidChange(_ nsNotification: Notification) {
@@ -166,7 +181,7 @@ class TaskInputViewController : BaseTaskInputViewController
         // ナビゲーションバー:レイヤー追加
         self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
         
-        // 後続タスク追加ボタン:編集画面遷移
+        // 後続タスク追加ボタン:登録画面遷移
         navigationController?.pushViewController(vc, animated: true)
         
         
@@ -174,7 +189,7 @@ class TaskInputViewController : BaseTaskInputViewController
     
     
     
-    // 確定ボタン：タップ時イベント
+    // 登録確定ボタン：タップ時イベント
     override func onTouchDown_decideEditTaskButton(){
         
         // タスク登録イベント
@@ -214,10 +229,12 @@ class TaskInputViewController : BaseTaskInputViewController
         //項目名登録
         //項目名未入力時チェック
         if(false == StringUtility.isEmpty(InputTaskNameField.text)){
+            
             // 空白の場合、代入文字
             taskInfoDataEntity.Title = CommonConst.INPUT_TASK_NAME_EMPTY_STRING
         }
         else{
+            
             // 空白ではない場合、入力値
             taskInfoDataEntity.Title = InputTaskNameField.text! as String
         }
@@ -253,19 +270,20 @@ class TaskInputViewController : BaseTaskInputViewController
         // 親タスクである場合
         if(self.paramTaskId == -2 ){
             
-            //　ParrentIdを親ID定数に設定[-1 = 親（先頭）]
+            //　作成タスク親IDを先頭タスク親ID定数に設定
             taskInfoDataEntity.ParrentId = -1
             
-            // ParamTaskIdを自IDに設定
+            // 読込タスクIDを作成タスクIDに設定
             self.paramTaskId = taskInfoDataEntity.Id
+            
         }
         // 後続タスクである場合
         else{
             
-            // ParrentIdを親IDに設定[それ以外＝親のID]
+            // 作成タスク親IDを読込IDに設定
             taskInfoDataEntity.ParrentId = self.paramTaskId
             
-            // ParamTaskIdを自IDに設定
+            // 読込タスクIDを作成タスクIDに設定
             self.paramTaskId = taskInfoDataEntity.Id
         }
         

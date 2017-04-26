@@ -52,7 +52,7 @@ class TaskEditViewController : BaseTaskInputViewController
     // 削除ボタンタップ時動作
     @IBAction func TouchUpInside_DeleteTaskBtn(_ sender: Any) {
         
-        // タスク完了メッセージ表示
+        // タスク削除確認メッセージ表示
         MessageUtility.dispAlertOKCancel(viewController: self, title: MessageUtility.MESSAGE_TITLE_STRING_CONFIRM_TASK_DELETE, message: MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DELETE, funcOkButton: DeleteConfirmOKAction, funcCancelButton: nil)
         
     }
@@ -71,8 +71,9 @@ class TaskEditViewController : BaseTaskInputViewController
         // ナビゲーションバー:レイヤー追加
         self.navigationController?.view.layer.add(self.navigationTrasitionAnimate(0.7, "suckEffect", "kCATransitionFromRight"), forKey: kCATransition)
         
-        //メイン画面へ遷移(一つ前)
-        self.navigationController?.popViewController(animated: true)
+        //メイン画面へ遷移(TOP)
+        //self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
         
     }
     
@@ -109,9 +110,45 @@ class TaskEditViewController : BaseTaskInputViewController
             // 削除ボタン有効化
             DeleteTaskBtn.isHidden = false
             DeleteTaskBtn.isEnabled = true
+            
+            // TEST:START
+            // 編集モード時後続タスク追加処理対策
+            // 読込ID:後続タスクが存在しないかつ子タスクではない場合
+            if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1 && self.paramParrentId == -1){
+                
+                // 後続タスク追加ボタン表示
+                AddAfterTask.isEnabled = true
+                AddAfterTask.isHidden = false
+                
+                // 後続タスク追加ボタン:タイトル再設定(登録)
+                AddAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
+
+            }
+            // 読込ID:後続タスクが存在しないかつ子タスクである場合
+            else if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1 && self.paramParrentId != -1){
+                
+                // TEST:START
+                // 後続タスクボタン非表示
+                AddAfterTask.isEnabled = false
+                AddAfterTask.isHidden = true
+                // TEST:END
+                return
+                
+            }
+            // 読込ID:後続タスクが存在する場合
+            else{
+                
+                // 後続タスク編集ボタン表示
+                // 後続タスクボタン表示
+                AddAfterTask.isEnabled = true
+                AddAfterTask.isHidden = false
+                
+            }
+            // TEST:END
+            
             break;
             
-        // 上記以外の場合(参照)
+        // 上記以外の場合(参照モード)
         default:
             
             // 編集不可用Viewを表示
@@ -120,29 +157,35 @@ class TaskEditViewController : BaseTaskInputViewController
             // 削除ボタン無効化
             DeleteTaskBtn.isHidden = true
             DeleteTaskBtn.isEnabled = false
+            
+            // TEST:START
+            // 読込ID:後続タスクが存在しない場合
+            if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1){
+                
+                //　後続タスクボタン非表示
+                AddAfterTask.isEnabled = false
+                AddAfterTask.isHidden = true
+                
+            }
+            // 読込ID:後続タスクが存在する場合
+            else{
+                
+                //　後続タスクボタン表示
+                AddAfterTask.isEnabled = true
+                AddAfterTask.isHidden = false
+            }
+            // TEST:END
+            
             break;
             
         }
         
-        // 後続タスクが存在しない場合
-        if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1){
-            
-            //　後続タスクボタン非表示
-            AddAfterTask.isEnabled = false
-            AddAfterTask.isHidden = true
-            
-        }else{
-            
-            //　後続タスクボタン表示
-            AddAfterTask.isEnabled = true
-            AddAfterTask.isHidden = false
-        }
     }
     
     // タスク内容初期表示処理
     override func displayTaskContent(){
         
-        // 選択タスク読込処理開始
+        // 読込タスク読込処理開始
         let taskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(paramTaskId)!
         
         // 項目名入力欄 = 選択タスク項目名
@@ -151,12 +194,57 @@ class TaskEditViewController : BaseTaskInputViewController
         // メモ入力欄 = 選択タスクメモ
         InputTaskMemoView.text = taskInfo.Memo
         
-        // タスク終了日時欄 = 選択タスク終了日時
+        // タスク終了日時欄 = 読込タスク終了日時
         InputTaskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime))
         // 同一日付を設定日時取得変数に格納
         inputTaskEndDate = FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime)
         // DatePicker開始時刻　＝　選択タスク終了日時
         inputDatePicker.setDate(inputTaskEndDate, animated: false)
+        
+        
+        // TEST:START
+        // Datepicker制限再設定処理
+        // 読込ID:子タスクが存在する場合
+        if(TaskInfoUtility.DefaultInstance.GetParrentIndex(taskInfo.Id) != -1){
+            
+            // 読込ID:子タスク読込処理開始
+            let parrentTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetParrentTaskInfoDataForId(taskInfo.Id)!
+            
+            // 設定最大日 ＝ 読込ID:子タスク終了日付
+            inputDatePicker.maximumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
+            
+        }
+        // 読込ID:親タスクが存在する場合
+        else if(TaskInfoUtility.DefaultInstance.GetIndex(taskInfo.ParrentId) != -1){
+            
+            // 読込ID:親タスク読込処理開始
+            let parrentTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(taskInfo.ParrentId)!
+            
+            // 親タスクが完了していない場合
+            if(parrentTaskInfo.CompleteFlag != 1){
+                
+                // 設定最小日 ＝ 読込ID:親タスク終了日付
+                inputDatePicker.minimumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
+                
+            }
+            // 親タスクが完了している場合 (暫定単独タスク)
+            else{
+                
+                // Datepicker設定制限初期化
+                inputDatePicker.minimumDate = nil
+                
+            }
+            
+        }
+        // 単独タスクである場合(親タスク,子タスクなし)
+        else{
+            
+            // 設定制限初期化
+            inputDatePicker.minimumDate = nil
+            
+        }
+        // TEST:END
+        
         
         // 通知場所リスト欄(要変更)
         InputPointListField.text = String(taskInfo.NotifiedLocation)
@@ -168,7 +256,7 @@ class TaskEditViewController : BaseTaskInputViewController
         didChengeImportanceSegmentValue(InputImportanceSegment.selectedSegmentIndex, btn1 : self.InputTaskColorBtn_1, btn2 : self.InputTaskColorBtn_2, btn3 : self.InputTaskColorBtn_3)
         
         // 親ID
-        // 親ID格納変数へ親IDを格納
+        // 読込タスク親ID格納変数へ読込タスク親IDを格納
         self.selfParrentId = taskInfo.ParrentId
         
         
@@ -317,17 +405,28 @@ class TaskEditViewController : BaseTaskInputViewController
         
         // タスク編集イベント
         inputEditTask()
-        
-        // タスク編集画面コントローラー生成
-        let vc = storyboard?.instantiateViewController(withIdentifier: "EditStoryBoard") as! TaskEditViewController
 
+        // ナビゲーションバー:レイヤー追加
+        self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
+        
         // 後続タスクが存在しない場合
         let childIndex = TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId)
         if(childIndex == -1){
             // 参照モード以外の場合
             if(self.paramMainViewMode != CommonConst.ActionType.reference){
+
+                // TEST:START
+                // タスク登録画面コントローラー生成
+                let vc = storyboard?.instantiateViewController(withIdentifier: "InputStoryBoard") as! TaskInputViewController
+                // 読込タスクID
+                vc.paramTaskId = self.paramTaskId
                 // タスク登録モード
                 vc.paramMainViewMode = CommonConst.ActionType.add
+                
+                // 後続タスク追加ボタン:編集画面遷移
+                navigationController?.pushViewController(vc, animated: true)
+                // TEST:END
+                
                 
             // 上記以外の場合
             } else {
@@ -337,6 +436,10 @@ class TaskEditViewController : BaseTaskInputViewController
             
         // 上記以外の場合
         } else {
+            
+            // タスク編集画面コントローラー生成
+            let vc = storyboard?.instantiateViewController(withIdentifier: "EditStoryBoard") as! TaskEditViewController
+            
             // 後続タスク情報を取得
             let childTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.getTaskInfoData()[childIndex]
             
@@ -346,13 +449,11 @@ class TaskEditViewController : BaseTaskInputViewController
             vc.paramMainViewMode = self.paramMainViewMode
             // 中間タスク判別用変数
             vc.paramParrentId = childTaskInfo.ParrentId
+            
+            // 後続タスク追加ボタン:編集画面遷移
+            navigationController?.pushViewController(vc, animated: true)
         }
 
-        // ナビゲーションバー:レイヤー追加
-        self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
-        
-        // 後続タスク追加ボタン:編集画面遷移
-        navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -421,7 +522,7 @@ class TaskEditViewController : BaseTaskInputViewController
         //taskInfoDataEntity.TextColor = 0
         
         // 親ID
-        // 読込タスクの親IDを再設定
+        // 編集タスクの親IDを再設定
         taskInfoDataEntity.ParrentId = self.selfParrentId
         // 中間タスク判別用変数に読込IDを設定
         self.paramParrentId = taskInfoDataEntity.Id
@@ -429,6 +530,7 @@ class TaskEditViewController : BaseTaskInputViewController
         
         // 編集モードである場合
         if(self.paramMainViewMode == CommonConst.ActionType.edit){
+            
             //　更新日時更新
             taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
             
