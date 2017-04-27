@@ -44,7 +44,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     var selfParrentId : Int = Int()
     /// パラメータ:登録画面表示ステータス(false:初期表示,true:表示済み)
     var paramBackStatus : Bool = false
-    
+
     // カラーボタンイメージ(全１２色)
     // 重要度：低
     let mImageTaskColorBtn_WHITE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_WHITE])!
@@ -621,6 +621,27 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         // 0.1秒バイブレーション作動
         AudioServicesPlaySystemSound(1003)
         AudioServicesDisposeSystemSoundID(1003)
+    }
+    
+    ///
+    //　ナビゲーションバーの「戻る」ボタン押下処理
+    ///
+    override func onClickNavigationBackBtn() {
+        // ナビゲーションコントローラからビューコントロールを取得
+        let viewControllers = self.navigationController?.viewControllers
+        
+        // ビューコントロールが有効な場合
+        if nil != viewControllers && 0 < (viewControllers?.count)! {
+            // ビューコントロール数分処理する
+            for viewController in viewControllers! {
+                // MainViewControllerがある場合
+                if let mainViewController = viewController as? MainViewController {
+                    // キャンセルフラグを立てる
+                    mainViewController.cancelFlag = true
+                    break
+                }
+            }
+        }
     }
 }
 

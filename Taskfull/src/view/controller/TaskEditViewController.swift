@@ -60,6 +60,9 @@ class TaskEditViewController : BaseTaskInputViewController
     // タスク削除確認OKアクション
     fileprivate func DeleteConfirmOKAction(action: UIAlertAction){
         
+        // OKボタン押下
+        self.isOkBtn = true
+
         // OK時アクション
         // 読込タスク及び子タスク削除
         TaskInfoUtility.DefaultInstance.RemoveTaskInfo(self.paramTaskId)
@@ -441,7 +444,7 @@ class TaskEditViewController : BaseTaskInputViewController
             let vc = storyboard?.instantiateViewController(withIdentifier: "EditStoryBoard") as! TaskEditViewController
             
             // 後続タスク情報を取得
-            let childTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.getTaskInfoData()[childIndex]
+            let childTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoData()[childIndex]
             
             // 読込タスクID
             vc.paramTaskId = childTaskInfo.Id
@@ -474,6 +477,9 @@ class TaskEditViewController : BaseTaskInputViewController
      タスク編集イベント
      */
     func inputEditTask(){
+        
+        // OKボタン押下
+        self.isOkBtn = true
         
         // EDIT START
         // タスクEntity

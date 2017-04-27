@@ -27,6 +27,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
      */
     static internal let JSON_FIELD_HEADER_VERSION : String = "version";
     static internal let JSON_FIELD_HEADER_ASSIGNMENT_ID : String = "assignment_id";
+    static internal let JSON_FIELD_HEADER_CATEGORY_TYPE : String = "category_type";
     static internal let JSON_FIELD_HEADER_DATA : String = "data";
     
     /**
@@ -40,6 +41,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
     static internal let JSON_FIELD_DATA_IMPORTANCE : String = "importance";
     static internal let JSON_FIELD_DATA_BUTTON_COLOR : String = "button_color";
     static internal let JSON_FIELD_DATA_TEXT_COLOR : String = "text_color";
+    static internal let JSON_FIELD_DATA_CATEGORY_TYPE : String = "category_type";
     static internal let JSON_FIELD_DATA_PARRENT_ID : String = "parrent_id";
     static internal let JSON_FIELD_DATA_COMPLETE_FLAG : String = "complete_flag";
     static internal let JSON_FIELD_DATA_CREATE_DATETIME : String = "create_datetime";
@@ -58,6 +60,8 @@ open class TaskJsonUtility : BaseJsonDataUtility
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_VERSION] = TaskInfoHeaderEntity.VERSION as AnyObject
         // 採番ID設定
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_ASSIGNMENT_ID] = 0 as AnyObject
+        // カテゴリー形式設定
+        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_CATEGORY_TYPE] = CommonConst.CategoryType.task.rawValue as AnyObject
         // データ設定
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_DATA] = taskData as AnyObject
         
@@ -123,6 +127,11 @@ open class TaskJsonUtility : BaseJsonDataUtility
                             // 採番ID取得
                             ret.AssignmentId = value as! Int
                             break
+                        // キー項目がJSON_FIELD_HEADER_CATEGORY_TYPE
+                        case TaskJsonUtility.JSON_FIELD_HEADER_CATEGORY_TYPE:
+                            // カテゴリー形式取得
+                            ret.CategoryType = value as! Int
+                            break
                         // キー項目がJSON_FIELD_HEADER_DATA
                         case TaskJsonUtility.JSON_FIELD_HEADER_DATA:
                             var workArry : [AnyObject] = [AnyObject]()
@@ -169,6 +178,10 @@ open class TaskJsonUtility : BaseJsonDataUtility
                                     // キー項目がJSON_FIELD_DATA_TEXT_COLOR
                                     case TaskJsonUtility.JSON_FIELD_DATA_TEXT_COLOR:
                                         data.TextColor = dataValue as! Int
+                                        break
+                                    // キー項目がJSON_FIELD_DATA_CATEGORY_TYPE
+                                    case TaskJsonUtility.JSON_FIELD_DATA_CATEGORY_TYPE:
+                                        data.CategoryType = dataValue as! Int
                                         break
                                     // キー項目がJSON_FIELD_DATA_PARRENT_ID
                                     case TaskJsonUtility.JSON_FIELD_DATA_PARRENT_ID:
@@ -261,6 +274,9 @@ open class TaskJsonUtility : BaseJsonDataUtility
         // 採番ID設定
         jsonBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_HEADER_ASSIGNMENT_ID, value: taskInfoHeaderEntity.AssignmentId, isComma: true))
         
+        // カテゴリー形式設定
+        jsonBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_HEADER_CATEGORY_TYPE, value: taskInfoHeaderEntity.CategoryType, isComma: true))
+        
         // データ数分処理する
         for data in taskInfoHeaderEntity.Data {
             // 追加する場合
@@ -288,6 +304,8 @@ open class TaskJsonUtility : BaseJsonDataUtility
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_BUTTON_COLOR, value: data.ButtonColor, isComma: true))
             // 文字色設定
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_TEXT_COLOR, value: data.TextColor, isComma: true))
+            // カテゴリー形式設定
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_CATEGORY_TYPE, value: data.CategoryType, isComma: true))
             // 親ID設定
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_PARRENT_ID, value: data.ParrentId, isComma: true))
             // 完了フラグ設定

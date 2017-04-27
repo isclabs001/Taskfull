@@ -13,9 +13,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    
+    ///
+    /// スライドメニューありのメイン画面作成処理
+    ///
+    fileprivate func createMainSlideMenuView() {
+        
+        // create viewController code...
+        // メイン画面のストーリーボード取得
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // メイン画面のコントローラーを取得
+        let mainViewController = storyboard.instantiateViewController(withIdentifier: "MainStoryBoard") as! MainViewController
+        // メインメニューバー画面のコントローラーを取得
+        let mainMenuBarViewController = storyboard.instantiateViewController(withIdentifier: "MainMenuBarStoryBoard") as! MainMenuBarViewController
 
+        // メイン画面にメニューバーのコントローラを設定
+        mainViewController.taskManuBarController = mainMenuBarViewController
+        
+        // メイン画面のナビゲーターコントローラを取得
+        let nvc: UINavigationController = UINavigationController(rootViewController: mainViewController)
+        
+        // メインメニューバー画面にメイン画面のナビゲータコントローラを指定する
+        mainMenuBarViewController.mainViewController = nvc
+        
+        // ExSlideMenuControllerを生成（メイン画面と左にメインメニューバー画面）
+        let slideMenuController = ExSlideMenuController(mainViewController:nvc, leftMenuViewController: mainMenuBarViewController)
+        // スクロールユーの装飾をする
+        slideMenuController.automaticallyAdjustsScrollViewInsets = true
+        // ExSlideMenuControllerのデリゲートをメイン画面に設定する
+        slideMenuController.delegate = mainViewController
+        // 初期表示画面をExSlideMenuControllerに設定する。
+        self.window?.rootViewController = slideMenuController
+        self.window?.makeKeyAndVisible()
+    }
+    
+
+    ///
+    /// Application起動処理
+    ///　- parameter application:UIApplication
+    ///　- parameter launchOptions:[UIApplicationLaunchOptionsKey: Any]?
+    ///　- returns:true、false
+    ///
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // スライドメニューありのメイン画面作成処理
+        self.createMainSlideMenuView()
+        
         return true
     }
 

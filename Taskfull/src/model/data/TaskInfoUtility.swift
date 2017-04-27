@@ -38,7 +38,7 @@ open class TaskInfoUtility {
     /// タスク登録データ情報の取得
     ///　- returns:TaskInfoDataEntity
     ///
-    open func getTaskInfoData() -> [TaskInfoDataEntity] {
+    open func GetTaskInfoData() -> [TaskInfoDataEntity] {
         return self._taskInfo.Data
     }
     
@@ -46,7 +46,7 @@ open class TaskInfoUtility {
     /// タスク登録データ情報の設定
     ///　- parameter:taskInfoDataEntity:TaskInfoDataEntity
     ///
-    open func setTaskInfoData(_ taskInfoDataEntity : [TaskInfoDataEntity]) {
+    open func SetTaskInfoData(_ taskInfoDataEntity : [TaskInfoDataEntity]) {
         self._taskInfo.Data.removeAll()
         self._taskInfo.Data = taskInfoDataEntity
     }
@@ -55,7 +55,7 @@ open class TaskInfoUtility {
     /// バージョンの取得
     ///　- returns:バージョン情報
     ///
-    open func getVersion() -> String {
+    open func GetVersion() -> String {
         return (self._taskInfo.Version)
     }
     
@@ -66,6 +66,22 @@ open class TaskInfoUtility {
     open func NextId() -> Int {
         self._taskInfo.AssignmentId += 1
         return (self._taskInfo.AssignmentId)
+    }
+    
+    ///
+    /// 現在のカテゴリー形式の取得
+    ///　- returns:現在のカテゴリー形式
+    ///
+    open func GetCategoryType() -> Int {
+        return (self._taskInfo.CategoryType)
+    }
+    
+    ///
+    /// 現在のカテゴリー形式の設定
+    ///　- parameter:categoryType:現在のカテゴリー形式
+    ///
+    open func SetCategoryType(categoryType : Int) {
+        self._taskInfo.CategoryType = categoryType
     }
     
     ///
@@ -175,7 +191,7 @@ open class TaskInfoUtility {
         let index = GetIndex(id)
         
         if(-1 < index) {
-            ret = getTaskInfoData()[index]
+            ret = GetTaskInfoData()[index]
         }
         
         return ret
@@ -244,7 +260,6 @@ open class TaskInfoUtility {
         taskJsonUtility.deleteJSONFile()
     }
     
-    
     ///
     /// 指定した親IDの子タスク登録情報を取得
     ///　- parameter:id:検索対象のID
@@ -256,9 +271,31 @@ open class TaskInfoUtility {
         let index = GetParrentIndex(id)
         
         if(-1 < index) {
-            ret = getTaskInfoData()[index]
+            ret = GetTaskInfoData()[index]
         }
         
+        return ret
+    }
+    
+    ///
+    /// 指定した親IDの子タスク登録情報を取得
+    ///　- parameter:id:検索対象のID
+    ///　- returns:nil以外:見つかったIDのタスク登録情報 nil:見つからなかった
+    ///
+    open func GetCategoryCount(categoryType : Int) -> Int {
+
+        var ret : Int = 0
+        
+        // データ数分処理する
+        for data in self._taskInfo.Data {
+            // 同一カテゴリー、かつ、完了していない場合
+            if(data.CategoryType == categoryType
+                && CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag) {
+                // 件数増加
+                ret += 1
+            }
+        }
+
         return ret
     }
     

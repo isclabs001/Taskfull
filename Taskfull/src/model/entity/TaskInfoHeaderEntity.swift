@@ -32,6 +32,10 @@ open class TaskInfoHeaderEntity {
      */
     var AssignmentId : Int
     /**
+     * 現在のカテゴリ形式
+     */
+    var CategoryType : Int
+    /**
      * TaskInfoDataEntityデータ配列
      */
     var Data : [TaskInfoDataEntity]
@@ -44,6 +48,7 @@ open class TaskInfoHeaderEntity {
         // 変数初期化
         self.Version = TaskInfoHeaderEntity.VERSION
         self.AssignmentId = 0
+        self.CategoryType = CommonConst.CategoryType.task.rawValue
         self.Data = []
     }
 }

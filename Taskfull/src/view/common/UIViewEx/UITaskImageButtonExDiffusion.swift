@@ -15,12 +15,12 @@ extension UITaskImageButton {
      * 拡散イメージ数
      */
     static internal let DIFFUSION_NUM_X : Int = 16
-    static internal let DIFFUSION_NUM_Y : Int = 4
+    static internal let DIFFUSION_NUM_Y : Int = 8
 
     /**
      * 拡散イメージサイズ
      */
-    static internal let DIFFUSION_IMAGE_SIZE : Int = 32
+    static internal let DIFFUSION_IMAGE_SIZE : Int = 8
 
     /**
      * キー定義構造体

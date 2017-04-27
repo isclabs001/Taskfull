@@ -70,6 +70,16 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
      */
     @IBOutlet weak var ButtomButtonMenuBar: UICustomView!
     
+    /**
+     * タスクメニューバー画面
+     */
+    open var taskManuBarController : MainMenuBarViewController! = nil
+    
+    /**
+     * キャンセルフラグ
+     */
+    open var cancelFlag : Bool = false
+    
     ///
     /// viewDidLoadイベント処理
     ///
@@ -80,6 +90,15 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // 初期化
         initializeProc()
     }
+    
+    ///
+    /// viewWillAppearイベント処理
+    ///　- parameter:animated:true:アニメーションする false:アニメーションしない
+    ///
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
     
     ///
     /// didReceiveMemoryWarningイベント処理
@@ -103,14 +122,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         //　正常な場合
         if(true == ret)
         {
-            // 動作モードによるメイン画面の初期化
-            initializeMain(self.mActionMode)
-    
-            // 登録タスク情報の取得
-            getTaskInfo()
-                
-            // タスクを表示する
-            displayTask(self.mActionMode)
+            // 再描画処理
+            redraw()
 
             // 戻り値にtrueを設定
             ret = true
@@ -450,10 +463,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         var dicParrentId : Dictionary<Int, Int> = Dictionary<Int, Int>()
         
         // データ数分表示する
-        for data in TaskInfoUtility.DefaultInstance.getTaskInfoData() {
-            // 未完了、かつ、親が表示されていない場合
+        for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
+            // 未完了、かつ、親が表示されていない、かつ、同一カテゴリーの場合
             if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
-                && false == dicParrentId.keys.contains(data.ParrentId)) {
+                && false == dicParrentId.keys.contains(data.ParrentId)
+                && TaskInfoUtility.DefaultInstance.GetCategoryType() == data.CategoryType) {
                 // 表示対象に追加する
                 taskData.append(data)
                 // 表示しているIDを設定
@@ -554,7 +568,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     ///
     fileprivate func displayTaskImageButtonForChild(parrentItem : ViewTaskItemEntity) {
         // データ数分表示する
-        for data in TaskInfoUtility.DefaultInstance.getTaskInfoData() {
+        for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
             // 未完了、かつ、親IDが一致した場合
             if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
                 && parrentItem.Id == data.ParrentId) {
@@ -699,6 +713,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+ 
+        // キャンセルフラグを初期化
+        self.cancelFlag = false
+        
         // タスク入力画面へ遷移する場合
         if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_INPUT){
             
@@ -721,28 +739,54 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
     }
     
-    
     ///
     //　画面表示直後時処理 タイミング要再考
     ///　- parameter animated:アニメーションフラグ
     ///
     override func viewDidAppear(_ animated: Bool) {
+        // 再描画処理
+        redraw()
+    }
+    
+    ///
+    //　再描画処理
+    ///
+    override func redraw() {
+        // キャンセルフラグが立っていない場合
+        if (false == self.cancelFlag) {
+            // 動作モードによるメイン画面の初期化
+            initializeMain(self.mActionMode)
         
-        // 動作モードによるメイン画面の初期化
-        initializeMain(self.mActionMode)
+            // 登録タスク情報の取得
+            getTaskInfo()
         
-        // 登録タスク情報の取得
-        getTaskInfo()
+            // タスクを表示する
+            displayTask(self.mActionMode)
         
-        // タスクを表示する
-        displayTask(self.mActionMode)
+            // タスク通知生成処理
+            taskExpirationNotification()
         
-        // タスク通知生成処理
-        taskExpirationNotification()
-        
-        // ナビゲーションバー非表示
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
+            // ナビゲーションバーの再描画
+            redrawNavigationBar()
+
+            // タスクメニューバーの再描画
+            redrawTaskMenuBar()
+        }
+
+        // キャンセルフラグを初期化
+        self.cancelFlag = false
+    }
+    
+    ///
+    /// ナビゲーションバーの再描画
+    ///
+    fileprivate func redrawNavigationBar() {
+        // ナビゲーションバー背景色
+        self.navigationController?.navigationBar.backgroundColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[TaskInfoUtility.DefaultInstance.GetCategoryType()]
+        // タイトル設定
+        self.navigationItem.title = "".appendingFormat(CommonConst.VIW_TITLE_MAIN, CommonConst.CATEGORY_TYPE_STRING[TaskInfoUtility.DefaultInstance.GetCategoryType()])
+        // ナビゲーションバー表示
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     ///
@@ -784,6 +828,16 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         TaskInfoUtility.DefaultInstance.SetTaskInfoDataForComplete(id)
         // 変更内容書き込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        // タスクメニューバーの再描画
+        redrawTaskMenuBar()
+    }
+
+    ///
+    /// タスクメニューバーの再描画
+    ///
+    fileprivate func redrawTaskMenuBar() {
+        // タスクメニューバーの再描画
+        self.taskManuBarController.redraw()
     }
     
     //**通知関連メソッド:START
@@ -951,4 +1005,39 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     //**END
     
+}
+
+extension MainViewController : SlideMenuControllerDelegate {
+    
+    func leftWillOpen() {
+        print("SlideMenuControllerDelegate: leftWillOpen")
+    }
+    
+    func leftDidOpen() {
+        print("SlideMenuControllerDelegate: leftDidOpen")
+    }
+    
+    func leftWillClose() {
+        print("SlideMenuControllerDelegate: leftWillClose")
+    }
+    
+    func leftDidClose() {
+        print("SlideMenuControllerDelegate: leftDidClose")
+    }
+    
+    func rightWillOpen() {
+        print("SlideMenuControllerDelegate: rightWillOpen")
+    }
+    
+    func rightDidOpen() {
+        print("SlideMenuControllerDelegate: rightDidOpen")
+    }
+    
+    func rightWillClose() {
+        print("SlideMenuControllerDelegate: rightWillClose")
+    }
+    
+    func rightDidClose() {
+        print("SlideMenuControllerDelegate: rightDidClose")
+    }
 }
