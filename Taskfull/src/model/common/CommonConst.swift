@@ -24,9 +24,9 @@ class CommonConst
     /**
      * メイン画面動作モード形式
      */
-    enum ActionType {
+    enum ActionType: Int {
         // 参照
-        case reference
+        case reference = 0
         // 登録
         case add
         // 編集
@@ -199,4 +199,32 @@ class CommonConst
     static internal let CL_BACKGROUND_GRADIATION_ORANGE_1 : UIColor = UIColorUtility.rgb(255, g: 128, b: 0)
     static internal let CL_BACKGROUND_GRADIATION_ORANGE_2 : UIColor = UIColorUtility.rgb(255, g: 218, b: 128)
 
+
+    /**
+ 　　　* カテゴリー
+ 　　*/
+    enum CategoryType: Int {
+        // 課題
+        case task = 0
+        // 買い物
+        case shopping
+        // 就職
+        case finding_employment
+        // その他
+        case etc
+        // 最大
+        case max
+    }
+    static internal let CATEGORY_TYPE_STRING : Array<String> = [
+        "課題",
+        "買い物",
+        "就職",
+        "その他"
+    ]
+    static internal let CATEGORY_TYPE_BACKGROUND_COLOR : Array<UIColor> = [
+        UIColorUtility.rgb(255, g: 160, b: 160),
+        UIColorUtility.rgb(255, g: 205, b: 120),
+        UIColorUtility.rgb(153, g: 255, b: 139),
+        UIColorUtility.rgb(136, g: 223, b: 255),
+    ]
 }

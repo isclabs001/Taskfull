@@ -81,6 +81,15 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     
     ///
+    /// viewWillAppearイベント処理
+    ///　- parameter:animated:true:アニメーションする false:アニメーションしない
+    ///
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
+    
+    ///
     /// didReceiveMemoryWarningイベント処理
     ///
     override func didReceiveMemoryWarning() {
@@ -915,4 +924,39 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     //**END
     
+}
+
+extension MainViewController : SlideMenuControllerDelegate {
+    
+    func leftWillOpen() {
+        print("SlideMenuControllerDelegate: leftWillOpen")
+    }
+    
+    func leftDidOpen() {
+        print("SlideMenuControllerDelegate: leftDidOpen")
+    }
+    
+    func leftWillClose() {
+        print("SlideMenuControllerDelegate: leftWillClose")
+    }
+    
+    func leftDidClose() {
+        print("SlideMenuControllerDelegate: leftDidClose")
+    }
+    
+    func rightWillOpen() {
+        print("SlideMenuControllerDelegate: rightWillOpen")
+    }
+    
+    func rightDidOpen() {
+        print("SlideMenuControllerDelegate: rightDidOpen")
+    }
+    
+    func rightWillClose() {
+        print("SlideMenuControllerDelegate: rightWillClose")
+    }
+    
+    func rightDidClose() {
+        print("SlideMenuControllerDelegate: rightDidClose")
+    }
 }
