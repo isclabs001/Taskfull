@@ -79,7 +79,9 @@ class MainMenuBarViewController : BaseViewController, MainMenuBarProtocol, UITab
     ///
     func changeViewController(_ categoryType: CommonConst.CategoryType) {
         // カテゴリ形式を設定
-        TaskInfoUtility.DefaultInstance.CategoryType = categoryType.rawValue
+        TaskInfoUtility.DefaultInstance.SetCategoryType(categoryType: categoryType.rawValue)
+        // タスク情報保存
+        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
         // 画面を切り替える
         self.slideMenuController()?.changeMainViewController(self.mainViewController, close: true)
     }

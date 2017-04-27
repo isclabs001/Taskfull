@@ -53,6 +53,7 @@ class CommonConst
     /**
      * 画面タイトル
      */
+    static internal let VIW_TITLE_MAIN : String = "Taskfull [%@]";
     static internal let VIW_TITLE_INPUT_TASK : String = "タスク登録";
     static internal let VIW_TITLE_EDIT_TASK : String = "タスク編集";
     static internal let VIW_TITLE_CONTENT_TASK : String = "タスク内容";

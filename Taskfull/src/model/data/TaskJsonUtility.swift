@@ -27,6 +27,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
      */
     static internal let JSON_FIELD_HEADER_VERSION : String = "version";
     static internal let JSON_FIELD_HEADER_ASSIGNMENT_ID : String = "assignment_id";
+    static internal let JSON_FIELD_HEADER_CATEGORY_TYPE : String = "category_type";
     static internal let JSON_FIELD_HEADER_DATA : String = "data";
     
     /**
@@ -59,6 +60,8 @@ open class TaskJsonUtility : BaseJsonDataUtility
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_VERSION] = TaskInfoHeaderEntity.VERSION as AnyObject
         // 採番ID設定
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_ASSIGNMENT_ID] = 0 as AnyObject
+        // カテゴリー形式設定
+        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_CATEGORY_TYPE] = CommonConst.CategoryType.task.rawValue as AnyObject
         // データ設定
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_DATA] = taskData as AnyObject
         
@@ -123,6 +126,11 @@ open class TaskJsonUtility : BaseJsonDataUtility
                         case TaskJsonUtility.JSON_FIELD_HEADER_ASSIGNMENT_ID:
                             // 採番ID取得
                             ret.AssignmentId = value as! Int
+                            break
+                        // キー項目がJSON_FIELD_HEADER_CATEGORY_TYPE
+                        case TaskJsonUtility.JSON_FIELD_HEADER_CATEGORY_TYPE:
+                            // カテゴリー形式取得
+                            ret.CategoryType = value as! Int
                             break
                         // キー項目がJSON_FIELD_HEADER_DATA
                         case TaskJsonUtility.JSON_FIELD_HEADER_DATA:
@@ -265,6 +273,9 @@ open class TaskJsonUtility : BaseJsonDataUtility
         
         // 採番ID設定
         jsonBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_HEADER_ASSIGNMENT_ID, value: taskInfoHeaderEntity.AssignmentId, isComma: true))
+        
+        // カテゴリー形式設定
+        jsonBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_HEADER_CATEGORY_TYPE, value: taskInfoHeaderEntity.CategoryType, isComma: true))
         
         // データ数分処理する
         for data in taskInfoHeaderEntity.Data {

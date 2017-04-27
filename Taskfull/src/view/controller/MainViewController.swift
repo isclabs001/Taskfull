@@ -464,11 +464,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         var dicParrentId : Dictionary<Int, Int> = Dictionary<Int, Int>()
         
         // データ数分表示する
-        for data in TaskInfoUtility.DefaultInstance.getTaskInfoData() {
+        for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
             // 未完了、かつ、親が表示されていない、かつ、同一カテゴリーの場合
             if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
                 && false == dicParrentId.keys.contains(data.ParrentId)
-                && TaskInfoUtility.DefaultInstance.CategoryType == data.CategoryType) {
+                && TaskInfoUtility.DefaultInstance.GetCategoryType() == data.CategoryType) {
                 // 表示対象に追加する
                 taskData.append(data)
                 // 表示しているIDを設定
@@ -569,7 +569,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     ///
     fileprivate func displayTaskImageButtonForChild(parrentItem : ViewTaskItemEntity) {
         // データ数分表示する
-        for data in TaskInfoUtility.DefaultInstance.getTaskInfoData() {
+        for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
             // 未完了、かつ、親IDが一致した場合
             if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
                 && parrentItem.Id == data.ParrentId) {
@@ -758,8 +758,20 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // タスクメニューバーの再描画
         redrawTaskMenuBar()
 
-        // ナビゲーションバー非表示
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        // ナビゲーションバーの再描画
+        redrawNavigationBar()
+    }
+    
+    ///
+    /// ナビゲーションバーの再描画
+    ///
+    fileprivate func redrawNavigationBar() {
+        // ナビゲーションバー背景色
+        self.navigationController?.navigationBar.backgroundColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[TaskInfoUtility.DefaultInstance.GetCategoryType()]
+        // タイトル設定
+        self.navigationItem.title = "".appendingFormat(CommonConst.VIW_TITLE_MAIN, CommonConst.CATEGORY_TYPE_STRING[TaskInfoUtility.DefaultInstance.GetCategoryType()])
+        // ナビゲーションバー表示
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     ///

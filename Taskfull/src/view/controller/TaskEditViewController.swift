@@ -441,7 +441,7 @@ class TaskEditViewController : BaseTaskInputViewController
             let vc = storyboard?.instantiateViewController(withIdentifier: "EditStoryBoard") as! TaskEditViewController
             
             // 後続タスク情報を取得
-            let childTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.getTaskInfoData()[childIndex]
+            let childTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoData()[childIndex]
             
             // 読込タスクID
             vc.paramTaskId = childTaskInfo.Id

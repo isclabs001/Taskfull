@@ -27,11 +27,6 @@ open class TaskInfoUtility {
     fileprivate var _taskInfo : TaskInfoHeaderEntity = TaskInfoHeaderEntity()
     
     /**
-     * 現在のカテゴリ形式
-     */
-    open var CategoryType : Int = CommonConst.CategoryType.task.rawValue
-    
-    /**
      * 初期化
      */
     public init() {
@@ -43,7 +38,7 @@ open class TaskInfoUtility {
     /// タスク登録データ情報の取得
     ///　- returns:TaskInfoDataEntity
     ///
-    open func getTaskInfoData() -> [TaskInfoDataEntity] {
+    open func GetTaskInfoData() -> [TaskInfoDataEntity] {
         return self._taskInfo.Data
     }
     
@@ -51,7 +46,7 @@ open class TaskInfoUtility {
     /// タスク登録データ情報の設定
     ///　- parameter:taskInfoDataEntity:TaskInfoDataEntity
     ///
-    open func setTaskInfoData(_ taskInfoDataEntity : [TaskInfoDataEntity]) {
+    open func SetTaskInfoData(_ taskInfoDataEntity : [TaskInfoDataEntity]) {
         self._taskInfo.Data.removeAll()
         self._taskInfo.Data = taskInfoDataEntity
     }
@@ -60,7 +55,7 @@ open class TaskInfoUtility {
     /// バージョンの取得
     ///　- returns:バージョン情報
     ///
-    open func getVersion() -> String {
+    open func GetVersion() -> String {
         return (self._taskInfo.Version)
     }
     
@@ -71,6 +66,22 @@ open class TaskInfoUtility {
     open func NextId() -> Int {
         self._taskInfo.AssignmentId += 1
         return (self._taskInfo.AssignmentId)
+    }
+    
+    ///
+    /// 現在のカテゴリー形式の取得
+    ///　- returns:現在のカテゴリー形式
+    ///
+    open func GetCategoryType() -> Int {
+        return (self._taskInfo.CategoryType)
+    }
+    
+    ///
+    /// 現在のカテゴリー形式の設定
+    ///　- parameter:categoryType:現在のカテゴリー形式
+    ///
+    open func SetCategoryType(categoryType : Int) {
+        self._taskInfo.CategoryType = categoryType
     }
     
     ///
@@ -180,7 +191,7 @@ open class TaskInfoUtility {
         let index = GetIndex(id)
         
         if(-1 < index) {
-            ret = getTaskInfoData()[index]
+            ret = GetTaskInfoData()[index]
         }
         
         return ret
@@ -260,7 +271,7 @@ open class TaskInfoUtility {
         let index = GetParrentIndex(id)
         
         if(-1 < index) {
-            ret = getTaskInfoData()[index]
+            ret = GetTaskInfoData()[index]
         }
         
         return ret
