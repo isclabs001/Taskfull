@@ -70,6 +70,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
      */
     @IBOutlet weak var ButtomButtonMenuBar: UICustomView!
     
+    /**
+     * タスクメニューバー画面
+     */
+    open var taskManuBarController : MainMenuBarViewController! = nil
+    
     ///
     /// viewDidLoadイベント処理
     ///
@@ -460,9 +465,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         // データ数分表示する
         for data in TaskInfoUtility.DefaultInstance.getTaskInfoData() {
-            // 未完了、かつ、親が表示されていない場合
+            // 未完了、かつ、親が表示されていない、かつ、同一カテゴリーの場合
             if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
-                && false == dicParrentId.keys.contains(data.ParrentId)) {
+                && false == dicParrentId.keys.contains(data.ParrentId)
+                && TaskInfoUtility.DefaultInstance.CategoryType == data.CategoryType) {
                 // 表示対象に追加する
                 taskData.append(data)
                 // 表示しているIDを設定
@@ -749,9 +755,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // タスク通知生成処理
         taskExpirationNotification()
         
+        // タスクメニューバーの再描画
+        redrawTaskMenuBar()
+
         // ナビゲーションバー非表示
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
     }
     
     ///
@@ -793,6 +801,16 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         TaskInfoUtility.DefaultInstance.SetTaskInfoDataForComplete(id)
         // 変更内容書き込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        // タスクメニューバーの再描画
+        redrawTaskMenuBar()
+    }
+
+    ///
+    /// タスクメニューバーの再描画
+    ///
+    fileprivate func redrawTaskMenuBar() {
+        // タスクメニューバーの再描画
+        self.taskManuBarController.redraw()
     }
     
     //**通知関連メソッド:START

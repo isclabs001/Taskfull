@@ -40,6 +40,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
     static internal let JSON_FIELD_DATA_IMPORTANCE : String = "importance";
     static internal let JSON_FIELD_DATA_BUTTON_COLOR : String = "button_color";
     static internal let JSON_FIELD_DATA_TEXT_COLOR : String = "text_color";
+    static internal let JSON_FIELD_DATA_CATEGORY_TYPE : String = "category_type";
     static internal let JSON_FIELD_DATA_PARRENT_ID : String = "parrent_id";
     static internal let JSON_FIELD_DATA_COMPLETE_FLAG : String = "complete_flag";
     static internal let JSON_FIELD_DATA_CREATE_DATETIME : String = "create_datetime";
@@ -170,6 +171,10 @@ open class TaskJsonUtility : BaseJsonDataUtility
                                     case TaskJsonUtility.JSON_FIELD_DATA_TEXT_COLOR:
                                         data.TextColor = dataValue as! Int
                                         break
+                                    // キー項目がJSON_FIELD_DATA_CATEGORY_TYPE
+                                    case TaskJsonUtility.JSON_FIELD_DATA_CATEGORY_TYPE:
+                                        data.CategoryType = dataValue as! Int
+                                        break
                                     // キー項目がJSON_FIELD_DATA_PARRENT_ID
                                     case TaskJsonUtility.JSON_FIELD_DATA_PARRENT_ID:
                                         data.ParrentId = dataValue as! Int
@@ -288,6 +293,8 @@ open class TaskJsonUtility : BaseJsonDataUtility
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_BUTTON_COLOR, value: data.ButtonColor, isComma: true))
             // 文字色設定
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_TEXT_COLOR, value: data.TextColor, isComma: true))
+            // カテゴリー形式設定
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_CATEGORY_TYPE, value: data.CategoryType, isComma: true))
             // 親ID設定
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_PARRENT_ID, value: data.ParrentId, isComma: true))
             // 完了フラグ設定

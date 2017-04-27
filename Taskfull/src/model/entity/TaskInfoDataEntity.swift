@@ -52,6 +52,10 @@ open class TaskInfoDataEntity : Comparable {
      * テキスト色
      */
     var TextColor : Int
+    /**
+     * カテゴリー形式
+     */
+    var CategoryType : Int
     
     /**
      * システム情報領域
@@ -91,29 +95,53 @@ open class TaskInfoDataEntity : Comparable {
         self.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
         self.CreateDateTime = StringUtility.EMPTY
         self.UpdateDateTime = StringUtility.EMPTY
+        self.CategoryType = CommonConst.CategoryType.task.rawValue
     }
 }
 
+///
+///　イコール比較関数
+/// - parameter cmp1:比較１
+/// - parameter cmp2:比較２
+/// - returns:true:比較１と比較２が等しい false:それ以外
+///
 public func ==(cmp1: TaskInfoDataEntity, cmp2: TaskInfoDataEntity) -> Bool {
+    // 比較１のIDが比較２のIDと同じ場合
     if cmp1.Id == cmp2.Id {
+        // trueを返す
         return true
     }
+    // falseを返す
     return false
 }
 
+///
+///　比較関数
+/// - parameter cmp1:比較１
+/// - parameter cmp2:比較２
+/// - returns:true:比較１が比較２より小さい false:それ以外
+///
 public func <(cmp1: TaskInfoDataEntity, cmp2: TaskInfoDataEntity) -> Bool {
-    //
+    // 比較１の作成日付が比較２の作成日付より小さい場合
     if cmp1.DateTime < cmp2.DateTime {
+        // trueを返す
         return true
+    // 比較１の作成日付が比較２の作成日付より大きい場合
     } else if cmp1.DateTime > cmp2.DateTime {
+        // falseを返す
         return false
     }
     
+    // 比較１のIDが比較２のIDより小さい場合
     if cmp1.Id < cmp2.Id {
+        // trueを返す
         return true
+    // 比較１のIDが比較２のIDより大きい場合
     } else if cmp1.Id > cmp2.Id {
+        // falseを返す
         return false
     }
     
+    // falseを返す
     return false
 }

@@ -27,6 +27,11 @@ open class TaskInfoUtility {
     fileprivate var _taskInfo : TaskInfoHeaderEntity = TaskInfoHeaderEntity()
     
     /**
+     * 現在のカテゴリ形式
+     */
+    open var CategoryType : Int = CommonConst.CategoryType.task.rawValue
+    
+    /**
      * 初期化
      */
     public init() {
@@ -244,7 +249,6 @@ open class TaskInfoUtility {
         taskJsonUtility.deleteJSONFile()
     }
     
-    
     ///
     /// 指定した親IDの子タスク登録情報を取得
     ///　- parameter:id:検索対象のID
@@ -259,6 +263,28 @@ open class TaskInfoUtility {
             ret = getTaskInfoData()[index]
         }
         
+        return ret
+    }
+    
+    ///
+    /// 指定した親IDの子タスク登録情報を取得
+    ///　- parameter:id:検索対象のID
+    ///　- returns:nil以外:見つかったIDのタスク登録情報 nil:見つからなかった
+    ///
+    open func GetCategoryCount(categoryType : Int) -> Int {
+
+        var ret : Int = 0
+        
+        // データ数分処理する
+        for data in self._taskInfo.Data {
+            // 同一カテゴリー、かつ、完了していない場合
+            if(data.CategoryType == categoryType
+                && CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag) {
+                // 件数増加
+                ret += 1
+            }
+        }
+
         return ret
     }
     
