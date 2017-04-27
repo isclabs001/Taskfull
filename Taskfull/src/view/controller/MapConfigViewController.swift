@@ -26,7 +26,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
      * 変数
      */
     
-    //ユーザ現在位置格納変数：権限通知対策の為、プロパティで宣言
+    //ユーザ現在位置格納ロケーション：権限通知対策の為、プロパティで宣言
     var selfLocation : CLLocationManager! = CLLocationManager()
     
     //selfLocation = CLLocationManager()
@@ -62,33 +62,19 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             //delegate設定
             GPSMapView.delegate = self
             
-            // セキュリティ認証のステータスを取得.
+            // GPS認証ステータスを取得
             let status = CLLocationManager.authorizationStatus()
-            print("authorizationStatus:\(status)");
             
-            // まだ認証が得られていない場合は、認証ダイアログを表示
-            // (このAppの使用中のみ許可の設定)
+            // GPS認証がまだである場合(アプリ起動初回のみ)
             if(status == .notDetermined) {
                 
+                // 認証ダイアログ通知
                 selfLocation.requestAlwaysAuthorization()
                 
             }
             
-            //認証状態取得
-            //let Certificationstatus = CLLocationManager.authorizationStatus()
-            
-            /*
-            //認証状態が'notDetermined'である場合
-            if(Certificationstatus == CLAuthorizationStatus.notDetermined){
-                
-                //初回起動時のみ、認証ダイアログ表示（常に使用）
-                selfLocation.requestAlwaysAuthorization()
-                
-            }*/
-            
             // ロングタップ時イベント作成
             let selfLongTap: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
-            //selfLongTap.addTarget(self, action: #selector(MapConfigViewController.MapLongTap(_:)))
             selfLongTap.addTarget(self, action: #selector(MapConfigViewController.MapLongTap(sender:)))
             
             // MapViewへロングタップ時イベント追加
@@ -102,14 +88,34 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         return ret
     }
     
+    
+    /// リスト内ピン生成処理
+    fileprivate func displayGeneratePin(){
+        
+        // 以下処理を通知場所リストでループ
+        
+        // ピン:生成
+        let myPin: MKPointAnnotation = MKPointAnnotation()
+        
+        // ピン:生成座標を設定
+        //myPin.coordinate = center
+        
+        // ピン:タイトル設定
+        myPin.title = "タイトル"
+        
+        // ピン:サブタイトル設定
+        //myPin.subtitle = "サブタイトル"
+        
+        // MapView:生成ピン追加
+        GPSMapView.addAnnotation(myPin)
+
+        
+        
+    }
+    
+    
     //マップ:表示処理
     private func DisplayInitialMap(){
-        
-        //delegate設定
-        //GPSMapView.delegate = self as? MKMapViewDelegate
-        
-        //ローカルで宣言した場合、権限確認通知が消える
-        //selfLocation = CLLocationManager()
         
         //delegate設定
         selfLocation.delegate = self
@@ -190,7 +196,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         GPSMapView.region = region
         
         // 再更新防止：位置情報取得停止
-        selfLocation.stopUpdatingLocation()
+        //selfLocation.stopUpdatingLocation()
     }
 
     //　画面表示直後時処理（初期表示含む）
@@ -232,7 +238,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         pointPin.title = "test"
         
         // サブタイトルを設定
-        pointPin.subtitle = "subtest"
+        //pointPin.subtitle = "subtest"
         
         // MapViewへピン追加:addAnotationイベント処理開始
         GPSMapView.addAnnotation(pointPin)
@@ -242,31 +248,6 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         
         // mapViewへ円追加：addOverlayイベント処理開始
         GPSMapView.add(selfCircle)
-        
-        /*
-        if #available(iOS 10.0, *) {
-            
-            let center = UNUserNotificationCenter.current()
-            center.delegate = self
-            
-            let content = UNMutableNotificationContent()
-            
-            content.title = "新横"
-            content.body = " "
-            content.sound = UNNotificationSound.default()
-            
-            let region = CLCircularRegion.init(center:tapLocation,radius:100,identifier:"testmap")
-            //region.notifyOnEntry = true
-            //region.notifyOnExit = false
-            let trigger = UNLocationNotificationTrigger.init(region : region,repeats:false)
-            
-            let request = UNNotificationRequest.init(identifier:"testmap",content:content,trigger:trigger)
-            
-            center.add(request)
-        } else {
-            // Fallback on earlier versions
-        }
- */
 
     }
     
@@ -293,8 +274,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             
         }
         
-        // annotationを設定.
+        // annotationを設定
         myPinView.annotation = annotation
+        
         return myPinView
 
     }
@@ -330,8 +312,24 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // Dispose of any resources that can be recreated.
     }
 
-    
+    /// アノテーション追加時イベント
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        
+        for view in views {
+            
+            // ボタン生成
+            let pinSideBtn  = UIButton(type: UIButtonType.detailDisclosure)
+            // Pinのバルーンにボタン追加
+            view.rightCalloutAccessoryView = pinSideBtn
+        }
+        
+    }
 
+    // アノテーションボタンタップ時イベント
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        print("ieeeei")
+    }
     
     
 }

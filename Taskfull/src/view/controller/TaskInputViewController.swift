@@ -160,10 +160,10 @@ class TaskInputViewController : BaseTaskInputViewController
     }
     
     
-    //Datepicer：値変更時イベント
+    //DatePicker：値変更時イベント
     override func inputDatePickerEdit(_ sender: UIDatePicker){
 
-        // Datepicer：値変更処理
+        // DatePicker：値変更処理
         updateInputDatePicker(sender, taskDateField: InputTaskDateField)
     }
     
@@ -215,94 +215,177 @@ class TaskInputViewController : BaseTaskInputViewController
          **タスク登録イベント実装
          */
         
-        //TEST START
+        // TEST START
+        // 新規のタスク登録画面である場合
+        if(self.paramBackStatus  != true){
         
-        // タスク情報追加
-        var taskInfoDataEntity : TaskInfoDataEntity
-        
-        // タスクEntity
-        taskInfoDataEntity = TaskInfoDataEntity()
-        
-        //新規ID
-        taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
-        
-        //項目名登録
-        //項目名未入力時チェック
-        if(false == StringUtility.isEmpty(InputTaskNameField.text)){
             
-            // 空白の場合、代入文字
-            taskInfoDataEntity.Title = CommonConst.INPUT_TASK_NAME_EMPTY_STRING
+            // タスク情報追加
+            var taskInfoDataEntity : TaskInfoDataEntity
+            
+            // タスクEntity
+            taskInfoDataEntity = TaskInfoDataEntity()
+            
+            //新規ID
+            taskInfoDataEntity.Id = TaskInfoUtility.DefaultInstance.NextId()
+            
+            //項目名登録
+            //項目名未入力時チェック
+            if(false == StringUtility.isEmpty(InputTaskNameField.text)){
+                
+                // 空白の場合、代入文字
+                taskInfoDataEntity.Title = CommonConst.INPUT_TASK_NAME_EMPTY_STRING
+            }
+            else{
+                
+                // 空白ではない場合、入力値
+                taskInfoDataEntity.Title = InputTaskNameField.text! as String
+            }
+            
+            //メモ
+            taskInfoDataEntity.Memo = InputTaskMemoView.text! as String
+            
+            //タスク終了時刻
+            taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
+            
+            //通知場所
+            taskInfoDataEntity.NotifiedLocation = 0
+            
+            //重要度(セグメントのインデックス)
+            taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
+            
+            //タスクカラー
+            //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
+            if (InputTaskColorBtn_1.isSelected == true){
+                taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_1.currentTitle!)!
+            }
+            else if(InputTaskColorBtn_2.isSelected == true){
+                taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_2.currentTitle!)!
+            }
+            else if(InputTaskColorBtn_3.isSelected == true){
+                taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_3.currentTitle!)!
+            }
+            
+            //テキストカラー
+            taskInfoDataEntity.TextColor = 0
+            
+            //親ID（-1 = 親（先頭）、それ以外＝親のID）
+            // 登録開始タスクである場合
+            if(self.paramTaskId == -2 ){
+                
+                //　作成タスク親IDを先頭タスク親ID定数に設定
+                taskInfoDataEntity.ParrentId = -1
+                
+                // 読込タスクIDを作成タスクIDに設定
+                self.paramTaskId = taskInfoDataEntity.Id
+                
+            }
+                // TODO:後続タスクである場合
+                // 後続タスクである場合
+            else{
+                
+                // 作成タスク親IDを読込IDに設定
+                taskInfoDataEntity.ParrentId = self.paramTaskId
+                
+                // 読込タスクIDを作成タスクIDに設定
+                self.paramTaskId = taskInfoDataEntity.Id
+            }
+            
+            
+            //完了フラグ
+            taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+            
+            //作成日時
+            taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+            
+            //更新日時
+            taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+            
+            // タスク情報のデータを追加する
+            TaskInfoUtility.DefaultInstance.AddTaskInfo(taskInfoDataEntity)
+            
+            // タスク情報の書込み
+            TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+            
+            // ステータスを表示済みへ更新
+            self.paramBackStatus  = true
+            
         }
+        // 表示済みである場合※BACK対策
         else{
             
-            // 空白ではない場合、入力値
-            taskInfoDataEntity.Title = InputTaskNameField.text! as String
-        }
-        
-        //メモ
-        taskInfoDataEntity.Memo = InputTaskMemoView.text! as String
-        
-        //タスク終了時刻
-        taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
-        
-        //通知場所
-        taskInfoDataEntity.NotifiedLocation = 0
-        
-        //重要度(セグメントのインデックス)
-        taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
-        
-        //タスクカラー
-        //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
-        if (InputTaskColorBtn_1.isSelected == true){
-            taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_1.currentTitle!)!
-        }
-        else if(InputTaskColorBtn_2.isSelected == true){
-            taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_2.currentTitle!)!
-        }
-        else if(InputTaskColorBtn_3.isSelected == true){
-            taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_3.currentTitle!)!
-        }
-        
-        //テキストカラー
-        taskInfoDataEntity.TextColor = 0
-        
-        //親ID（-1 = 親（先頭）、それ以外＝親のID）
-        // 親タスクである場合
-        if(self.paramTaskId == -2 ){
+            // EDIT START
+            // タスクEntity
+            let taskInfoDataEntity : TaskInfoDataEntity = TaskInfoDataEntity()
             
-            //　作成タスク親IDを先頭タスク親ID定数に設定
-            taskInfoDataEntity.ParrentId = -1
+            // タスクID設定
+            // 読込タスクIDを設定
+            taskInfoDataEntity.Id = self.paramTaskId
             
-            // 読込タスクIDを作成タスクIDに設定
-            self.paramTaskId = taskInfoDataEntity.Id
+            //項目名登録
+            //項目名未入力時チェック
+            if(false == StringUtility.isEmpty(InputTaskNameField.text)){
+                // 空白の場合、代入文字
+                taskInfoDataEntity.Title = CommonConst.INPUT_TASK_NAME_EMPTY_STRING
+            }
+            else{
+                // 空白ではない場合、入力値
+                taskInfoDataEntity.Title = InputTaskNameField.text! as String
+            }
+            
+            //メモ
+            taskInfoDataEntity.Memo = InputTaskMemoView.text! as String
+            
+            //タスク終了時刻
+            taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
+            
+            //通知場所
+            taskInfoDataEntity.NotifiedLocation = 0
+            
+            //重要度(セグメントのインデックス)
+            taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
+            
+            //タスクカラー
+            //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
+            if (InputTaskColorBtn_1.isSelected == true){
+                taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_1.currentTitle!)!
+            }
+            else if(InputTaskColorBtn_2.isSelected == true){
+                taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_2.currentTitle!)!
+            }
+            else if(InputTaskColorBtn_3.isSelected == true){
+                taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_3.currentTitle!)!
+            }
+            
+            // テキストカラー
+            // taskInfoDataEntity.TextColor = 0
+            
+            
+            // 親ID（-1 = 親（先頭）、それ以外＝親のID）
+            // 自身の親ID取得
+            let selfTaskInfoDataEntity : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(self.paramTaskId)!
+            // 親ID再設定
+            taskInfoDataEntity.ParrentId = selfTaskInfoDataEntity.ParrentId
+            
+            
+            //完了フラグ
+            taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
+            
+            
+            //作成日時
+            taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+            
+            //更新日時
+            taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+            
+            
+            // タスク更新処理
+            TaskInfoUtility.DefaultInstance.SetTaskInfoDataForId(taskInfoDataEntity)
+            
+            // タスク情報書込み
+            TaskInfoUtility.DefaultInstance.WriteTaskInfo()
             
         }
-        // 後続タスクである場合
-        else{
-            
-            // 作成タスク親IDを読込IDに設定
-            taskInfoDataEntity.ParrentId = self.paramTaskId
-            
-            // 読込タスクIDを作成タスクIDに設定
-            self.paramTaskId = taskInfoDataEntity.Id
-        }
-        
-        
-        //完了フラグ
-        taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
-        
-        //作成日時
-        taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
-        
-        //更新日時
-        taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
-        
-        // タスク情報のデータを追加する
-        TaskInfoUtility.DefaultInstance.AddTaskInfo(taskInfoDataEntity)
-        
-        // タスク情報の書込み
-        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-        
         
     }
     
@@ -313,6 +396,22 @@ class TaskInputViewController : BaseTaskInputViewController
         setSelectedPoint(textField : self.InputPointListField, row: row)
     }
     
+    
+    // TEST:START
+    // 別画面遷移時イベント
+    override func didMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
+
+        // 戻るイベント補足時
+        if parent == nil {
+
+            // 戻るイベント補足時イベント
+            print("戻るボタン is tapped")
+            
+        }
+        
+    }
+    // TEST:END
     
 }
 
