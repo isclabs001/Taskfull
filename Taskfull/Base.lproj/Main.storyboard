@@ -500,7 +500,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iON-5N-sL3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="304.34782608695656" y="1059.7826086956522"/>
+            <point key="canvasLocation" x="275" y="1280"/>
         </scene>
         <!--Map Config View Controller-->
         <scene sceneID="0WK-eO-bIY">
@@ -521,85 +521,51 @@
                                     <constraint firstAttribute="width" id="wgr-zI-C2f"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWC-Lq-7aa" userLabel="BaseGpsSwitchView">
-                                <rect key="frame" x="0.0" y="64" width="414" height="74"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPSリマインダー通知" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9SE-tC-gy8">
-                                        <rect key="frame" x="25" y="23" width="172" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jNQ-oQ-Fjv">
-                                        <rect key="frame" x="321" y="22" width="51" height="31"/>
-                                    </switch>
-                                </subviews>
-                                <color key="backgroundColor" red="0.36010122299194336" green="0.65859571430418229" blue="0.89897107415729094" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="9SE-tC-gy8" secondAttribute="bottom" constant="22.5" id="2lr-Pc-DWA"/>
-                                    <constraint firstItem="9SE-tC-gy8" firstAttribute="top" secondItem="XWC-Lq-7aa" secondAttribute="top" constant="23" id="5mY-Xe-SGt"/>
-                                    <constraint firstItem="jNQ-oQ-Fjv" firstAttribute="centerY" secondItem="9SE-tC-gy8" secondAttribute="centerY" id="B9K-jD-RWu"/>
-                                    <constraint firstItem="9SE-tC-gy8" firstAttribute="leading" secondItem="XWC-Lq-7aa" secondAttribute="leading" constant="25" id="L50-0Z-BEE"/>
-                                    <constraint firstAttribute="trailing" secondItem="jNQ-oQ-Fjv" secondAttribute="trailing" constant="44" id="ufA-6b-dv7"/>
-                                </constraints>
-                            </view>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0vp-qP-Zqr">
+                                <rect key="frame" x="0.0" y="137" width="414" height="599"/>
+                            </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ki-T3-eb1" userLabel="BasePointListView">
-                                <rect key="frame" x="0.0" y="138" width="414" height="73"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="73"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-Dl-wl9" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="113" y="19" width="257" height="36"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="通知場所" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-Dl-wl9" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="44" y="19" width="326" height="37"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知場所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3D-vZ-OaF">
-                                        <rect key="frame" x="25" y="22" width="70" height="27"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.56843455632527673" green="0.83220682541529334" blue="0.89897107415729094" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="ln1-Dl-wl9" secondAttribute="trailing" constant="44" id="1ga-3d-qlu"/>
-                                    <constraint firstItem="t3D-vZ-OaF" firstAttribute="top" secondItem="5Ki-T3-eb1" secondAttribute="top" constant="22" id="LcJ-dS-7VP"/>
-                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="leading" secondItem="t3D-vZ-OaF" secondAttribute="trailing" constant="18.5" id="diX-vh-MRV"/>
-                                    <constraint firstAttribute="bottom" secondItem="t3D-vZ-OaF" secondAttribute="bottom" constant="23.5" id="kdd-JL-NLG"/>
+                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="44" id="L9S-jj-9Nj"/>
                                     <constraint firstAttribute="bottom" secondItem="ln1-Dl-wl9" secondAttribute="bottom" constant="17.5" id="q3O-oy-vUD"/>
                                     <constraint firstItem="ln1-Dl-wl9" firstAttribute="top" secondItem="5Ki-T3-eb1" secondAttribute="top" constant="19" id="tuD-9e-5im"/>
-                                    <constraint firstItem="t3D-vZ-OaF" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="25" id="vH2-96-lim"/>
                                 </constraints>
                             </view>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0vp-qP-Zqr">
-                                <rect key="frame" x="0.0" y="211" width="414" height="525"/>
-                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5Ki-T3-eb1" firstAttribute="top" secondItem="XWC-Lq-7aa" secondAttribute="bottom" id="0wL-kf-pZP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5Ki-T3-eb1" secondAttribute="trailing" constant="-20" id="2xs-aF-JDf"/>
                             <constraint firstItem="5Ki-T3-eb1" firstAttribute="height" secondItem="64E-2y-nKd" secondAttribute="height" multiplier="0.1" id="6Rd-Zj-ltq"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="XWC-Lq-7aa" secondAttribute="trailing" constant="-20" id="Db0-aS-OJN"/>
-                            <constraint firstItem="XWC-Lq-7aa" firstAttribute="top" secondItem="0Q0-By-4fm" secondAttribute="bottom" id="Dk7-Mz-b9P"/>
                             <constraint firstItem="gd1-BO-RdB" firstAttribute="leading" secondItem="64E-2y-nKd" secondAttribute="leading" id="LLK-Of-VVO"/>
+                            <constraint firstItem="5Ki-T3-eb1" firstAttribute="top" secondItem="0Q0-By-4fm" secondAttribute="bottom" id="MIw-mB-URG"/>
                             <constraint firstItem="0vp-qP-Zqr" firstAttribute="leading" secondItem="gd1-BO-RdB" secondAttribute="trailing" id="Mit-ol-GRf"/>
                             <constraint firstItem="5Ki-T3-eb1" firstAttribute="leading" secondItem="gd1-BO-RdB" secondAttribute="trailing" id="SZ5-bM-pJu"/>
                             <constraint firstItem="0vp-qP-Zqr" firstAttribute="top" secondItem="5Ki-T3-eb1" secondAttribute="bottom" id="ZD8-Dz-GcS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0vp-qP-Zqr" secondAttribute="trailing" constant="-20" id="dF1-ne-1lT"/>
                             <constraint firstItem="gd1-BO-RdB" firstAttribute="top" secondItem="0Q0-By-4fm" secondAttribute="bottom" id="eKU-Ps-Ceu"/>
-                            <constraint firstItem="XWC-Lq-7aa" firstAttribute="leading" secondItem="gd1-BO-RdB" secondAttribute="trailing" id="iu1-uL-JDA"/>
-                            <constraint firstItem="XWC-Lq-7aa" firstAttribute="height" secondItem="64E-2y-nKd" secondAttribute="height" multiplier="0.1" id="oLi-zq-KSV"/>
                             <constraint firstItem="yLs-fc-2Lw" firstAttribute="top" secondItem="0vp-qP-Zqr" secondAttribute="bottom" id="obJ-mz-E2n"/>
                             <constraint firstItem="yLs-fc-2Lw" firstAttribute="top" secondItem="gd1-BO-RdB" secondAttribute="bottom" id="ydc-zX-dPS"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="GPSMapView" destination="0vp-qP-Zqr" id="c6i-81-j0s"/>
+                        <outlet property="InputPointListField" destination="ln1-Dl-wl9" id="HeL-KU-MUy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JRq-zI-LRU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063.768115942029" y="1132.3369565217392"/>
+            <point key="canvasLocation" x="1077" y="1215"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Yoa-Ul-xHo">
