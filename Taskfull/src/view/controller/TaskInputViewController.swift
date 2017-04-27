@@ -215,6 +215,9 @@ class TaskInputViewController : BaseTaskInputViewController
          **タスク登録イベント実装
          */
         
+        // OKボタン押下
+        self.isOkBtn = true
+        
         // TEST START
         // 新規のタスク登録画面である場合
         if(self.paramBackStatus  != true){
@@ -395,24 +398,6 @@ class TaskInputViewController : BaseTaskInputViewController
         // 登録地点選択処理
         setSelectedPoint(textField : self.InputPointListField, row: row)
     }
-    
-    
-    // TEST:START
-    // 別画面遷移時イベント
-    override func didMove(toParentViewController parent: UIViewController?) {
-        super.willMove(toParentViewController: parent)
-
-        // 戻るイベント補足時
-        if parent == nil {
-
-            // 戻るイベント補足時イベント
-            print("戻るボタン is tapped")
-            
-        }
-        
-    }
-    // TEST:END
-    
 }
 
 

@@ -136,7 +136,8 @@ class MainMenuBarViewController : BaseViewController, MainMenuBarProtocol, UITab
     ///
     /// tableView　再描画処理
     ///
-    open func redraw() {
+    override func redraw() {
+        // メニューの再読み込み
         self.tvMenuBar.reloadData()
     }
 }

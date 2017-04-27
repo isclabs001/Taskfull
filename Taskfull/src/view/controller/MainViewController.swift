@@ -75,6 +75,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
      */
     open var taskManuBarController : MainMenuBarViewController! = nil
     
+    /**
+     * キャンセルフラグ
+     */
+    open var cancelFlag : Bool = false
+    
     ///
     /// viewDidLoadイベント処理
     ///
@@ -117,14 +122,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         //　正常な場合
         if(true == ret)
         {
-            // 動作モードによるメイン画面の初期化
-            initializeMain(self.mActionMode)
-    
-            // 登録タスク情報の取得
-            getTaskInfo()
-                
-            // タスクを表示する
-            displayTask(self.mActionMode)
+            // 再描画処理
+            redraw()
 
             // 戻り値にtrueを設定
             ret = true
@@ -714,6 +713,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+ 
+        // キャンセルフラグを初期化
+        self.cancelFlag = false
+        
         // タスク入力画面へ遷移する場合
         if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_INPUT){
             
@@ -736,30 +739,42 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
     }
     
-    
     ///
     //　画面表示直後時処理 タイミング要再考
     ///　- parameter animated:アニメーションフラグ
     ///
     override func viewDidAppear(_ animated: Bool) {
+        // 再描画処理
+        redraw()
+    }
+    
+    ///
+    //　再描画処理
+    ///
+    override func redraw() {
+        // キャンセルフラグが立っていない場合
+        if (false == self.cancelFlag) {
+            // 動作モードによるメイン画面の初期化
+            initializeMain(self.mActionMode)
         
-        // 動作モードによるメイン画面の初期化
-        initializeMain(self.mActionMode)
+            // 登録タスク情報の取得
+            getTaskInfo()
         
-        // 登録タスク情報の取得
-        getTaskInfo()
+            // タスクを表示する
+            displayTask(self.mActionMode)
         
-        // タスクを表示する
-        displayTask(self.mActionMode)
+            // タスク通知生成処理
+            taskExpirationNotification()
         
-        // タスク通知生成処理
-        taskExpirationNotification()
-        
-        // タスクメニューバーの再描画
-        redrawTaskMenuBar()
+            // ナビゲーションバーの再描画
+            redrawNavigationBar()
 
-        // ナビゲーションバーの再描画
-        redrawNavigationBar()
+            // タスクメニューバーの再描画
+            redrawTaskMenuBar()
+        }
+
+        // キャンセルフラグを初期化
+        self.cancelFlag = false
     }
     
     ///
