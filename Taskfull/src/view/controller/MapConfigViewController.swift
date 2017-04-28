@@ -22,7 +22,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /**
      * 定数
      */
-    
+
     /**
      * 変数
      */
@@ -59,6 +59,12 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     }
     //PicerView　値選択時イベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        // 選択IDの座標読込
+        
+        // 選択ID緯度取得
+        // 選択ID経度取得
+        //
         
         // 座標移動イベント(マップ補正含)
         
@@ -250,8 +256,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // 位置情報をMapに設定
         GPSMapView.region = region
         
-        // 再更新防止：位置情報取得停止
-        //selfLocation.stopUpdatingLocation()
+        // Map再更新防止：位置情報取得停止
+        selfLocation.stopUpdatingLocation()
     }
 
     //　画面表示直後時処理（初期表示含む）
@@ -271,7 +277,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     
     // ロングタップ時イベント
     func MapLongTap(sender: UILongPressGestureRecognizer) {
-        
+
         // 長押し時、ピンの再生成防止
         if sender.state != UIGestureRecognizerState.began {
             return
@@ -283,7 +289,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // 取得座標をCLLocationCoordinate2Dへ変換
         let tapLocation: CLLocationCoordinate2D = GPSMapView.convert(longTapLocation, toCoordinateFrom: GPSMapView)
         
-        // 通知地点登録イベント
+        // アノテーション(ピン)登録イベント
         setMapPinAlert(tapLocation: tapLocation)
         
 
@@ -377,17 +383,15 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         activeSheet(view: view)
     }
     
-    
 
-    /// 通知地点登録イベント
+    /// アノテーション(ピン)登録イベント
     ///
     /// - Parameter tapLocation: ロングタップ箇所のロケーション(CLLocationCoordinate2D)
     func setMapPinAlert(tapLocation: CLLocationCoordinate2D) {
         
         // Alert生成
         let myAlert: UIAlertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        
-        
+
         // AlertにTextFieldを追加
         myAlert.addTextField { (textField: UITextField!) -> Void in
             
@@ -397,9 +401,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             let myNotificationCenter = NotificationCenter.default
             
             
-            // textFieldに変更があればchangeTextFieldメソッドに通知
+            // textFieldに値変更があればchangeTextFieldメソッドに通知
             myNotificationCenter.addObserver(self, selector: #selector(MapConfigViewController.changeTextField(sender:)), name: NSNotification.Name.UITextFieldTextDidChange, object: nil)
-            
+
+
         }
         
         
@@ -409,14 +414,17 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             // ピン生成
             let pointPin: MKPointAnnotation = MKPointAnnotation()
             
-            // 座標を設定
+            // ピン表示座標を設定
             pointPin.coordinate = tapLocation
             
             // 入力値が空欄でない場合
             if(true == StringUtility.isEmpty(myAlert.textFields?[0].text)){
                 
+                // アラート入力値取得
+                var inputPointTitle : String = (myAlert.textFields?[0].text)!
+                
                 // タイトルを設定(アラート入力値)
-                pointPin.title = myAlert.textFields?[0].text
+                pointPin.title = inputPointTitle
                 
                 // MapViewへピン追加:addAnotationイベント処理開始
                 self.GPSMapView.addAnnotation(pointPin)
@@ -428,7 +436,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 self.GPSMapView.add(selfCircle)
                 
                 // TODO:通知地点登録
+                self.registrationPointList(pointTitle: inputPointTitle, location: tapLocation)
 
+                
             }
             // 入力値が空欄である場合
             else{
@@ -448,13 +458,13 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         let CancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive) { (action: UIAlertAction!) -> Void in
             
             // Cancel時イベント
-            
+
         }
         
         // Alertにアクションを追加
         myAlert.addAction(CancelAction)
         myAlert.addAction(OkAction)
-        
+
         // Alert表示
         present(myAlert, animated: true, completion: nil)
         
@@ -484,6 +494,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 alert.message = "10文字以内で入力してください※操作性悪くなる為、アラート表示について備考。。"
                 alert.addButton(withTitle: "OK")
                 alert.show()
+                
             }
             
             // 再編集の為、有効化
@@ -499,11 +510,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         let myAlert = UIAlertController(title: view.annotation!.title!, message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
         
         
-        
         // アクション生成_1
-        let myAction_1 = UIAlertAction(title: "Edit", style: UIAlertActionStyle.default, handler: {
-            
-            (action: UIAlertAction!) in
+        let myAction_1 = UIAlertAction(title: "Edit", style: UIAlertActionStyle.default, handler: {(action: UIAlertAction!) in
             
             // TODO:アノテーション編集処理
             
@@ -511,15 +519,19 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         })
         
         // アクション生成_2
-        let myAction_2 = UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: {
-            
-            (action: UIAlertAction!) in
+        let myAction_2 = UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: {(action: UIAlertAction!) in
 
             //　アノテーション = ピン
             let annotation = view.annotation!
-            // アノテーション配列のインデックス取得 ※新規アノテーションインデックスは前挿入
+            //  選択アノテーションのインデックス取得 ※新規アノテーションインデックスは前挿入
             let index  = (self.GPSMapView.annotations as NSArray).index(of: annotation)
-            // 選択アノテーション削除
+            
+            // TODO:通知地点リストから削除処理（座標で検索？）
+            //self.GPSMapView.annotations[index].coordinate.latitude
+            //self.GPSMapView.annotations[index].coordinate.longitude
+            // 一致する座標のデータ削除
+            
+            // 選択アノテーション削除(インデックス指定)
             self.GPSMapView.removeAnnotation(self.GPSMapView.annotations[index])
             // 選択オーバーレイ削除(アノテーションインデックスが前挿入である為、要ズレ回避)
             //self.GPSMapView.remove(self.GPSMapView.overlays[index])
@@ -540,14 +552,13 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             }
             // アノテーションインデックス対策代替処理:END
             
-            // TODO:通知地点リストから削除処理（座標で検索？？）
+            // TODO:通知地点リストから削除処理（座標で検索？）
+            
             
         })
         
         // アクション生成_3
-        let myAction_3 = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
-            
-            (action: UIAlertAction!) in
+        let myAction_3 = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(action: UIAlertAction!) in
             
             print("Cancel")
             
@@ -563,6 +574,26 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         
     }
     
+
     
+    
+    
+    // 通知地点登録処理
+    func registrationPointList(pointTitle :String,location: CLLocationCoordinate2D){
+        
+        // ID設定
+        
+        // タイトル設定
+        
+        // ロケーション分解
+        // 緯度
+        //location.latitude
+        // 経度
+        //location.longitude
+        
+        // データ書き込み
+        
+    }
+
 
 }

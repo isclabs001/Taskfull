@@ -539,8 +539,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ki-T3-eb1" userLabel="BasePointListView">
                                 <rect key="frame" x="0.0" y="64" width="414" height="73"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="通知場所" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-Dl-wl9" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="44" y="19" width="326" height="37"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="通知場所" textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-Dl-wl9" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="25" y="16" width="364" height="41"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -548,10 +548,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.56843455632527673" green="0.83220682541529334" blue="0.89897107415729094" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="ln1-Dl-wl9" secondAttribute="trailing" constant="44" id="1ga-3d-qlu"/>
-                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="44" id="L9S-jj-9Nj"/>
-                                    <constraint firstAttribute="bottom" secondItem="ln1-Dl-wl9" secondAttribute="bottom" constant="17.5" id="q3O-oy-vUD"/>
-                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="top" secondItem="5Ki-T3-eb1" secondAttribute="top" constant="19" id="tuD-9e-5im"/>
+                                    <constraint firstAttribute="trailing" secondItem="ln1-Dl-wl9" secondAttribute="trailing" constant="25" id="1ga-3d-qlu"/>
+                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="25" id="L9S-jj-9Nj"/>
+                                    <constraint firstAttribute="bottom" secondItem="ln1-Dl-wl9" secondAttribute="bottom" constant="16" id="q3O-oy-vUD"/>
+                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="top" secondItem="5Ki-T3-eb1" secondAttribute="top" constant="16" id="tuD-9e-5im"/>
                                 </constraints>
                             </view>
                         </subviews>

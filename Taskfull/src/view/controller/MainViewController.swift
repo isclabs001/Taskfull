@@ -958,7 +958,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     content.sound = UNNotificationSound.default()
                     
                     // 通知座標指定
-                    let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(37.3333,-122.0519)
+                    let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(35.508692,139.612245)
                     //let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(35.535303,139.589728)
                     // 通知範囲指定
                     let region = CLCircularRegion(center: coordinate, radius: CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE, identifier: "test")
