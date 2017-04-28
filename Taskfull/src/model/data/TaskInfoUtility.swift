@@ -250,6 +250,7 @@ open class TaskInfoUtility {
         // タスク登録情報のクリア
         self._taskInfo.AssignmentId = 0
         self._taskInfo.Data.removeAll()
+        self._taskInfo.Location.removeAll()
     }
     
     ///
@@ -297,6 +298,67 @@ open class TaskInfoUtility {
         }
 
         return ret
+    }
+    
+    ///
+    /// 位置情報データ情報の取得
+    ///　- returns:TaskInfoLocationDataEntity
+    ///
+    open func GetTaskInfoLocation() -> [TaskInfoLocationDataEntity] {
+        return self._taskInfo.Location
+    }
+    
+    ///
+    /// 位置情報データ情報の設定
+    ///　- parameter:taskInfoLocationDataEntity:TaskInfoLocationDataEntity
+    ///
+    open func SetTaskInfoLocation(_ taskInfoLocationDataEntity : [TaskInfoLocationDataEntity]) {
+        self._taskInfo.Location.removeAll()
+        self._taskInfo.Location = taskInfoLocationDataEntity
+    }
+    
+    ///
+    /// 指定したIDと一致したIDの位置情報インデックスを取得
+    ///　- parameter:id:検索対象の位置ID
+    ///　- returns:-1以外:見つかった位置IDのインデックス -1:見つからなかった
+    ///
+    open func GetIndexForLocation(_ id : Int) -> Int {
+        
+        // データ数分処理する
+        for i in (0 ..< self._taskInfo.Location.count ) {
+            // IDが見つかった場合
+            if(self._taskInfo.Location[i].Id == id) {
+                // インデックスを返す
+                return i
+            }
+        }
+        
+        // 見つからない場合は「-1」を返す
+        return -1
+    }
+    
+    ///
+    /// 位置情報の追加
+    ///　- parameter:taskInfoLocationDataEntity:TaskInfoLocationDataEntity
+    ///
+    open func AddLocationInfo(_ taskInfoLocationDataEntity : TaskInfoLocationDataEntity) {
+        self._taskInfo.Location.append(taskInfoLocationDataEntity)
+    }
+    
+    ///
+    /// 位置情報の削除
+    ///　- parameter:id:削除対象のID
+    ///
+    open func RemoveLocationInfo(_ id : Int) {
+        
+        // IDに紐付いているの位置情報インデックスを取得
+        let index : Int = GetIndexForLocation(id)
+        
+        // IDに紐付いている位置情報データが見つかった場合
+        if(-1 != index) {
+            // 削除する
+            self._taskInfo.Location.remove(at: index)
+        }
     }
     
 }

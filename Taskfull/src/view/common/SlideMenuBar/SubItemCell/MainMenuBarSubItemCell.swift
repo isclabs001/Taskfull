@@ -42,7 +42,9 @@ class MainMenuBarSubItemCell : BaseTableViewCell {
             self.lblValues.text = String(data.values)
             self.backgroundColor = data.backgroundColor
             self.lblTitle.textColor = UIColor.white
+            self.lblTitle.shadowColor = UIColor.brown
             self.lblValues.textColor = UIColor.white
+            self.lblValues.shadowColor = UIColor.brown
         }
     }
 }
