@@ -29,6 +29,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
     static internal let JSON_FIELD_HEADER_ASSIGNMENT_ID : String = "assignment_id";
     static internal let JSON_FIELD_HEADER_CATEGORY_TYPE : String = "category_type";
     static internal let JSON_FIELD_HEADER_DATA : String = "data";
+    static internal let JSON_FIELD_HEADER_LOCATION : String = "location";
     
     /**
      * タスク用JSONデータ部フィールド名
@@ -47,6 +48,14 @@ open class TaskJsonUtility : BaseJsonDataUtility
     static internal let JSON_FIELD_DATA_CREATE_DATETIME : String = "create_datetime";
     static internal let JSON_FIELD_DATA_UPDATE_DATETIME : String = "update_datetime";
 
+    /**
+     * 位置情報用JSONフィールド名
+     */
+    static internal let JSON_FIELD_LOCATION_ID: String = "id";
+    static internal let JSON_FIELD_LOCATION_TITLE: String = "title";
+    static internal let JSON_FIELD_LOCATION_LATITUDE: String = "Latitude";
+    static internal let JSON_FIELD_LOCATION_LONGITUDE: String = "Longitude";
+    
     ///
     ///　タスク用JSONオブジェクトの初期データ作成
     ///　- returns:初期データ[String:AnyObject]
@@ -55,6 +64,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
         // Dictionaryを生成
         var taskHeader : Dictionary<String, AnyObject> = [:]
         let taskData : [Dictionary<String, AnyObject>] = []
+        let locationInfo : [Dictionary<String, AnyObject>] = []
         
         // バージョン設定
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_VERSION] = TaskInfoHeaderEntity.VERSION as AnyObject
@@ -64,6 +74,8 @@ open class TaskJsonUtility : BaseJsonDataUtility
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_CATEGORY_TYPE] = CommonConst.CategoryType.task.rawValue as AnyObject
         // データ設定
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_DATA] = taskData as AnyObject
+        // 位置情報設定
+        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_LOCATION] = locationInfo as AnyObject
         
         return taskHeader
     }
@@ -207,6 +219,43 @@ open class TaskJsonUtility : BaseJsonDataUtility
                                 ret.Data.append(data)
                             }
                             break
+                        // キー項目がJSON_FIELD_HEADER_LOCATION
+                        case TaskJsonUtility.JSON_FIELD_HEADER_LOCATION:
+                            var workArry : [AnyObject] = [AnyObject]()
+                            
+                            // データ部のデータ配列を取得する
+                            workArry = JSONItemToObject(value as AnyObject) as! [AnyObject]
+                            
+                            for workItemArry in workArry {
+                                // TaskInfoDataEntity項目生成
+                                let data : TaskInfoLocationDataEntity = TaskInfoLocationDataEntity()
+                                
+                                // データ配列数分処理する
+                                for (dataKey, dataValue) in workItemArry as! Dictionary<String, AnyObject> {
+                                    // キー項目をStringに変換
+                                    switch(dataKey){
+                                    // キー項目がJSON_FIELD_LOCATION_ID
+                                    case TaskJsonUtility.JSON_FIELD_LOCATION_ID:
+                                        data.Id = dataValue as! Int
+                                        break
+                                    // キー項目がJSON_FIELD_LOCATION_TITLE
+                                    case TaskJsonUtility.JSON_FIELD_LOCATION_TITLE:
+                                        data.Title = decodeJsonString(dataValue as! String)
+                                        break
+                                    // キー項目がJSON_FIELD_LOCATION_LATITUDE
+                                    case TaskJsonUtility.JSON_FIELD_LOCATION_LATITUDE:
+                                        data.Latitude = dataValue as! Double
+                                        break
+                                    // キー項目がJSON_FIELD_LOCATION_LONGITUDE
+                                    case TaskJsonUtility.JSON_FIELD_LOCATION_LONGITUDE:
+                                        data.Latitude = dataValue as! Double
+                                        break
+                                    default:
+                                        break
+                                    }
+                                }
+                            }
+                            break
                         default:
                             break
                         }
@@ -277,6 +326,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
         // カテゴリー形式設定
         jsonBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_HEADER_CATEGORY_TYPE, value: taskInfoHeaderEntity.CategoryType, isComma: true))
         
+        // DATA
         // データ数分処理する
         for data in taskInfoHeaderEntity.Data {
             // 追加する場合
@@ -318,9 +368,33 @@ open class TaskJsonUtility : BaseJsonDataUtility
             // 子項目の配列カッコ（}）を設定
             jsonDataBuff.append(bracketsChild2)
         }
-
         // データ配列部設定
-        jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_DATA, value: jsonDataBuff, isComma: false))
+        jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_DATA, value: jsonDataBuff, isComma: true))
+        
+        // LOCATION
+        jsonDataBuff.removeAll()
+        // 位置データ数分処理する
+        for location in taskInfoHeaderEntity.Location {
+            // 追加する場合
+            if(0 < jsonDataBuff.length){
+                // カンマを追加する
+                jsonDataBuff.append(comma)
+            }
+            
+            // 子項目の配列カッコ（{）を設定
+            jsonDataBuff.append(bracketsChild1)
+            
+            // ID設定
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_LOCATION_ID, value: location.Id, isComma: true))
+            // タイトル設定（文字をエスケープする）
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_LOCATION_TITLE, value: escapeJsonString(location.Title), isComma: true))
+            // 緯度設定
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_LOCATION_LATITUDE, value: location.Latitude, isComma: true))
+            // 経度設定
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_LOCATION_LONGITUDE, value: location.Longitude, isComma: true))
+        }
+        // データ配列部設定
+        jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_LOCATION, value: jsonDataBuff, isComma: true))
 
         // JSON終了カッコ設定
         jsonBuff.append(bracketsEnd)
@@ -342,7 +416,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
         
         return dblQuart + key + dblQuart + sep + dblQuart + value + dblQuart + ((isComma) ? comma : StringUtility.EMPTY)
     }
-
+    
     ///
     ///　数値をJSON文字列に変換する
     ///　- parameter:key:キー
@@ -351,6 +425,21 @@ open class TaskJsonUtility : BaseJsonDataUtility
     ///　- returns:JSON文字列 "key":value
     ///
     func formatJsonItem(_ key : String, value : Int, isComma : Bool) -> String {
+        let sep : String = ":"
+        let dblQuart : String = "\""
+        let comma : String = ","
+        
+        return dblQuart + key + dblQuart + sep + String(value) + ((isComma) ? comma : StringUtility.EMPTY)
+    }
+    
+    ///
+    ///　数値をJSON文字列に変換する
+    ///　- parameter:key:キー
+    ///　- parameter:value:値
+    ///　- parameter:isComma:true:後ろにカンマをつける false:つけない
+    ///　- returns:JSON文字列 "key":value
+    ///
+    func formatJsonItem(_ key : String, value : Double, isComma : Bool) -> String {
         let sep : String = ":"
         let dblQuart : String = "\""
         let comma : String = ","
