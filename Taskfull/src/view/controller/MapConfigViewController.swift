@@ -60,7 +60,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     //PicerView　値選択時イベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        // 座標移動イベント
+        // 座標移動イベント(マップ補正含)
         
     }
     
@@ -422,7 +422,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 self.GPSMapView.addAnnotation(pointPin)
                 
                 // 円を描画(半径100m)
-                let selfCircle: MKCircle = MKCircle(center: tapLocation, radius: CLLocationDistance(100))
+                let selfCircle: MKCircle = MKCircle(center: tapLocation, radius: CLLocationDistance(CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE))
                 
                 // mapViewへ円追加：addOverlayイベント処理開始
                 self.GPSMapView.add(selfCircle)
@@ -447,7 +447,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // Cancelアクション生成
         let CancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive) { (action: UIAlertAction!) -> Void in
             
-            // Cansel時イベント
+            // Cancel時イベント
             
         }
         
@@ -455,13 +455,12 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         myAlert.addAction(CancelAction)
         myAlert.addAction(OkAction)
         
-        
-        // Alertを発動する
+        // Alert表示
         present(myAlert, animated: true, completion: nil)
         
     }
 
-    
+    ///　TextField入力値制限処理
     func changeTextField(sender: NSNotification) {
         
         //　UITextFieldへ変換
@@ -506,12 +505,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             
             (action: UIAlertAction!) in
             
-            let annotation = view.annotation!
-            
-            print(String((self.GPSMapView.annotations as NSArray).index(of: annotation)))
-            
-            var indexCount =  (self.GPSMapView.annotations as NSArray).count
-            
+            // TODO:アノテーション編集処理
             
             
         })
@@ -523,7 +517,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
 
             //　アノテーション = ピン
             let annotation = view.annotation!
-            // アノテーション配列のインデックス取得 ※アノテーションインデックスは前挿入
+            // アノテーション配列のインデックス取得 ※新規アノテーションインデックスは前挿入
             let index  = (self.GPSMapView.annotations as NSArray).index(of: annotation)
             // 選択アノテーション削除
             self.GPSMapView.removeAnnotation(self.GPSMapView.annotations[index])
@@ -538,7 +532,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             for i in 0..<(self.GPSMapView.annotations as NSArray).count{
                 
                 // 円を描画(半径100m)
-                let selfCircle: MKCircle = MKCircle(center: self.GPSMapView.annotations[i].coordinate, radius: CLLocationDistance(100))
+                let selfCircle: MKCircle = MKCircle(center: self.GPSMapView.annotations[i].coordinate, radius: CLLocationDistance(CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE))
                 
                 // mapViewへ円追加：addOverlayイベント処理開始
                 self.GPSMapView.add(selfCircle)
@@ -546,7 +540,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             }
             // アノテーションインデックス対策代替処理:END
             
-            // TODO:通知地点リストから削除（座標で検索？？）
+            // TODO:通知地点リストから削除処理（座標で検索？？）
             
         })
         

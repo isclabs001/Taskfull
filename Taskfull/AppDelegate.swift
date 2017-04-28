@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate{
 
     var window: UIWindow?
-
+    
+    // 通知用LocationManager:生成&&初期化
+    let locationManager : CLLocationManager! = CLLocationManager()
     
     ///
     /// スライドメニューありのメイン画面作成処理
@@ -60,6 +63,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // スライドメニューありのメイン画面作成処理
         self.createMainSlideMenuView()
+        
+        // 通知用LocationManager:Delegate設定
+        self.locationManager.delegate = self
+        // 初回起動時、GPS認証ダイアログ表示(常に許可)※使用時のみでも可？
+        self.locationManager.requestAlwaysAuthorization()
         
         return true
     }

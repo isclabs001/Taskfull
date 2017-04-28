@@ -9,12 +9,12 @@
 import UIKit
 import UserNotifications
 import NotificationCenter
-import CoreLocation //TEST:ジオフェンス※CLLocationManagerDelegate同様
+import CoreLocation
 
 ///
 /// メイン画面
 ///
-class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNotificationCenterDelegate,UIApplicationDelegate,CLLocationManagerDelegate
+class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNotificationCenterDelegate,UIApplicationDelegate
 {
     /**
      * 定数
@@ -27,7 +27,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     static internal let SEGUE_IDENTIFIER_TASK_INPUT = "toTaskInputViewController"
     
     static internal let SEGUE_IDENTIFIER_TASK_EDIT = "toTaskEditViewController"
-    
+
     
     /**
      * 変数
@@ -873,7 +873,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 
                 //通知設定：START
 
-                //　変換用カレンダー生成(西暦)
+                //　DateComponents変換用カレンダー生成(西暦)
                 let calender  =  Calendar(identifier:.gregorian)
                 
 
@@ -937,30 +937,36 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     
                     // TEST:START
                     // GPS 通知設定
-                    let locationManager : CLLocationManager! = CLLocationManager()
-                    locationManager.requestAlwaysAuthorization()
-                    locationManager.delegate = self
+                    //self.locationManager.requestAlwaysAuthorization()
+                    //self.locationManager.delegate = self
+
                     // バックグラウンド状態時、位置情報取得
-                    locationManager.allowsBackgroundLocationUpdates = true
-                    locationManager.pausesLocationUpdatesAutomatically = false
+                    //self.locationManager.startUpdatingLocation()
+                    // 位置情報取得精度(10m)
+                    //self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                    // バックグラウンド時、位置情報取得
+                    //self.locationManager.allowsBackgroundLocationUpdates = true
+                    //self.locationManager.pausesLocationUpdatesAutomatically = false
+                    //self.locationManager.distanceFilter = 10
                     
                     //　デバッグ用位置情報print
-                    print(locationManager.location?.coordinate.longitude,"+++",locationManager.location?.coordinate.latitude)
+                    //print(self.locationManager.location?.coordinate.longitude,"+++",self.locationManager.location?.coordinate.latitude)
                     
                     // UNMutableNotificationContent 作成
-                    content.title = String(item.Title)
+                    content.title = String((item.Title) + "_GPS")
                     content.body = String(" ")
                     content.sound = UNNotificationSound.default()
                     
                     // 通知座標指定
-                    let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(35.702069100000003,139.77532690000001)
+                    let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(37.3333,-122.0519)
+                    //let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(35.535303,139.589728)
                     // 通知範囲指定
-                    let region = CLCircularRegion(center: coordinate, radius: 100.0, identifier: "test")
+                    let region = CLCircularRegion(center: coordinate, radius: CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE, identifier: "test")
                     // 通知範囲in
                     region.notifyOnEntry = true
                     // 通知範囲out
-                    region.notifyOnExit = true
-                    // 通知トリガー作成
+                    //region.notifyOnExit = true
+                    // 通知トリガー作成(通知範囲,通知リピートなし)
                     let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
                     // 通知リクエスト作成
                     let locationRequest = UNNotificationRequest(identifier: String(item.Id) + "_GPS",content: content,trigger: locationTrigger)
@@ -1006,6 +1012,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     //**END
     
 }
+
+
 
 extension MainViewController : SlideMenuControllerDelegate {
     

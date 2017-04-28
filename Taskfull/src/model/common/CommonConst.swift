@@ -228,4 +228,14 @@ class CommonConst
         UIColorUtility.rgb(153, g: 255, b: 139),
         UIColorUtility.rgb(136, g: 223, b: 255),
     ]
+    
+    
+    /**
+     * ジオフェンス通知範囲(半径)
+     */
+    static internal let NOTIFICATION_GEOFENCE_RADIUS_RANGE: Double = 100;
+    
+    
+    
+    
 }
