@@ -124,7 +124,7 @@ class UITaskImageButton : UIView
         // アニメーション停止
         stopAnimation()
     }
-    
+
     ///
     ///　表示位置設定
     ///　- parameter frame:位置・サイズ

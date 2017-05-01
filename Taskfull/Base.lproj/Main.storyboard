@@ -6,7 +6,7 @@
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -159,9 +159,6 @@
                                                                         <color key="value" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
-                                                                <connections>
-                                                                    <segue destination="GuG-Ie-jQR" kind="show" identifier="toMapConfigViewController" id="XlA-Mp-Wl3"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -198,6 +195,18 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menubar_left.png" translatesAutoresizingMaskIntoConstraints="NO" id="a3a-Px-uQz">
+                                <rect key="frame" x="0.0" y="336" width="24" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="a3a-Px-uQz" secondAttribute="height" multiplier="3:8" id="YB8-35-aSH"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menubar_right.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ek5-2D-uul">
+                                <rect key="frame" x="390" y="336" width="24" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Ek5-2D-uul" secondAttribute="height" multiplier="3:8" id="u3f-Nm-3LM"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXR-Lq-i1V" customClass="UICircleImageButton" customModule="Taskfull" customModuleProvider="target">
                                 <rect key="frame" x="10" y="74" width="64" height="64"/>
                                 <constraints>
@@ -213,20 +222,19 @@
                                     <action selector="onTouchDown_ModeButton:" destination="BYZ-38-t0r" eventType="touchDown" id="LcL-kb-c7J"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menubar_left.png" translatesAutoresizingMaskIntoConstraints="NO" id="a3a-Px-uQz">
-                                <rect key="frame" x="0.0" y="232" width="24" height="256"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Jxg-T7-lVi" secondAttribute="trailing" id="F12-K6-B8D"/>
-                            <constraint firstItem="SXR-Lq-i1V" firstAttribute="bottom" secondItem="a3a-Px-uQz" secondAttribute="topMargin" constant="-102" id="J8D-kD-YKK"/>
+                            <constraint firstItem="SXR-Lq-i1V" firstAttribute="bottom" secondItem="a3a-Px-uQz" secondAttribute="top" constant="-198" id="Ksi-Hx-hSx"/>
+                            <constraint firstAttribute="leading" secondItem="a3a-Px-uQz" secondAttribute="leading" id="Nil-Sy-IEA"/>
                             <constraint firstItem="Jxg-T7-lVi" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cHO-JA-8xO"/>
                             <constraint firstItem="SXR-Lq-i1V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-10" id="dpI-iq-MaU"/>
-                            <constraint firstAttribute="leading" secondItem="a3a-Px-uQz" secondAttribute="leading" id="eef-Sg-Usm"/>
-                            <constraint firstItem="SXR-Lq-i1V" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="hek-d8-dHc"/>
+                            <constraint firstItem="y3c-jy-aDJ" firstAttribute="bottom" secondItem="Ek5-2D-uul" secondAttribute="top" constant="-272" id="eR8-LU-vsY"/>
+                            <constraint firstItem="y3c-jy-aDJ" firstAttribute="bottom" secondItem="SXR-Lq-i1V" secondAttribute="top" constant="-10" id="hek-d8-dHc"/>
                             <constraint firstItem="Jxg-T7-lVi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="m6q-Sd-k8K"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jxg-T7-lVi" secondAttribute="bottom" id="tZd-jC-MkT"/>
+                            <constraint firstAttribute="trailing" secondItem="Ek5-2D-uul" secondAttribute="trailing" id="ycN-Bk-maE"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="gradationBackgroundStartColor">
@@ -240,17 +248,21 @@
                     <navigationItem key="navigationItem" id="pNc-OI-mSp"/>
                     <connections>
                         <outlet property="ButtomButtonMenuBar" destination="rKM-3y-WXi" id="4TA-mj-kEJ"/>
+                        <outlet property="LeftMenuBarBtn" destination="a3a-Px-uQz" id="jpT-WK-IIi"/>
+                        <outlet property="RightMenuBarBtn" destination="Ek5-2D-uul" id="dWT-Xc-iz1"/>
                         <outlet property="imageCanvasView" destination="yuf-aY-2H9" id="P0u-mA-EXb"/>
                         <outlet property="mainView" destination="8bC-Xf-vdC" id="ATd-hy-9gO"/>
                         <outlet property="modeButton" destination="SXR-Lq-i1V" id="hT3-Ny-xN4"/>
                         <segue destination="shW-Sx-7tf" kind="show" identifier="toTaskInputViewController" id="AuN-5W-GDq"/>
                         <segue destination="cWF-5s-J59" kind="show" identifier="toTaskEditViewController" id="FqB-Ea-tP0"/>
                         <segue destination="9Cf-bN-zTa" kind="show" id="Fpo-Q5-jco"/>
+                        <segue destination="s1p-ON-gl9" kind="show" id="hYx-WZ-qF5"/>
+                        <segue destination="GuG-Ie-jQR" kind="show" identifier="toMapConfigViewController" id="jgT-6N-t9F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1114.4927536231885" y="398.64130434782612"/>
+            <point key="canvasLocation" x="1042" y="356"/>
         </scene>
         <!--Task Input View Controller-->
         <scene sceneID="DJn-sY-cPL">
@@ -285,10 +297,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TEZ-4M-O0U" userLabel="BaseTaskImportanceView">
-                                <rect key="frame" x="0.0" y="467" width="414" height="67"/>
+                                <rect key="frame" x="0.0" y="467" width="414" height="66.666666666666629"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="g4e-Va-Zua">
-                                        <rect key="frame" x="20" y="10" width="374" height="48"/>
+                                        <rect key="frame" x="20" y="10" width="374" height="47.666666666666629"/>
                                         <segments>
                                             <segment title="低"/>
                                             <segment title="中"/>
@@ -381,13 +393,13 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s43-CE-MyA" userLabel="BaseTaskColorBtnView">
-                                <rect key="frame" x="0.0" y="534" width="414" height="135"/>
+                                <rect key="frame" x="0.0" y="533.66666666666652" width="414" height="134.33333333333337"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nHi-PU-jMs">
-                                        <rect key="frame" x="30" y="0.0" width="354" height="135"/>
+                                        <rect key="frame" x="30" y="0.0" width="354" height="134.33333333333337"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-y1-WJP" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="10" width="111.33333333333334" height="115"/>
+                                                <rect key="frame" x="0.0" y="10" width="111.66666666666666" height="114.33333333333337"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -400,7 +412,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="121.33333333333333" y="10" width="111.33333333333336" height="115"/>
+                                                <rect key="frame" x="121.66666666666667" y="10" width="111.00000000000001" height="114.33333333333337"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -413,7 +425,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-cs-b7O" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="242.66666666666671" y="10" width="111.33333333333329" height="115"/>
+                                                <rect key="frame" x="242.66666666666671" y="10" width="111.33333333333329" height="114.33333333333337"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -534,13 +546,13 @@
                                 </constraints>
                             </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0vp-qP-Zqr">
-                                <rect key="frame" x="0.0" y="137" width="414" height="599"/>
+                                <rect key="frame" x="0.0" y="137.66666666666669" width="414" height="598.33333333333326"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ki-T3-eb1" userLabel="BasePointListView">
-                                <rect key="frame" x="0.0" y="64" width="414" height="73"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="73.666666666666657"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="通知場所" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-Dl-wl9" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="44" y="19" width="326" height="37"/>
+                                        <rect key="frame" x="44" y="19" width="326" height="37.666666666666671"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -577,7 +589,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JRq-zI-LRU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1077" y="1215"/>
+            <point key="canvasLocation" x="977" y="1280"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Yoa-Ul-xHo">
@@ -630,10 +642,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7q-qG-2R4" userLabel="BaseTaskImportanceView">
-                                <rect key="frame" x="0.0" y="467" width="414" height="67"/>
+                                <rect key="frame" x="0.0" y="467" width="414" height="66.666666666666629"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="LBd-6C-BTm">
-                                        <rect key="frame" x="20" y="10" width="374" height="48"/>
+                                        <rect key="frame" x="20" y="10" width="374" height="47.666666666666629"/>
                                         <segments>
                                             <segment title="低"/>
                                             <segment title="中"/>
@@ -746,13 +758,13 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dU8-qb-Rwu" userLabel="BaseTaskColorBtnView">
-                                <rect key="frame" x="0.0" y="534" width="414" height="135"/>
+                                <rect key="frame" x="0.0" y="533.66666666666652" width="414" height="134.33333333333337"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uYH-L5-13a">
-                                        <rect key="frame" x="30" y="0.0" width="354" height="135"/>
+                                        <rect key="frame" x="30" y="0.0" width="354" height="134.33333333333337"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zak-Zi-z4b" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="10" width="111.33333333333334" height="115"/>
+                                                <rect key="frame" x="0.0" y="10" width="111.66666666666666" height="114.33333333333337"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -765,7 +777,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oq3-bs-m4t" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="121.33333333333333" y="10" width="111.33333333333336" height="115"/>
+                                                <rect key="frame" x="121.66666666666667" y="10" width="111.00000000000001" height="114.33333333333337"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -778,7 +790,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVH-fM-vMr" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="242.66666666666671" y="10" width="111.33333333333329" height="115"/>
+                                                <rect key="frame" x="242.66666666666671" y="10" width="111.33333333333329" height="114.33333333333337"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -930,11 +942,46 @@
             </objects>
             <point key="canvasLocation" x="1884" y="823"/>
         </scene>
+        <!--Task Category Menu Bar View Controller-->
+        <scene sceneID="hBZ-vG-aCp">
+            <objects>
+                <viewController storyboardIdentifier="TaskCategoryMenuBarStoryBoard" id="s1p-ON-gl9" customClass="TaskCategoryMenuBarViewController" customModule="Taskfull" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zlt-95-Adu"/>
+                        <viewControllerLayoutGuide type="bottom" id="Chh-bm-AGN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hER-jF-0nR">
+                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vjW-6j-C5U">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.0" green="0.1176470588" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Chh-bm-AGN" firstAttribute="top" secondItem="vjW-6j-C5U" secondAttribute="bottom" id="7pS-LU-s3q"/>
+                            <constraint firstItem="vjW-6j-C5U" firstAttribute="top" secondItem="hER-jF-0nR" secondAttribute="top" id="OhB-xH-vyT"/>
+                            <constraint firstItem="vjW-6j-C5U" firstAttribute="leading" secondItem="hER-jF-0nR" secondAttribute="leading" id="lkH-ii-818"/>
+                            <constraint firstAttribute="trailing" secondItem="vjW-6j-C5U" secondAttribute="trailing" id="n7t-Ve-u7K"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <connections>
+                        <outlet property="tvMenuBar" destination="vjW-6j-C5U" id="mhF-Hq-WhU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JhA-wV-dIs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1884" y="1619"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="menubar_left.png" width="24" height="256"/>
+        <image name="menubar_left.png" width="24" height="64"/>
+        <image name="menubar_right.png" width="24" height="64"/>
         <image name="modechg.png" width="128" height="128"/>
         <image name="modechg_down.png" width="128" height="128"/>
-        <image name="soap002.png" width="1024" height="1024"/>
+        <image name="soap002.png" width="270" height="270"/>
     </resources>
 </document>

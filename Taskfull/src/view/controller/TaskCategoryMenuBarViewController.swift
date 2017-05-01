@@ -1,29 +1,29 @@
 //
-//  MainMenuBarViewController.swift
+//  TaskCategoryMenuBarViewController.swift
 //  Taskfull
 //
-//  Created by IscIsc on 2017/04/26.
+//  Created by IscIsc on 2017/04/28.
 //  Copyright © 2017年 isc. All rights reserved.
 //
 
 import UIKit
 
 ///
-/// MainMenuBarProtocol定義
+/// TaskCategoryMenuBarProtocol定義
 ///
-protocol MainMenuBarProtocol : class {
+protocol TaskCategoryMenuBarProtocol : class {
     // changeViewControllerイベント
-    func changeViewController(_ mainMenuType: CommonConst.MainMenuType)
+    func changeViewController(_ categoryType: CommonConst.CategoryType)
 }
 
 ///
-/// メインメニューバークラス
+/// タスクカテゴリーメニューバークラス
 ///
-class MainMenuBarViewController : BaseMenuBarViewController, MainMenuBarProtocol, UITableViewDelegate, UITableViewDataSource {
+class TaskCategoryMenuBarViewController : BaseMenuBarViewController, TaskCategoryMenuBarProtocol, UITableViewDelegate, UITableViewDataSource {
     /**
      * 定数
      */
-
+    
     /**
      * 変数
      */
@@ -43,7 +43,7 @@ class MainMenuBarViewController : BaseMenuBarViewController, MainMenuBarProtocol
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // 空白行は表示させない
         let clearView : UIView = UIView(frame : CGRect.zero)
         clearView.backgroundColor = UIColor.clear
@@ -57,8 +57,8 @@ class MainMenuBarViewController : BaseMenuBarViewController, MainMenuBarProtocol
         self.tvMenuBar.delegate = self
         // dataSourceを自分自身に設定
         self.tvMenuBar.dataSource = self
-        // cellクラスをMainMenuBarSubItemCellに設定
-        let nib : UINib = UINib.init(nibName: MainMenuBarSubItemCell.className, bundle:nil)
+        // cellクラスをTaskCategoryMenuBarSubItemCellに設定
+        let nib : UINib = UINib.init(nibName: TaskCategoryMenuBarSubItemCell.className, bundle:nil)
         self.tvMenuBar.register(nib, forCellReuseIdentifier: "Cell")
     }
     
@@ -72,11 +72,15 @@ class MainMenuBarViewController : BaseMenuBarViewController, MainMenuBarProtocol
     
     ///
     /// changeViewController処理
-    ///　- parameter:mainMenuType:カテゴリー形式
+    ///　- parameter:categoryType:カテゴリー形式
     ///
-    func changeViewController(_ mainMenuType: CommonConst.MainMenuType) {
+    func changeViewController(_ categoryType: CommonConst.CategoryType) {
+        // カテゴリ形式を設定
+        TaskInfoUtility.DefaultInstance.SetCategoryType(categoryType: categoryType.rawValue)
+        // タスク情報保存
+        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
         // 画面を切り替える
-        self.setMainViewController(mainMenuType: mainMenuType)
+        self.setMainViewController(mainMenuType: CommonConst.MainMenuType.none)
     }
     
     ///
@@ -86,7 +90,7 @@ class MainMenuBarViewController : BaseMenuBarViewController, MainMenuBarProtocol
     ///　- returns:行の高さ取得
     ///
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return MainMenuBarSubItemCell.height()
+        return TaskCategoryMenuBarSubItemCell.height()
     }
     
     ///
@@ -95,16 +99,16 @@ class MainMenuBarViewController : BaseMenuBarViewController, MainMenuBarProtocol
     ///　- parameter:indexPath:選択セルインデックス情報
     ///
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.changeViewController(CommonConst.MainMenuType(rawValue: indexPath.row)!)
+        self.changeViewController(CommonConst.CategoryType(rawValue: indexPath.row)!)
     }
-
+    
     ///
     /// tableView　要素数取得処理
     ///　- parameter:tableView:UITableView
     ///　- parameter:section:テーブルの要素数
     ///
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CommonConst.MainMenuType.max.rawValue
+        return CommonConst.CategoryType.max.rawValue
     }
     
     ///
@@ -114,18 +118,18 @@ class MainMenuBarViewController : BaseMenuBarViewController, MainMenuBarProtocol
     ///　- returns:表示するセルのオブジェクト
     ///
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // MainMenuBarSubItemCellが取得できた場合
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as Any as? MainMenuBarSubItemCell {
+        // TaskCategoryMenuBarSubItemCellが取得できた場合
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as Any as? TaskCategoryMenuBarSubItemCell {
             // 枠線を引く
             cell.layoutMargins = UIEdgeInsets.zero
             // セルのデータを設定する
-            cell.setData(MainMenuBarSubItemCellData(mainMenu: indexPath.row, title: CommonConst.MAIN_MENU_TYPE_STRING[indexPath.row], backgroundColor : CommonConst.MAIN_MENU_TYPE_BACKGROUND_COLOR[indexPath.row]))
+            cell.setData(TaskCategoryMenuBarSubItemCellData(category: indexPath.row, title: CommonConst.CATEGORY_TYPE_STRING[indexPath.row], values: TaskInfoUtility.DefaultInstance.GetCategoryCount(categoryType: indexPath.row), backgroundColor : CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[indexPath.row]))
             // 設定したセルオブジェクトを返す
             return cell
         }
         
         // 空のセルオブジェクトを返す
-        return MainMenuBarSubItemCell()
+        return TaskCategoryMenuBarSubItemCell()
     }
     
     ///

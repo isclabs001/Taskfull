@@ -1,6 +1,6 @@
 //
 //  MainViewController.swift
-//  SchoolCafeteriaMap
+//  Taskfull
 //
 //  Created by IscIsc on 2016/07/12.
 //  Copyright © 2016年 IscIsc. All rights reserved.
@@ -14,7 +14,7 @@ import CoreLocation
 ///
 /// メイン画面
 ///
-class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNotificationCenterDelegate,UIApplicationDelegate
+class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNotificationCenterDelegate,UIApplicationDelegate,SlideMenuControllerDelegate
 {
     /**
      * 定数
@@ -25,8 +25,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
      */
     // タスク追加画面への遷移定義文字列
     static internal let SEGUE_IDENTIFIER_TASK_INPUT = "toTaskInputViewController"
-    
+    // タスク編集画面への遷移定義文字列
     static internal let SEGUE_IDENTIFIER_TASK_EDIT = "toTaskEditViewController"
+    // GPS通知設定画面への遷移定義文字列
+    static internal let SEGUE_IDENTIFIER_CONFIG_MAP = "toMapConfigViewController"
 
     
     /**
@@ -71,14 +73,47 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     @IBOutlet weak var ButtomButtonMenuBar: UICustomView!
     
     /**
-     * タスクメニューバー画面
+     * 左メニューバーボタン
      */
-    open var taskManuBarController : MainMenuBarViewController! = nil
+    @IBOutlet weak var LeftMenuBarBtn: UIImageView!
+    
+    /**
+     * 右メニューバーボタン
+     */
+    @IBOutlet weak var RightMenuBarBtn: UIImageView!
+    
+    /**
+     * タスクカテゴリーメニューバー画面
+     */
+    open var taskCategoryManuBarController : TaskCategoryMenuBarViewController! = nil
     
     /**
      * キャンセルフラグ
      */
     open var cancelFlag : Bool = false
+    
+    /**
+     * 画面遷移フラグ
+     */
+    open var transDisplayFlag : CommonConst.MainMenuType = CommonConst.MainMenuType.none
+        
+    /**
+     * 左メニューバー利用可/不可判断
+     */
+    open override var isValidLeftMenuBar : Bool {
+        get {
+            return !self.LeftMenuBarBtn.isHidden
+        }
+    }
+    
+    /**
+     * 右メニューバー利用可/不可判断
+     */
+    open override var isValidRightMenuBar : Bool {
+        get {
+            return !self.RightMenuBarBtn.isHidden
+        }
+    }
     
     ///
     /// viewDidLoadイベント処理
@@ -96,14 +131,53 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     ///　- parameter:animated:true:アニメーションする false:アニメーションしない
     ///
     override func viewWillAppear(_ animated: Bool) {
+        // 基底のviewWillAppearを呼び出す
         super.viewWillAppear(animated)
     }
+    
+    ///
+    //　画面表示直後時処理 タイミング要再考
+    ///　- parameter animated:アニメーションフラグ
+    ///
+    override func viewDidAppear(_ animated: Bool) {
+        // 基底のviewDidAppearを呼び出す
+        super.viewDidAppear(animated)
+        
+        // 画面遷移しない場合
+        if(self.transDisplayFlag == CommonConst.MainMenuType.none){
+            // キャンセルフラグが立っていない場合
+            if (false == self.cancelFlag) {
+                // タスクイメージボタン全削除処理
+                removeAllTaskImageControl()
 
+                // 再描画処理（タイマーでタイミングをづらさないとアニメーションされないため）
+                _ = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(updateRedraw(_:)), userInfo: nil, repeats: false)
+            }
+
+        // 上記以外の場合
+        } else {
+            // 画面遷移処理
+            transDisplay()
+        }
+    }
+    
+    ///
+    ///　再描画用　タイマー更新処理
+    ///　- parameter timer:タイマー
+    ///
+    @objc func updateRedraw(_ timer: Timer) {
+        // タイマー停止
+        timer.invalidate()
+
+        // 再描画処理
+        redraw()
+    }
     
     ///
     /// didReceiveMemoryWarningイベント処理
     ///
     override func didReceiveMemoryWarning() {
+        // 基底のdidReceiveMemoryWarningを呼び出す
         super.didReceiveMemoryWarning()
 
         // タスクイメージボタン全削除処理
@@ -122,6 +196,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         //　正常な場合
         if(true == ret)
         {
+            // 動作モードによるメイン画面の初期化
+            initializeMain(self.mActionMode)
+            
             // 再描画処理
             redraw()
 
@@ -143,13 +220,15 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         case CommonConst.ActionType.edit:
             self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_1
             self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_2
-            ButtomButtonMenuBar.isHidden = false;
+            self.ButtomButtonMenuBar.isHidden = true
+            self.RightMenuBarBtn.isHidden = false
             break;
         // 上記以外の場合
         default:
             self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
             self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
-            ButtomButtonMenuBar.isHidden = true;
+            self.ButtomButtonMenuBar.isHidden = true
+            self.RightMenuBarBtn.isHidden = true
             break;
         }
     }
@@ -503,7 +582,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 表示する場合
             if (item.IsDisplay) {
                 // キャンバスビューにコントロールを追加
-                self.imageCanvasView.addSubview(item.TaskButton!)
+                self.imageCanvasView.insertSubview(item.TaskButton!, at: 0)
             }
         }
     }
@@ -583,7 +662,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 self.mArrayViewTaskItem.append(viewTaskItem)
 
                 // キャンバスビューにコントロールを追加
-                self.imageCanvasView.addSubview(viewTaskItem.TaskButton!)
+                self.imageCanvasView.insertSubview(viewTaskItem.TaskButton!, at: 0)
             }
         }
     }
@@ -740,28 +819,13 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     
     ///
-    //　画面表示直後時処理 タイミング要再考
-    ///　- parameter animated:アニメーションフラグ
-    ///
-    override func viewDidAppear(_ animated: Bool) {
-        // 再描画処理
-        redraw()
-    }
-    
-    ///
     //　再描画処理
     ///
     override func redraw() {
         // キャンセルフラグが立っていない場合
         if (false == self.cancelFlag) {
-            // 動作モードによるメイン画面の初期化
-            initializeMain(self.mActionMode)
-        
             // 登録タスク情報の取得
             getTaskInfo()
-        
-            // タスクを表示する
-            displayTask(self.mActionMode)
         
             // タスク通知生成処理
             taskExpirationNotification()
@@ -769,12 +833,36 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // ナビゲーションバーの再描画
             redrawNavigationBar()
 
-            // タスクメニューバーの再描画
+            // タスクカテゴリーメニューバーの再描画
             redrawTaskMenuBar()
+
+            // タスクを表示する
+            displayTask(self.mActionMode)
         }
 
         // キャンセルフラグを初期化
         self.cancelFlag = false
+    }
+    
+    ///
+    //　画面遷移処理
+    ///
+    func transDisplay() {
+        switch(self.transDisplayFlag){
+        // タスク入力画面の場合
+        case CommonConst.MainMenuType.taskAdd:
+            // タスク入力画面を表示
+            self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_TASK_INPUT, sender: self)
+            break
+        // GPS設定画面の場合
+        case CommonConst.MainMenuType.configGps:
+            // GPS設定画面を表示
+            self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_CONFIG_MAP, sender: self)
+            break
+        default:
+            break
+        }
+        self.transDisplayFlag = CommonConst.MainMenuType.none
     }
     
     ///
@@ -786,7 +874,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // タイトル設定
         self.navigationItem.title = "".appendingFormat(CommonConst.VIW_TITLE_MAIN, CommonConst.CATEGORY_TYPE_STRING[TaskInfoUtility.DefaultInstance.GetCategoryType()])
         // ナビゲーションバー表示
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     ///
@@ -828,16 +916,16 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         TaskInfoUtility.DefaultInstance.SetTaskInfoDataForComplete(id)
         // 変更内容書き込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-        // タスクメニューバーの再描画
+        // タスクカテゴリーメニューバーの再描画
         redrawTaskMenuBar()
     }
 
     ///
-    /// タスクメニューバーの再描画
+    /// タスクカテゴリーメニューバーの再描画
     ///
     fileprivate func redrawTaskMenuBar() {
-        // タスクメニューバーの再描画
-        self.taskManuBarController.redraw()
+        // タスクカテゴリーメニューバーの再描画
+        self.taskCategoryManuBarController.redraw()
     }
     
     //**通知関連メソッド:START
@@ -1011,12 +1099,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     //**END
     
-}
-
-
-
-extension MainViewController : SlideMenuControllerDelegate {
-    
+    /// SlideMenuControllerDelegate
     func leftWillOpen() {
         print("SlideMenuControllerDelegate: leftWillOpen")
     }

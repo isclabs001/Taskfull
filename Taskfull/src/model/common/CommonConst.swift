@@ -229,6 +229,28 @@ class CommonConst
         UIColorUtility.rgb(136, g: 223, b: 255),
     ]
     
+    /**
+     * メインメニュー
+    */
+    enum MainMenuType: Int {
+        // なし
+        case none = -1
+        // タスク追加
+        case taskAdd = 0
+        // GPS通知設定
+        case configGps
+        // 最大
+        case max = 2
+    }
+    static internal let MAIN_MENU_TYPE_STRING : Array<String> = [
+        "タスク追加",
+        "GPS通知設定"
+    ]
+    static internal let MAIN_MENU_TYPE_BACKGROUND_COLOR : Array<UIColor> = [
+        UIColorUtility.rgb(232, g: 207, b: 255),
+        UIColorUtility.rgb(153, g: 217, b: 234),
+    ]
+    
     
     /**
      * ジオフェンス通知範囲(半径)

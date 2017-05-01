@@ -28,20 +28,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         
         // メイン画面のコントローラーを取得
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "MainStoryBoard") as! MainViewController
+        // タスクカテゴリーメニューバー画面のコントローラーを取得
+        let taskCategoryMenuBarViewController = storyboard.instantiateViewController(withIdentifier: "TaskCategoryMenuBarStoryBoard") as! TaskCategoryMenuBarViewController
         // メインメニューバー画面のコントローラーを取得
         let mainMenuBarViewController = storyboard.instantiateViewController(withIdentifier: "MainMenuBarStoryBoard") as! MainMenuBarViewController
 
-        // メイン画面にメニューバーのコントローラを設定
-        mainViewController.taskManuBarController = mainMenuBarViewController
+        // メイン画面にタスクカテゴリーメニューバーのコントローラを設定
+        mainViewController.taskCategoryManuBarController = taskCategoryMenuBarViewController
         
         // メイン画面のナビゲーターコントローラを取得
-        let nvc: UINavigationController = UINavigationController(rootViewController: mainViewController)
-        
-        // メインメニューバー画面にメイン画面のナビゲータコントローラを指定する
-        mainMenuBarViewController.mainViewController = nvc
+        let mainNavigationController: UINavigationController = UINavigationController(rootViewController: mainViewController)
+        // メニューバーに設定する
+        taskCategoryMenuBarViewController.mainUINavigationController = mainNavigationController
+        mainMenuBarViewController.mainUINavigationController = mainNavigationController
         
         // ExSlideMenuControllerを生成（メイン画面と左にメインメニューバー画面）
-        let slideMenuController = ExSlideMenuController(mainViewController:nvc, leftMenuViewController: mainMenuBarViewController)
+        let slideMenuController = ExSlideMenuController(mainViewController: mainNavigationController, leftMenuViewController: taskCategoryMenuBarViewController, rightMenuViewController: mainMenuBarViewController)
         // スクロールユーの装飾をする
         slideMenuController.automaticallyAdjustsScrollViewInsets = true
         // ExSlideMenuControllerのデリゲートをメイン画面に設定する

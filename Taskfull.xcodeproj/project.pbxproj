@@ -10,6 +10,10 @@
 		427952D41E9C84560064CE2E /* MapConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427952D31E9C84560064CE2E /* MapConfigViewController.swift */; };
 		427952D71E9C99F00064CE2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427952D61E9C99F00064CE2E /* CoreLocation.framework */; };
 		63098FF81EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63098FF71EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift */; };
+		63098FFA1EB3287800EF34C6 /* menubar_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 63098FF91EB3287800EF34C6 /* menubar_right.png */; };
+		63098FFC1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63098FFB1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift */; };
+		63098FFE1EB340D100EF34C6 /* TaskCategoryMenuBarSubItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63098FFD1EB340D100EF34C6 /* TaskCategoryMenuBarSubItemCell.swift */; };
+		630990021EB341F900EF34C6 /* TaskCategoryMenuBarSubItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 630990011EB341F900EF34C6 /* TaskCategoryMenuBarSubItemCell.xib */; };
 		6312389C1E73C6730054AC30 /* UICircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6312389B1E73C6730054AC30 /* UICircleImageView.swift */; };
 		6312389E1E73C7C20054AC30 /* UIImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6312389D1E73C7C20054AC30 /* UIImageButton.swift */; };
 		631238A01E73CB940054AC30 /* UICircleImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6312389F1E73CB940054AC30 /* UICircleImageButton.swift */; };
@@ -42,7 +46,6 @@
 		635669671EB03A690008F57C /* SlideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635669651EB03A690008F57C /* SlideMenuController.swift */; };
 		635669691EB03B190008F57C /* MainMenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635669681EB03B190008F57C /* MainMenuBarViewController.swift */; };
 		6356696C1EB043A70008F57C /* MainMenuBarSubItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6356696B1EB043A70008F57C /* MainMenuBarSubItemCell.swift */; };
-		6356696E1EB043BA0008F57C /* MainMenuBarSubItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6356696D1EB043BA0008F57C /* MainMenuBarSubItemCell.xib */; };
 		635669701EB0465D0008F57C /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6356696F1EB0465D0008F57C /* BaseTableViewCell.swift */; };
 		635669741EB0611B0008F57C /* ExSlideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635669731EB0611B0008F57C /* ExSlideMenuController.swift */; };
 		635669771EB063070008F57C /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635669761EB063070008F57C /* NSObject.swift */; };
@@ -51,6 +54,8 @@
 		635669841EB06A660008F57C /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6356697E1EB06A660008F57C /* UIView.swift */; };
 		635669851EB06A660008F57C /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6356697F1EB06A660008F57C /* UIViewController.swift */; };
 		635669871EB06AB20008F57C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635669861EB06AB20008F57C /* String.swift */; };
+		635CA7D51EB6C57D00FB3497 /* BaseMenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635CA7D41EB6C57D00FB3497 /* BaseMenuBarViewController.swift */; };
+		635CA7D71EB6FC9100FB3497 /* MainMenuBarSubItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635CA7D61EB6FC9000FB3497 /* MainMenuBarSubItemCell.xib */; };
 		635DCE711E739F1700F6F325 /* CommonConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE701E739F1700F6F325 /* CommonConst.swift */; };
 		635DCE731E73A03600F6F325 /* BaseJsonDataUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE721E73A03600F6F325 /* BaseJsonDataUtility.swift */; };
 		635DCE751E73A04300F6F325 /* LatLngForSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE741E73A04300F6F325 /* LatLngForSerializable.swift */; };
@@ -74,7 +79,6 @@
 		63B64A4C1EA8800A004ABBC0 /* MessageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */; };
 		63BED1241EAAF71C000F5C7E /* UITaskImageButtonExDiffusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BED1231EAAF71C000F5C7E /* UITaskImageButtonExDiffusion.swift */; };
 		63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */; };
-		63C5CF0B1E8DEB6800055DE2 /* シャボン玉_サンプル.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C5CF0A1E8DEB6700055DE2 /* シャボン玉_サンプル.png */; };
 		63C5CF0D1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */; };
 		63C9423E1E8E5E450052AB80 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9423D1E8E5E450052AB80 /* StringExtensions.swift */; };
 		63C942401E8E69260052AB80 /* TaskJsonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9423F1E8E69260052AB80 /* TaskJsonUtility.swift */; };
@@ -104,6 +108,10 @@
 		427952D31E9C84560064CE2E /* MapConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapConfigViewController.swift; sourceTree = "<group>"; };
 		427952D61E9C99F00064CE2E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		63098FF71EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInfoLocationDataEntity.swift; sourceTree = "<group>"; };
+		63098FF91EB3287800EF34C6 /* menubar_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menubar_right.png; sourceTree = "<group>"; };
+		63098FFB1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCategoryMenuBarViewController.swift; sourceTree = "<group>"; };
+		63098FFD1EB340D100EF34C6 /* TaskCategoryMenuBarSubItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCategoryMenuBarSubItemCell.swift; sourceTree = "<group>"; };
+		630990011EB341F900EF34C6 /* TaskCategoryMenuBarSubItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskCategoryMenuBarSubItemCell.xib; sourceTree = "<group>"; };
 		6312389B1E73C6730054AC30 /* UICircleImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircleImageView.swift; sourceTree = "<group>"; };
 		6312389D1E73C7C20054AC30 /* UIImageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageButton.swift; sourceTree = "<group>"; };
 		6312389F1E73CB940054AC30 /* UICircleImageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircleImageButton.swift; sourceTree = "<group>"; };
@@ -136,7 +144,6 @@
 		635669651EB03A690008F57C /* SlideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuController.swift; sourceTree = "<group>"; };
 		635669681EB03B190008F57C /* MainMenuBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuBarViewController.swift; sourceTree = "<group>"; };
 		6356696B1EB043A70008F57C /* MainMenuBarSubItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuBarSubItemCell.swift; sourceTree = "<group>"; };
-		6356696D1EB043BA0008F57C /* MainMenuBarSubItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuBarSubItemCell.xib; sourceTree = "<group>"; };
 		6356696F1EB0465D0008F57C /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		635669731EB0611B0008F57C /* ExSlideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExSlideMenuController.swift; sourceTree = "<group>"; };
 		635669761EB063070008F57C /* NSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObject.swift; sourceTree = "<group>"; };
@@ -145,6 +152,8 @@
 		6356697E1EB06A660008F57C /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		6356697F1EB06A660008F57C /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		635669861EB06AB20008F57C /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		635CA7D41EB6C57D00FB3497 /* BaseMenuBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseMenuBarViewController.swift; sourceTree = "<group>"; };
+		635CA7D61EB6FC9000FB3497 /* MainMenuBarSubItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuBarSubItemCell.xib; sourceTree = "<group>"; };
 		635DCE701E739F1700F6F325 /* CommonConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonConst.swift; sourceTree = "<group>"; };
 		635DCE721E73A03600F6F325 /* BaseJsonDataUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseJsonDataUtility.swift; sourceTree = "<group>"; };
 		635DCE741E73A04300F6F325 /* LatLngForSerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatLngForSerializable.swift; sourceTree = "<group>"; };
@@ -174,7 +183,6 @@
 		63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageUtility.swift; sourceTree = "<group>"; };
 		63BED1231EAAF71C000F5C7E /* UITaskImageButtonExDiffusion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITaskImageButtonExDiffusion.swift; sourceTree = "<group>"; };
 		63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDisabledTextField.swift; sourceTree = "<group>"; };
-		63C5CF0A1E8DEB6700055DE2 /* シャボン玉_サンプル.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "シャボン玉_サンプル.png"; sourceTree = "<group>"; };
 		63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPlaceHolderTextView.swift; sourceTree = "<group>"; };
 		63C9423D1E8E5E450052AB80 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		63C9423F1E8E69260052AB80 /* TaskJsonUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskJsonUtility.swift; sourceTree = "<group>"; };
@@ -240,9 +248,11 @@
 		6356696A1EB043030008F57C /* SubItemCell */ = {
 			isa = PBXGroup;
 			children = (
-				6356696B1EB043A70008F57C /* MainMenuBarSubItemCell.swift */,
-				6356696D1EB043BA0008F57C /* MainMenuBarSubItemCell.xib */,
 				6356696F1EB0465D0008F57C /* BaseTableViewCell.swift */,
+				6356696B1EB043A70008F57C /* MainMenuBarSubItemCell.swift */,
+				635CA7D61EB6FC9000FB3497 /* MainMenuBarSubItemCell.xib */,
+				63098FFD1EB340D100EF34C6 /* TaskCategoryMenuBarSubItemCell.swift */,
+				630990011EB341F900EF34C6 /* TaskCategoryMenuBarSubItemCell.xib */,
 			);
 			path = SubItemCell;
 			sourceTree = "<group>";
@@ -272,6 +282,7 @@
 		635DCE651E739C9A00F6F325 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				63098FF91EB3287800EF34C6 /* menubar_right.png */,
 				63D028DD1EB1932800573666 /* circle.png */,
 				63D028DB1EB17ECF00573666 /* menubar_left.png */,
 				631373021E92325C0089C19E /* soap003.png */,
@@ -285,7 +296,6 @@
 				6313730A1E92325C0089C19E /* soap011.png */,
 				6313730B1E92325C0089C19E /* soap012.png */,
 				6313730C1E92325C0089C19E /* soap013.png */,
-				63C5CF0A1E8DEB6700055DE2 /* シャボン玉_サンプル.png */,
 				631238A91E73EA180054AC30 /* add_down.png */,
 				631238AA1E73EA180054AC30 /* modechg_down.png */,
 				631238A11E73E4960054AC30 /* add.png */,
@@ -418,7 +428,9 @@
 				427952D31E9C84560064CE2E /* MapConfigViewController.swift */,
 				63D24F7C1EA45FAF00D473A7 /* TaskEditViewController.swift */,
 				635669601EADA2DA0008F57C /* BaseTaskInputViewController.swift */,
+				635CA7D41EB6C57D00FB3497 /* BaseMenuBarViewController.swift */,
 				635669681EB03B190008F57C /* MainMenuBarViewController.swift */,
+				63098FFB1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -661,10 +673,11 @@
 				636CE3BD1E6010CE002273BE /* LaunchScreen.storyboard in Resources */,
 				631238AC1E73EA180054AC30 /* modechg_down.png in Resources */,
 				631373161E92325C0089C19E /* soap012.png in Resources */,
+				630990021EB341F900EF34C6 /* TaskCategoryMenuBarSubItemCell.xib in Resources */,
 				63D028DC1EB17ECF00573666 /* menubar_left.png in Resources */,
-				6356696E1EB043BA0008F57C /* MainMenuBarSubItemCell.xib in Resources */,
 				631373141E92325C0089C19E /* soap010.png in Resources */,
 				631373111E92325C0089C19E /* soap007.png in Resources */,
+				63098FFA1EB3287800EF34C6 /* menubar_right.png in Resources */,
 				631238AB1E73EA180054AC30 /* add_down.png in Resources */,
 				6313730E1E92325C0089C19E /* soap004.png in Resources */,
 				631238A71E73E4960054AC30 /* soap001.png in Resources */,
@@ -674,7 +687,6 @@
 				631373151E92325C0089C19E /* soap011.png in Resources */,
 				631373101E92325C0089C19E /* soap006.png in Resources */,
 				631373121E92325C0089C19E /* soap008.png in Resources */,
-				63C5CF0B1E8DEB6800055DE2 /* シャボン玉_サンプル.png in Resources */,
 				636CE3BA1E6010CE002273BE /* Assets.xcassets in Resources */,
 				6313730F1E92325C0089C19E /* soap005.png in Resources */,
 				633187271E85256D00D0A9BE /* UITaskImageButton.xib in Resources */,
@@ -684,6 +696,7 @@
 				63D028DE1EB1932800573666 /* circle.png in Resources */,
 				636CE3B81E6010CE002273BE /* Main.storyboard in Resources */,
 				631373131E92325C0089C19E /* soap009.png in Resources */,
+				635CA7D71EB6FC9100FB3497 /* MainMenuBarSubItemCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -734,9 +747,11 @@
 				635DCE8F1E73A1FB00F6F325 /* MainViewController.swift in Sources */,
 				635669771EB063070008F57C /* NSObject.swift in Sources */,
 				635DCE711E739F1700F6F325 /* CommonConst.swift in Sources */,
+				63098FFC1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift in Sources */,
 				636CE3B31E6010CD002273BE /* AppDelegate.swift in Sources */,
 				635669841EB06A660008F57C /* UIView.swift in Sources */,
 				635669701EB0465D0008F57C /* BaseTableViewCell.swift in Sources */,
+				635CA7D51EB6C57D00FB3497 /* BaseMenuBarViewController.swift in Sources */,
 				635DCE851E73A18400F6F325 /* UICustomView.swift in Sources */,
 				635669831EB06A660008F57C /* UITableViewExtension.swift in Sources */,
 				631372FA1E8F2E8F0089C19E /* TaskInfoHeaderEntity.swift in Sources */,
@@ -751,6 +766,7 @@
 				631238B11E7410730054AC30 /* UITaskImageButton.swift in Sources */,
 				63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */,
 				63C942401E8E69260052AB80 /* TaskJsonUtility.swift in Sources */,
+				63098FFE1EB340D100EF34C6 /* TaskCategoryMenuBarSubItemCell.swift in Sources */,
 				63B64A4C1EA8800A004ABBC0 /* MessageUtility.swift in Sources */,
 				635DCE871E73A18D00F6F325 /* UIGradientButton.swift in Sources */,
 			);
