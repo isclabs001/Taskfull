@@ -76,17 +76,53 @@ extension UITaskImageButton {
     ///
     @objc fileprivate func cellAnimations(){
         
+        var signX : CGFloat = 1.0
+        var signY : CGFloat = 1.0
+        var index : Int = 0
+        
         // 拡散要素数分処理する
         for shape in diffusionCells!{
+            switch(index) {
+            case 1:
+                signX = -0.5
+                signY = 0.5
+            case 2:
+                signX = -1.0
+                signY = 0
+            case 3:
+                signX = -0.5
+                signY = -0.5
+            case 4:
+                signX = 0.0
+                signY = -1.0
+            case 5:
+                signX = 0.5
+                signY = -0.5
+            case 6:
+                signX = 1.0
+                signY = 0.0
+            case 7:
+                signX = 0.5
+                signY = 0.5
+            default:
+                signX = 1.0
+                signY = 1.0
+            }
+            
+            signX += CGFloat(arc4random() % 5) / 10
+            signY += CGFloat(arc4random() % 5) / 10
+
             // 中央表示
             shape.position = center
             shape.opacity = 1
             // 表示位置アニメーション生成
             let moveAnimation = CAKeyframeAnimation(keyPath: "position")
             // 放物線移動設定
-            moveAnimation.path = makeRandomPath(shape).cgPath
+            //moveAnimation.path = makeRandomPath(shape).cgPath
+            moveAnimation.path = makeRandomPath2(shape, signX:signX, signY:signY).cgPath
             moveAnimation.fillMode = kCAFillModeRemoved
-            moveAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.240000, 0.590000, 0.506667, 0.026667)
+            moveAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.590000, 0.240000, 0.026667, 0.506667)
+            //moveAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.240000, 0.590000, 0.506667, 0.026667)
             //moveAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.25, 0.46, 0.45, 0.94)
             //moveAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.215, 0.61, 0.355, 1)
             moveAnimation.duration = TimeInterval(arc4random()%10) * 0.05 + 0.3
@@ -112,6 +148,8 @@ extension UITaskImageButton {
             shape.add(scaleAnimation, forKey: "scaleAnimation")
             shape.add(moveAnimation, forKey: "moveAnimation")
             shape.add(opacityAnimation, forKey: "opacityAnimation")
+            
+            index = (index + 1) % 8
         }
     }
     
@@ -149,6 +187,35 @@ extension UITaskImageButton {
         let controlPointOffSetX = (endPointX - aLayer.position.x) / 2  + aLayer.position.x
         let controlPointOffSetY = layer.position.y - 0.2 * layer.frame.size.height - CGFloat(arc4random() % UInt32(1.2 * layer.frame.size.height))
         let endPointY = layer.position.y + layer.frame.size.height / 2 + CGFloat(arc4random() % UInt32(layer.frame.size.height / 2))
+        // 放物線の追加
+        particlePath.addQuadCurve(to: CGPoint(x: endPointX, y: endPointY), controlPoint: CGPoint(x: controlPointOffSetX, y: controlPointOffSetY))
+        
+        // 作成した放物線を返す
+        return particlePath
+    }
+    
+    ///
+    ///　放物線移動の作成
+    /// - parameter aLayer:親レイヤー
+    ///
+    fileprivate func makeRandomPath2(_ aLayer:CALayer, signX:CGFloat, signY:CGFloat) -> UIBezierPath{
+        // 放物線オブジェクトUIBezierPathの生成
+        let particlePath = UIBezierPath()
+        // 放物線の異動先位置を設定
+        particlePath.move(to: layer.position)
+        // 放物線の算出
+        let basicLeft = -CGFloat(1.3 * layer.frame.size.width)
+        let maxOffset = 2 * abs(basicLeft)
+        let randomNumber = arc4random() % 101
+        //let endPointX = basicLeft + maxOffset * (CGFloat(randomNumber) / 100.0) + aLayer.position.x
+        let endPointX = aLayer.position.x + ((basicLeft + maxOffset * (CGFloat(randomNumber) / 100.0)) * signX)
+        //let controlPointOffSetX = (endPointX - aLayer.position.x) / 2  + aLayer.position.x
+        let controlPointOffSetX = aLayer.position.x
+        //let controlPointOffSetY = layer.position.y - 0.2 * layer.frame.size.height - CGFloat(arc4random() % UInt32(1.2 * layer.frame.size.height))
+        //let controlPointOffSetY = layer.position.y + ((CGFloat(arc4random() % UInt32(1.2 * layer.frame.size.height))) * signY)
+        let controlPointOffSetY = layer.position.y
+        //let endPointY = layer.position.y + ((layer.frame.size.height / 2 + CGFloat(arc4random() % UInt32(layer.frame.size.height / 2))) * signY)
+        let endPointY = layer.position.y + ((layer.frame.size.height + CGFloat(arc4random() % UInt32(layer.frame.size.height / 2))) * signY)
         // 放物線の追加
         particlePath.addQuadCurve(to: CGPoint(x: endPointX, y: endPointY), controlPoint: CGPoint(x: controlPointOffSetX, y: controlPointOffSetY))
         
