@@ -123,7 +123,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         super.viewDidLoad()
         
         // 初期化
-        initializeProc()
+        let _ = initializeProc()
     }
     
     ///
@@ -150,7 +150,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                 // タスクイメージボタン全削除処理
                 removeAllTaskImageControl()
 
-                // 再描画処理（タイマーでタイミングをづらさないとアニメーションされないため）
+                // 再描画処理（タイマーでタイミングをずらさないとアニメーションされないため）
                 _ = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(updateRedraw(_:)), userInfo: nil, repeats: false)
             }
 

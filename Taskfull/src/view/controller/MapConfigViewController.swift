@@ -41,7 +41,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         super.viewDidLoad()
         
         // 初期化
-        initializeProc()
+        let _ = initializeProc()
     }
     
     //PicerView　表示列

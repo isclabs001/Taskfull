@@ -44,7 +44,7 @@ class TaskInputViewController : BaseTaskInputViewController
         super.viewDidLoad()
         
         // 初期化
-        initializeProc()
+        let _ = initializeProc()
     }
     
     

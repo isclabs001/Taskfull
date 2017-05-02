@@ -97,7 +97,7 @@ open class TaskInfoUtility {
     ///
     open func WriteTaskInfo() {
         let taskJsonUtility : TaskJsonUtility = TaskJsonUtility()
-        taskJsonUtility.writeJSONFile(self._taskInfo)
+        let _ = taskJsonUtility.writeJSONFile(self._taskInfo)
     }
     
     ///
@@ -258,7 +258,7 @@ open class TaskInfoUtility {
     ///
     open func DeleteTaskInfo() {
         let taskJsonUtility : TaskJsonUtility = TaskJsonUtility()
-        taskJsonUtility.deleteJSONFile()
+        let _ = taskJsonUtility.deleteJSONFile()
     }
     
     ///

@@ -46,7 +46,7 @@ class TaskEditViewController : BaseTaskInputViewController
         super.viewDidLoad()
         
         // 初期化
-        initializeProc()
+        let _ = initializeProc()
     }
     
     // 削除ボタンタップ時動作
