@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import AudioToolbox
 
 ///
 /// GPSリマインダー画面
@@ -27,11 +28,12 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
      * 変数
      */
     //登録地点用要素配列（テスト用）
-    var pointListArray : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
+    var pointListNameArray : [String] = [""]
     // 登録地点リスト入力PickerView
     let inputPointPicker : UIPickerView! = UIPickerView()
     
-    //ユーザ現在位置格納ロケーション：権限通知対策の為、プロパティで宣言
+    
+    //ユーザ現在位置格納ロケーション：権限通知重複対策の為、プロパティで宣言
     var selfLocation : CLLocationManager! = CLLocationManager()
     
     /// viewDidLoadイベント処理
@@ -50,32 +52,37 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     }
     //PicerView　表示行（要素数）
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        //要素数(仮　要)
-        return pointListArray.count
+        // 要素数
+        return pointListNameArray.count
     }
     //PicerView　表示要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        
-        
-        // 配列に組み込んでから回す
-        pointListArray = ["","自宅","スーパー","aaaaaaaaaaa"]
-        
-        
         // PicerViewを表示要素を戻す
-        return pointListArray[row] as? String
+        return pointListNameArray[row]
         
     }
     //PicerView　値選択時イベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        // 選択IDの座標読込
+        // 選択IDの登録名セット
+        setSelectedPoint(textField: InputPointListField, row: row)
         
-        // 選択ID緯度取得
-        // 選択ID経度取得
-        //
+        // 選択IDのEntity読込
+        //let taskLocationDataEntity : TaskInfoLocationDataEntity = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(row)!
+        let taskLocationDataEntity : TaskInfoLocationDataEntity = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(0)!
         
-        // 座標移動イベント(マップ補正含)
+        // 選択IDの座標生成
+        let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
+        
+        // Map表示領域指定(数字を小さくすると拡大)
+        let span : MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+        
+        // 生成座標より表示領域作成
+        let region : MKCoordinateRegion = MKCoordinateRegion(center: coordinate, span: span)
+        
+        // 選択IDの表示領域をMapに設定
+        GPSMapView.region = region
         
     }
     
@@ -92,7 +99,22 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         view.endEditing(true)
     }
     
+    // 選択地点の設定
+    func setSelectedPoint(textField : UITextField, row: Int) {
+        
+        // 選択項目をUITextFieldに設定する
+        InputPointListField.text = pointListNameArray[row]
+        
+        // 0.1秒バイブレーション作動
+        actionViblation()
+    }
     
+    // バイブレーション作動
+    func actionViblation() {
+        // 0.1秒バイブレーション作動
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
+    }
     
     /// 初期化処理
     override func initializeProc() ->Bool
@@ -103,7 +125,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         //　正常な場合
         if(true == ret)
         {
-
+            
             // ナビゲーションバー表示
             navigationController?.setNavigationBarHidden(false, animated: true)
             
@@ -134,7 +156,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             
             //　通知場所(登録地点リスト):初期設定
             displayInputPoint(pointListField: self.InputPointListField)
-            
+
             /// リスト内ピン生成処理
             displayGeneratePin()
             
@@ -149,7 +171,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     func displayInputPoint(pointListField: UITextField!){
         
         //登録地点リスト:要素更新処理
-        
+        // 通知地点名更新処理
+        updataPointListNameArray()
         
         //登録地点リスト：Delegate,DataSource設定
         self.inputPointPicker.delegate = self
@@ -165,6 +188,30 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     }
     
     
+    // 通知地点名配列更新処理
+    fileprivate func updataPointListNameArray(){
+        
+        // テキスト欄初期化
+        InputPointListField.text = ""
+        
+        // 配列初期化
+        pointListNameArray = [""]
+        
+        // 登録地点数分処理
+        for i in 0..<TaskInfoUtility.DefaultInstance.GetInfoLocationCount(){
+            
+            // TaskInfoLocationDataEntity
+            let taskLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(i)
+            
+            // 配列追加(1~)
+            pointListNameArray.append((taskLocationDataEntity?.Title)!)
+            
+        }
+        
+        //登録地点リスト入力欄 リロード
+        self.inputPointPicker.reloadAllComponents()
+        
+    }
     
     
     /// リスト内ピン生成処理
@@ -173,8 +220,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // 以下処理を通知場所リストでループ
         // デバッグ用:通知座標指定読み出し:START
         if(TaskInfoUtility.DefaultInstance.GetIndexForLocation(0) != -1){
-            // TaskInfoLocationDataEntity
-            let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(0)!
+            // TaskInfoLocationDataEntity:読込
+            let taskLocationDataEntity : TaskInfoLocationDataEntity = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(0)!
             
             // ピン:生成
             let myPin: MKPointAnnotation = MKPointAnnotation()
@@ -198,6 +245,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 self.GPSMapView.add(selfCircle)
                 
             }
+            
         }
         
     }
@@ -540,20 +588,20 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         //  選択アノテーションのインデックス取得 ※新規アノテーションインデックスは前挿入
         let index  = (self.GPSMapView.annotations as NSArray).index(of: annotation)
         
-        // インスタンス生成:ActionSheet
-        let myAlert = UIAlertController(title: view.annotation!.title!, message: (String(self.GPSMapView.annotations[index].coordinate.latitude) + "\n" + String(self.GPSMapView.annotations[index].coordinate.longitude)), preferredStyle: UIAlertControllerStyle.actionSheet)
+        // インスタンス生成:サブメッセージ緯度経度
+        let myAlert = UIAlertController(title: view.annotation!.title!, message: ("緯度:" + String(self.GPSMapView.annotations[index].coordinate.latitude) + "\n" + "経度:" + String(self.GPSMapView.annotations[index].coordinate.longitude)), preferredStyle: UIAlertControllerStyle.actionSheet)
 
+// TODO:アノテーションをインスタンス変数に格納しないと編集不可のため、次フェーズ課題
+//        // 編集アクション生成
+//        let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.default, handler: {(action: UIAlertAction!) in
+//            
+//            // TODO:アノテーション編集処理
+//            
+//            
+//        })
         
-        // アクション生成_1
-        let myAction_1 = UIAlertAction(title: "Edit", style: UIAlertActionStyle.default, handler: {(action: UIAlertAction!) in
-            
-            // TODO:アノテーション編集処理
-            
-            
-        })
-        
-        // アクション生成_2
-        let myAction_2 = UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: {(action: UIAlertAction!) in
+        // 削除アクション生成
+        let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: {(action: UIAlertAction!) in
 
             
             //　アノテーション = ピン
@@ -590,20 +638,22 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             // TODO:通知地点リストから削除処理（座標で検索？）
             TaskInfoUtility.DefaultInstance.RemoveLocationInfo(0)
             TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+
+            // 通知地点名配列更新処理
+            self.updataPointListNameArray()
             
         })
         
-        // アクション生成_3
-        let myAction_3 = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(action: UIAlertAction!) in
+        // キャンセルアクション生成
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(action: UIAlertAction!) in
             
             print("Cancel")
             
         })
         
         // アクション追加
-        myAlert.addAction(myAction_1)
-        myAlert.addAction(myAction_2)
-        myAlert.addAction(myAction_3)
+        myAlert.addAction(deleteAction)
+        myAlert.addAction(cancelAction)
         
         // ActionSheet表示
         self.present(myAlert, animated: true, completion: nil)
@@ -626,25 +676,40 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // TaskInfoLocationDataEntity
         let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoLocationDataEntity()
         
+        
+//        for i in 1...10{
+//
+//            
+//            if(TaskInfoUtility.DefaultInstance.GetInfoLocationEmptyIndex(i) == -1){
+//                
+//                // ID設定※要空き番を割り当て処理
+//                taskLocationDataEntity.Id = i
+//                
+//            }
+//            
+//            
+//        }
+        
         // ID設定※要空き番を割り当て処理
         taskLocationDataEntity.Id = 0
         
         // タイトル設定
         taskLocationDataEntity.Title = pointTitle
         
-        // ロケーション分解
         // 緯度
-        //location.latitude
         taskLocationDataEntity.Latitude = location.latitude
+        
         // 経度
-        //location.longitude
         taskLocationDataEntity.Longitude = location.longitude
         
-        // データ追加
+        // ロケーション情報の追加
         TaskInfoUtility.DefaultInstance.AddLocationInfo(taskLocationDataEntity)
         
         // ロケーション情報の書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        
+        // 通知地点名配列更新処理
+        updataPointListNameArray()
         
         
         // デバッグ用(読出)

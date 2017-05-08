@@ -130,11 +130,10 @@ class TaskEditViewController : BaseTaskInputViewController
             // 読込ID:後続タスクが存在しないかつ子タスクである場合
             else if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1 && self.paramParrentId != -1){
                 
-                // TEST:START
-                // 後続タスクボタン非表示
+                // 後続タスクボタン無効化
                 AddAfterTask.isEnabled = false
                 AddAfterTask.isHidden = true
-                // TEST:END
+                
                 return
                 
             }
@@ -406,6 +405,7 @@ class TaskEditViewController : BaseTaskInputViewController
     //後続タスクボタン：タップ時イベント
     override func onTouchDown_addAfterTaskButton(_ sender : UIButton){
         
+        // TODO:タスク参照時、編集イベント不要
         // タスク編集イベント
         inputEditTask()
 
@@ -437,7 +437,7 @@ class TaskEditViewController : BaseTaskInputViewController
                 return
             }
             
-        // 上記以外の場合(タスク編集)
+        // 上記以外の場合(タスク参照)
         } else {
             
             // タスク編集画面コントローラー生成
@@ -446,7 +446,7 @@ class TaskEditViewController : BaseTaskInputViewController
             // 後続タスク情報を取得
             let childTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoData()[childIndex]
             
-            // 読込タスクID
+            // 読込タスクID(子タスクID)
             vc.paramTaskId = childTaskInfo.Id
             // メイン画面:モード
             vc.paramMainViewMode = self.paramMainViewMode

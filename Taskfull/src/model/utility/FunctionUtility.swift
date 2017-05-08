@@ -63,21 +63,24 @@ class FunctionUtility
     ///
     ///　日付日時を"M月d日(曜日) HH時mm分"文字列に変換する
     ///　- parameter date:日付日時
-    ///　- returns:変換した文字列&曜日
+    ///　- returns:変換した文字列&曜日("M月d日(曜日) HH時mm分")
     ///
     static func DateToMdHHmm_JP(_ date : Date) -> String
     {
-        //曜日インデックス取得
+        // 曜日インデックス取得
         let calendar : Calendar = Calendar(identifier : Calendar.Identifier.gregorian)
         let component : DateComponents = (calendar as NSCalendar).components([NSCalendar.Unit.weekday], from: date)
         let weekDay : Int = component.weekday!
         let weekDaySymbolIndex : Int  = weekDay - 1
         
-        //曜日名取得の為JPにロケール変更
+        // 曜日名取得の為JPにロケール変更
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ja_JP")
-        //文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
+        
+        // 文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
         dateFormatter.dateFormat = "M月d日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex])) HH時mm分"
+        
+        // "M月d日(曜日) HH時mm分"を返す
         return dateFormatter.string(from: date)
     }
     

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		427952D41E9C84560064CE2E /* MapConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427952D31E9C84560064CE2E /* MapConfigViewController.swift */; };
-		427952D71E9C99F00064CE2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427952D61E9C99F00064CE2E /* CoreLocation.framework */; };
+		427952D71E9C99F00064CE2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427952D61E9C99F00064CE2E /* CoreLocation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		63098FF81EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63098FF71EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift */; };
 		63098FFA1EB3287800EF34C6 /* menubar_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 63098FF91EB3287800EF34C6 /* menubar_right.png */; };
 		63098FFC1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63098FFB1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift */; };

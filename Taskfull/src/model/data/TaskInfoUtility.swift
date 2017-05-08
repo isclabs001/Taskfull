@@ -381,5 +381,36 @@ open class TaskInfoUtility {
         return ret
     }
     
+    ///
+    ///
+    ///　位置情報格納数を取得
+    ///　- returns:位置情報格納数
+    ///
+    open func GetInfoLocationCount() -> Int {
+
+        //
+        return self._taskInfo.Location.count
+    }
+    
+    ///
+    /// 
+    ///　- parameter:id:検索対象のID
+    ///　- returns:-1以外:見つかった親IDのインデックス -1:見つからなかった
+    ///
+    open func GetInfoLocationEmptyIndex(_ Id : Int) -> Int {
+        
+        // データ数分処理する
+        for i in (0 ..< self._taskInfo.Location.count) {
+            // が見つかった場合
+            if(self._taskInfo.Location[i].Id == 0) {
+                // インデックスを返す
+                return i
+            }
+        }
+        
+        // 見つからない場合は「-1」を返す
+        return -1
+    }
+    
     
 }
