@@ -27,7 +27,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
      * 変数
      */
     //登録地点用要素配列（テスト用）
-    var aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
+    var pointListArray : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     // 登録地点リスト入力PickerView
     let inputPointPicker : UIPickerView! = UIPickerView()
     
@@ -51,17 +51,20 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     //PicerView　表示行（要素数）
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         //要素数(仮　要)
-        return aaa.count
+        return pointListArray.count
     }
     //PicerView　表示要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
+        
+        
         // 配列に組み込んでから回す
-        var aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
+        pointListArray = ["","自宅","スーパー","aaaaaaaaaaa"]
         
         
+        // PicerViewを表示要素を戻す
+        return pointListArray[row] as? String
         
-        return aaa[row] as? String
     }
     //PicerView　値選択時イベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -132,7 +135,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             //　通知場所(登録地点リスト):初期設定
             displayInputPoint(pointListField: self.InputPointListField)
             
-            
+            /// リスト内ピン生成処理
             displayGeneratePin()
             
             // 戻り値にtrueを設定
@@ -145,7 +148,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     //　通知場所(登録地点リスト):初期設定
     func displayInputPoint(pointListField: UITextField!){
         
-        //登録地点リスト:要素追加イベント(未実装)
+        //登録地点リスト:要素更新処理
         
         
         //登録地点リスト：Delegate,DataSource設定
@@ -161,6 +164,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         
     }
     
+    
+    
+    
     /// リスト内ピン生成処理
     fileprivate func displayGeneratePin(){
         
@@ -169,17 +175,18 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         if(TaskInfoUtility.DefaultInstance.GetIndexForLocation(0) != -1){
             // TaskInfoLocationDataEntity
             let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(0)!
-        // ピン:生成
-        let myPin: MKPointAnnotation = MKPointAnnotation()
-        
-        // ピン:生成座標を設定
-        myPin.coordinate = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
-        
-        // ピン:タイトル設定
-        myPin.title = taskLocationDataEntity.Title
-        
-        // MapView:生成ピン追加
-        GPSMapView.addAnnotation(myPin)
+            
+            // ピン:生成
+            let myPin: MKPointAnnotation = MKPointAnnotation()
+            
+            // ピン:生成座標を設定
+            myPin.coordinate = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
+            
+            // ピン:タイトル設定
+            myPin.title = taskLocationDataEntity.Title
+            
+            // MapView:生成ピン追加
+            GPSMapView.addAnnotation(myPin)
             
             // Map上のアノテーション全てにオーバーレイ描写処理
             for i in 0..<(self.GPSMapView.annotations as NSArray).count{
@@ -278,7 +285,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // 位置情報をMapに設定
         GPSMapView.region = region
         
-        // Map再更新防止：位置情報取得停止
+        // Map再更新防止の為、位置情報取得停止
         selfLocation.stopUpdatingLocation()
     }
 

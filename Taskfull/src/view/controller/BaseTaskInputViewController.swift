@@ -44,6 +44,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     var selfParrentId : Int = Int()
     /// パラメータ:登録画面表示ステータス(false:初期表示,true:表示済み)
     var paramBackStatus : Bool = false
+    /// パラメータ:カテゴリータイプ
+    var paramCategoryType : Int = 0
+    
 
     // カラーボタンイメージ(全１２色)
     // 重要度：低
@@ -118,9 +121,12 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         if(true == ret)
         {
             // 背景色設定
-            mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
-            mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
-
+//            mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
+//            mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
+            // 背景色設定
+            mainView.gradationBackgroundStartColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[paramCategoryType]
+            mainView.gradationBackgroundEndColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[paramCategoryType]
+            
             //　view:フォーカスが外れた際のイベント
             let tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(missFocusView))
             view.addGestureRecognizer(tap)
@@ -157,7 +163,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         // ナビゲーションバー表示
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         // ナビゲーションバー背景色
-        self.navigationController?.navigationBar.backgroundColor = UIColorUtility.rgb(107, g: 133, b: 194)
+        //self.navigationController?.navigationBar.backgroundColor = UIColorUtility.rgb(107, g: 133, b: 194)
+        self.navigationController?.navigationBar.backgroundColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[paramCategoryType]
+        
         // ナビゲーションバー透過度
         self.navigationController?.navigationBar.alpha = 0.9
         // ナビゲーションバー透過フラグ

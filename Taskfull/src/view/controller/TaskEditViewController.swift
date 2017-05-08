@@ -418,17 +418,17 @@ class TaskEditViewController : BaseTaskInputViewController
             // 参照モード以外の場合
             if(self.paramMainViewMode != CommonConst.ActionType.reference){
 
-                // TEST:START
                 // タスク登録画面コントローラー生成
                 let vc = storyboard?.instantiateViewController(withIdentifier: "InputStoryBoard") as! TaskInputViewController
                 // 読込タスクID
                 vc.paramTaskId = self.paramTaskId
                 // タスク登録モード
                 vc.paramMainViewMode = CommonConst.ActionType.add
+                // タスク:カテゴリータイプ
+                vc.paramCategoryType = paramCategoryType
                 
-                // 後続タスク追加ボタン:編集画面遷移
+                // 後続タスク追加ボタン:編集画面遷移処理
                 navigationController?.pushViewController(vc, animated: true)
-                // TEST:END
                 
                 
             // 上記以外の場合
@@ -437,7 +437,7 @@ class TaskEditViewController : BaseTaskInputViewController
                 return
             }
             
-        // 上記以外の場合
+        // 上記以外の場合(タスク編集)
         } else {
             
             // タスク編集画面コントローラー生成
@@ -452,6 +452,8 @@ class TaskEditViewController : BaseTaskInputViewController
             vc.paramMainViewMode = self.paramMainViewMode
             // 中間タスク判別用変数
             vc.paramParrentId = childTaskInfo.ParrentId
+            // カテゴリータイプ
+            vc.paramCategoryType = paramCategoryType
             
             // 後続タスク追加ボタン:編集画面遷移
             navigationController?.pushViewController(vc, animated: true)
@@ -533,6 +535,8 @@ class TaskEditViewController : BaseTaskInputViewController
         // 中間タスク判別用変数に読込IDを設定
         self.paramParrentId = taskInfoDataEntity.Id
         
+        // カテゴリータイプ
+        taskInfoDataEntity.CategoryType = paramCategoryType
         
         // 編集モードである場合
         if(self.paramMainViewMode == CommonConst.ActionType.edit){

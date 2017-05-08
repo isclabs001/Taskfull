@@ -176,7 +176,11 @@ class TaskInputViewController : BaseTaskInputViewController
         
         // タスク登録画面コントローラー生成
         let vc = storyboard?.instantiateViewController(withIdentifier: "InputStoryBoard") as! TaskInputViewController
+        
+        // 親タスクID
         vc.paramTaskId = self.paramTaskId
+        // タスク:カテゴリータイプ
+        vc.paramCategoryType = paramCategoryType
         
         // ナビゲーションバー:レイヤー追加
         self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
@@ -283,8 +287,7 @@ class TaskInputViewController : BaseTaskInputViewController
                 self.paramTaskId = taskInfoDataEntity.Id
                 
             }
-                // TODO:後続タスクである場合
-                // 後続タスクである場合
+            // 後続タスクである場合
             else{
                 
                 // 作成タスク親IDを読込IDに設定
@@ -294,6 +297,9 @@ class TaskInputViewController : BaseTaskInputViewController
                 self.paramTaskId = taskInfoDataEntity.Id
             }
             
+            
+            // カテゴリータイプ
+            taskInfoDataEntity.CategoryType = paramCategoryType
             
             //完了フラグ
             taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
@@ -370,17 +376,17 @@ class TaskInputViewController : BaseTaskInputViewController
             // 親ID再設定
             taskInfoDataEntity.ParrentId = selfTaskInfoDataEntity.ParrentId
             
+            // カテゴリータイプ
+            taskInfoDataEntity.CategoryType = paramCategoryType
             
             //完了フラグ
             taskInfoDataEntity.CompleteFlag = CommonConst.TASK_COMPLETE_FLAG_INVALID
-            
             
             //作成日時
             taskInfoDataEntity.CreateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
             
             //更新日時
             taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
-            
             
             // タスク更新処理
             TaskInfoUtility.DefaultInstance.SetTaskInfoDataForId(taskInfoDataEntity)

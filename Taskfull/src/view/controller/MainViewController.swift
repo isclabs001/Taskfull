@@ -804,6 +804,12 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
 
             // タスク登録モード
             dvc.paramMainViewMode = CommonConst.ActionType.add
+            
+            
+            // TEST:START
+            // タスク:カテゴリータイプ
+            dvc.paramCategoryType = TaskInfoUtility.DefaultInstance.GetCategoryType()
+            // TEST:END
         }
         // タスク編集画面へ遷移する場合
         else if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_EDIT){
@@ -814,6 +820,12 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 長押しボタンのタスクIDを渡す
             dvc.paramTaskId = self.mParamTaskId
             dvc.paramMainViewMode = self.mActionMode
+            
+            // TEST:START
+            // タスク:カテゴリータイプ
+            dvc.paramCategoryType = TaskInfoUtility.DefaultInstance.GetCategoryType()
+            // TEST:END
+            
         }
         
     }

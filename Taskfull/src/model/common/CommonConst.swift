@@ -208,11 +208,11 @@ class CommonConst
         // 課題
         case task = 0
         // 買い物
-        case shopping
+        case shopping = 1
         // 就職
-        case finding_employment
+        case finding_employment = 2
         // その他
-        case etc
+        case etc = 3
         // 最大
         case max
     }
