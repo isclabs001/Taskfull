@@ -18,7 +18,7 @@ class ExSlideMenuController : SlideMenuController {
         }
         return false
     }
-    
+/*
     override func track(_ trackAction: TrackAction) {
         switch trackAction {
         case .leftTapOpen:
@@ -39,4 +39,5 @@ class ExSlideMenuController : SlideMenuController {
             print("TrackAction: right flick close.")
         }
     }
+*/
 }

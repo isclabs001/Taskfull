@@ -11,10 +11,35 @@ import UIKit
 ///
 /// UIViewController基底クラス
 ///
-class BaseViewController: UIViewController {
+open class BaseViewController: UIViewController {
+    /**
+     * 定数
+     */
     
+    
+    /**
+     * 変数
+     */
     /// OKボタン押下有無
     var isOkBtn : Bool = false
+    
+    /**
+     * 左メニューバー利用可/不可判断
+     */
+    open var isValidLeftMenuBar : Bool {
+        get {
+            return false
+        }
+    }
+    
+    /**
+     * 右メニューバー利用可/不可判断
+     */
+    open var isValidRightMenuBar : Bool {
+        get {
+            return false
+        }
+    }
     
     ///
     ///　初期化処理
@@ -50,7 +75,7 @@ class BaseViewController: UIViewController {
     /// viewWillDisappearイベント
     ///　- parameter animated:アニメーションフラグ
     ///
-    override func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         // ナビゲーションコントローラが有効な場合
         if(nil != self.navigationController && false == self.isOkBtn){
             // ナビゲーションコントローラからビューコントロールを取得

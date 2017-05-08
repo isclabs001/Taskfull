@@ -33,7 +33,7 @@ public struct SlideMenuOptions {
     public static var animationDuration: CGFloat = 0.4
     public static var animationOptions: UIViewAnimationOptions = []
     public static var rightViewWidth: CGFloat = 270.0
-    public static var rightBezelWidth: CGFloat? = 16.0
+    public static var rightBezelWidth: CGFloat? = 64.0
     public static var rightPanFromBezel: Bool = true
     public static var hideStatusBar: Bool = true
     public static var pointOfNoReturnWidth: CGFloat = 44.0
@@ -230,26 +230,88 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return self.mainViewController?.preferredStatusBarStyle ?? .default
     }
     
+    ///
+    /// MainViewController取得処理
+    ///　- returns:nil以外:MainViewController nil:取得できなかった
+    ///
+    func getMainViewController() -> MainViewController? {
+        // navigationControllerが有効な場合
+        if let navigationController = self.mainViewController as? UINavigationController {
+            // navigationControllerのview数分処理する
+            for cntl : UIViewController in navigationController.viewControllers {
+                // MainViewControllerの場合
+                if let parrentMainViewController = cntl as? MainViewController {
+                    // MainViewControllerを返す
+                    return parrentMainViewController
+                }
+            }
+        }
+        
+        // nilを返す
+        return nil
+    }
+    
+    ///
+    /// 右メニューバー利用可/不可判断
+    ///　- returns:true:利用可 false:利用不可
+    ///
+    func isValidRightMenuBar() -> Bool {
+        // MainViewControllerが有効な場合
+        if let mainViewController = getMainViewController() {
+            // 右メニューバー利用可/不可判断を取得
+            return mainViewController.isValidRightMenuBar
+        // 上記以外の場合
+        } else {
+            // 利用不可を返す
+            return false
+        }
+    }
+    
+    ///
+    /// 左メニューバー利用可/不可判断
+    ///　- returns:true:利用可 false:利用不可
+    ///
+    func isValidLeftMenuBar() -> Bool {
+        // MainViewControllerが有効な場合
+        if let mainViewController = getMainViewController() {
+            // 左メニューバー利用可/不可判断を取得
+            return mainViewController.isValidLeftMenuBar
+        // 上記以外の場合
+        } else {
+            // 利用不可を返す
+            return false
+        }
+    }
+    
     open override func openLeft() {
+        // leftViewControllerが無効な場合
         guard let _ = leftViewController else { // If leftViewController is nil, then return
+            // 処理しない
             return
         }
         
+        // 左メニューバーオープンイベントを通知
         self.delegate?.leftWillOpen?()
         
+        // WindowLevelを設定する
         setOpenWindowLevel()
-        // for call viewWillAppear of leftViewController
+        // 左メニューバーのviewWillAppearを実行
         leftViewController?.beginAppearanceTransition(isLeftHidden(), animated: true)
+        // 左メニューバーの表示
         openLeftWithVelocity(0.0)
-        
+
+        // 左メニューバーオープン通知
         track(.leftTapOpen)
     }
     
     open override func openRight() {
+        // rightViewControllerが無効な場合
         guard let _ = rightViewController else { // If rightViewController is nil, then return
+            // 処理しない
             return
         }
-        
+
+        // 右メニューバーオープンイベントを通知
         self.delegate?.rightWillOpen?()
         
         setOpenWindowLevel()
@@ -377,6 +439,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
             return
         }
         
+        if !isValidLeftMenuBar() {
+            return
+        }
+        
         if isRightOpen() {
             return
         }
@@ -454,6 +520,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
     func handleRightPanGesture(_ panGesture: UIPanGestureRecognizer) {
         
         if !isTagetViewController() {
+            return
+        }
+        
+        if !isValidRightMenuBar() {
             return
         }
         
@@ -664,6 +734,7 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     open func isLeftOpen() -> Bool {
+        // 左メニューバーがが有効、かつ、左メニューバーのX座標が表示座標である場合
         return leftViewController != nil && leftContainerView.frame.origin.x == 0.0
     }
     
@@ -684,6 +755,7 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     open func isRightOpen() -> Bool {
+        // 右メニューバーがが有効、かつ、右メニューバーのX座標が表示座標である場合
         return rightViewController != nil && rightContainerView.frame.origin.x == view.bounds.width - rightContainerView.frame.size.width
     }
     
