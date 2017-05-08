@@ -958,8 +958,20 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     content.sound = UNNotificationSound.default()
                     
                     // 通知座標指定
-                    let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(35.508692,139.612245)
-                    //let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(35.535303,139.589728)
+                    //let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(35.508692,139.612245)
+                    
+                    // デバッグ用:通知座標指定読み出し:START
+                    if(TaskInfoUtility.DefaultInstance.GetIndexForLocation(0) != -1){
+                    // TaskInfoLocationDataEntity
+                    let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(0)!
+
+                    // 通知座標指定
+                    let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
+                    print(taskLocationDataEntity.Title)
+                    print(taskLocationDataEntity.Latitude)
+                    print(taskLocationDataEntity.Longitude)
+                    // デバッグ用:通知座標指定読み出し:END
+
                     // 通知範囲指定
                     let region = CLCircularRegion(center: coordinate, radius: CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE, identifier: "test")
                     // 通知範囲in
@@ -973,7 +985,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     // UNUserNotificationCenterに作成したUNNotificationRequestを追加
                     center.add(locationRequest)
                     // TEST:END
-                    
+                    }
                 }
                 //通知設定：END
             })

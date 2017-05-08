@@ -342,7 +342,9 @@ open class TaskInfoUtility {
     ///　- parameter:taskInfoLocationDataEntity:TaskInfoLocationDataEntity
     ///
     open func AddLocationInfo(_ taskInfoLocationDataEntity : TaskInfoLocationDataEntity) {
+        
         self._taskInfo.Location.append(taskInfoLocationDataEntity)
+        
     }
     
     ///
@@ -360,5 +362,24 @@ open class TaskInfoUtility {
             self._taskInfo.Location.remove(at: index)
         }
     }
+    
+    
+    ///
+    /// 指定したIDの位置情報を取得
+    ///　- parameter:id:検索対象のID
+    ///　- returns:nil以外:見つかったIDの位置情報 nil:見つからなかった
+    ///
+    open func GetInfoLocationDataForId(_ id : Int) -> TaskInfoLocationDataEntity? {
+        
+        var ret : TaskInfoLocationDataEntity? = nil
+        let index = GetIndexForLocation(id)
+        
+        if(-1 < index) {
+            ret = GetTaskInfoLocation()[index]
+        }
+        
+        return ret
+    }
+    
     
 }

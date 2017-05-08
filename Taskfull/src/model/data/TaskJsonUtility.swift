@@ -248,12 +248,14 @@ open class TaskJsonUtility : BaseJsonDataUtility
                                         break
                                     // キー項目がJSON_FIELD_LOCATION_LONGITUDE
                                     case TaskJsonUtility.JSON_FIELD_LOCATION_LONGITUDE:
-                                        data.Latitude = dataValue as! Double
+                                        data.Longitude = dataValue as! Double
                                         break
                                     default:
                                         break
                                     }
                                 }
+                                // 配列に構造体を追加
+                                ret.Location.append(data)
                             }
                             break
                         default:
@@ -391,10 +393,13 @@ open class TaskJsonUtility : BaseJsonDataUtility
             // 緯度設定
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_LOCATION_LATITUDE, value: location.Latitude, isComma: true))
             // 経度設定
-            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_LOCATION_LONGITUDE, value: location.Longitude, isComma: true))
+            jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_LOCATION_LONGITUDE, value: location.Longitude, isComma: false))
+            
+            // 子項目の配列カッコ（}）を設定
+            jsonDataBuff.append(bracketsChild2)
         }
         // データ配列部設定
-        jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_LOCATION, value: jsonDataBuff, isComma: true))
+        jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_LOCATION, value: jsonDataBuff, isComma: false))
 
         // JSON終了カッコ設定
         jsonBuff.append(bracketsEnd)

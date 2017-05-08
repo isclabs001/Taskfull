@@ -27,7 +27,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
      * 変数
      */
     //登録地点用要素配列（テスト用）
-    let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
+    var aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
     // 登録地点リスト入力PickerView
     let inputPointPicker : UIPickerView! = UIPickerView()
     
@@ -55,6 +55,12 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     }
     //PicerView　表示要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        // 配列に組み込んでから回す
+        var aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
+        
+        
+        
         return aaa[row] as? String
     }
     //PicerView　値選択時イベント
@@ -126,6 +132,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             //　通知場所(登録地点リスト):初期設定
             displayInputPoint(pointListField: self.InputPointListField)
             
+            
+            displayGeneratePin()
+            
             // 戻り値にtrueを設定
             ret = true
         }
@@ -156,20 +165,33 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     fileprivate func displayGeneratePin(){
         
         // 以下処理を通知場所リストでループ
-        
+        // デバッグ用:通知座標指定読み出し:START
+        if(TaskInfoUtility.DefaultInstance.GetIndexForLocation(0) != -1){
+            // TaskInfoLocationDataEntity
+            let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(0)!
         // ピン:生成
         let myPin: MKPointAnnotation = MKPointAnnotation()
         
         // ピン:生成座標を設定
-        //myPin.coordinate = center
+        myPin.coordinate = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
         
         // ピン:タイトル設定
-        myPin.title = "タイトル"
+        myPin.title = taskLocationDataEntity.Title
         
         // MapView:生成ピン追加
         GPSMapView.addAnnotation(myPin)
-
-        
+            
+            // Map上のアノテーション全てにオーバーレイ描写処理
+            for i in 0..<(self.GPSMapView.annotations as NSArray).count{
+                
+                // 円を描画(半径100m)
+                let selfCircle: MKCircle = MKCircle(center: self.GPSMapView.annotations[i].coordinate, radius: CLLocationDistance(CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE))
+                
+                // mapViewへ円追加：addOverlayイベント処理開始
+                self.GPSMapView.add(selfCircle)
+                
+            }
+        }
         
     }
     
@@ -421,7 +443,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             if(true == StringUtility.isEmpty(myAlert.textFields?[0].text)){
                 
                 // アラート入力値取得
-                var inputPointTitle : String = (myAlert.textFields?[0].text)!
+                let inputPointTitle : String = (myAlert.textFields?[0].text)!
                 
                 // タイトルを設定(アラート入力値)
                 pointPin.title = inputPointTitle
@@ -503,12 +525,17 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         }
     }
 
-    
+    ///　アクションシート表示
     func activeSheet(view: MKAnnotationView){
         
-        // インスタンス生成:ActionSheet
-        let myAlert = UIAlertController(title: view.annotation!.title!, message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+        //　アノテーション = ピン
+        let annotation = view.annotation!
+        //  選択アノテーションのインデックス取得 ※新規アノテーションインデックスは前挿入
+        let index  = (self.GPSMapView.annotations as NSArray).index(of: annotation)
         
+        // インスタンス生成:ActionSheet
+        let myAlert = UIAlertController(title: view.annotation!.title!, message: (String(self.GPSMapView.annotations[index].coordinate.latitude) + "\n" + String(self.GPSMapView.annotations[index].coordinate.longitude)), preferredStyle: UIAlertControllerStyle.actionSheet)
+
         
         // アクション生成_1
         let myAction_1 = UIAlertAction(title: "Edit", style: UIAlertActionStyle.default, handler: {(action: UIAlertAction!) in
@@ -521,10 +548,11 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // アクション生成_2
         let myAction_2 = UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: {(action: UIAlertAction!) in
 
+            
             //　アノテーション = ピン
-            let annotation = view.annotation!
+            //let annotation = view.annotation!
             //  選択アノテーションのインデックス取得 ※新規アノテーションインデックスは前挿入
-            let index  = (self.GPSMapView.annotations as NSArray).index(of: annotation)
+            //let index  = (self.GPSMapView.annotations as NSArray).index(of: annotation)
             
             // TODO:通知地点リストから削除処理（座標で検索？）
             //self.GPSMapView.annotations[index].coordinate.latitude
@@ -553,7 +581,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             // アノテーションインデックス対策代替処理:END
             
             // TODO:通知地点リストから削除処理（座標で検索？）
-            
+            TaskInfoUtility.DefaultInstance.RemoveLocationInfo(0)
+            TaskInfoUtility.DefaultInstance.WriteTaskInfo()
             
         })
         
@@ -581,17 +610,44 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     // 通知地点登録処理
     func registrationPointList(pointTitle :String,location: CLLocationCoordinate2D){
         
-        // ID設定
+        // デバッグ用:START
+        // 削除処理※削除しないと挿入されていく
+        TaskInfoUtility.DefaultInstance.RemoveLocationInfo(0)
+        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        // デバッグ用:END
+        
+        // TaskInfoLocationDataEntity
+        let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoLocationDataEntity()
+        
+        // ID設定※要空き番を割り当て処理
+        taskLocationDataEntity.Id = 0
         
         // タイトル設定
+        taskLocationDataEntity.Title = pointTitle
         
         // ロケーション分解
         // 緯度
         //location.latitude
+        taskLocationDataEntity.Latitude = location.latitude
         // 経度
         //location.longitude
+        taskLocationDataEntity.Longitude = location.longitude
         
-        // データ書き込み
+        // データ追加
+        TaskInfoUtility.DefaultInstance.AddLocationInfo(taskLocationDataEntity)
+        
+        // ロケーション情報の書込み
+        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        
+        
+        // デバッグ用(読出)
+        /*
+        taskLocationDataEntity = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(0)!
+        print(taskLocationDataEntity.Title)
+        print(taskLocationDataEntity.Latitude)
+        print(taskLocationDataEntity.Longitude)
+        TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+ */
         
     }
 
