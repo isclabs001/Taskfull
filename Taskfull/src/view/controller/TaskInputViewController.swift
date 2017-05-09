@@ -106,9 +106,11 @@ class TaskInputViewController : BaseTaskInputViewController
     //登録内容入力欄設定
     override func displayInputField(){
         
-        //項目名入力欄,メモ入力欄:初期設定
+        // 項目名入力欄,メモ入力欄:初期設定
         displayInputTaskName(taskNameField: self.InputTaskNameField)
         displayInputTaskMemo(taskMemoView: self.InputTaskMemoView)
+        // 通知時刻欄:入力状態有効
+        InputTaskNameField.becomeFirstResponder()
         
         //タスク終了時刻欄:初期設定
         diplayInputTaskDate(taskDateField: self.InputTaskDateField)
@@ -171,23 +173,33 @@ class TaskInputViewController : BaseTaskInputViewController
     //後続タスクボタン：タップ時イベント
     override func onTouchDown_addAfterTaskButton(_ sender : UIButton){
         
-        // タスク登録イベント
-        inputRegistrationTask()
-        
-        // タスク登録画面コントローラー生成
-        let vc = storyboard?.instantiateViewController(withIdentifier: "InputStoryBoard") as! TaskInputViewController
-        
-        // 親タスクID
-        vc.paramTaskId = self.paramTaskId
-        // タスク:カテゴリータイプ
-        vc.paramCategoryType = paramCategoryType
-        
-        // ナビゲーションバー:レイヤー追加
-        self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
-        
-        // 後続タスク追加ボタン:登録画面遷移
-        navigationController?.pushViewController(vc, animated: true)
-        
+        // 通知時刻欄が空欄ではない場合
+        if(StringUtility.isEmpty(InputTaskDateField.text) == true){
+            
+            // タスク登録イベント
+            inputRegistrationTask()
+            
+            // タスク登録画面コントローラー生成
+            let vc = storyboard?.instantiateViewController(withIdentifier: "InputStoryBoard") as! TaskInputViewController
+            
+            // 親タスクID
+            vc.paramTaskId = self.paramTaskId
+            // タスク:カテゴリータイプ
+            vc.paramCategoryType = paramCategoryType
+            
+            // ナビゲーションバー:レイヤー追加
+            self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
+            
+            // 後続タスク追加ボタン:登録画面遷移
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        // 通知時刻欄が空欄である場合
+        else{
+            
+            // タスク削除確認メッセージ表示
+            MessageUtility.dispAlertOKAction(viewController: self, title: "", message: MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DATE_INPUT, funcOkButton: inputConfirmOKAction)
+            
+        }
         
     }
     
@@ -196,18 +208,39 @@ class TaskInputViewController : BaseTaskInputViewController
     // 登録確定ボタン：タップ時イベント
     override func onTouchDown_decideEditTaskButton(){
         
-        // タスク登録イベント
-        inputRegistrationTask()
-        
-        // ナビゲーションバー:レイヤー追加
-        self.navigationController?.view.layer.add(navigationTrasitionAnimate(1.2, "rippleEffect", "false"), forKey: kCATransition)
-        
-        // ナビゲーションバー:最初の画面に戻る
-        self.navigationController?.popToRootViewController(animated: true)
-        
+        // 通知時刻欄が空欄ではない場合
+        if(StringUtility.isEmpty(InputTaskDateField.text) == true){
+            
+            // タスク登録イベント
+            inputRegistrationTask()
+            
+            // ナビゲーションバー:レイヤー追加
+            self.navigationController?.view.layer.add(navigationTrasitionAnimate(1.2, "rippleEffect", "false"), forKey: kCATransition)
+            
+            // ナビゲーションバー:最初の画面に戻る
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        // 通知時刻欄が空欄である場合
+        else{
+            
+            // タスク削除確認メッセージ表示
+            MessageUtility.dispAlertOKAction(viewController: self, title: "", message: MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DATE_INPUT, funcOkButton: inputConfirmOKAction)
+            
+        }
         
     }
     
+    // 通知時刻欄空欄時、OKアクション
+    fileprivate func inputConfirmOKAction(action: UIAlertAction){
+        
+        // OKボタン押下
+        self.isOkBtn = true
+        
+        // TODO:Picker表示が遅い(仕様)
+        // 通知時刻欄:入力状態
+        InputTaskDateField.becomeFirstResponder()
+        
+    }
     
     
     /**

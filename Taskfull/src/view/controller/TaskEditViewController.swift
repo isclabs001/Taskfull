@@ -483,8 +483,11 @@ class TaskEditViewController : BaseTaskInputViewController
         // OKボタン押下
         self.isOkBtn = true
         
-        // EDIT START
-        // タスクEntity
+        // 編集対象タスク情報Entity(編集対象外情報格納)
+        let editTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(self.paramTaskId)!
+        
+        /// EDIT START
+        // 編集対象タスク格納Entity
         let taskInfoDataEntity : TaskInfoDataEntity = TaskInfoDataEntity()
         
         // タスクID設定
@@ -508,7 +511,7 @@ class TaskEditViewController : BaseTaskInputViewController
         //タスク終了時刻
         taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
         
-        //通知場所
+        //通知場所(編集対象)
         taskInfoDataEntity.NotifiedLocation = 0
         
         //重要度(セグメントのインデックス)
@@ -526,8 +529,8 @@ class TaskEditViewController : BaseTaskInputViewController
             taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_3.currentTitle!)!
         }
         
-        // テキストカラー
-        //taskInfoDataEntity.TextColor = 0
+        // テキストカラー(編集対象外)
+        taskInfoDataEntity.TextColor = editTaskInfo.TextColor
         
         // 親ID
         // 編集タスクの親IDを再設定
@@ -535,8 +538,11 @@ class TaskEditViewController : BaseTaskInputViewController
         // 中間タスク判別用変数に読込IDを設定
         self.paramParrentId = taskInfoDataEntity.Id
         
-        // カテゴリータイプ
-        taskInfoDataEntity.CategoryType = paramCategoryType
+        // カテゴリータイプ(編集対象外)
+        taskInfoDataEntity.CategoryType = editTaskInfo.CategoryType
+        
+        // 作成日時(編集対象外)
+        taskInfoDataEntity.CreateDateTime = editTaskInfo.CreateDateTime
         
         // 編集モードである場合
         if(self.paramMainViewMode == CommonConst.ActionType.edit){
@@ -545,12 +551,20 @@ class TaskEditViewController : BaseTaskInputViewController
             taskInfoDataEntity.UpdateDateTime = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
             
         }
+        // 編集モード以外である場合(参照モード)
+        else{
+            
+            //　更新日時(編集対象外)
+            taskInfoDataEntity.UpdateDateTime = editTaskInfo.UpdateDateTime
+            
+        }
         
         // タスク更新処理
         TaskInfoUtility.DefaultInstance.SetTaskInfoDataForId(taskInfoDataEntity)
         
         // タスク情報書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        /// EDIT END
         
     }
     

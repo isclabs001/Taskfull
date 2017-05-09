@@ -23,11 +23,13 @@ class MessageUtility
     // タイトル
     open static let MESSAGE_TITLE_STRING_CONFIRM_TASK_COMPLETE : String = "タスク完了確認"
     open static let MESSAGE_TITLE_STRING_CONFIRM_TASK_DELETE : String = "削除確認"
+    open static let MESSAGE_TITLE_STRING_CONFIRM_TASK_DATE_INPUT : String = "入力確認"
     
     // メッセージ
     open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_COMPLETE : String = "タスク「%@」を完了してもよろしいですか？"
     open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DELETE : String = "編集中のタスク及び後続タスクを削除します。よろしいですか？"
     open static let MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT : String = "%@文字以内で入力して下さい"
+    open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DATE_INPUT : String = "通知時刻を入力して下さい"
     
     /**
      * 変数定義
@@ -81,4 +83,27 @@ class MessageUtility
         // Alertを表示
         viewController.present(alert, animated: true, completion: nil)
     }
+    
+    ///
+    /// メッセージ表示（OKボタン[アクション]）
+    ///　- parameter viewController:UIViewController
+    ///　- parameter title:メッセージタイトル
+    ///　- parameter message:メッセージ内容
+    ///　- parameter funcOkButton:OKボタン押下時の関数（func 関数名(action: UIAlertAction) 形式で宣言）
+    ///
+    static open func dispAlertOKAction(viewController : UIViewController, title : String, message : String, funcOkButton : ((UIAlertAction) -> Swift.Void)?) {
+        
+        // UIAlertControllerクラスのインスタンスを生成
+        let alert: UIAlertController = UIAlertController(title: title, message: message,  preferredStyle:  UIAlertControllerStyle.alert)
+        
+        // OKボタン
+        let defaultAction: UIAlertAction = UIAlertAction(title: MESSAGE_BUTTON_STRING_OK, style: UIAlertActionStyle.default, handler:funcOkButton)
+        
+        // Actionを追加
+        alert.addAction(defaultAction)
+        
+        // Alertを表示
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
 }
