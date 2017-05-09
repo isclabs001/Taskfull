@@ -123,7 +123,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
             // 背景色設定
 //            mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
 //            mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
-            // 背景色設定
+            // 背景色設定(カテゴリー対応)
             mainView.gradationBackgroundStartColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[paramCategoryType]
             mainView.gradationBackgroundEndColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[paramCategoryType]
             
@@ -351,10 +351,10 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
         //項目名入力欄:delegate設定
         taskNameField.delegate  = self
-        //項目名入力欄(透かし文字,左寄せ)要定数化
+        //項目名入力欄(透かし文字,左寄せ)
         taskNameField.placeholder = CommonConst.INPUT_TASK_NAME_PLACE_HOLDER
         taskNameField.textAlignment = NSTextAlignment.left
-        //項目名入力欄:編集完了時イベント(TODO:textView同様デリゲートメソッドにて実装？)
+        //項目名入力欄:編集完了時イベント
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: taskNameField)
     }
     
@@ -380,35 +380,42 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
         // ツールバー実装:START
         // キーボードに表示するツールバーの表示
-        let pickerToolBar = UIToolbar(frame: CGRect(x:0,y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
-        pickerToolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
-        pickerToolBar.barStyle = .blackOpaque
-        pickerToolBar.tintColor = UIColor.white
-        pickerToolBar.backgroundColor = UIColor.blue
-        //完了ボタンを設定
-        let toolBarBtn      = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(TaskInputViewController.onTouch_ToolBarClearBtn))
-        //ツールバーにボタンを表示
-        pickerToolBar.setItems([toolBarBtn], animated: true)
-        pickerToolBar.sizeToFit()
-        taskDateField.inputAccessoryView = pickerToolBar
+//        let pickerToolBar = UIToolbar(frame: CGRect(x:0,y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
+//        pickerToolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
+//        pickerToolBar.barStyle = .blackOpaque
+//        pickerToolBar.tintColor = UIColor.white
+//        pickerToolBar.backgroundColor = UIColor.blue
+//        //　クリアボタンを設定
+//        let toolBarBtn      = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(TaskInputViewController.onTouch_ToolBarClearBtn))
+//        //　ツールバーにボタンを表示
+//        pickerToolBar.setItems([toolBarBtn], animated: true)
+//        pickerToolBar.sizeToFit()
+//        taskDateField.inputAccessoryView = pickerToolBar
         // ツールバー実装:END
         
         
         //タスク終了時刻入力欄（現在日付,中央寄せ,サイズ自動調整）
-        // 登録開始タスクである場合
+        // 登録開始タスクである場合(新規登録先頭タスク)
         if(paramTaskId == -2 ){
             
-            // タスク終了時刻入力欄を現在時刻に設定()
-            taskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(Date())
+            // タスク終了時刻入力欄を空欄に設定
+            taskDateField.text = ""
             taskDateField.textAlignment = NSTextAlignment.center
             taskDateField.sizeToFit()
             
+            // タスク終了時刻入力欄を現在時刻に設定()※初期埋め時処理
+//            taskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(Date())
+//            taskDateField.textAlignment = NSTextAlignment.center
+//            taskDateField.sizeToFit()
+            
+            
         }
         // TEST:START
-        // 読込ID:子タスクが存在する場合
+        // 読込ID:子タスクが存在する場合(編集時用、編集設定にて詳細定義)
         else if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) != -1){
             
-            // 読込ID:子タスク読込処理開始
+            // Datepicker制限設定開始
+            // 読込ID:子タスク情報読込開始
             let parrentTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetParrentTaskInfoDataForId(self.paramTaskId)!
             
             // 設定最大日 ＝ 読込ID:子タスク終了日付
@@ -421,7 +428,6 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
             
             // 読込タスク(親タスク)の終了時刻取得
             let taskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(paramTaskId)!
-            
             
             // タスク終了時刻入力欄を読込タスク(親タスク)の終了時刻取得に設定
             taskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime))
@@ -463,7 +469,8 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         //　タスク終了時刻欄初期化
         taskDateField.text = StringUtility.EMPTY
         
-        // 日時格納変数初期化
+        // 日時格納変数初期化(1000/01/01 00:00:00)
+        //inputTaskEndDate = FunctionUtility.yyyyMMddHHmmssToDate("10000101000000")
         
         // picker閉じる
         view.endEditing(true)
