@@ -88,7 +88,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     open var taskCategoryManuBarController : TaskCategoryMenuBarViewController! = nil
     
     /**
-     * キャンセルフラグ
+     * キャンセルフラグƒ
      */
     open var cancelFlag : Bool = false
     
@@ -136,13 +136,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     
     ///
-    //　画面表示直後時処理 タイミング要再考
+    //　画面表示直後時処理
     ///　- parameter animated:アニメーションフラグ
     ///
     override func viewDidAppear(_ animated: Bool) {
-        // 基底のviewDidAppearを呼び出す
-        super.viewDidAppear(animated)
-        
         // 画面遷移しない場合
         if(self.transDisplayFlag == CommonConst.MainMenuType.none){
             // キャンセルフラグが立っていない場合
@@ -152,6 +149,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
 
                 // 再描画処理（タイマーでタイミングをずらさないとアニメーションされないため）
                 _ = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(updateRedraw(_:)), userInfo: nil, repeats: false)
+            
+            // 上記以外の場合
+            } else {
+                // アニメーション開始
+                startAllTaskImageAnimation()
             }
 
         // 上記以外の場合
@@ -159,6 +161,21 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 画面遷移処理
             transDisplay()
         }
+
+        // 基底のviewDidAppearを呼び出す
+        super.viewDidAppear(animated)
+    }
+    
+    ///
+    //　画面非表示時処理
+    ///　- parameter animated:アニメーションフラグ
+    ///
+    override func viewDidDisappear(_ animated: Bool) {
+        // アニメーション停止
+        stopAllTaskImageAnimation()
+
+        // 基底のviewDidDisappearを呼び出す
+        super.viewDidDisappear(animated)
     }
     
     ///
@@ -283,6 +300,30 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             
             // インデックス更新
             index += 1
+        }
+    }
+    
+    ///
+    /// タスクイメージボタンのアニメーション開始処理
+    ///
+    fileprivate func startAllTaskImageAnimation(){
+        
+        // キャンバスビューにコントロール数分処理する
+        for item in self.mArrayViewTaskItem {
+            // アニメーション開始処理
+            item.TaskButton?.startAnimation()
+        }
+    }
+    
+    ///
+    /// タスクイメージボタンのアニメーション停止処理
+    ///
+    fileprivate func stopAllTaskImageAnimation(){
+        
+        // キャンバスビューにコントロール数分処理する
+        for item in self.mArrayViewTaskItem {
+            // アニメーション停止処理
+            item.TaskButton?.stopAnimation()
         }
     }
     

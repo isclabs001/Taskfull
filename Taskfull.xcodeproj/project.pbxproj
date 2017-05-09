@@ -77,7 +77,6 @@
 		636CE3C81E6010CE002273BE /* TaskfullTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636CE3C71E6010CE002273BE /* TaskfullTests.swift */; };
 		636CE3D31E6010CE002273BE /* TaskfullUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636CE3D21E6010CE002273BE /* TaskfullUITests.swift */; };
 		63B64A4C1EA8800A004ABBC0 /* MessageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */; };
-		63BED1241EAAF71C000F5C7E /* UITaskImageButtonExDiffusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BED1231EAAF71C000F5C7E /* UITaskImageButtonExDiffusion.swift */; };
 		63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */; };
 		63C5CF0D1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */; };
 		63C9423E1E8E5E450052AB80 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9423D1E8E5E450052AB80 /* StringExtensions.swift */; };
@@ -181,7 +180,6 @@
 		636CE3D21E6010CE002273BE /* TaskfullUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskfullUITests.swift; sourceTree = "<group>"; };
 		636CE3D41E6010CE002273BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageUtility.swift; sourceTree = "<group>"; };
-		63BED1231EAAF71C000F5C7E /* UITaskImageButtonExDiffusion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITaskImageButtonExDiffusion.swift; sourceTree = "<group>"; };
 		63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDisabledTextField.swift; sourceTree = "<group>"; };
 		63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPlaceHolderTextView.swift; sourceTree = "<group>"; };
 		63C9423D1E8E5E450052AB80 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
@@ -409,7 +407,6 @@
 			isa = PBXGroup;
 			children = (
 				635669621EB031DE0008F57C /* SlideMenBar */,
-				63BED1201EAAF629000F5C7E /* UIViewEx */,
 				63C55E521E8A0ABD00740991 /* InputCustomField */,
 				635DCE7D1E73A13200F6F325 /* CustomUI */,
 				635DCE7E1E73A14400F6F325 /* UIGradientButton */,
@@ -532,14 +529,6 @@
 				636CE3D41E6010CE002273BE /* Info.plist */,
 			);
 			path = TaskfullUITests;
-			sourceTree = "<group>";
-		};
-		63BED1201EAAF629000F5C7E /* UIViewEx */ = {
-			isa = PBXGroup;
-			children = (
-				63BED1231EAAF71C000F5C7E /* UITaskImageButtonExDiffusion.swift */,
-			);
-			path = UIViewEx;
 			sourceTree = "<group>";
 		};
 		63C55E521E8A0ABD00740991 /* InputCustomField */ = {
@@ -743,7 +732,6 @@
 				635DCE751E73A04300F6F325 /* LatLngForSerializable.swift in Sources */,
 				635669741EB0611B0008F57C /* ExSlideMenuController.swift in Sources */,
 				635DCE771E73A04F00F6F325 /* FunctionUtility.swift in Sources */,
-				63BED1241EAAF71C000F5C7E /* UITaskImageButtonExDiffusion.swift in Sources */,
 				635DCE8F1E73A1FB00F6F325 /* MainViewController.swift in Sources */,
 				635669771EB063070008F57C /* NSObject.swift in Sources */,
 				635DCE711E739F1700F6F325 /* CommonConst.swift in Sources */,
