@@ -53,10 +53,13 @@ class UIColorUtility {
     
     
     static func getColor(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int) -> UIColor {
+        return getColor( size, image: image, pos: pos, pixelDataByteSize: pixelDataByteSize, scale: UIScreen.main.scale)
+    }
+    
+    static func getColor(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int, scale: CGFloat) -> UIColor {
         
         let imageData = image.dataProvider?.data
         let data : UnsafePointer = CFDataGetBytePtr(imageData)
-        let scale = UIScreen.main.scale
         let address : Int = ((size * Int(pos.y * scale)) + Int(pos.x * scale)) * pixelDataByteSize
         let r = CGFloat(data[address])
         let g = CGFloat(data[address+1])
@@ -65,7 +68,24 @@ class UIColorUtility {
         
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
-
+    
+    static func getColorNonAlpha(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int) -> UIColor {
+        return getColorNonAlpha( size, image: image, pos: pos, pixelDataByteSize: pixelDataByteSize, scale: UIScreen.main.scale)
+    }
+    
+    static func getColorNonAlpha(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int, scale: CGFloat) -> UIColor {
+        
+        let imageData = image.dataProvider?.data
+        let data : UnsafePointer = CFDataGetBytePtr(imageData)
+        let address : Int = ((size * Int(pos.y * scale)) + Int(pos.x * scale)) * pixelDataByteSize
+        let r = CGFloat(data[address])
+        let g = CGFloat(data[address+1])
+        let b = CGFloat(data[address+2])
+        let a = CGFloat(255)
+        
+        return UIColor(red: r, green: g, blue: b, alpha: a)
+    }
+    
     
     static func convImagePos(_ pos: CGPoint, orgImageSize: Int, crntImageSize: Int) -> CGPoint{
         

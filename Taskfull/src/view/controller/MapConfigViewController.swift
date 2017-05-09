@@ -352,7 +352,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     
     // 位置情報取得失敗時イベント
     func locationManager(_ manager: CLLocationManager,didFailWithError error: Error){
-        print("error")
+        debugPrint("error")
     }
 
     
@@ -653,7 +653,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // キャンセルアクション生成
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(action: UIAlertAction!) in
             
-            print("Cancel")
+            debugPrint("Cancel")
             
         })
         
@@ -724,9 +724,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // デバッグ用(読出)
         /*
         taskLocationDataEntity = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(0)!
-        print(taskLocationDataEntity.Title)
-        print(taskLocationDataEntity.Latitude)
-        print(taskLocationDataEntity.Longitude)
+        debugPrint(taskLocationDataEntity.Title)
+        debugPrint(taskLocationDataEntity.Latitude)
+        debugPrint(taskLocationDataEntity.Longitude)
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
  */
         

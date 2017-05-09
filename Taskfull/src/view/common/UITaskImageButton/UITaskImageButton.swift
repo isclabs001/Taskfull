@@ -182,8 +182,6 @@ class UITaskImageButton : UIView
         guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
             return
         }
-        // 破裂用初期化処理
-        //self.initCustumControlDiffusion()
 
         // 一旦非表示にする
         self.alpha = 0
@@ -201,6 +199,7 @@ class UITaskImageButton : UIView
 
         // ラベル文字色設定
         self.txtLabel.textColor = getLabelTextColor(self.labelTextColor)
+        self.txtLabel.shadowColor = UIColor.brown
         
         // アニメーション設定
         startAnimation()
@@ -497,13 +496,9 @@ class UITaskImageButton : UIView
             // 表示位置アニメーション生成
             let moveAnimation = CAKeyframeAnimation(keyPath: "position")
             // 放物線移動設定
-            //moveAnimation.path = makeRandomPath(shape).cgPath
-            moveAnimation.path = makeRandomPath2(shape, signX:signX, signY:signY).cgPath
+            moveAnimation.path = makeRandomPathForDiffusion(shape, signX:signX, signY:signY).cgPath
             moveAnimation.fillMode = kCAFillModeRemoved
             moveAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.590000, 0.240000, 0.026667, 0.506667)
-            //moveAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.240000, 0.590000, 0.506667, 0.026667)
-            //moveAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.25, 0.46, 0.45, 0.94)
-            //moveAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.215, 0.61, 0.355, 1)
             moveAnimation.duration = TimeInterval(arc4random()%10) * 0.05 + 0.3
             
             // 拡散イメージ縮小アニメーション生成
@@ -550,15 +545,15 @@ class UITaskImageButton : UIView
     }
     
     ///
-    ///　放物線移動の作成
+    ///　放物線移動の作成（枝垂れ風）
     /// - parameter aLayer:親レイヤー
     ///
-    fileprivate func makeRandomPath(_ aLayer:CALayer) -> UIBezierPath{
+    fileprivate func makeRandomPathForDropping(_ aLayer:CALayer) -> UIBezierPath{
         // 放物線オブジェクトUIBezierPathの生成
         let particlePath = UIBezierPath()
         // 放物線の異動先位置を設定
         particlePath.move(to: layer.position)
-        // 放物線の算出
+        // 枝垂れ風な放物線の算出
         let basicLeft = -CGFloat(1.3 * layer.frame.size.width)
         let maxOffset = 2 * abs(basicLeft)
         let randomNumber = arc4random() % 101
@@ -574,26 +569,21 @@ class UITaskImageButton : UIView
     }
     
     ///
-    ///　放物線移動の作成
+    ///　放物線移動の作成（拡散）
     /// - parameter aLayer:親レイヤー
     ///
-    fileprivate func makeRandomPath2(_ aLayer:CALayer, signX:CGFloat, signY:CGFloat) -> UIBezierPath{
+    fileprivate func makeRandomPathForDiffusion(_ aLayer:CALayer, signX:CGFloat, signY:CGFloat) -> UIBezierPath{
         // 放物線オブジェクトUIBezierPathの生成
         let particlePath = UIBezierPath()
         // 放物線の異動先位置を設定
         particlePath.move(to: layer.position)
-        // 放物線の算出
+        // 拡散な放物線の算出
         let basicLeft = -CGFloat(1.3 * layer.frame.size.width)
         let maxOffset = 2 * abs(basicLeft)
         let randomNumber = arc4random() % 101
-        //let endPointX = basicLeft + maxOffset * (CGFloat(randomNumber) / 100.0) + aLayer.position.x
         let endPointX = aLayer.position.x + ((basicLeft + maxOffset * (CGFloat(randomNumber) / 100.0)) * signX)
-        //let controlPointOffSetX = (endPointX - aLayer.position.x) / 2  + aLayer.position.x
         let controlPointOffSetX = aLayer.position.x
-        //let controlPointOffSetY = layer.position.y - 0.2 * layer.frame.size.height - CGFloat(arc4random() % UInt32(1.2 * layer.frame.size.height))
-        //let controlPointOffSetY = layer.position.y + ((CGFloat(arc4random() % UInt32(1.2 * layer.frame.size.height))) * signY)
         let controlPointOffSetY = layer.position.y
-        //let endPointY = layer.position.y + ((layer.frame.size.height / 2 + CGFloat(arc4random() % UInt32(layer.frame.size.height / 2))) * signY)
         let endPointY = layer.position.y + ((layer.frame.size.height + CGFloat(arc4random() % UInt32(layer.frame.size.height / 2))) * signY)
         // 放物線の追加
         particlePath.addQuadCurve(to: CGPoint(x: endPointX, y: endPointY), controlPoint: CGPoint(x: controlPointOffSetX, y: controlPointOffSetY))
@@ -646,7 +636,6 @@ class UITaskImageButton : UIView
                     // 拡散イメージサイズを画像のサイズ/32より算出
                     let pWidth = min(frame.size.width,frame.size.height) / 32
                     // 拡散イメージ色を水色を基調にランダムの色を設定
-                    //let color = UIColorUtility.rgb(222, g: 255, b: 255)
                     let color = UIColorUtility.rgb(200 + Int(arc4random()%22), g: 220 + Int(arc4random()%35), b: 255)
                     let shape = CALayer()
                     // 円にする
@@ -663,35 +652,6 @@ class UITaskImageButton : UIView
         
         // 0.1秒後に拡散イメージアニメーションを実行
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(UITaskImageButton.cellAnimations), userInfo: nil, repeats: false)
-    }
-    
-    ///
-    ///　初期化処理
-    ///
-    func initCustumControlDiffusion() {
-        let originalSelector = #selector(UITaskImageButton.willMove(toSuperview:))
-        let swizzledSelector = #selector(UITaskImageButton.willMoveToSuperviewEx(_:))
-        
-        let originalMethod = class_getInstanceMethod(UIView.self, originalSelector)
-        let swizzledMethod = class_getInstanceMethod(UIView.self, swizzledSelector)
-        
-        let didAddMethod = class_addMethod(UIView.self, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))
-        
-        if didAddMethod {
-            class_replaceMethod(UIView.self, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod))
-        } else {
-            method_exchangeImplementations(originalMethod, swizzledMethod);
-        }
-    }
-    
-    ///
-    ///　解放処理（デストラクタ）
-    /// - parameter newSuperView:親レイヤー
-    ///
-    func willMoveToSuperviewEx(_ newSuperView:UIView){
-        // メモリの解放
-        removeDiffusionCells()
-        willMoveToSuperviewEx(newSuperView)
     }
 }
 
