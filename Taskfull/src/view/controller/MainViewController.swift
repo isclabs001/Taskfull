@@ -68,11 +68,6 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     @IBOutlet weak var modeButton: UICircleImageButton!
     
     /**
-     * 下部ボタンメニューバー
-     */
-    @IBOutlet weak var ButtomButtonMenuBar: UICustomView!
-    
-    /**
      * 左メニューバーボタン
      */
     @IBOutlet weak var LeftMenuBarBtn: UIImageView!
@@ -253,14 +248,12 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         case CommonConst.ActionType.edit:
             self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_1
             self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_2
-            self.ButtomButtonMenuBar.isHidden = true
             self.RightMenuBarBtn.isHidden = false
             break;
         // 上記以外の場合
         default:
             self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
             self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
-            self.ButtomButtonMenuBar.isHidden = true
             self.RightMenuBarBtn.isHidden = true
             break;
         }
