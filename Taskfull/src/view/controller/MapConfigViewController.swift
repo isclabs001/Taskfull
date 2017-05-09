@@ -35,6 +35,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     
     //ユーザ現在位置格納ロケーション：権限通知重複対策の為、プロパティで宣言
     var selfLocation : CLLocationManager! = CLLocationManager()
+
+    // 更新フラグ
+    var updateFlag : Bool = false
+    
     
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
@@ -514,7 +518,6 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 
                 // TODO:通知地点登録
                 self.registrationPointList(pointTitle: inputPointTitle, location: tapLocation)
-
                 
             }
             // 入力値が空欄である場合
@@ -638,6 +641,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             // TODO:通知地点リストから削除処理（座標で検索？）
             TaskInfoUtility.DefaultInstance.RemoveLocationInfo(0)
             TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+            
+            // 更新フラグを立てる
+            self.updateFlag = true
 
             // 通知地点名配列更新処理
             self.updataPointListNameArray()
@@ -708,6 +714,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // ロケーション情報の書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
         
+        // 更新フラグを立てる
+        self.updateFlag = true
+        
         // 通知地点名配列更新処理
         updataPointListNameArray()
         
@@ -723,5 +732,12 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         
     }
 
-
+    
+    ///
+    //　ナビゲーションバーの「戻る」ボタン押下処理
+    ///
+    override func onClickNavigationBackBtn() {
+        // キャンセル
+        setCancelFlag(cancelFlag: !self.updateFlag)
+    }
 }

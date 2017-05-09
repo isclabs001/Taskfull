@@ -635,21 +635,8 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     //　ナビゲーションバーの「戻る」ボタン押下処理
     ///
     override func onClickNavigationBackBtn() {
-        // ナビゲーションコントローラからビューコントロールを取得
-        let viewControllers = self.navigationController?.viewControllers
-        
-        // ビューコントロールが有効な場合
-        if nil != viewControllers && 0 < (viewControllers?.count)! {
-            // ビューコントロール数分処理する
-            for viewController in viewControllers! {
-                // MainViewControllerがある場合
-                if let mainViewController = viewController as? MainViewController {
-                    // キャンセルフラグを立てる
-                    mainViewController.cancelFlag = true
-                    break
-                }
-            }
-        }
+        // キャンセル
+        setCancelFlag(cancelFlag: true)
     }
 }
 

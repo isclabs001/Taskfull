@@ -111,4 +111,26 @@ open class BaseViewController: UIViewController {
     ///
     func onClickNavigationBackBtn() {
     }
+    
+    ///
+    //　MainViewControllerのキャンセルフラグの設定処理
+    ///　- parameter cancelFlag:true:キャンセル false:キャンセルではない
+    ///
+    func setCancelFlag(cancelFlag : Bool) {
+        // ナビゲーションコントローラからビューコントロールを取得
+        let viewControllers = self.navigationController?.viewControllers
+        
+        // ビューコントロールが有効な場合
+        if nil != viewControllers && 0 < (viewControllers?.count)! {
+            // ビューコントロール数分処理する
+            for viewController in viewControllers! {
+                // MainViewControllerがある場合
+                if let mainViewController = viewController as? MainViewController {
+                    // キャンセルフラグを設定する
+                    mainViewController.cancelFlag = cancelFlag
+                    break
+                }
+            }
+        }
+    }
 }
