@@ -224,6 +224,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         //　正常な場合
         if(true == ret)
         {
+            // applicationDidEnterBackgroundの通知を受信する
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: NSNotification.Name(rawValue: "applicationDidEnterBackground"), object: nil)
+            // applicationWillEnterForegroundの通知を受信する
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterForeground), name: NSNotification.Name(rawValue: "applicationWillEnterForeground"), object: nil)
+            
             // 動作モードによるメイン画面の初期化
             initializeMain(self.mActionMode)
             
@@ -235,6 +240,24 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         }
         
         return ret
+    }
+    
+    ///
+    /// applicationDidEnterBackgroundイベント処理
+    ///　- parameter application:UIApplicationオブジェクト
+    ///
+    func applicationDidEnterBackground(_ application: UIApplication){
+        // アニメーション停止
+        stopAllTaskImageAnimation()
+    }
+    
+    ///
+    /// applicationWillEnterForegroundイベント処理
+    ///　- parameter application:UIApplicationオブジェクト
+    ///
+    func applicationWillEnterForeground(_ application: UIApplication){
+        // アニメーション開始
+        startAllTaskImageAnimation()
     }
     
     ///
