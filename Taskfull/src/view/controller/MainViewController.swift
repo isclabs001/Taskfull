@@ -68,11 +68,6 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     @IBOutlet weak var modeButton: UICircleImageButton!
     
     /**
-     * 下部ボタンメニューバー
-     */
-    @IBOutlet weak var ButtomButtonMenuBar: UICustomView!
-    
-    /**
      * 左メニューバーボタン
      */
     @IBOutlet weak var LeftMenuBarBtn: UIImageView!
@@ -146,7 +141,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             if (false == self.cancelFlag) {
                 // タスクイメージボタン全削除処理
                 removeAllTaskImageControl()
-
+                
                 // 再描画処理（タイマーでタイミングをずらさないとアニメーションされないため）
                 _ = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(updateRedraw(_:)), userInfo: nil, repeats: false)
             
@@ -186,6 +181,22 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // タイマー停止
         timer.invalidate()
 
+        // 再描画処理
+        redraw()
+    }
+    
+    ///
+    ///　全再描画用　タイマー更新処理
+    ///　- parameter timer:タイマー
+    ///
+    @objc func updateAllRedraw(_ timer: Timer) {
+        // タイマー停止
+        timer.invalidate()
+        
+        // タスクイメージボタン全削除処理
+        self.cancelFlag = false
+        removeAllTaskImageControl()
+        
         // 再描画処理
         redraw()
     }
@@ -237,14 +248,12 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         case CommonConst.ActionType.edit:
             self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_1
             self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_2
-            self.ButtomButtonMenuBar.isHidden = true
             self.RightMenuBarBtn.isHidden = false
             break;
         // 上記以外の場合
         default:
             self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
             self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
-            self.ButtomButtonMenuBar.isHidden = true
             self.RightMenuBarBtn.isHidden = true
             break;
         }
@@ -450,8 +459,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         // データがある場合
         if(0 < self.mArrayViewTaskItem.count) {
+            let centerIndex = (8 >= index) ? 0 : (index - 8)
             // 先頭ボタン表示位置を取得
-            let centerButtonLocation : CGRect = self.mArrayViewTaskItem[0].Location
+            let centerButtonLocation : CGRect = self.mArrayViewTaskItem[centerIndex].Location
             // ボタン位置取得
             ret = getNextButtonLocation(index, centerButtonLocation: centerButtonLocation, buttonSize : buttonSize)
             
@@ -482,7 +492,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         // 先頭の場合
         if(0 == index) {
             // 中央に表示
-            ret = CGPoint(x: centerButtonLocation.origin.x, y: centerButtonLocation.origin.y)
+            ret = CGPoint(x: centerButtonLocation.origin.x + (centerButtonHalfSize.width - buttonHalfSize.width) , y: centerButtonLocation.origin.y + (centerButtonHalfSize.height - buttonHalfSize.height))
 
         // 上記以外の場合
         } else {
@@ -729,6 +739,26 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     }
     
     ///
+    /// 表示用　タスクイメージボタン全非表示かのチェック
+    ///　- returns true:非表示 false:表示あり
+    ///
+    fileprivate func isNonDisplay() -> Bool{
+        var ret : Bool = true
+        
+        // キャンバスビューにコントロール数分処理する
+        for item in self.mArrayViewTaskItem {
+            // 表示データがある場合
+            if(true == item.IsDisplay) {
+                // 戻り値にfalseを設定する
+                ret = false
+                break
+            }
+        }
+        
+        return ret
+    }
+    
+    ///
     /// モード切り替えボタン押下イベント
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
@@ -765,7 +795,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     ///
     @IBAction func onTouchUp_TaskCirclrImageButton(_ sender : UITaskImageButton){
         
-        print(sender.tag.description)
+        debugPrint(sender.tag.description)
 
         switch(self.mActionMode){
         // 現在編集モードの場合
@@ -777,6 +807,12 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         default:
             // シャボン玉を割る処理を実行
             clashTaskImageButton(id: sender.tag, isComplete: false)
+            
+            // 全て非表示になった場合
+            if(true == isNonDisplay()){
+                // 全再描画処理（タイマーでタイミングをずらさないとアニメーションされないため）
+                _ = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateAllRedraw(_:)), userInfo: nil, repeats: false)
+            }
             break;
         }
     }
@@ -1063,7 +1099,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     let trigger = UNCalendarNotificationTrigger.init(dateMatching: dateComponents, repeats: false)
                     
                     //　TEST確認用：要削除
-                    print(calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime)))
+                    debugPrint(calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime)))
                     
                 
                     // UNNotificationRequest作成(identifier:タスクID,content: タスク内容,trigger: 設定日時)
@@ -1091,7 +1127,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     //self.locationManager.distanceFilter = 10
                     
                     //　デバッグ用位置情報print
-                    //print(self.locationManager.location?.coordinate.longitude,"+++",self.locationManager.location?.coordinate.latitude)
+                    //debugPrint(self.locationManager.location?.coordinate.longitude,"+++",self.locationManager.location?.coordinate.latitude)
                     
                     // UNMutableNotificationContent 作成
                     content.title = String((item.Title) + "_GPS")
@@ -1108,9 +1144,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
 
                     // 通知座標指定
                     let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
-                    print(taskLocationDataEntity.Title)
-                    print(taskLocationDataEntity.Latitude)
-                    print(taskLocationDataEntity.Longitude)
+                    debugPrint(taskLocationDataEntity.Title)
+                    debugPrint(taskLocationDataEntity.Latitude)
+                    debugPrint(taskLocationDataEntity.Longitude)
                     // デバッグ用:通知座標指定読み出し:END
 
                     // 通知範囲指定
@@ -1166,34 +1202,26 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     
     /// SlideMenuControllerDelegate
     func leftWillOpen() {
-        print("SlideMenuControllerDelegate: leftWillOpen")
     }
     
     func leftDidOpen() {
-        print("SlideMenuControllerDelegate: leftDidOpen")
     }
     
     func leftWillClose() {
-        print("SlideMenuControllerDelegate: leftWillClose")
     }
     
     func leftDidClose() {
-        print("SlideMenuControllerDelegate: leftDidClose")
     }
     
     func rightWillOpen() {
-        print("SlideMenuControllerDelegate: rightWillOpen")
     }
     
     func rightDidOpen() {
-        print("SlideMenuControllerDelegate: rightDidOpen")
     }
     
     func rightWillClose() {
-        print("SlideMenuControllerDelegate: rightWillClose")
     }
     
     func rightDidClose() {
-        print("SlideMenuControllerDelegate: rightDidClose")
     }
 }

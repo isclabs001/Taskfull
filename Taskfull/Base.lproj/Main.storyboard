@@ -247,7 +247,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="pNc-OI-mSp"/>
                     <connections>
-                        <outlet property="ButtomButtonMenuBar" destination="rKM-3y-WXi" id="4TA-mj-kEJ"/>
                         <outlet property="LeftMenuBarBtn" destination="a3a-Px-uQz" id="jpT-WK-IIi"/>
                         <outlet property="RightMenuBarBtn" destination="Ek5-2D-uul" id="dWT-Xc-iz1"/>
                         <outlet property="imageCanvasView" destination="yuf-aY-2H9" id="P0u-mA-EXb"/>
