@@ -249,9 +249,8 @@ class TaskEditViewController : BaseTaskInputViewController
         // TEST:END
         
         
-        // 通知場所リスト欄(要変更)
-        InputPointListField.text = String(taskInfo.NotifiedLocation)
-        
+        // 通知場所リスト欄
+        InputPointListField.text = TaskInfoUtility.DefaultInstance.GetInfoLocationTitleForId(taskInfo.NotifiedLocation)
         
         // 重要度欄
         InputImportanceSegment.selectedSegmentIndex = taskInfo.Importance
@@ -495,7 +494,7 @@ class TaskEditViewController : BaseTaskInputViewController
         // 読込タスクIDを設定
         taskInfoDataEntity.Id = self.paramTaskId
         
-        //項目名登録
+        //項目名(編集対象)
         //項目名未入力時チェック
         if(false == StringUtility.isEmpty(InputTaskNameField.text)){
             // 空白の場合、代入文字
@@ -506,19 +505,27 @@ class TaskEditViewController : BaseTaskInputViewController
             taskInfoDataEntity.Title = InputTaskNameField.text! as String
         }
         
-        //メモ
+        //メモ(編集対象)
         taskInfoDataEntity.Memo = InputTaskMemoView.text! as String
         
-        //タスク終了時刻
+        //タスク終了時刻(編集対象)
         taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
         
         //通知場所(編集対象)
-        taskInfoDataEntity.NotifiedLocation = 0
+        //通知場所未入力時チェック
+        if(false == StringUtility.isEmpty(InputPointListField.text)){
+            // 空白の場合、固定値代入
+            taskInfoDataEntity.NotifiedLocation = 0
+        }
+        else{
+            // 空白ではない場合、入力値
+            taskInfoDataEntity.NotifiedLocation = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(InputPointListField.text! as String)
+        }
         
-        //重要度(セグメントのインデックス)
+        //重要度(編集対象)
         taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
         
-        //タスクカラー
+        //タスクカラー(編集対象)
         //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
         if (InputTaskColorBtn_1.isSelected == true){
             taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_1.currentTitle!)!
@@ -533,7 +540,7 @@ class TaskEditViewController : BaseTaskInputViewController
         // テキストカラー(編集対象外)
         taskInfoDataEntity.TextColor = editTaskInfo.TextColor
         
-        // 親ID
+        // 親ID(編集対象)
         // 編集タスクの親IDを再設定
         taskInfoDataEntity.ParrentId = self.selfParrentId
         // 中間タスク判別用変数に読込IDを設定

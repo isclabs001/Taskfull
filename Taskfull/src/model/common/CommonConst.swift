@@ -258,6 +258,11 @@ class CommonConst
     static internal let NOTIFICATION_GEOFENCE_RADIUS_RANGE: Double = 100;
     
     
+    /**
+     * 通知地点登録上限数
+     */
+    static internal let INPUT_NOTIFICATION_POINT_LIST_LIMIT: Int = 10;
+    
     
     
 }

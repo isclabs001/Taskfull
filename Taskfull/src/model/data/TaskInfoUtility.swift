@@ -382,7 +382,6 @@ open class TaskInfoUtility {
     }
     
     ///
-    ///
     ///　位置情報格納数を取得
     ///　- returns:位置情報格納数
     ///
@@ -393,23 +392,67 @@ open class TaskInfoUtility {
     }
     
     ///
-    /// 
-    ///　- parameter:id:検索対象のID
-    ///　- returns:-1以外:見つかった親IDのインデックス -1:見つからなかった
+    /// 指定したタイトル位置情報IDを取得
+    ///　- parameter:-1以外＝対象ID,
+    ///  -1 ＝ 未存在
     ///
-    open func GetInfoLocationEmptyIndex(_ Id : Int) -> Int {
+    open func GetInfoLocationIndexForTitle(_ title : String) -> Int{
         
         // データ数分処理する
-        for i in (0 ..< self._taskInfo.Location.count) {
-            // が見つかった場合
-            if(self._taskInfo.Location[i].Id == 0) {
-                // インデックスを返す
-                return i
+        for i in (0 ..< self._taskInfo.Location.count ) {
+            
+            // タイトルが見つかった場合
+            if(self._taskInfo.Location[i].Title == title) {
+                
+                // IDを返す
+                return self._taskInfo.Location[i].Id
+                
             }
         }
         
         // 見つからない場合は「-1」を返す
         return -1
+        
+    }
+    
+    ///
+    /// 指定したインデックスの位置情報を取得
+    ///　- parameter:index:検索対象のインデックス
+    ///　- returns:nil以外:見つかったインデックスの位置情報 nil:見つからなかった
+    ///
+    open func GetInfoLocationDataForIndex(_ index : Int) -> TaskInfoLocationDataEntity? {
+        
+        var ret : TaskInfoLocationDataEntity? = nil
+        
+        if(-1 < index) {
+            ret = GetTaskInfoLocation()[index]
+        }
+        
+        return ret
+    }
+    
+    ///
+    /// 指定IDの位置情報タイトルを取得
+    ///　- parameter:
+    ///
+    ///
+    open func GetInfoLocationTitleForId(_ id : Int) -> String{
+        
+        // データ数分処理する
+        for i in (0 ..< self._taskInfo.Location.count ) {
+            
+            // Idが見つかった場合
+            if(self._taskInfo.Location[i].Id == id) {
+                
+                // タイトルを返す
+                return self._taskInfo.Location[i].Title
+                
+            }
+        }
+        
+        // 見つからない場合は「Error」を返す
+        return "Error"
+        
     }
     
     

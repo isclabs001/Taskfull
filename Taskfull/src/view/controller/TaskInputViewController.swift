@@ -292,7 +292,21 @@ class TaskInputViewController : BaseTaskInputViewController
             taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
             
             //通知場所
-            taskInfoDataEntity.NotifiedLocation = 0
+            //通知場所未入力時チェック
+            if(false == StringUtility.isEmpty(InputPointListField.text)){
+                
+                // 空白の場合、固定値代入
+                taskInfoDataEntity.NotifiedLocation = 0
+                
+            }
+            else{
+                
+                // 空白ではない場合、入力値
+                taskInfoDataEntity.NotifiedLocation = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(InputPointListField.text! as String)
+                print(InputPointListField.text! as String)
+            }
+            
+            
             
             //重要度(セグメントのインデックス)
             taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
@@ -385,7 +399,15 @@ class TaskInputViewController : BaseTaskInputViewController
             taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
             
             //通知場所
-            taskInfoDataEntity.NotifiedLocation = 0
+            //通知場所未入力時チェック
+            if(false == StringUtility.isEmpty(InputPointListField.text)){
+                // 空白の場合、固定値代入
+                taskInfoDataEntity.NotifiedLocation = 0
+            }
+            else{
+                // 空白ではない場合、入力値
+                taskInfoDataEntity.NotifiedLocation = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(InputPointListField.text! as String)
+            }
             
             //重要度(セグメントのインデックス)
             taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
@@ -439,6 +461,19 @@ class TaskInputViewController : BaseTaskInputViewController
         
         // 登録地点選択処理
         setSelectedPoint(textField : self.InputPointListField, row: row)
+        
+        // 空欄以外を選択した場合(row = 0以外)
+        if(row != 0){
+            
+            // Pickerのタイトルより、選択ID取得
+            let infoLocationId = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(pointListNameArray[row])
+            
+            // 選択Entity取得
+            let taskLocationDataEntity : TaskInfoLocationDataEntity = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(infoLocationId)!
+            
+            
+        }
+        
     }
 }
 

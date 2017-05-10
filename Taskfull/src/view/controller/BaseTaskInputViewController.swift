@@ -31,8 +31,8 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     // 設定日時取得変数
     var inputTaskEndDate : Date = Date()
     
-    //登録地点用要素配列（テスト用）
-    let aaa : NSArray = ["","自宅","スーパー","aaaaaaaaaaa"]
+    // 登録地点用要素配列
+    var pointListNameArray : [String] = [""]
     
     /// パラメータ:読込タスクID(Add:親タスクID,Edit:自身タスクID)
     var paramTaskId : Int = -2
@@ -73,16 +73,55 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     }
     //PicerView　表示行（要素数）
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        //要素数(仮　要)
-        return aaa.count
+        //要素数
+        return pointListNameArray.count
     }
     //PicerView　表示要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return aaa[row] as? String
+        return pointListNameArray[row] as? String
     }
     //PicerView　値選択時イベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
     }
+    
+    /// 通知地点名リスト用配列更新処理
+    fileprivate func updataPointListNameArray(_ InputPointListField: UITextField!){
+        
+        // テキスト欄初期化
+        InputPointListField.text = ""
+        
+        // 配列初期化
+        pointListNameArray = [""]
+        
+        // 通知地点数
+        let intLocationCount : Int = TaskInfoUtility.DefaultInstance.GetInfoLocationCount()
+        
+        // 通知地点が登録されている場合
+        if(intLocationCount != 0){
+            
+            // 登録地点数分処理(ID)
+            for i in 1...CommonConst.INPUT_NOTIFICATION_POINT_LIST_LIMIT{
+                
+                // 空番ではない場合
+                if(TaskInfoUtility.DefaultInstance.GetIndexForLocation(i) != -1){
+                    
+                    // 空番以外のTaskInfoLocationDataEntity
+                    let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(i)!
+                    
+                    // 通知地点名配列追加(1~)
+                    pointListNameArray.append(taskLocationDataEntity.Title)
+                }
+                
+            }
+            
+            //登録地点リスト入力欄 リロード
+            self.inputPointPicker.reloadAllComponents()
+            
+        }
+        
+    }
+    
     
     //キーボード「リターンキー」：タップ時イベント
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -93,8 +132,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     
     // 選択地点の設定
     func setSelectedPoint(textField : UITextField, row: Int) {
+        
         // 選択項目をUITextFieldに設定する
-        textField.text = aaa[row] as? String
+        textField.text = pointListNameArray[row] as? String
         
         // 0.1秒バイブレーション作動
         actionViblation()
@@ -500,7 +540,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     func displayInputPoint(pointListField: UITextField!){
         
         //登録地点リスト:要素追加イベント(未実装)
-        
+        updataPointListNameArray(pointListField)
         
         //登録地点リスト：Delegate,DataSource設定
         self.inputPointPicker.delegate = self
