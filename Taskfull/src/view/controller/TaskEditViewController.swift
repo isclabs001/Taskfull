@@ -104,7 +104,7 @@ class TaskEditViewController : BaseTaskInputViewController
         // メイン画面モード
         switch(self.paramMainViewMode){
             
-        // 現在編集モードの場合
+        // 編集モードの場合
         case CommonConst.ActionType.edit:
             
             // 編集不可用Viewを非表示
@@ -167,7 +167,7 @@ class TaskEditViewController : BaseTaskInputViewController
                 //　後続タスクボタン非表示
                 AddAfterTask.isEnabled = false
                 AddAfterTask.isHidden = true
-                
+
             }
             // 読込ID:後続タスクが存在する場合
             else{
@@ -175,6 +175,7 @@ class TaskEditViewController : BaseTaskInputViewController
                 //　後続タスクボタン表示
                 AddAfterTask.isEnabled = true
                 AddAfterTask.isHidden = false
+
             }
             // TEST:END
             
@@ -206,7 +207,7 @@ class TaskEditViewController : BaseTaskInputViewController
         
         // TEST:START
         // Datepicker制限再設定処理
-        // 読込ID:子タスクが存在する場合
+        // 読込ID:子タスクが存在する場合(判定:親タスク)
         if(TaskInfoUtility.DefaultInstance.GetParrentIndex(taskInfo.Id) != -1){
             
             // 読込ID:子タスク読込処理開始
@@ -216,7 +217,7 @@ class TaskEditViewController : BaseTaskInputViewController
             inputDatePicker.maximumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
             
         }
-        // 読込ID:親タスクが存在する場合
+        // 読込ID:親タスクが存在する場合(判定:子タスク)
         else if(TaskInfoUtility.DefaultInstance.GetIndex(taskInfo.ParrentId) != -1){
             
             // 読込ID:親タスク読込処理開始
@@ -229,7 +230,7 @@ class TaskEditViewController : BaseTaskInputViewController
                 inputDatePicker.minimumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
                 
             }
-            // 親タスクが完了している場合 (暫定単独タスク)
+            // 親タスクが完了している場合 (判定:単独子タスク)
             else{
                 
                 // Datepicker設定制限初期化
@@ -238,7 +239,7 @@ class TaskEditViewController : BaseTaskInputViewController
             }
             
         }
-        // 単独タスクである場合(親タスク,子タスクなし)
+        // 単独タスクである場合(判定:親タスク,子タスクなし)
         else{
             
             // 設定制限初期化

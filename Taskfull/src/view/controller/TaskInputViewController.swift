@@ -208,6 +208,9 @@ class TaskInputViewController : BaseTaskInputViewController
     // 登録確定ボタン：タップ時イベント
     override func onTouchDown_decideEditTaskButton(){
         
+        // キーボードを閉じる
+        view.endEditing(true)
+        
         // 通知時刻欄が空欄ではない場合
         if(StringUtility.isEmpty(InputTaskDateField.text) == true){
             
