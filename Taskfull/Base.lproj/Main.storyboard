@@ -51,10 +51,11 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXR-Lq-i1V" customClass="UICircleImageButton" customModule="Taskfull" customModuleProvider="target">
-                                <rect key="frame" x="10" y="74" width="64" height="64"/>
+                                <rect key="frame" x="167" y="636" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="a6G-QC-ylx"/>
-                                    <constraint firstAttribute="height" constant="64" id="i7u-F4-7Bg"/>
+                                    <constraint firstAttribute="height" constant="80" id="4Ng-Zf-NVr"/>
+                                    <constraint firstAttribute="width" constant="80" id="A67-nW-57V"/>
+                                    <constraint firstAttribute="width" secondItem="SXR-Lq-i1V" secondAttribute="height" multiplier="1:1" id="dAn-Tj-Vqo"/>
                                 </constraints>
                                 <state key="normal" title=" "/>
                                 <userDefinedRuntimeAttributes>
@@ -69,14 +70,14 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Jxg-T7-lVi" secondAttribute="trailing" id="F12-K6-B8D"/>
-                            <constraint firstItem="SXR-Lq-i1V" firstAttribute="bottom" secondItem="a3a-Px-uQz" secondAttribute="top" constant="-198" id="Ksi-Hx-hSx"/>
                             <constraint firstAttribute="leading" secondItem="a3a-Px-uQz" secondAttribute="leading" id="Nil-Sy-IEA"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="SXR-Lq-i1V" secondAttribute="bottom" constant="20" id="bvM-WE-scV"/>
                             <constraint firstItem="Jxg-T7-lVi" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cHO-JA-8xO"/>
-                            <constraint firstItem="SXR-Lq-i1V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-10" id="dpI-iq-MaU"/>
                             <constraint firstItem="y3c-jy-aDJ" firstAttribute="bottom" secondItem="Ek5-2D-uul" secondAttribute="top" constant="-272" id="eR8-LU-vsY"/>
-                            <constraint firstItem="y3c-jy-aDJ" firstAttribute="bottom" secondItem="SXR-Lq-i1V" secondAttribute="top" constant="-10" id="hek-d8-dHc"/>
                             <constraint firstItem="Jxg-T7-lVi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="m6q-Sd-k8K"/>
+                            <constraint firstItem="a3a-Px-uQz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="272" id="mKz-4Y-afi"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jxg-T7-lVi" secondAttribute="bottom" id="tZd-jC-MkT"/>
+                            <constraint firstItem="SXR-Lq-i1V" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ta3-IC-Lyu"/>
                             <constraint firstAttribute="trailing" secondItem="Ek5-2D-uul" secondAttribute="trailing" id="ycN-Bk-maE"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -104,7 +105,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042" y="356"/>
+            <point key="canvasLocation" x="1039.1304347826087" y="355.43478260869568"/>
         </scene>
         <!--Task Input View Controller-->
         <scene sceneID="DJn-sY-cPL">
