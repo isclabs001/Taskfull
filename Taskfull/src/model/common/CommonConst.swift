@@ -161,6 +161,9 @@ class CommonConst
     static internal let INPUT_TASK_NAME_STRING_LIMIT: Int = 20;
     // メモ入力制限数
     static internal let INPUT_TASK_MEMO_STRING_LIMIT: Int = 200;
+    // 通知地点名入力制限数
+    static internal let INPUT_TASK_NOTIFICATION_POINT_LIST_STRING_LIMIT: Int = 10;
+    
 
     /**
      * 項目名未入力時代入定数

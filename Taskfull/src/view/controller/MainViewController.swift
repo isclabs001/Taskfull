@@ -1088,7 +1088,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
     fileprivate func taskExpirationNotification(){
         
         
-        //　現在の通知全削除
+        //　現在のローカル通知全削除
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         } else {
@@ -1118,17 +1118,6 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
 
                 //　DateComponents変換用カレンダー生成(西暦)
                 let calender  =  Calendar(identifier:.gregorian)
-                
-
-                // カスタム通知実装:START
-                let completeTask = UNNotificationAction(identifier: "completeTask",
-                                                        title: "完了", options: [])
-                let inCompleteTask = UNNotificationAction(identifier: "inCompleteTask",
-                                                          title: "未完了",
-                                                          options: [])
-                let category = UNNotificationCategory(identifier: "message", actions: [completeTask, inCompleteTask], intentIdentifiers: [], options: [])
-                UNUserNotificationCenter.current().setNotificationCategories([category])
-                // END
                 
                 //表示タスク数分処理
                 for item in self.getDisplayTaskData() {
@@ -1179,56 +1168,55 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     
                     
                     // TEST:START
-                    // GPS 通知設定
-                    //self.locationManager.requestAlwaysAuthorization()
-                    //self.locationManager.delegate = self
-
-                    // バックグラウンド状態時、位置情報取得
-                    //self.locationManager.startUpdatingLocation()
-                    // 位置情報取得精度(10m)
-                    //self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                    // バックグラウンド時、位置情報取得
-                    //self.locationManager.allowsBackgroundLocationUpdates = true
-                    //self.locationManager.pausesLocationUpdatesAutomatically = false
-                    //self.locationManager.distanceFilter = 10
-                    
-                    //　デバッグ用位置情報print
-                    //debugPrint(self.locationManager.location?.coordinate.longitude,"+++",self.locationManager.location?.coordinate.latitude)
-                    
                     // UNMutableNotificationContent 作成
-                    content.title = String((item.Title) + "_GPS")
-                    content.body = String(" ")
+                    content.title = String((item.Title) + "_到着")
+                    //メモが空欄である場合
+                    if(true == StringUtility.isEmpty(item.Memo)){
+                        //通知ボディ = 空白文字挿入
+                        content.body = " "
+                    }
+                    else{
+                        //通知ボディ ＝ メモ設定
+                        content.body = String(item.Memo)
+                    }
+                    //通知サウンド:デフォルト
                     content.sound = UNNotificationSound.default()
                     
-                    // 通知座標指定
-                    //let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(35.508692,139.612245)
-                    
-                    // デバッグ用:通知座標指定読み出し:START
-                    if(TaskInfoUtility.DefaultInstance.GetIndexForLocation(1) != -1){
-                    // TaskInfoLocationDataEntity
-                    let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(1)!
+                    // TODO:要存在確認？
+                    // 通知地点初期値(未設定)ではない場合
+                    if(item.NotifiedLocation != CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE){
+                        
+                        // TaskInfoLocationDataEntity
+                        let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(item.NotifiedLocation)!
+                        
+                        // 通知座標指定
+                        let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
+                        
+                        // デバッグ用:通知座標指定読み出し:START
+                        debugPrint(taskLocationDataEntity.Title)
+                        debugPrint(taskLocationDataEntity.Latitude)
+                        debugPrint(taskLocationDataEntity.Longitude)
+                        // デバッグ用:通知座標指定読み出し:END
+                        
+                        // 通知範囲指定
+                        let region = CLCircularRegion(center: coordinate, radius: CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE, identifier: "region" + item.Title)
+                        
+                        // 通知範囲in
+                        region.notifyOnEntry = true
+                        // 通知範囲out
+                        //region.notifyOnExit = true
+                        
+                        // 通知トリガー作成(通知範囲,通知リピートなし)
+                        let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
+                        
+                        // 通知リクエスト作成
+                        let locationRequest = UNNotificationRequest(identifier: String(item.Id) + "_GPS",content: content,trigger: locationTrigger)
+                        
+                        // UNUserNotificationCenterに作成したUNNotificationRequestを追加
+                        center.add(locationRequest)
 
-                    // 通知座標指定
-                    let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
-                    debugPrint(taskLocationDataEntity.Title)
-                    debugPrint(taskLocationDataEntity.Latitude)
-                    debugPrint(taskLocationDataEntity.Longitude)
-                    // デバッグ用:通知座標指定読み出し:END
-
-                    // 通知範囲指定
-                    let region = CLCircularRegion(center: coordinate, radius: CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE, identifier: "test")
-                    // 通知範囲in
-                    region.notifyOnEntry = true
-                    // 通知範囲out
-                    //region.notifyOnExit = true
-                    // 通知トリガー作成(通知範囲,通知リピートなし)
-                    let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
-                    // 通知リクエスト作成
-                    let locationRequest = UNNotificationRequest(identifier: String(item.Id) + "_GPS",content: content,trigger: locationTrigger)
-                    // UNUserNotificationCenterに作成したUNNotificationRequestを追加
-                    center.add(locationRequest)
-                    // TEST:END
                     }
+                    // TEST:END
                 }
                 //通知設定：END
             })
