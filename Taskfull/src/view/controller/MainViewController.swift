@@ -342,8 +342,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         // キャンバスビューにコントロール数分処理する
         for item in self.mArrayViewTaskItem {
-            // アニメーション開始処理
-            item.TaskButton?.startAnimation()
+            // 表示している場合
+            if (true == item.IsDisplay) {
+                // アニメーション開始処理
+                item.TaskButton?.startAnimation()
+            }
         }
     }
     
@@ -354,8 +357,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         // キャンバスビューにコントロール数分処理する
         for item in self.mArrayViewTaskItem {
-            // アニメーション停止処理
-            item.TaskButton?.stopAnimation()
+            // 表示している場合
+            if (true == item.IsDisplay) {
+                // アニメーション停止処理
+                item.TaskButton?.stopAnimation()
+            }
         }
     }
     
@@ -689,26 +695,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     // 子がいる場合は子を表示する
                     displayTaskImageButtonForChild(parrentItem: item)
 
-                    // 完了の場合
-                    if(true == isComplete){
-                        // キャンバスから削除する
-                        item.TaskButton?.removeFromSuperview()
-                        item.TaskButton?.allocRelease()
-                    
-                    // 上記以外の場合
-                    } else {
-                        // 親の場合
-                        if(false == item.IsChild){
-                            // 非表示にする
-                            item.IsDisplay = false
-
-                        // 上記以外の場合
-                        } else {
-                            // キャンバスから削除する
-                            item.TaskButton?.removeFromSuperview()
-                            item.TaskButton?.allocRelease()
-                        }
-                    }
+                    // 非表示にする
+                    item.IsDisplay = false
                     break;
                 }
             }
