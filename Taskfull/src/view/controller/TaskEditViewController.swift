@@ -216,8 +216,27 @@ class TaskEditViewController : BaseTaskInputViewController
             // 設定最大日 ＝ 読込ID:子タスク終了日付
             inputDatePicker.maximumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
             
+            // TEST:START
+            // 読込ID:親タスクが存在する場合(判定:中間タスク)
+            if(TaskInfoUtility.DefaultInstance.GetIndex(taskInfo.ParrentId) != -1){
+                
+                // 読込ID:親タスク読込処理開始
+                let parrentTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(taskInfo.ParrentId)!
+                
+                // 親タスクが完了していない場合
+                if(parrentTaskInfo.CompleteFlag != 1){
+                    
+                    // 設定最小日 ＝ 読込ID:親タスク終了日付
+                    inputDatePicker.minimumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
+                    
+                }
+                
+            }
+            // TEST:END
+            
+            
         }
-        // 読込ID:親タスクが存在する場合(判定:子タスク)
+        // 読込ID:親タスクが存在する場合(判定:末端タスク)
         else if(TaskInfoUtility.DefaultInstance.GetIndex(taskInfo.ParrentId) != -1){
             
             // 読込ID:親タスク読込処理開始

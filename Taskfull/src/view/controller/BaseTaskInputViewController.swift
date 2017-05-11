@@ -625,14 +625,14 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         addAfterTask.addTarget(self, action: #selector(onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
         // TODO:後続タスク制限数の為後続ボタン隠す(4/21)※作成上限撤廃する場合、諸問題クリアする必要あり
-        if(self.paramTaskId != -2){
-            addAfterTask.isHidden = true
-            addAfterTask.isEnabled = false
-        }
-        else{
-            addAfterTask.isHidden = false
-            addAfterTask.isEnabled = true
-        }
+//        if(self.paramTaskId != -2){
+//            addAfterTask.isHidden = true
+//            addAfterTask.isEnabled = false
+//        }
+//        else{
+//            addAfterTask.isHidden = false
+//            addAfterTask.isEnabled = true
+//        }
     }
     
     //後続タスクボタン：タップ時イベント
