@@ -623,10 +623,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         // データ数分表示する
         for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
-            // 未完了、かつ、親が表示されていない、かつ、同一カテゴリーの場合
+            // 未完了、かつ、同一カテゴリー、かつ、親が表示されていない場合
             if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
-                && false == dicParrentId.keys.contains(data.ParrentId)
-                && TaskInfoUtility.DefaultInstance.GetCategoryType() == data.CategoryType) {
+                && TaskInfoUtility.DefaultInstance.GetCategoryType() == data.CategoryType
+                && false == isDisplayParrent(parrentId : data.ParrentId, categoryType : TaskInfoUtility.DefaultInstance.GetCategoryType(), dicParrentId : dicParrentId)) {
                 // 表示対象に追加する
                 taskData.append(data)
                 // 表示しているIDを設定
@@ -639,6 +639,38 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         
         // 結果を返す
         return taskData
+    }
+    
+    ///
+    /// 親IDが表示済かの判断
+    ///　- parameter parrentId:親タスクID
+    ///　- parameter categoryType:カテゴリー形式
+    ///　- parameter dicParrentId:表示済親ID
+    ///　- returns:true:表示済 false:非表示
+    ///
+    fileprivate func isDisplayParrent(parrentId : Int, categoryType : Int, dicParrentId : Dictionary<Int, Int>) ->Bool {
+        // 親IDが有効な場合
+        if(0 <= parrentId) {
+            // データ数分表示する
+            for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
+                // IDと親IDが一致、かつ、親が表示されていない場合
+                if(data.Id == parrentId
+                    && categoryType == data.CategoryType) {
+                    // 表示していない場合
+                    if(false == dicParrentId.keys.contains(data.Id)) {
+                        // 親を遡ってチェックする
+                        return isDisplayParrent(parrentId : data.ParrentId, categoryType : categoryType, dicParrentId : dicParrentId)
+
+                    // 上記以外の場合
+                    } else {
+                        // 親が表示している
+                        return true
+                    }
+                }
+            }
+        }
+        
+        return false
     }
     
     ///
