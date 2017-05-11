@@ -625,28 +625,31 @@ class UITaskImageButton : UIView
         // 縮小アニメーションを即時実行
         _ = Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(UITaskImageButton.scaleOpacityAnimations), userInfo: nil, repeats: false)
         
-        // 拡散配列が無効な場合
-        if diffusionCells == nil{
-            // 拡散配列を設定
-            diffusionCells = [CALayer]()
-            // 拡散X数分処理する
-            for i in 0...UITaskImageButton.DIFFUSION_NUM_X{
-                // 拡散Y数分処理する
-                for j in 0...UITaskImageButton.DIFFUSION_NUM_Y{
-                    // 拡散イメージサイズを画像のサイズ/32より算出
-                    let pWidth = min(frame.size.width,frame.size.height) / 32
-                    // 拡散イメージ色を水色を基調にランダムの色を設定
-                    let color = UIColorUtility.rgb(200 + Int(arc4random()%22), g: 220 + Int(arc4random()%35), b: 255)
-                    let shape = CALayer()
-                    // 円にする
-                    shape.backgroundColor = color.cgColor
-                    shape.opacity = 0
-                    shape.cornerRadius = pWidth / 2
-                    shape.frame = CGRect(x: CGFloat(i) * pWidth, y: CGFloat(j) * pWidth, width: pWidth, height: pWidth)
-                    // 追加
-                    layer.superlayer?.addSublayer(shape)
-                    diffusionCells?.append(shape)
-                }
+        // 拡散配列が有効な場合
+        if nil != diffusionCells{
+            // 削除する
+            removeDiffusionCells()
+        }
+
+        // 拡散配列を設定
+        diffusionCells = [CALayer]()
+        // 拡散X数分処理する
+        for i in 0...UITaskImageButton.DIFFUSION_NUM_X{
+            // 拡散Y数分処理する
+            for j in 0...UITaskImageButton.DIFFUSION_NUM_Y{
+                // 拡散イメージサイズを画像のサイズ/32より算出
+                let pWidth = min(frame.size.width,frame.size.height) / 32
+                // 拡散イメージ色を水色を基調にランダムの色を設定
+                let color = UIColorUtility.rgb(200 + Int(arc4random()%22), g: 220 + Int(arc4random()%35), b: 255)
+                let shape = CALayer()
+                // 円にする
+                shape.backgroundColor = color.cgColor
+                shape.opacity = 0
+                shape.cornerRadius = pWidth / 2
+                shape.frame = CGRect(x: CGFloat(i) * pWidth, y: CGFloat(j) * pWidth, width: pWidth, height: pWidth)
+                // 追加
+                layer.superlayer?.addSublayer(shape)
+                diffusionCells?.append(shape)
             }
         }
         
