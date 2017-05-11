@@ -543,18 +543,18 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             
             // ピン表示座標を設定
             pointPin.coordinate = tapLocation
+        
+            // タイトル名:前後のスペース削除
+            let strInputPointTrimTitle : String = (myAlert.textFields?[0].text)!.trimmingCharacters(in: NSCharacterSet.whitespaces)
             
             // 入力値が空欄でない場合
-            if(true == StringUtility.isEmpty(myAlert.textFields?[0].text)){
+            if(false == StringUtility.isEmpty(strInputPointTrimTitle)){
                 
                 // 同名通知地点が存在しない場合
-                if(TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle((myAlert.textFields?[0].text)!)  == -1){
+                if(TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(strInputPointTrimTitle)  == -1){
                     
-                    // アラート入力値取得
-                    let inputPointTitle : String = (myAlert.textFields?[0].text)!
-                    
-                    // タイトルを設定(アラート入力値)
-                    pointPin.title = inputPointTitle
+                    // タイトルを設定
+                    pointPin.title = strInputPointTrimTitle
                     
                     // MapViewへピン追加:addAnotationイベント処理開始
                     self.GPSMapView.addAnnotation(pointPin)
@@ -566,7 +566,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                     self.GPSMapView.add(selfCircle)
                     
                     // TODO:通知地点登録
-                    self.registrationPointList(pointTitle: inputPointTitle, location: tapLocation)
+                    self.registrationPointList(pointTitle: strInputPointTrimTitle, location: tapLocation)
                 }
                 // 同名通知地点が存在した場合
                 else{
@@ -619,12 +619,14 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // 変数に代入
         if let copyText = inputTextField.text {
             
+            
             // 入力制限数チェック
             if ("\(copyText)".characters.count) <= 10 {
                 
                 // 編集有効
                 inputTextField.isEnabled = true
-
+                
+                
             } else {
                 
                 // 編集無効
@@ -637,8 +639,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 alert.addButton(withTitle: "OK")
                 alert.show()
                 
+                // 前後半角スペース削除　※スペースのみ入力時、複数通知防止の為
+                inputTextField.text = inputTextField.text?.trimmingCharacters(in: NSCharacterSet.whitespaces)
+                
             }
-            
             // 再編集の為、有効化
             inputTextField.isEnabled = true
             
