@@ -296,7 +296,7 @@ class TaskInputViewController : BaseTaskInputViewController
             if(false == StringUtility.isEmpty(InputPointListField.text)){
                 
                 // 空白の場合、固定値代入
-                taskInfoDataEntity.NotifiedLocation = 0
+                taskInfoDataEntity.NotifiedLocation = CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE
                 
             }
             else{
@@ -402,7 +402,7 @@ class TaskInputViewController : BaseTaskInputViewController
             //通知場所未入力時チェック
             if(false == StringUtility.isEmpty(InputPointListField.text)){
                 // 空白の場合、固定値代入
-                taskInfoDataEntity.NotifiedLocation = 0
+                taskInfoDataEntity.NotifiedLocation = CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE
             }
             else{
                 // 空白ではない場合、入力値

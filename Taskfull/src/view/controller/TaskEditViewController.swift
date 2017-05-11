@@ -64,11 +64,12 @@ class TaskEditViewController : BaseTaskInputViewController
         self.isOkBtn = true
 
         // OK時アクション
-        // 読込タスク及び子タスク削除
+        // 読込タスク
         TaskInfoUtility.DefaultInstance.RemoveTaskInfo(self.paramTaskId)
-        TaskInfoUtility.DefaultInstance.RemoveTaskInfoForChild(self.paramTaskId)
+        // 読込タスクの後続タスク削除
+        _ = TaskInfoUtility.DefaultInstance.RemoveTaskInfoForChild(self.paramTaskId)
         
-        // 変更内容書き込み
+        // 削除内容書き込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
         
         // ナビゲーションバー:レイヤー追加
@@ -78,7 +79,6 @@ class TaskEditViewController : BaseTaskInputViewController
         self.navigationController?.popToRootViewController(animated: true)
         
     }
-    
     
     
     /// 初期化処理
@@ -278,7 +278,16 @@ class TaskEditViewController : BaseTaskInputViewController
         
         
         // 通知場所リスト欄
-        InputPointListField.text = TaskInfoUtility.DefaultInstance.GetInfoLocationTitleForId(taskInfo.NotifiedLocation)
+        // 通知地点初期値である場合
+        if(taskInfo.NotifiedLocation == CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE){
+            // テキスト欄 = 空白
+            InputPointListField.text = ""
+        }
+        // 通知地点初期値以外である場合
+        else{
+            // テキスト欄 = 地点名
+            InputPointListField.text = TaskInfoUtility.DefaultInstance.GetInfoLocationTitleForId(taskInfo.NotifiedLocation)
+        }
         
         // 重要度欄
         InputImportanceSegment.selectedSegmentIndex = taskInfo.Importance
@@ -545,7 +554,7 @@ class TaskEditViewController : BaseTaskInputViewController
         //通知場所未入力時チェック
         if(false == StringUtility.isEmpty(InputPointListField.text)){
             // 空白の場合、固定値代入
-            taskInfoDataEntity.NotifiedLocation = 0
+            taskInfoDataEntity.NotifiedLocation = CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE
         }
         else{
             // 空白ではない場合、入力値
