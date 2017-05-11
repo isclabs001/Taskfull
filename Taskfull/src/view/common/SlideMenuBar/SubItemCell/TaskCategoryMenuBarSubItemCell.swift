@@ -8,8 +8,18 @@
 
 import UIKit
 
+//
+// TaskCategoryMenuBarSubItemCellDataのデータ構造体
+//
 struct TaskCategoryMenuBarSubItemCellData {
     
+    ///
+    ///　初期化処理
+    ///　- parameter category:カテゴリー形式
+    ///　- parameter title:タイトル
+    ///　- parameter values:値
+    ///　- parameter backgroundColor:背景色
+    ///
     init(category: Int, title: String, values: Int, backgroundColor: UIColor) {
         self.category = category
         self.title = title
@@ -22,6 +32,9 @@ struct TaskCategoryMenuBarSubItemCellData {
     var backgroundColor: UIColor
 }
 
+//
+// TaskCategoryMenuBarSubItemCellクラス
+//
 class TaskCategoryMenuBarSubItemCell : BaseTableViewCell {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblValues: UILabel!
@@ -29,12 +42,21 @@ class TaskCategoryMenuBarSubItemCell : BaseTableViewCell {
     
     var category : Int = -1
     
+    ///
+    /// セルの高さを取得
+    /// - returns: セルの高さ
+    ///
     override class func height() -> CGFloat {
+        // 120を返す
         return 120
     }
     
+    ///
+    /// セルのデータ設定
+    ///　- parameter data:セルのデータ
+    ///
     override func setData(_ data: Any?) {
-        // TaskCategoryMenuBarSubItemCellDataが取得できた場合
+        // セルデータが「TaskCategoryMenuBarSubItemCellData型」の場合
         if let data = data as? TaskCategoryMenuBarSubItemCellData {
             // セル情報設定
             self.category = data.category
