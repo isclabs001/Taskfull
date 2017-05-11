@@ -75,7 +75,6 @@ class TaskEditViewController : BaseTaskInputViewController
         self.navigationController?.view.layer.add(self.navigationTrasitionAnimate(0.7, "suckEffect", "kCATransitionFromRight"), forKey: kCATransition)
         
         //メイン画面へ遷移(TOP)
-        //self.navigationController?.popViewController(animated: true)
         self.navigationController?.popToRootViewController(animated: true)
         
     }
@@ -127,12 +126,22 @@ class TaskEditViewController : BaseTaskInputViewController
                 AddAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
 
             }
+            // TODO: 後続タスク作成上限撤廃の為、上記分岐と同処理
             // 読込ID:後続タスクが存在しないかつ子タスクである場合
             else if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1 && self.paramParrentId != -1){
                 
                 // 後続タスクボタン無効化
-                AddAfterTask.isEnabled = false
-                AddAfterTask.isHidden = true
+                //AddAfterTask.isEnabled = false
+                //AddAfterTask.isHidden = true
+                
+                // TEST:START 後続タスク作成上限撤廃の為、表示
+                // 後続タスク追加ボタン表示
+                AddAfterTask.isEnabled = true
+                AddAfterTask.isHidden = false
+                
+                // 後続タスク追加ボタン:タイトル再設定(登録)
+                AddAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
+                // TEST:END
                 
                 return
                 
@@ -437,6 +446,7 @@ class TaskEditViewController : BaseTaskInputViewController
             // 参照モード以外の場合
             if(self.paramMainViewMode != CommonConst.ActionType.reference){
 
+                // タスク登録画面遷移開始
                 // タスク登録画面コントローラー生成
                 let vc = storyboard?.instantiateViewController(withIdentifier: "InputStoryBoard") as! TaskInputViewController
                 // 読込タスクID
@@ -459,6 +469,7 @@ class TaskEditViewController : BaseTaskInputViewController
         // 上記以外の場合(タスク参照)
         } else {
             
+            // タスク画面遷移開始
             // タスク編集画面コントローラー生成
             let vc = storyboard?.instantiateViewController(withIdentifier: "EditStoryBoard") as! TaskEditViewController
             
