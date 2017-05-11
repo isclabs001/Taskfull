@@ -278,7 +278,16 @@ class TaskEditViewController : BaseTaskInputViewController
         
         
         // 通知場所リスト欄
-        InputPointListField.text = TaskInfoUtility.DefaultInstance.GetInfoLocationTitleForId(taskInfo.NotifiedLocation)
+        // 通知地点初期値である場合
+        if(taskInfo.NotifiedLocation == CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE){
+            // テキスト欄 = 空白
+            InputPointListField.text = ""
+        }
+        // 通知地点初期値以外である場合
+        else{
+            // テキスト欄 = 地点名
+            InputPointListField.text = TaskInfoUtility.DefaultInstance.GetInfoLocationTitleForId(taskInfo.NotifiedLocation)
+        }
         
         // 重要度欄
         InputImportanceSegment.selectedSegmentIndex = taskInfo.Importance
@@ -545,7 +554,7 @@ class TaskEditViewController : BaseTaskInputViewController
         //通知場所未入力時チェック
         if(false == StringUtility.isEmpty(InputPointListField.text)){
             // 空白の場合、固定値代入
-            taskInfoDataEntity.NotifiedLocation = 0
+            taskInfoDataEntity.NotifiedLocation = CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE
         }
         else{
             // 空白ではない場合、入力値

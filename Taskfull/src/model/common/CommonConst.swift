@@ -264,5 +264,9 @@ class CommonConst
     static internal let INPUT_NOTIFICATION_POINT_LIST_LIMIT: Int = 10;
     
     
+    /**
+     * 通知地点初期値
+     */
+    static internal let INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE: Int = 0;
     
 }
