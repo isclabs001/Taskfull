@@ -6,6 +6,7 @@
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -39,13 +40,13 @@
                                 </subviews>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menubar_left.png" translatesAutoresizingMaskIntoConstraints="NO" id="a3a-Px-uQz">
-                                <rect key="frame" x="0.0" y="336" width="24" height="64"/>
+                                <rect key="frame" x="0.0" y="304" width="24" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="a3a-Px-uQz" secondAttribute="height" multiplier="3:8" id="YB8-35-aSH"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menubar_right.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ek5-2D-uul">
-                                <rect key="frame" x="390" y="336" width="24" height="64"/>
+                                <rect key="frame" x="390" y="304" width="24" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Ek5-2D-uul" secondAttribute="height" multiplier="3:8" id="u3f-Nm-3LM"/>
                                 </constraints>
@@ -73,9 +74,9 @@
                             <constraint firstAttribute="leading" secondItem="a3a-Px-uQz" secondAttribute="leading" id="Nil-Sy-IEA"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="SXR-Lq-i1V" secondAttribute="bottom" constant="20" id="bvM-WE-scV"/>
                             <constraint firstItem="Jxg-T7-lVi" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cHO-JA-8xO"/>
-                            <constraint firstItem="y3c-jy-aDJ" firstAttribute="bottom" secondItem="Ek5-2D-uul" secondAttribute="top" constant="-272" id="eR8-LU-vsY"/>
+                            <constraint firstItem="y3c-jy-aDJ" firstAttribute="bottom" secondItem="Ek5-2D-uul" secondAttribute="centerY" constant="-272" id="eR8-LU-vsY"/>
                             <constraint firstItem="Jxg-T7-lVi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="m6q-Sd-k8K"/>
-                            <constraint firstItem="a3a-Px-uQz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="272" id="mKz-4Y-afi"/>
+                            <constraint firstItem="a3a-Px-uQz" firstAttribute="centerY" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="272" id="mKz-4Y-afi"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jxg-T7-lVi" secondAttribute="bottom" id="tZd-jC-MkT"/>
                             <constraint firstItem="SXR-Lq-i1V" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ta3-IC-Lyu"/>
                             <constraint firstAttribute="trailing" secondItem="Ek5-2D-uul" secondAttribute="trailing" id="ycN-Bk-maE"/>
