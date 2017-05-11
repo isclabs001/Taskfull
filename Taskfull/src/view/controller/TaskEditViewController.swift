@@ -64,11 +64,12 @@ class TaskEditViewController : BaseTaskInputViewController
         self.isOkBtn = true
 
         // OK時アクション
-        // 読込タスク及び子タスク削除
+        // 読込タスク
         TaskInfoUtility.DefaultInstance.RemoveTaskInfo(self.paramTaskId)
-        TaskInfoUtility.DefaultInstance.RemoveTaskInfoForChild(self.paramTaskId)
+        // 読込タスクの後続タスク削除
+        _ = TaskInfoUtility.DefaultInstance.RemoveTaskInfoForChild(self.paramTaskId)
         
-        // 変更内容書き込み
+        // 削除内容書き込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
         
         // ナビゲーションバー:レイヤー追加
@@ -78,7 +79,6 @@ class TaskEditViewController : BaseTaskInputViewController
         self.navigationController?.popToRootViewController(animated: true)
         
     }
-    
     
     
     /// 初期化処理
