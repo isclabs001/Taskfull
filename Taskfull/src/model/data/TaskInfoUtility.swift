@@ -398,14 +398,14 @@ open class TaskInfoUtility {
     ///
     open func GetInfoLocationCount() -> Int {
 
-        //
+        // 位置情報格納数
         return self._taskInfo.Location.count
     }
     
     ///
-    /// 指定したタイトル位置情報IDを取得
-    ///　- parameter:-1以外＝対象ID,
-    ///  -1 ＝ 未存在
+    /// 指定した位置情報のタイトルからIDを取得
+    ///　- parameter:title:指定した位置情報のタイトル
+    ///　- returns:-1以外＝対象ID,-1 ＝ 未存在
     ///
     open func GetInfoLocationIndexForTitle(_ title : String) -> Int{
         
@@ -444,8 +444,8 @@ open class TaskInfoUtility {
     
     ///
     /// 指定IDの位置情報タイトルを取得
-    ///　- parameter:
-    ///
+    ///　- parameter:id:対象ID
+    ///　- returns:指定IDのタイトル
     ///
     open func GetInfoLocationTitleForId(_ id : Int) -> String{
         
@@ -463,8 +463,5 @@ open class TaskInfoUtility {
         
         // 見つからない場合は「Error」を返す
         return "Error"
-        
     }
-    
-    
 }

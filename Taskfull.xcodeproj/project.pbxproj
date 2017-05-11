@@ -58,7 +58,6 @@
 		635CA7D71EB6FC9100FB3497 /* MainMenuBarSubItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635CA7D61EB6FC9000FB3497 /* MainMenuBarSubItemCell.xib */; };
 		635DCE711E739F1700F6F325 /* CommonConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE701E739F1700F6F325 /* CommonConst.swift */; };
 		635DCE731E73A03600F6F325 /* BaseJsonDataUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE721E73A03600F6F325 /* BaseJsonDataUtility.swift */; };
-		635DCE751E73A04300F6F325 /* LatLngForSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE741E73A04300F6F325 /* LatLngForSerializable.swift */; };
 		635DCE771E73A04F00F6F325 /* FunctionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE761E73A04F00F6F325 /* FunctionUtility.swift */; };
 		635DCE791E73A05500F6F325 /* StringUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE781E73A05500F6F325 /* StringUtility.swift */; };
 		635DCE811E73A17E00F6F325 /* UICommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635DCE801E73A17E00F6F325 /* UICommon.swift */; };
@@ -155,7 +154,6 @@
 		635CA7D61EB6FC9000FB3497 /* MainMenuBarSubItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuBarSubItemCell.xib; sourceTree = "<group>"; };
 		635DCE701E739F1700F6F325 /* CommonConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonConst.swift; sourceTree = "<group>"; };
 		635DCE721E73A03600F6F325 /* BaseJsonDataUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseJsonDataUtility.swift; sourceTree = "<group>"; };
-		635DCE741E73A04300F6F325 /* LatLngForSerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatLngForSerializable.swift; sourceTree = "<group>"; };
 		635DCE761E73A04F00F6F325 /* FunctionUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionUtility.swift; sourceTree = "<group>"; };
 		635DCE781E73A05500F6F325 /* StringUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtility.swift; sourceTree = "<group>"; };
 		635DCE801E73A17E00F6F325 /* UICommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICommon.swift; sourceTree = "<group>"; };
@@ -376,7 +374,6 @@
 		635DCE6D1E739EA700F6F325 /* entity */ = {
 			isa = PBXGroup;
 			children = (
-				635DCE741E73A04300F6F325 /* LatLngForSerializable.swift */,
 				631372F91E8F2E8F0089C19E /* TaskInfoHeaderEntity.swift */,
 				631372FC1E8F2F0A0089C19E /* TaskInfoDataEntity.swift */,
 				63098FF71EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift */,
@@ -729,7 +726,6 @@
 				631373011E91EBBF0089C19E /* ViewTaskItemEntity.swift in Sources */,
 				636CE3B51E6010CD002273BE /* ViewController.swift in Sources */,
 				631372FF1E8F334F0089C19E /* TaskInfoUtility.swift in Sources */,
-				635DCE751E73A04300F6F325 /* LatLngForSerializable.swift in Sources */,
 				635669741EB0611B0008F57C /* ExSlideMenuController.swift in Sources */,
 				635DCE771E73A04F00F6F325 /* FunctionUtility.swift in Sources */,
 				635DCE8F1E73A1FB00F6F325 /* MainViewController.swift in Sources */,
