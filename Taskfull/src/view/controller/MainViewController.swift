@@ -713,20 +713,43 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             // 未完了、かつ、親IDが一致した場合
             if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
                 && parrentItem.Id == data.ParrentId) {
-                
-                // 現在日付を取得
-                let systemDate : String = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
+                // 登録済ではない場合
+                if(false == isRegistered(id : data.Id)){
+                    // 現在日付を取得
+                    let systemDate : String = FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true)
 
-                // タスクイメージボタンを生成
-                let viewTaskItem : ViewTaskItemEntity = createViewTaskItemEntity(index: parrentItem.Index, systemDate: systemDate, item: data)
+                    // タスクイメージボタンを生成
+                    let viewTaskItem : ViewTaskItemEntity = createViewTaskItemEntity(index: parrentItem.Index, systemDate: systemDate, item: data)
 
-                // 配列に追加
-                self.mArrayViewTaskItem.append(viewTaskItem)
+                    // 配列に追加
+                    self.mArrayViewTaskItem.append(viewTaskItem)
 
-                // キャンバスビューにコントロールを追加
-                self.imageCanvasView.insertSubview(viewTaskItem.TaskButton!, at: 0)
+                    // キャンバスビューにコントロールを追加
+                    self.imageCanvasView.insertSubview(viewTaskItem.TaskButton!, at: 0)
+                }
             }
         }
+    }
+    
+    ///
+    /// 表示用　タスクイメージボタンが登録済かのチェック
+    ///　- parameter id:登録済かを確認するID
+    ///　- returns true:登録済 false:未登録
+    ///
+    fileprivate func isRegistered(id : Int) -> Bool{
+        var ret : Bool = false
+        
+        // キャンバスビューにコントロール数分処理する
+        for item in self.mArrayViewTaskItem {
+            // 非表示データがある場合
+            if(id == item.Id) {
+                // 戻り値にfalseを設定する
+                ret = true
+                break
+            }
+        }
+        
+        return ret
     }
     
     ///
