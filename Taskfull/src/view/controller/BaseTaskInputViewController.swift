@@ -69,7 +69,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     
     //PicerView　表示列
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return CommonConst.INPUT_NOTIFICATION_POINT_LIST_PICKER_COLUMN_COUNT
     }
     //PicerView　表示行（要素数）
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -78,6 +78,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     }
     //PicerView　表示要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        //要素数
         return pointListNameArray[row] as? String
     }
     //PicerView　値選択時イベント

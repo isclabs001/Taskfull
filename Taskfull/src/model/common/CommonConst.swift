@@ -268,4 +268,10 @@ class CommonConst
      */
     static internal let INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE: Int = 0;
     
+    
+    /**
+     * 通知地点PickerView表示列数
+     */
+    static internal let INPUT_NOTIFICATION_POINT_LIST_PICKER_COLUMN_COUNT: Int = 1;
+    
 }

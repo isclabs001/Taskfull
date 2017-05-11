@@ -289,6 +289,20 @@ class TaskEditViewController : BaseTaskInputViewController
             InputPointListField.text = TaskInfoUtility.DefaultInstance.GetInfoLocationTitleForId(taskInfo.NotifiedLocation)
         }
         
+        // 通知地点数分処理
+        for i in 0..<pointListNameArray.count{
+            
+            // 同一名である場合
+            if(InputPointListField.text == pointListNameArray[i]){
+                
+                // 選択行を設定
+                inputPointPicker.selectRow(i, inComponent: 0, animated: false)
+                
+            }
+            
+        }
+        
+        
         // 重要度欄
         InputImportanceSegment.selectedSegmentIndex = taskInfo.Importance
         //各セグメント分岐処理(ボタン色変更)
