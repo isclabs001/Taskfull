@@ -47,12 +47,11 @@ class StringUtility
     static internal let AMP : String = "&";
 
     
-    /**
-     * 文字列が空であるかどうかを調べる。
-     *
-     * - param value:チェックする文字列
-     * - returns: {@code value} が {@code null} であるか空文字列の場合は {@code true}、そうでない場合は {@code false}
-     */
+    ///
+    ///　文字列が空であるかどうかを調べる。
+    ///　- parameter value:チェックする文字列
+    ///　- returns:空文字列の場合:true、空文字列ではない場合:false
+    ///
     static internal func isEmpty(_ value : String?) -> Bool
     {
         return nil == value || false == isEmpty(value!);
@@ -62,12 +61,11 @@ class StringUtility
         return 0 == value.characters.count;
     }
 
-    /**
-     * 文字列が空でないかどうかを調べる。
-     *
-     * @param value チェックする文字列
-     * @return {@code value} が {@code null} でも空文字列でもない場合は　{@code　true}、そうでない場合は{@code　false}
-     */
+    ///
+    ///　文字列が空でないかを調べる。
+    ///　- parameter value:チェックする文字列
+    ///　- returns:空文字列ではない場合:true、空文字列の場合:false
+    ///
     static internal func isNotEmpty(_ value : String?) -> Bool
     {
         return nil != value && true == isNotEmpty(value!);

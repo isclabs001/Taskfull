@@ -1,0 +1,50 @@
+/* 
+  Localizable.strings
+  Taskfull
+
+  Created by IscIsc on 2017/05/12.
+  Copyright © 2017年 isc. All rights reserved.
+*/
+
+/// タイトル
+"TitleMain"="Taskfull [%@]";
+"TitleInputTask"="Task Regist";
+"TitleEditTask"="Task Edit";
+"TitleContentTask"="Task Content";
+
+/// ラベル項目
+"LabelItemNameEmpty"="Item name not yet entered";
+"LabelItemNamePlaceHolder"="Item Name:";
+"LabelItemMemoPlaceHolder"="Memo:";
+"LabelItemAfterTaskAdd"="Subsequent task add";
+"LabelItemAfterTaskDisplay"="Subsequent task display";
+"LabelItemAfterTaskEdit"="Subsequent task edit";
+
+/// カテゴリー形式
+"CategoryTypeTask"="Task";
+"CategoryTypeShopping"="Shopping";
+"CategoryTypeEmployment"="Employment";
+"CategoryTypeOther"="Other";
+
+/// メインメニュー形式
+"MainMenuTypeTaskAdd"="Task regist";
+"MainMenuTypeGPSNotification"="GPS notice";
+
+
+/// メッセージボタン
+"MessageStringButtonOK"="OK";
+"MessageStringButtonCancel"="Cancel";
+/// メッセージタイトル
+"MessageStringTitleConfirmTaskComplete"="Complete confirm";
+"MessageStringTitleConfirmDelete"="Delete confirm";
+"MessageStringTitleConfirmInput"="Regist confirm";
+/// 確認メッセージ
+"MessageStringConfirmMessageTaskComplete"="Are you sure you want to complete task '%@' ?";
+"MessageStringConfirmMessageTaskDelete"="Delete the currently edited task and succeeding task. Is it OK?";
+/// エラーメッセージ
+"MessageStringErrorTaskCountLimit"="Please enter within %@ characters.";
+"MessageStringErrorTaskDateInput"="Please enter notification time.";
+"MessageStringErrorNotificationPointListName"="Please enter a notification location name.";
+"MessageStringErrorNotificationPointListSameName"="The same name is already in use.";
+"MessageStringErrorNotificationPointListDelete"="An incomplete task using '%@' exists.";
+

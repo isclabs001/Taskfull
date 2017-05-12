@@ -364,6 +364,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
     
     ///
     /// タスクイメージボタン生成処理
+    ///　- parameter index:インデックス
+    ///　- parameter systemDate:システム日付
+    ///　- parameter item:作成するTaskInfoDataEntityオブジェクト
+    ///　- returns:作成したViewTaskItemEntityオブジェクト
     ///
     fileprivate func createViewTaskItemEntity(index : Int, systemDate : String, item : TaskInfoDataEntity) -> ViewTaskItemEntity {
 
@@ -372,6 +376,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
     
     ///
     /// タスクイメージボタン生成処理
+    ///　- parameter parrentIndex:親インデックス
+    ///　- parameter systemDate:システム日付
+    ///　- parameter item:作成するViewTaskItemEntityオブジェクト
+    ///　- returns:作成したViewTaskItemEntityオブジェクト
     ///
     fileprivate func createViewTaskItemEntity(parrentIndex : Int, systemDate : String, item : ViewTaskItemEntity) -> ViewTaskItemEntity {
 
@@ -389,6 +397,16 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
 
     ///
     /// タスクイメージボタン生成処理
+    ///　- parameter index:インデックス
+    ///　- parameter systemDate:システム日付
+    ///　- parameter id:ID
+    ///　- parameter title:タイトル
+    ///　- parameter memo:メモ
+    ///　- parameter dateTime:タスク日付
+    ///　- parameter buttonColor:ボタン色
+    ///　- parameter textColor:文字色
+    ///　- parameter createDateTime:作成日付
+    ///　- returns:作成したViewTaskItemEntityオブジェクト
     ///
     fileprivate func createViewTaskItemEntity(index : Int, systemDate : String, id : Int, title : String, memo : String, dateTime : String, buttonColor : Int, textColor : Int, createDateTime : String) -> ViewTaskItemEntity {
         
@@ -584,6 +602,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
     
     ///
     /// 表示ボタン色取得
+    ///　- parameter color:ボタン色
+    ///　- parameter systemDate:システム日付
+    ///　- parameter taskDate:タスク日付
     ///　- returns:表示ボタン色
     ///
     fileprivate func getButtonColor(_ color : Int, systemDate : String, taskDate : String) -> Int {
@@ -594,6 +615,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
     
     ///
     /// 表示ボタンリソース取得
+    ///　- parameter color:ボタン色
     ///　- returns:表示ボタンリソース
     ///
     fileprivate func getButtonResource(_ color : Int) -> UIImage {
@@ -1024,7 +1046,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
         // ナビゲーションバー背景色
         self.navigationController?.navigationBar.backgroundColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[TaskInfoUtility.DefaultInstance.GetCategoryType()]
         // タイトル設定
-        self.navigationItem.title = "".appendingFormat(CommonConst.VIW_TITLE_MAIN, CommonConst.CATEGORY_TYPE_STRING[TaskInfoUtility.DefaultInstance.GetCategoryType()])
+        self.navigationItem.title = MessageUtility.getMessage(key: "TitleMain", param: CommonConst.CATEGORY_TYPE_STRING[TaskInfoUtility.DefaultInstance.GetCategoryType()])
         // ナビゲーションバー表示
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
@@ -1043,7 +1065,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
         // 取得できた場合
         if nil != data {
             // タスク完了メッセージ表示
-            MessageUtility.dispAlertOKCancel(viewController: self, title: MessageUtility.MESSAGE_TITLE_STRING_CONFIRM_TASK_COMPLETE, message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_TASK_COMPLETE, (data?.Title)!), funcOkButton: onClickTaskCompleteOK, funcCancelButton: nil)
+            MessageUtility.dispAlertOKCancel(
+                viewController: self,
+                title: MessageUtility.getMessage(key: "MessageStringTitleConfirmTaskComplete"),
+                message: MessageUtility.getMessage(key: "MessageStringConfirmMessageTaskComplete",param: (data?.Title)!),
+                funcOkButton: onClickTaskCompleteOK, funcCancelButton: nil)
         }
     }
     

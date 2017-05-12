@@ -274,21 +274,21 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         case CommonConst.ActionType.add:
             
             //タイトル名設定(タスク登録)
-            self.title = CommonConst.VIW_TITLE_INPUT_TASK
+            self.title = MessageUtility.getMessage(key: "TitleInputTask")
             break;
             
         // 現在編集モードの場合
         case CommonConst.ActionType.edit:
             
             //タイトル名設定(タスク編集)
-            self.title = CommonConst.VIW_TITLE_EDIT_TASK
+            self.title = MessageUtility.getMessage(key: "TitleEditTask")
             break;
             
         // 上記以外の場合(参照モード)
         default:
             
             //タイトル名設定(タスク内容)
-            self.title = CommonConst.VIW_TITLE_CONTENT_TASK
+            self.title = MessageUtility.getMessage(key: "TitleContentTask")
             break;
         }
     }
@@ -427,7 +427,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         //項目名入力欄:delegate設定
         taskNameField.delegate  = self
         //項目名入力欄(透かし文字,左寄せ)
-        taskNameField.placeholder = CommonConst.INPUT_TASK_NAME_PLACE_HOLDER
+        taskNameField.placeholder = MessageUtility.getMessage(key: "LabelItemNamePlaceHolder")
         taskNameField.textAlignment = NSTextAlignment.left
         //項目名入力欄:編集完了時イベント
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: taskNameField)
@@ -447,7 +447,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         taskMemoView.textAlignment = NSTextAlignment.left
         taskMemoView.layer.borderWidth = 1
         taskMemoView.layer.borderColor = UIColor.gray.cgColor
-        taskMemoView.placeHolder = CommonConst.INPUT_TASK_MEMO_PLACE_HOLDER as NSString
+        taskMemoView.placeHolder = MessageUtility.getMessage(key: "LabelItemMemoPlaceHolder") as NSString
     }
     
     //タスク終了時刻欄:初期設定
@@ -627,17 +627,17 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         // 現在登録モードの場合
         case CommonConst.ActionType.add:
             // 後続ボタン:タイトル設定(登録)
-            addAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
+            addAfterTask.setTitle(MessageUtility.getMessage(key: "LabelItemAfterTaskAdd"), for: UIControlState())
             break;
         // 現在編集モードの場合
         case CommonConst.ActionType.edit:
             // 後続ボタン:タイトル設定(編集)
-            addAfterTask.setTitle(CommonConst.AFTER_EDIT_TASK_BTN_TITLE, for: UIControlState())
+            addAfterTask.setTitle(MessageUtility.getMessage(key: "LabelItemAfterTaskEdit"), for: UIControlState())
             break;
         // 上記以外の場合(参照モード)
         default:
             // 後続ボタン:タイトル設定(表示)
-            addAfterTask.setTitle(CommonConst.AFTER_DISPLAY_TASK_BTN_TITLE, for: UIControlState())
+            addAfterTask.setTitle(MessageUtility.getMessage(key: "LabelItemAfterTaskDisplay"), for: UIControlState())
             break;
         }
 

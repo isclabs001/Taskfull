@@ -75,8 +75,10 @@ class TaskInputViewController : BaseTaskInputViewController
             
             
             // 文字数制限アラート表示(メモ)
-            MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
-            
+            MessageUtility.dispAlertOK(
+                viewController: self,
+                title: "",
+                message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
         }
     }
     
@@ -96,8 +98,10 @@ class TaskInputViewController : BaseTaskInputViewController
                 inputTextField.text = copyText.substring(to: copyText.characters.index(copyText.startIndex, offsetBy: CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
                 
                 // 文字数制限アラート表示(項目名)
-                MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
-                
+                MessageUtility.dispAlertOK(
+                    viewController: self,
+                    title: "",
+                    message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
             }
         }
     }
@@ -197,8 +201,11 @@ class TaskInputViewController : BaseTaskInputViewController
         else{
             
             // タスク削除確認メッセージ表示
-            MessageUtility.dispAlertOKAction(viewController: self, title: "", message: MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DATE_INPUT, funcOkButton: inputConfirmOKAction)
-            
+            MessageUtility.dispAlertOKAction(
+                viewController: self,
+                title: "",
+                message: MessageUtility.getMessage(key: "MessageStringErrorTaskDateInput"),
+                funcOkButton: inputConfirmOKAction)
         }
         
     }
@@ -227,8 +234,11 @@ class TaskInputViewController : BaseTaskInputViewController
         else{
             
             // タスク削除確認メッセージ表示
-            MessageUtility.dispAlertOKAction(viewController: self, title: "", message: MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DATE_INPUT, funcOkButton: inputConfirmOKAction)
-            
+            MessageUtility.dispAlertOKAction(
+                viewController: self,
+                title: "",
+                message: MessageUtility.getMessage(key: "MessageStringErrorTaskDateInput"),
+                funcOkButton: inputConfirmOKAction)
         }
         
     }
@@ -277,7 +287,7 @@ class TaskInputViewController : BaseTaskInputViewController
             if(false == StringUtility.isEmpty(InputTaskNameField.text)){
                 
                 // 空白の場合、代入文字
-                taskInfoDataEntity.Title = CommonConst.INPUT_TASK_NAME_EMPTY_STRING
+                taskInfoDataEntity.Title = MessageUtility.getMessage(key: "LabelItemNameEmpty")
             }
             else{
                 
@@ -385,7 +395,7 @@ class TaskInputViewController : BaseTaskInputViewController
             //項目名未入力時チェック
             if(false == StringUtility.isEmpty(InputTaskNameField.text)){
                 // 空白の場合、代入文字
-                taskInfoDataEntity.Title = CommonConst.INPUT_TASK_NAME_EMPTY_STRING
+                taskInfoDataEntity.Title = MessageUtility.getMessage(key: "LabelItemNameEmpty")
             }
             else{
                 // 空白ではない場合、入力値

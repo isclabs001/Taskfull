@@ -1,0 +1,51 @@
+/* 
+  Localizable.strings
+  Taskfull
+
+  Created by IscIsc on 2017/05/12.
+  Copyright © 2017年 isc. All rights reserved.
+*/
+
+/// タイトル
+"TitleMain"="Taskfull [%@]";
+"TitleInputTask"="タスク登録";
+"TitleEditTask"="タスク編集";
+"TitleContentTask"="タスク内容";
+
+/// ラベル項目
+"LabelItemNameEmpty"="項目名未入力";
+"LabelItemNamePlaceHolder"="項目名:";
+"LabelItemMemoPlaceHolder"="メモ:";
+"LabelItemAfterTaskAdd"="後続タスク追加";
+"LabelItemAfterTaskDisplay"="後続タスク表示";
+"LabelItemAfterTaskEdit"="後続タスク編集";
+
+/// カテゴリー形式
+"CategoryTypeTask"="課題";
+"CategoryTypeShopping"="買い物";
+"CategoryTypeEmployment"="就職";
+"CategoryTypeOther"="その他";
+
+/// メインメニュー形式
+"MainMenuTypeTaskAdd"="タスク追加";
+"MainMenuTypeGPSNotification"="GPS通知設定";
+
+
+/// メッセージボタン
+"MessageStringButtonOK"="OK";
+"MessageStringButtonCancel"="キャンセル";
+/// メッセージタイトル
+"MessageStringTitleConfirmTaskComplete"="タスク完了確認";
+"MessageStringTitleConfirmDelete"="削除確認";
+"MessageStringTitleConfirmInput"="入力確認";
+/// 確認メッセージ
+"MessageStringConfirmMessageTaskComplete"="タスク「%@」を完了してもよろしいですか？";
+"MessageStringConfirmMessageTaskDelete"="編集中のタスク及び後続タスクを削除します。よろしいですか？";
+/// エラーメッセージ
+"MessageStringErrorTaskCountLimit"="%@文字以内で入力して下さい。";
+"MessageStringErrorTaskDateInput"="通知時刻を入力して下さい。";
+"MessageStringErrorNotificationPointListName"="通知地点名を入力してください。";
+"MessageStringErrorNotificationPointListSameName"="既に同じ名前が使用されています。";
+"MessageStringErrorNotificationPointListDelete"="「%@」を使用している未完了タスクが存在しています。";
+
+
