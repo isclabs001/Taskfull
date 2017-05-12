@@ -51,14 +51,6 @@ class CommonConst
     static internal let DISTANCE_THRESHOLD : Double = 0.5;
     
     /**
-     * 画面タイトル
-     */
-    static internal let VIW_TITLE_MAIN : String = "Taskfull [%@]";
-    static internal let VIW_TITLE_INPUT_TASK : String = "タスク登録";
-    static internal let VIW_TITLE_EDIT_TASK : String = "タスク編集";
-    static internal let VIW_TITLE_CONTENT_TASK : String = "タスク内容";
-    
-    /**
      * ドキュメント（共有）ディレクトリ
      */
     static internal let DIRECTORY_DOCUMENTS : String = NSHomeDirectory() + "/Library/Documents";
@@ -164,29 +156,6 @@ class CommonConst
     // 通知地点名入力制限数
     static internal let INPUT_TASK_NOTIFICATION_POINT_LIST_STRING_LIMIT: Int = 10;
     
-
-    /**
-     * 項目名未入力時代入定数
-     */
-    static internal let INPUT_TASK_NAME_EMPTY_STRING : String = "項目名未入力"
-    
-    
-    /**
-     * 入力欄プレースホルダー用定数
-     */
-    // 項目名プレースホルダー用定数
-    static internal let INPUT_TASK_NAME_PLACE_HOLDER : String = "項目名:"
-    // メモ欄プレースホルダー用定数
-    static internal let INPUT_TASK_MEMO_PLACE_HOLDER : String = "メモ:"
-    
-    /**
-     * 後続タスク追加ボタンタイトル定数
-     */
-    // 後続ボタン追加タイトル定数
-    static internal let AFTER_ADD_TASK_BTN_TITLE : String = "後続タスク追加"
-    static internal let AFTER_DISPLAY_TASK_BTN_TITLE : String = "後続タスク表示"
-    static internal let AFTER_EDIT_TASK_BTN_TITLE : String = "後続タスク編集"
-
     /**
      * カラーボタン選択時背景色定数
      */
@@ -219,10 +188,10 @@ class CommonConst
         case max
     }
     static internal let CATEGORY_TYPE_STRING : Array<String> = [
-        "課題",
-        "買い物",
-        "就職",
-        "その他"
+        MessageUtility.getMessage(key: "CategoryTypeTask"),
+        MessageUtility.getMessage(key: "CategoryTypeShopping"),
+        MessageUtility.getMessage(key: "CategoryTypeEmployment"),
+        MessageUtility.getMessage(key: "CategoryTypeOther")
     ]
     static internal let CATEGORY_TYPE_BACKGROUND_COLOR : Array<UIColor> = [
         UIColorUtility.rgb(255, g: 160, b: 160),
@@ -245,8 +214,8 @@ class CommonConst
         case max = 2
     }
     static internal let MAIN_MENU_TYPE_STRING : Array<String> = [
-        "タスク追加",
-        "GPS通知設定"
+        MessageUtility.getMessage(key: "MainMenuTypeTaskAdd"),
+        MessageUtility.getMessage(key: "MainMenuTypeGPSNotification"),
     ]
     static internal let MAIN_MENU_TYPE_BACKGROUND_COLOR : Array<UIColor> = [
         UIColorUtility.rgb(232, g: 207, b: 255),

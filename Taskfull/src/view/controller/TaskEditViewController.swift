@@ -53,8 +53,12 @@ class TaskEditViewController : BaseTaskInputViewController
     @IBAction func TouchUpInside_DeleteTaskBtn(_ sender: Any) {
         
         // タスク削除確認メッセージ表示
-        MessageUtility.dispAlertOKCancel(viewController: self, title: MessageUtility.MESSAGE_TITLE_STRING_CONFIRM_TASK_DELETE, message: MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DELETE, funcOkButton: DeleteConfirmOKAction, funcCancelButton: nil)
-        
+        MessageUtility.dispAlertOKCancel(
+            viewController: self,
+            title: MessageUtility.getMessage(key: "MessageStringTitleConfirmDelete"),
+            message: MessageUtility.getMessage(key: "MessageStringConfirmMessageTaskDelete"),
+            funcOkButton: DeleteConfirmOKAction,
+            funcCancelButton: nil)
     }
     
     // タスク削除確認OKアクション
@@ -123,7 +127,7 @@ class TaskEditViewController : BaseTaskInputViewController
                 AddAfterTask.isHidden = false
                 
                 // 後続タスク追加ボタン:タイトル再設定(登録)
-                AddAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
+                AddAfterTask.setTitle(MessageUtility.getMessage(key: "LabelItemAfterTaskAdd"), for: UIControlState())
 
             }
             // TODO: 後続タスク作成上限撤廃の為、上記分岐と同処理
@@ -140,7 +144,7 @@ class TaskEditViewController : BaseTaskInputViewController
                 AddAfterTask.isHidden = false
                 
                 // 後続タスク追加ボタン:タイトル再設定(登録)
-                AddAfterTask.setTitle(CommonConst.AFTER_ADD_TASK_BTN_TITLE, for: UIControlState())
+                AddAfterTask.setTitle(MessageUtility.getMessage(key: "LabelItemAfterTaskAdd"), for: UIControlState())
                 // TEST:END
                 
                 return
@@ -359,8 +363,10 @@ class TaskEditViewController : BaseTaskInputViewController
             
             
             // 文字数制限アラート表示(メモ)
-            MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
-            
+            MessageUtility.dispAlertOK(
+                viewController: self,
+                title: "",
+                message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
         }
     }
     
@@ -382,8 +388,10 @@ class TaskEditViewController : BaseTaskInputViewController
                 inputTextField.text = copyText.substring(to: copyText.characters.index(copyText.startIndex, offsetBy: CommonConst.INPUT_TASK_NAME_STRING_LIMIT))
                 
                 // 文字数制限アラート表示(項目名)
-                MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
-                
+                MessageUtility.dispAlertOK(
+                    viewController: self,
+                    title: "",
+                    message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
             }
         }
     }
@@ -551,7 +559,7 @@ class TaskEditViewController : BaseTaskInputViewController
         //項目名未入力時チェック
         if(false == StringUtility.isEmpty(InputTaskNameField.text)){
             // 空白の場合、代入文字
-            taskInfoDataEntity.Title = CommonConst.INPUT_TASK_NAME_EMPTY_STRING
+            taskInfoDataEntity.Title = MessageUtility.getMessage(key: "LabelItemNameEmpty")
         }
         else{
             // 空白ではない場合、入力値

@@ -424,10 +424,11 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         else{
             
             // 制限アラート表示
-            MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
-            
+            MessageUtility.dispAlertOK(
+                viewController: self,
+                title: "",
+                message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
         }
-
     }
     
     
@@ -582,10 +583,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                     // アラート表示
                     let alert = UIAlertView()
                     alert.title = ""
-                    alert.message = MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_SAME_NAME
-                    alert.addButton(withTitle: "OK")
+                    alert.message = MessageUtility.getMessage(key: "MessageStringErrorNotificationPointListSameName")
+                    alert.addButton(withTitle: MessageUtility.getMessage(key: "MessageStringButtonOK"))
                     alert.show()
-                    
                 }
             }
             // 入力値が空欄である場合
@@ -594,8 +594,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 // アラート表示
                 let alert = UIAlertView()
                 alert.title = ""
-                alert.message = MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_NAME
-                alert.addButton(withTitle: "OK")
+                alert.message = MessageUtility.getMessage(key: "MessageStringErrorNotificationPointListName")
+                alert.addButton(withTitle: MessageUtility.getMessage(key: "MessageStringButtonOK"))
                 alert.show()
                 
             }
@@ -603,7 +603,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         
         
         // Cancelアクション生成
-        let CancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive) { (action: UIAlertAction!) -> Void in
+        let CancelAction = UIAlertAction(title: MessageUtility.getMessage(key: "MessageStringButtonCancel"), style: UIAlertActionStyle.destructive) { (action: UIAlertAction!) -> Void in
             
             // Cancel時イベント記述
 
@@ -643,8 +643,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 // アラート表示；二重表示対策の為、UIAlertView使用
                 let alert = UIAlertView()
                 alert.title = ""
-                alert.message = "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT,(String(CommonConst.INPUT_TASK_NOTIFICATION_POINT_LIST_STRING_LIMIT)))
-                alert.addButton(withTitle: "OK")
+                alert.message = MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: String(CommonConst.INPUT_TASK_NOTIFICATION_POINT_LIST_STRING_LIMIT))
+                alert.addButton(withTitle: MessageUtility.getMessage(key: "MessageStringButtonOK"))
                 alert.show()
                 
                 // 前後半角スペース削除　※スペースのみ入力時、複数通知防止の為

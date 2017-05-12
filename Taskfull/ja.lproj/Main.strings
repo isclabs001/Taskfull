@@ -1,0 +1,69 @@
+
+/* Class = "UIButton"; normalTitle = "削除"; ObjectID = "4G2-4B-50l"; */
+"4G2-4B-50l.normalTitle" = "削除";
+
+/* Class = "UIButton"; normalTitle = "後続タスク追加"; ObjectID = "5jP-bL-5xk"; */
+"5jP-bL-5xk.normalTitle" = "後続タスク追加";
+
+/* Class = "UITextField"; placeholder = "通知時刻"; ObjectID = "6S7-hO-Ucy"; */
+"6S7-hO-Ucy.placeholder" = "通知時刻";
+
+/* Class = "UITextField"; placeholder = "通知場所"; ObjectID = "702-8F-eoS"; */
+"702-8F-eoS.placeholder" = "通知場所";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7dZ-PZ-lc6"; */
+"7dZ-PZ-lc6.normalTitle" = "Button";
+
+/* Class = "UISegmentedControl"; LBd-6C-BTm.segmentTitles[0] = "低"; ObjectID = "LBd-6C-BTm"; */
+"LBd-6C-BTm.segmentTitles[0]" = "低";
+
+/* Class = "UISegmentedControl"; LBd-6C-BTm.segmentTitles[1] = "中"; ObjectID = "LBd-6C-BTm"; */
+"LBd-6C-BTm.segmentTitles[1]" = "中";
+
+/* Class = "UISegmentedControl"; LBd-6C-BTm.segmentTitles[2] = "高"; ObjectID = "LBd-6C-BTm"; */
+"LBd-6C-BTm.segmentTitles[2]" = "高";
+
+/* Class = "UISegmentedControl"; LBd-6C-BTm.segmentTitles[3] = "至急"; ObjectID = "LBd-6C-BTm"; */
+"LBd-6C-BTm.segmentTitles[3]" = "至急";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Oq3-bs-m4t"; */
+"Oq3-bs-m4t.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = " "; ObjectID = "SXR-Lq-i1V"; */
+"SXR-Lq-i1V.normalTitle" = " ";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Zak-Zi-z4b"; */
+"Zak-Zi-z4b.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Zh2-y1-WJP"; */
+"Zh2-y1-WJP.normalTitle" = "Button";
+
+/* Class = "UITextField"; placeholder = "通知場所"; ObjectID = "aPD-ts-pDm"; */
+"aPD-ts-pDm.placeholder" = "通知場所";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "cVH-fM-vMr"; */
+"cVH-fM-vMr.normalTitle" = "Button";
+
+/* Class = "UISegmentedControl"; g4e-Va-Zua.segmentTitles[0] = "低"; ObjectID = "g4e-Va-Zua"; */
+"g4e-Va-Zua.segmentTitles[0]" = "低";
+
+/* Class = "UISegmentedControl"; g4e-Va-Zua.segmentTitles[1] = "中"; ObjectID = "g4e-Va-Zua"; */
+"g4e-Va-Zua.segmentTitles[1]" = "中";
+
+/* Class = "UISegmentedControl"; g4e-Va-Zua.segmentTitles[2] = "高"; ObjectID = "g4e-Va-Zua"; */
+"g4e-Va-Zua.segmentTitles[2]" = "高";
+
+/* Class = "UISegmentedControl"; g4e-Va-Zua.segmentTitles[3] = "至急"; ObjectID = "g4e-Va-Zua"; */
+"g4e-Va-Zua.segmentTitles[3]" = "至急";
+
+/* Class = "UITextField"; placeholder = "通知場所"; ObjectID = "ln1-Dl-wl9"; */
+"ln1-Dl-wl9.placeholder" = "通知場所";
+
+/* Class = "UITextField"; placeholder = "通知時刻"; ObjectID = "qGP-Lc-c3N"; */
+"qGP-Lc-c3N.placeholder" = "通知時刻";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vhD-cs-b7O"; */
+"vhD-cs-b7O.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "w2T-Od-cqa"; */
+"w2T-Od-cqa.normalTitle" = "Button";

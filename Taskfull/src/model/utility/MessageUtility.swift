@@ -13,31 +13,6 @@ import UIKit
 ///
 class MessageUtility
 {
-    /**
-     * 定数定義
-     */
-    /// ボタン
-    open static let MESSAGE_BUTTON_STRING_OK : String = "OK"
-    open static let MESSAGE_BUTTON_STRING_CANCEL : String = "キャンセル"
-
-    // タイトル
-    open static let MESSAGE_TITLE_STRING_CONFIRM_TASK_COMPLETE : String = "タスク完了確認"
-    open static let MESSAGE_TITLE_STRING_CONFIRM_TASK_DELETE : String = "削除確認"
-    open static let MESSAGE_TITLE_STRING_CONFIRM_TASK_DATE_INPUT : String = "入力確認"
-    
-    // メッセージ
-    open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_COMPLETE : String = "タスク「%@」を完了してもよろしいですか？"
-    open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DELETE : String = "編集中のタスク及び後続タスクを削除します。よろしいですか？"
-    open static let MESSAGE_MESSAGE_STRING_TASK_COUNT_LIMIT : String = "%@文字以内で入力して下さい"
-    open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DATE_INPUT : String = "通知時刻を入力して下さい"
-    open static let MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_NAME : String = "通知地点名を入力してください"
-    open static let MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_SAME_NAME : String = "既に同じ名前が使用されています"
-    
-    
-    /**
-     * 変数定義
-     */
-    
     ///
     /// メッセージ表示（OKボタン）
     ///　- parameter viewController:UIViewController
@@ -52,7 +27,7 @@ class MessageUtility
         let alert: UIAlertController = UIAlertController(title: title, message: message,  preferredStyle:  UIAlertControllerStyle.alert)
         
         // OKボタン
-        let defaultAction: UIAlertAction = UIAlertAction(title: MESSAGE_BUTTON_STRING_OK, style: UIAlertActionStyle.default, handler:nil)
+        let defaultAction: UIAlertAction = UIAlertAction(title: MessageUtility.getMessage(key: "MessageStringButtonOK"), style: UIAlertActionStyle.default, handler:nil)
 
         // Actionを追加
         alert.addAction(defaultAction)
@@ -75,9 +50,9 @@ class MessageUtility
         let alert: UIAlertController = UIAlertController(title: title, message: message,  preferredStyle:  UIAlertControllerStyle.alert)
         
         // OKボタン
-        let defaultAction: UIAlertAction = UIAlertAction(title: MESSAGE_BUTTON_STRING_OK, style: UIAlertActionStyle.default, handler:funcOkButton)
+        let defaultAction: UIAlertAction = UIAlertAction(title: MessageUtility.getMessage(key: "MessageStringButtonOK"), style: UIAlertActionStyle.default, handler:funcOkButton)
         // キャンセルボタン
-        let cancelAction: UIAlertAction = UIAlertAction(title: MESSAGE_BUTTON_STRING_CANCEL, style: UIAlertActionStyle.cancel, handler:funcCancelButton)
+        let cancelAction: UIAlertAction = UIAlertAction(title: MessageUtility.getMessage(key: "MessageStringButtonCancel"), style: UIAlertActionStyle.cancel, handler:funcCancelButton)
         
         // Actionを追加
         alert.addAction(cancelAction)
@@ -100,7 +75,7 @@ class MessageUtility
         let alert: UIAlertController = UIAlertController(title: title, message: message,  preferredStyle:  UIAlertControllerStyle.alert)
         
         // OKボタン
-        let defaultAction: UIAlertAction = UIAlertAction(title: MESSAGE_BUTTON_STRING_OK, style: UIAlertActionStyle.default, handler:funcOkButton)
+        let defaultAction: UIAlertAction = UIAlertAction(title: MessageUtility.getMessage(key: "MessageStringButtonOK"), style: UIAlertActionStyle.default, handler:funcOkButton)
         
         // Actionを追加
         alert.addAction(defaultAction)
@@ -109,4 +84,22 @@ class MessageUtility
         viewController.present(alert, animated: true, completion: nil)
     }
     
+    ///
+    /// メッセージ取得
+    ///　- parameter key:メッセージリソースキー
+    ///　- returns: メッセージ
+    ///
+    static open func getMessage(key : String) -> String {
+        return NSLocalizedString(key, comment: StringUtility.EMPTY)
+    }
+    
+    ///
+    /// メッセージ取得
+    ///　- parameter key:メッセージリソースキー
+    ///　- parameter param:メッセージパラメーター
+    ///　- returns: メッセージ
+    ///
+    static open func getMessage(key : String, param : String) -> String {
+        return "".appendingFormat(getMessage(key : key),param)
+    }
 }
