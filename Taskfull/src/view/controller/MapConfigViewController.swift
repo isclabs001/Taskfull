@@ -168,7 +168,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             let tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(missFocusView))
             view.addGestureRecognizer(tap)
             
-            //　通知場所(登録地点リスト):初期設定
+            //　通知地点(登録地点リスト):初期設定
             displayInputPoint(pointListField: self.InputPointListField)
 
             /// リスト内ピン生成処理
@@ -182,7 +182,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     }
 
     
-    ///　通知場所(登録地点リスト):初期設定
+    ///　通知地点(登録地点リスト):初期設定
     func displayInputPoint(pointListField: UITextField!){
         
         //登録地点リスト:要素更新処理
@@ -679,38 +679,55 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         
         // 削除アクション生成
         let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: {(action: UIAlertAction!) in
-
+            
+            // アノテーションタイトルと紐付いている位置情報Id取得
+            let intLocationId = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(self.GPSMapView.annotations[index].title!!)
+            
             // 一致するタイトルのデータ削除
-            // 一致タイトル位置情報のIDを返し、該当ID削除
-            TaskInfoUtility.DefaultInstance.RemoveLocationInfo(TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(self.GPSMapView.annotations[index].title!!))
-            TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-            
-            // 選択アノテーション削除(インデックス指定)
-            self.GPSMapView.removeAnnotation(self.GPSMapView.annotations[index])
-            // 選択オーバーレイ削除(アノテーションインデックスが前挿入である為、要ズレ回避)
-            // self.GPSMapView.remove(self.GPSMapView.overlays[index])
-            
-            // アノテーションインデックス対策代替処理:START
-            // 全オーバーレイ削除(円)
-            self.GPSMapView.removeOverlays(self.GPSMapView.overlays)
-            
-            // Map上のアノテーション全てにオーバーレイ描写処理
-            for i in 0..<(self.GPSMapView.annotations as NSArray).count{
+            // 設定タスクが存在しない場合
+            if(self.getTaskDataLocationValue(intLocationId: intLocationId) == -1){
                 
-                // 円を描画(半径100m)
-                let selfCircle: MKCircle = MKCircle(center: self.GPSMapView.annotations[i].coordinate, radius: CLLocationDistance(CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE))
+                // 該当Id削除
+                TaskInfoUtility.DefaultInstance.RemoveLocationInfo(intLocationId)
+                TaskInfoUtility.DefaultInstance.WriteTaskInfo()
                 
-                // mapViewへ円追加：addOverlayイベント処理開始
-                self.GPSMapView.add(selfCircle)
-
+                // 選択アノテーション削除(インデックス指定)
+                self.GPSMapView.removeAnnotation(self.GPSMapView.annotations[index])
+                // 選択オーバーレイ削除(アノテーションインデックスが前挿入である為、要ズレ回避)
+                // self.GPSMapView.remove(self.GPSMapView.overlays[index])
+                
+                // アノテーションインデックス対策代替処理:START
+                // 全オーバーレイ削除(円)
+                self.GPSMapView.removeOverlays(self.GPSMapView.overlays)
+                
+                // Map上のアノテーション全てにオーバーレイ描写処理
+                for i in 0..<(self.GPSMapView.annotations as NSArray).count{
+                    
+                    // 円を描画(半径100m)
+                    let selfCircle: MKCircle = MKCircle(center: self.GPSMapView.annotations[i].coordinate, radius: CLLocationDistance(CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE))
+                    
+                    // mapViewへ円追加：addOverlayイベント処理開始
+                    self.GPSMapView.add(selfCircle)
+                    
+                }
+                // アノテーションインデックス対策代替処理:END
+                
+                // 更新フラグを立てる
+                self.updateFlag = true
+                
+                // 通知地点名配列更新処理
+                self.updataPointListNameArray()
+                
+                
             }
-            // アノテーションインデックス対策代替処理:END
-            
-            // 更新フラグを立てる
-            self.updateFlag = true
-
-            // 通知地点名配列更新処理
-            self.updataPointListNameArray()
+            // 設定タスクが存在する場合
+            else{
+                
+                // 削除不可アラート表示
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_DELETE_ERROR,(self.GPSMapView.annotations[index].title!!)))
+                
+            }
+        
             
         })
         
@@ -786,4 +803,30 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // キャンセル
         setCancelFlag(cancelFlag: !self.updateFlag)
     }
+    
+    
+    /// 未完了タスクの同一位置情報Idの取得処理
+    ///
+    /// - Parameter intLocationId: 検索対象位置情報Id
+    /// - Returns: 未完了タスク一致した位置情報Id
+    fileprivate func getTaskDataLocationValue(intLocationId :Int) -> Int {
+        
+        // タスクデータ数分表示する
+        for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
+            
+            // 未完了かつ同一ロケーションが設定されている場合
+            if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
+                && intLocationId == data.NotifiedLocation) {
+                
+                // 結果を返す
+                return data.NotifiedLocation
+            }
+        }
+
+        // 結果を返す
+        return -1
+    }
+    
+    
+    
 }

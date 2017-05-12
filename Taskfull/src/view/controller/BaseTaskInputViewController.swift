@@ -79,7 +79,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     //PicerView　表示要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         //要素数
-        return pointListNameArray[row] as? String
+        return pointListNameArray[row]
     }
     //PicerView　値選択時イベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -134,11 +134,48 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     // 選択地点の設定
     func setSelectedPoint(textField : UITextField, row: Int) {
         
-        // 選択項目をUITextFieldに設定する
-        textField.text = pointListNameArray[row] as? String
+        // 選択行
+        switch(row){
+
+        // 初期値である場合
+        case 0:
+            
+            // 選択項目をUITextFieldに設定
+            textField.text = pointListNameArray[row]
+            
+            // 0.1秒バイブレーション作動
+            //actionViblation()
         
-        // 0.1秒バイブレーション作動
-        actionViblation()
+        // 初期値以外である場合
+        default:
+            
+            // 未完了かつロケーション初期値以外が設定されているタスク数が20以下である場合
+            if(getTaskDataLocationCountValue(strInputPointTitle: textField.text!) <= 20){
+                
+                // 選択項目をUITextFieldに設定
+                textField.text = pointListNameArray[row]
+                
+                // 0.1秒バイブレーション作動
+                actionViblation()
+
+            }
+            // 未完了かつロケーション初期値以外が設定されているタスク数が20以上である場合
+            else{
+                
+                // UITextFieldを空白に設定
+                textField.text = ""
+                
+                // 選択行を初期値に選択
+                inputPointPicker.selectRow(0, inComponent: 0, animated: true)
+                
+                // viewを閉じる
+                view.endEditing(true)
+                
+                // アラート表示
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: "通知地点設定数上限です。\n未完了タスク20個まで設定可能です")
+                
+            }
+        }
     }
     
     // didReceiveMemoryWarningイベント処理
@@ -161,9 +198,6 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         //　正常な場合
         if(true == ret)
         {
-            // 背景色設定
-//            mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
-//            mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
             // 背景色設定(カテゴリー対応)
             mainView.gradationBackgroundStartColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[paramCategoryType]
             mainView.gradationBackgroundEndColor = CommonConst.CATEGORY_TYPE_BACKGROUND_COLOR[paramCategoryType]
@@ -419,21 +453,6 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     //タスク終了時刻欄:初期設定
     func diplayInputTaskDate(taskDateField: UITextField!){
         
-        // ツールバー実装:START
-        // キーボードに表示するツールバーの表示
-//        let pickerToolBar = UIToolbar(frame: CGRect(x:0,y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
-//        pickerToolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
-//        pickerToolBar.barStyle = .blackOpaque
-//        pickerToolBar.tintColor = UIColor.white
-//        pickerToolBar.backgroundColor = UIColor.blue
-//        //　クリアボタンを設定
-//        let toolBarBtn      = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(TaskInputViewController.onTouch_ToolBarClearBtn))
-//        //　ツールバーにボタンを表示
-//        pickerToolBar.setItems([toolBarBtn], animated: true)
-//        pickerToolBar.sizeToFit()
-//        taskDateField.inputAccessoryView = pickerToolBar
-        // ツールバー実装:END
-        
         
         //タスク終了時刻入力欄（現在日付,中央寄せ,サイズ自動調整）
         // 登録開始タスクである場合(新規登録先頭タスク)
@@ -537,10 +556,10 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     }
 
     
-    //通知場所(登録地点リスト):初期設定
+    //通知地点(登録地点リスト):初期設定
     func displayInputPoint(pointListField: UITextField!){
         
-        //登録地点リスト:要素追加イベント(未実装)
+        //登録地点リスト:要素追加イベント
         updataPointListNameArray(pointListField)
         
         //登録地点リスト：Delegate,DataSource設定
@@ -625,15 +644,6 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         // 後続タスク追加ボタン:タップ時イベント
         addAfterTask.addTarget(self, action: #selector(onTouchDown_addAfterTaskButton(_:)), for:.touchUpInside)
         
-        // TODO:後続タスク制限数の為後続ボタン隠す(4/21)※作成上限撤廃する場合、諸問題クリアする必要あり
-//        if(self.paramTaskId != -2){
-//            addAfterTask.isHidden = true
-//            addAfterTask.isEnabled = false
-//        }
-//        else{
-//            addAfterTask.isHidden = false
-//            addAfterTask.isEnabled = true
-//        }
     }
     
     //後続タスクボタン：タップ時イベント
@@ -686,6 +696,54 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         // キャンセル
         setCancelFlag(cancelFlag: true)
     }
+    
+    /// 未完了かつロケーション初期値以外が設定されているタスク数取得処理
+    ///
+    /// - Returns: 未完了かつロケーション初期値以外が設定されているタスク数
+    fileprivate func getTaskDataLocationCountValue(strInputPointTitle : String) -> Int {
+        
+        // カウント初期化
+        var intUnfinishedLocationCount : Int = 0
+        
+        // メイン画面モード
+        switch(self.paramMainViewMode){
+        // 登録モードの場合
+        case CommonConst.ActionType.add:
+            
+            // 登録前提の為、カウントを増やす
+            intUnfinishedLocationCount += 1
+            
+        // 上記以外の場合(編集,参照モード)
+        default:
+            
+            //  位置情報が未設定である場合
+            if(strInputPointTitle.isEmpty == true){
+                
+                // 追加前提の為、カウントを増やす
+                intUnfinishedLocationCount += 1
+                
+            }
+            
+            break
+        }
+            
+        // タスクデータ数分表示する
+        for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
+            
+            // 未完了かつロケーション初期値以外が設定されている場合
+            if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag
+                && CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE != data.NotifiedLocation) {
+                
+                // カウントを増やす
+                intUnfinishedLocationCount += 1
+            }
+        }
+        
+        // 結果を返す
+        return intUnfinishedLocationCount
+    }
+    
+    
 }
 
 

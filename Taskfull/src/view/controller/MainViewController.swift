@@ -1151,13 +1151,13 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                     // UNMutableNotificationContent作成
                     let content = UNMutableNotificationContent()
                     
-                    // カスタム通知設定
-                    content.categoryIdentifier = "message"
+                    // Identifier設定
+                    content.categoryIdentifier = "message" + String(item.Title)
                     
-                    //通知タイトル設定
+                    // 通知タイトル設定
                     content.title = String(item.Title)
                     
-                    //メモが空欄である場合
+                    // メモが空欄である場合
                     if(true == StringUtility.isEmpty(item.Memo)){
                         //通知ボディ = 空白文字挿入
                         content.body = " "
@@ -1219,6 +1219,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
                         let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
                         
                         // デバッグ用:通知座標指定読み出し:START
+                        print(item.Title)
                         debugPrint(taskLocationDataEntity.Title)
                         debugPrint(taskLocationDataEntity.Latitude)
                         debugPrint(taskLocationDataEntity.Longitude)

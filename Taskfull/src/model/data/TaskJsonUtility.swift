@@ -348,7 +348,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_MEMO, value: escapeJsonString(data.Memo), isComma: true))
             // 日時設定
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_DATETIME, value: data.DateTime, isComma: true))
-            // 通知場所設定
+            // 通知地点設定
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_NOTIFIED_LOCATION, value: data.NotifiedLocation, isComma: true))
             // 重要度設定
             jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_DATA_IMPORTANCE, value: data.Importance, isComma: true))
