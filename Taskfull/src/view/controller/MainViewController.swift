@@ -477,9 +477,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
         // 上記以外の場合
         } else {
             // 作成日からの時間の差取得
-            let diffHour : Int = FunctionUtility.DiffHour(taskDate, date2: createDate) - FunctionUtility.DiffHour(systemDate, date2: createDate)
+            let diffHourAll : Int = FunctionUtility.DiffHour(taskDate, date2: createDate)
+            let diffHourRemaining : Int = FunctionUtility.DiffHour(taskDate, date2: systemDate)
+            let hourSize : CGFloat = CGFloat(CommonConst.TASK_BUTTON_SIZE_MAX - CommonConst.TASK_BUTTON_SIZE_MIN) / CGFloat(diffHourAll)
 
-            let work : CGFloat = CGFloat(CommonConst.TASK_BUTTON_SIZE_MIN) + ((CGFloat(CommonConst.TASK_BUTTON_SIZE_MAX - CommonConst.TASK_BUTTON_SIZE_MIN) / CGFloat(diffHour)))
+            let work : CGFloat = CGFloat(CommonConst.TASK_BUTTON_SIZE_MIN) + (hourSize * CGFloat(diffHourAll - diffHourRemaining))
             ret = CGSize(width: work, height: work)
         }
         
