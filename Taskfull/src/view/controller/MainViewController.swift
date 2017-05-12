@@ -7,14 +7,11 @@
 //
 
 import UIKit
-import UserNotifications
-import NotificationCenter
-import CoreLocation
 
 ///
 /// メイン画面
 ///
-class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNotificationCenterDelegate,UIApplicationDelegate,SlideMenuControllerDelegate
+class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenuControllerDelegate
 {
     /**
      * 定数
@@ -1005,7 +1002,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
             getTaskInfo()
         
             // タスク通知生成処理
-            taskExpirationNotification()
+            //taskExpirationNotification()
         
             // ナビゲーションバーの再描画
             redrawNavigationBar()
@@ -1109,177 +1106,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,UNUserNot
         self.taskCategoryManuBarController.redraw()
     }
     
-    //**通知関連メソッド:START
-    // タスク通知生成処理:要修正　TODO：AppDelegateへ移動、通知、iOS９以下の対応、、
-    fileprivate func taskExpirationNotification(){
-        
-        
-        //　現在のローカル通知全削除
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-        } else {
-            // Fallback on earlier versions
-        };
-        
-        
-        if #available(iOS 10.0, *) {
-            
-            // 通知デリゲート設定
-            let center = UNUserNotificationCenter.current()
-            center.delegate = self
-            
-            // 通知種類(バッチ,サウンド,アラート)
-            center.requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (granted, error) in
-                if error != nil {
-                    return
-                }
-                
-                if granted {
-                    debugPrint("通知許可")
-                } else {
-                    debugPrint("通知拒否")
-                }
-                
-                //通知設定：START
-
-                //　DateComponents変換用カレンダー生成(西暦)
-                let calender  =  Calendar(identifier:.gregorian)
-                
-                //表示タスク数分処理
-                for item in self.getDisplayTaskData() {
-
-                    // UNMutableNotificationContent作成
-                    let content = UNMutableNotificationContent()
-                    
-                    // Identifier設定
-                    content.categoryIdentifier = "message" + String(item.Title)
-                    
-                    // 通知タイトル設定
-                    content.title = String(item.Title)
-                    
-                    // メモが空欄である場合
-                    if(true == StringUtility.isEmpty(item.Memo)){
-                        //通知ボディ = 空白文字挿入
-                        content.body = " "
-                    }
-                    else{
-                        //通知ボディ ＝ メモ設定
-                        content.body = String(item.Memo)
-                    }
-                    
-                    //アイコンバッジ：数
-                    //content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber
-                    
-                    //通知サウンド:デフォルト
-                    content.sound = UNNotificationSound.default()
-
-                    // タスク終了日時をdateComponetsへ変換
-                    let dateComponents =   calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
-                    
-                    // 変換したタスク日時をトリガーに設定(リピート:なし)
-                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: dateComponents, repeats: false)
-                    
-                    //　TEST確認用：要削除
-                    debugPrint(calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime)))
-                    
-                
-                    // UNNotificationRequest作成(identifier:タスクID,content: タスク内容,trigger: 設定日時)
-                    let request = UNNotificationRequest.init(identifier: String(item.Id), content: content, trigger: trigger)
-
-                
-                    // UNUserNotificationCenterに作成したUNNotificationRequestを追加
-                    center.add(request)
-
-                    
-                    
-                    
-                    // TEST:START
-                    // UNMutableNotificationContent 作成
-                    content.title = String((item.Title) + "_到着")
-                    //メモが空欄である場合
-                    if(true == StringUtility.isEmpty(item.Memo)){
-                        //通知ボディ = 空白文字挿入
-                        content.body = " "
-                    }
-                    else{
-                        //通知ボディ ＝ メモ設定
-                        content.body = String(item.Memo)
-                    }
-                    //通知サウンド:デフォルト
-                    content.sound = UNNotificationSound.default()
-                    
-                    // TODO:要存在確認？
-                    // 通知地点初期値(未設定)ではない場合
-                    if(item.NotifiedLocation != CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE){
-                        
-                        // TaskInfoLocationDataEntity
-                        let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(item.NotifiedLocation)!
-                        
-                        // 通知座標指定
-                        let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
-                        
-                        // デバッグ用:通知座標指定読み出し:START
-                        print(item.Title)
-                        debugPrint(taskLocationDataEntity.Title)
-                        debugPrint(taskLocationDataEntity.Latitude)
-                        debugPrint(taskLocationDataEntity.Longitude)
-                        // デバッグ用:通知座標指定読み出し:END
-                        
-                        // 通知範囲指定
-                        let region = CLCircularRegion(center: coordinate, radius: CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE, identifier: "region" + item.Title)
-                        
-                        // 通知範囲in
-                        region.notifyOnEntry = true
-                        // 通知範囲out
-                        //region.notifyOnExit = true
-                        
-                        // 通知トリガー作成(通知範囲,通知リピートなし)
-                        let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
-                        
-                        // 通知リクエスト作成
-                        let locationRequest = UNNotificationRequest(identifier: String(item.Id) + "_GPS",content: content,trigger: locationTrigger)
-                        
-                        // UNUserNotificationCenterに作成したUNNotificationRequestを追加
-                        center.add(locationRequest)
-
-                    }
-                    // TEST:END
-                }
-                //通知設定：END
-            })
-            
-        } else {
-            // iOS 9
-            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
-            UIApplication.shared.registerUserNotificationSettings(settings)
-            
-            
-        }
-    }
     
-    
-    // フォアグラウンド時:通知受信時イベント
-    @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        // 通知：バッジ、サウンド、アラート
-        completionHandler([.badge,.sound, .alert])
-
-    }
-    
-    
-    // 通知タップ時イベント
-    @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        //UIApplication.shared.applicationIconBadgeNumber = 0
-        
-        //通知：なし
-        completionHandler()
-    }
-    //**END
     
     /// SlideMenuControllerDelegate
     func leftWillOpen() {
