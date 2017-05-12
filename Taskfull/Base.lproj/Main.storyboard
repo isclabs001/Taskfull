@@ -530,7 +530,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5jP-bL-5xk" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="290" height="67"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="322" height="67"/>
                                                 <color key="backgroundColor" red="0.28627450980000002" green="0.36078431370000003" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="5jP-bL-5xk" secondAttribute="height" multiplier="290:67" id="xIX-DY-aq4"/>
@@ -559,7 +559,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4G2-4B-50l" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="290" y="0.0" width="124" height="67"/>
+                                                <rect key="frame" x="322" y="0.0" width="92" height="67"/>
                                                 <color key="backgroundColor" red="1" green="0.43698790050000003" blue="0.38521007340000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="4G2-4B-50l" secondAttribute="height" multiplier="124:67" id="mn3-IA-ZNb"/>
