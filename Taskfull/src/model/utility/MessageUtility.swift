@@ -32,7 +32,8 @@ class MessageUtility
     open static let MESSAGE_MESSAGE_STRING_CONFIRM_TASK_DATE_INPUT : String = "通知時刻を入力して下さい"
     open static let MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_NAME : String = "通知地点名を入力してください"
     open static let MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_SAME_NAME : String = "既に同じ名前が使用されています"
-    
+    open static let MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_DELETE_ERROR : String = "「%@」が設定されている未完了タスクが存在しています"
+    open static let MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_CREATE_LIMIT : String = "通知地点作成上限です"
     
     /**
      * 変数定義

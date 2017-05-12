@@ -115,7 +115,7 @@ class TaskInputViewController : BaseTaskInputViewController
         //タスク終了時刻欄:初期設定
         diplayInputTaskDate(taskDateField: self.InputTaskDateField)
         
-        //通知場所:初期設定
+        //通知地点:初期設定
         displayInputPoint(pointListField: self.InputPointListField)
         
         //重要度:初期設定
@@ -291,8 +291,8 @@ class TaskInputViewController : BaseTaskInputViewController
             //タスク終了時刻
             taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
             
-            //通知場所
-            //通知場所未入力時チェック
+            //通知地点
+            //通知地点未入力時チェック
             if(false == StringUtility.isEmpty(InputPointListField.text)){
                 
                 // 空白の場合、固定値代入
@@ -398,15 +398,19 @@ class TaskInputViewController : BaseTaskInputViewController
             //タスク終了時刻
             taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
             
-            //通知場所
-            //通知場所未入力時チェック
+            //通知地点
+            //通知地点未入力時チェック
             if(false == StringUtility.isEmpty(InputPointListField.text)){
-                // 空白の場合、固定値代入
+                
+                // 入力欄空白の場合、固定値代入
                 taskInfoDataEntity.NotifiedLocation = CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE
+                
             }
             else{
-                // 空白ではない場合、入力値
+                
+                // 空白ではない場合、入力値から値取得
                 taskInfoDataEntity.NotifiedLocation = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(InputPointListField.text! as String)
+                
             }
             
             //重要度(セグメントのインデックス)

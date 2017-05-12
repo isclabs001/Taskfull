@@ -37,7 +37,7 @@ open class TaskInfoDataEntity : Comparable {
      */
     var DateTime : String
     /**
-     * 通知場所
+     * 通知地点
      */
     var NotifiedLocation : Int
     /**

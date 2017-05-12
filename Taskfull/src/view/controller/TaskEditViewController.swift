@@ -277,7 +277,7 @@ class TaskEditViewController : BaseTaskInputViewController
         // TEST:END
         
         
-        // 通知場所リスト欄
+        // 通知地点リスト欄
         // 通知地点初期値である場合
         if(taskInfo.NotifiedLocation == CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE){
             // テキスト欄 = 空白
@@ -399,7 +399,7 @@ class TaskEditViewController : BaseTaskInputViewController
         //タスク終了時刻欄:初期設定
         diplayInputTaskDate(taskDateField: self.InputTaskDateField)
         
-        //通知場所:初期設定
+        //通知地点:初期設定
         displayInputPoint(pointListField: self.InputPointListField)
         
         //重要度:初期設定
@@ -564,8 +564,8 @@ class TaskEditViewController : BaseTaskInputViewController
         //タスク終了時刻(編集対象)
         taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
         
-        //通知場所(編集対象)
-        //通知場所未入力時チェック
+        //通知地点(編集対象)
+        //通知地点未入力時チェック
         if(false == StringUtility.isEmpty(InputPointListField.text)){
             // 空白の場合、固定値代入
             taskInfoDataEntity.NotifiedLocation = CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE
@@ -634,6 +634,7 @@ class TaskEditViewController : BaseTaskInputViewController
         
         // 登録地点選択処理
         setSelectedPoint(textField : self.InputPointListField, row: row)
+        
     }
 }
 
