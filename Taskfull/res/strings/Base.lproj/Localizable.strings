@@ -46,4 +46,5 @@
 "MessageStringErrorTaskDateInput"="Please enter notification time.";
 "MessageStringErrorNotificationPointListName"="Please enter a notification location name.";
 "MessageStringErrorNotificationPointListSameName"="The same name is already in use.";
+"MessageStringErrorNotificationPointListDelete"="An incomplete task using '%@' exists.";
 

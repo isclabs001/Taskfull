@@ -724,8 +724,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             else{
                 
                 // 削除不可アラート表示
-                MessageUtility.dispAlertOK(viewController: self, title: "", message: "".appendingFormat(MessageUtility.MESSAGE_MESSAGE_STRING_CONFIRM_NOTIFICATION_POINT_LIST_DELETE_ERROR,(self.GPSMapView.annotations[index].title!!)))
-                
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: MessageUtility.getMessage(key: "MessageStringErrorNotificationPointListDelete", param: self.GPSMapView.annotations[index].title!!))
             }
         
             
