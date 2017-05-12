@@ -243,7 +243,7 @@
                                         <rect key="frame" x="30" y="0.0" width="354" height="134"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-y1-WJP" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="10" width="111.33333333333334" height="114"/>
+                                                <rect key="frame" x="0.0" y="10" width="111" height="114"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -256,7 +256,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dZ-PZ-lc6" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="121.33333333333333" y="10" width="111.33333333333336" height="114"/>
+                                                <rect key="frame" x="121" y="10" width="112" height="114"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -269,7 +269,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-cs-b7O" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="242.66666666666671" y="10" width="111.33333333333329" height="114"/>
+                                                <rect key="frame" x="243" y="10" width="111" height="114"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -530,7 +530,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5jP-bL-5xk" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="321.66666666666669" height="67"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="322" height="67"/>
                                                 <color key="backgroundColor" red="0.28627450980000002" green="0.36078431370000003" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <state key="normal" title="後続タスク追加">
@@ -556,7 +556,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4G2-4B-50l" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="321.66666666666674" y="0.0" width="92.333333333333314" height="67"/>
+                                                <rect key="frame" x="322" y="0.0" width="92" height="67"/>
                                                 <color key="backgroundColor" red="1" green="0.43698790050000003" blue="0.38521007340000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <state key="normal" title="削除">
@@ -621,7 +621,7 @@
                                         <rect key="frame" x="30" y="0.0" width="354" height="134"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zak-Zi-z4b" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="10" width="111.33333333333334" height="114"/>
+                                                <rect key="frame" x="0.0" y="10" width="111" height="114"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -634,7 +634,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oq3-bs-m4t" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="121.33333333333333" y="10" width="111.33333333333336" height="114"/>
+                                                <rect key="frame" x="121" y="10" width="112" height="114"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -647,7 +647,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVH-fM-vMr" customClass="UICustomButton" customModule="Taskfull" customModuleProvider="target">
-                                                <rect key="frame" x="242.66666666666671" y="10" width="111.33333333333329" height="114"/>
+                                                <rect key="frame" x="243" y="10" width="111" height="114"/>
                                                 <state key="normal" title="Button" image="soap002.png"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
