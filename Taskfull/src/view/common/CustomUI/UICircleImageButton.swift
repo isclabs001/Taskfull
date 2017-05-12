@@ -30,7 +30,7 @@ class UICircleImageButton : UIImageButton
     // タップ座標のコントロール座標内チェック
     ///　- parameter point:タップ座標
     ///　- parameter event:UIEvent
-    ///　- returns event:nil:コントロール外 nil以外:タップされたコントロールオブジェクト
+    ///　- returns UIView:nil:コントロール外 nil以外:タップされたコントロールオブジェクト
     //
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         // 押下ポイントがコントロールに入っていない場合

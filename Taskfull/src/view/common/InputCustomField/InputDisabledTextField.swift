@@ -9,19 +9,29 @@
 import UIKit
 
 //
-// UIテキストフィールドクラス
+// 入力不可UIテキストフィールドクラス
 //
 class InputDisabledTextField : UITextField
 {
-    
-    //コピー,ペースト,メニュー表示を非表示
+    ///
+    /// メニュー表示イベント
+    ///　- parameter:action:Selectorオブジェクト
+    ///　- parameter:sender:senderオブジェクト
+    ///　- returns メニューを表示させないため、常にfalse
+    ///
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        // コピー,ペースト,メニュー表示を非表示
         UIMenuController.shared.isMenuVisible = false
         return false
     }
     
-    //キャレット（入力棒）を非表示
+    ///
+    /// キャレット表示イベント
+    ///　- parameter:action:Selectorオブジェクト
+    ///　- returns 常にfalse
+    ///
     override func caretRect(for position: UITextPosition) -> CGRect {
+        // キャレット（入力棒）を非表示
         return CGRect.zero
     }
 }

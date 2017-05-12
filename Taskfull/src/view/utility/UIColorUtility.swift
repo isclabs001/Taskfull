@@ -51,11 +51,27 @@ class UIColorUtility {
         return UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: alpha);
     }
     
-    
+    ///
+    ///　画像から指定位置の色を取得する
+    ///　- parameter size:画像幅のサイズ
+    ///　- parameter image:画像
+    ///　- parameter pos:座標位置 
+    ///　- parameter pixelDataByteSize:画像のピスセルサイズ（32ビットの場合「4（バイト）」とする）
+    ///　- returns:UIColor
+    ///
     static func getColor(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int) -> UIColor {
         return getColor( size, image: image, pos: pos, pixelDataByteSize: pixelDataByteSize, scale: UIScreen.main.scale)
     }
     
+    ///
+    ///　画像から指定位置の色を取得する
+    ///　- parameter size:画像幅のサイズ
+    ///　- parameter image:画像
+    ///　- parameter pos:座標位置 
+    ///　- parameter pixelDataByteSize:画像のピスセルサイズ（32ビットの場合「4（バイト）」とする）
+    ///　- parameter scale:倍率
+    ///　- returns:UIColor
+    ///
     static func getColor(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int, scale: CGFloat) -> UIColor {
         
         let imageData = image.dataProvider?.data
@@ -69,10 +85,27 @@ class UIColorUtility {
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
     
+    ///
+    ///　画像から指定位置の色を取得する（透明度は無視する）
+    ///　- parameter size:画像幅のサイズ
+    ///　- parameter image:画像
+    ///　- parameter pos:座標位置 
+    ///　- parameter pixelDataByteSize:画像のピスセルサイズ（32ビットの場合「4（バイト）」とする）
+    ///　- returns:UIColor
+    ///
     static func getColorNonAlpha(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int) -> UIColor {
         return getColorNonAlpha( size, image: image, pos: pos, pixelDataByteSize: pixelDataByteSize, scale: UIScreen.main.scale)
     }
     
+    ///
+    ///　画像から指定位置の色を取得する（透明度は無視する）
+    ///　- parameter size:画像幅のサイズ
+    ///　- parameter image:画像
+    ///　- parameter pos:座標位置 
+    ///　- parameter pixelDataByteSize:画像のピスセルサイズ（32ビットの場合「4（バイト）」とする）
+    ///　- parameter scale:倍率
+    ///　- returns:UIColor
+    ///
     static func getColorNonAlpha(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int, scale: CGFloat) -> UIColor {
         
         let imageData = image.dataProvider?.data
@@ -86,7 +119,13 @@ class UIColorUtility {
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
     
-    
+    ///
+    ///　座標を画像座標に変換する
+    ///　- parameter pos:座標位置
+    ///　- parameter orgImageSize:画像のオリジナルサイズ
+    ///　- parameter crntImageSize:現在の画像サイズ
+    ///　- returns:画像倍率から変換した座標
+    ///
     static func convImagePos(_ pos: CGPoint, orgImageSize: Int, crntImageSize: Int) -> CGPoint{
         
         // 縮小倍率係数取得
@@ -96,22 +135,40 @@ class UIColorUtility {
         return CGPoint(x: pos.x * zoom, y: pos.y * zoom)
     }
     
+    ///
+    ///　倍率を算出する
+    ///　- parameter orgImageSize:画像のオリジナルサイズ
+    ///　- parameter crntImageSize:現在の画像サイズ
+    ///　- returns:画像倍率
+    ///
     static func getZoom(_ orgImageSize: Int, crntImageSize: Int) -> CGFloat{
         //倍率を算出
         return CGFloat(orgImageSize) / CGFloat(crntImageSize)
     }
     
+    ///
+    ///　縮小倍率を算出する
+    ///　- parameter orgImageSize:画像のオリジナルサイズ
+    ///　- parameter crntImageSize:現在の画像サイズ
+    ///　- returns:画像倍率
+    ///
     static func getZoomShrink(_ orgImageSize: Int, crntImageSize: Int) -> CGFloat{
         //縮小倍率を算出
         return CGFloat(crntImageSize) / CGFloat(orgImageSize)
     }
-
     
+    ///
+    ///　指定位置の画像透明度を取得する
+    ///　- parameter size:画像幅のサイズ
+    ///　- parameter image:画像
+    ///　- parameter pos:座標位置
+    ///　- parameter pixelDataByteSize:画像のピスセルサイズ（32ビットの場合「4（バイト）」とする）
+    ///　- returns:画像透明度
+    ///
     static func getAlphaColor(_ size: Int, image: CGImage, pos: CGPoint, pixelDataByteSize: Int) -> CGFloat {
         
         let imageData = image.dataProvider?.data
         let data : UnsafePointer = CFDataGetBytePtr(imageData)
-//        let scale = UIScreen.mainScreen().scale
         let scale : CGFloat = 1.0
         let address : Int = ((size * Int(pos.y * scale)) + Int(pos.x * scale)) * pixelDataByteSize
 

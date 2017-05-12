@@ -9,10 +9,16 @@
 import Foundation
 import UIKit
 
+//
+// グラデーションボタンクラス
+//
 class UIGradientButton : UIButton {
+    // グラデーション用レイヤー
     fileprivate var gradientLayer : CAGradientLayer
 
+    // グラデーション　開始色
     internal var startGradient : CGColor
+    // グラデーション　終了色
     internal var endGradient : CGColor
 
 
@@ -40,6 +46,5 @@ class UIGradientButton : UIButton {
     ///
     internal func setGradient(startColor startGradient : CGColor, endColor endGradient : CGColor)
     {
-    
     }
 }

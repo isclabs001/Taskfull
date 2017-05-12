@@ -18,37 +18,35 @@ open class UIPlaceHolderTextView: UITextView {
     var placeHolderColor:UIColor      = UIColor.lightGray
     var placeHolder:NSString          = ""
     
+    ///
+    ///　初期化処理（Storyboard/xibから）
+    ///　- parameter aDecoder:NSCoder
+    ///
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
-    
-    
-    /* swift2.0 初期化処理:要エラー対策
-    override init(frame: CGRect){
-        super.init(frame: frame)
-    }
-    
-    override init() {
-        super.init()
-    }
-    */
 
-    //オブザーバ解除
+    ///
+    ///　終了処理
+    ///
     deinit {
+        //オブザーバ解除
         NotificationCenter.default.removeObserver(self)
     }
     
+    ///
+    ///　awakeFromNibイベント
+    ///
     override open func awakeFromNib() {
         super.awakeFromNib()
         
         NotificationCenter.default.addObserver(self, selector: #selector(UIPlaceHolderTextView.textChanged(_:)), name: NSNotification.Name.UITextViewTextDidChange, object: nil)
     }
     
-    func seetText(_ text:NSString) {
-        super.text = text as String
-        self.textChanged(nil)
-    }
-    
+    ///
+    ///　描画処理
+    ///　- parameter rect:描画範囲
+    ///
     override open func draw(_ rect: CGRect) {
         if(self.placeHolder.length > 0) {
             self.placeHolderLabel.frame           = CGRect(x: 8,y: 8,width: self.bounds.size.width - 16,height: 0)
@@ -75,18 +73,19 @@ open class UIPlaceHolderTextView: UITextView {
         super.draw(rect)
     }
     
+    ///
+    ///　textChangedイベント
+    ///　- parameter notification:Notificationオブジェクト
+    ///
     open func textChanged(_ notification:Notification?) -> (Void) {
         if(self.placeHolder.length == 0){
             return
         }
         
-        // swift2.0 エラー対策
-        //if(countElements(self.text) == 0) {
         if((self.text.characters.count) == 0) {
             self.viewWithTag(999)?.alpha = 1
         }else{
             self.viewWithTag(999)?.alpha = 0
         }
     }
-    
 }

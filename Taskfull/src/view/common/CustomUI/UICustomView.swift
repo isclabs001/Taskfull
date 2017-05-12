@@ -57,7 +57,9 @@ class UICustomView : UIView
         }
     }
     
-    // グラデーション背景色　通常時のレイアウト設定
+    ///
+    /// グラデーション背景色　通常時のレイアウト設定
+    ///
     fileprivate func SetGradationLayerForNonHighlighted()
     {
         // グラデーション色が有効な場合
