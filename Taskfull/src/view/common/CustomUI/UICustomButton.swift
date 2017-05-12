@@ -113,6 +113,7 @@ class UICustomButton : UIButton
         }
     }
     
+    ///
     /// 背景色の設定（ハイライト用）
     /// - parameter normalColor:通常の背景色
     /// - parameter gradationStartColor:グラデーションの開始色
@@ -120,6 +121,7 @@ class UICustomButton : UIButton
     /// - parameter subLayerIndex1:サブレイヤーインデックス１（グラデーション切替用）
     /// - parameter subLayerIndex2:サブレイヤーインデックス２（グラデーション切替用）
     /// - parameter subLayerIndex:サブレイヤーインデックス（グラデーション無し）
+    ///
     fileprivate func SetBackGroundColorForHighlight(
         _ normalColor : UIColor?,
         gradationStartColor : UIColor?,
@@ -153,7 +155,9 @@ class UICustomButton : UIButton
         }
     }
     
-    // グラデーション背景色　通常時のレイアウト設定
+    ///
+    /// グラデーション背景色　通常時のレイアウト設定
+    ///
     fileprivate func SetGradationLayerForNonHighlighted()
     {
         // 通常時のグラデーション色が有効な場合
@@ -180,7 +184,9 @@ class UICustomButton : UIButton
         }
     }
     
-    // グラデーション背景色　押下時のレイアウト設定
+    ///
+    /// グラデーション背景色　押下時のレイアウト設定
+    ///
     fileprivate func SetGradationLayerForHighlighted()
     {
         // 押下時のグラデーション色が有効な場合
@@ -206,7 +212,15 @@ class UICustomButton : UIButton
     }
 }
 
+//
+// UIButton拡張クラス
+//
 extension UIButton {
+    ///
+    /// 指定色でUIImage生成
+    /// - parameter color:色
+    /// - returns:UIImage
+    ///
     fileprivate func imageWithColor(_ color: UIColor) -> UIImage {
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
@@ -221,6 +235,12 @@ extension UIButton {
         return image!
     }
     
+    ///
+    /// 背景色設定
+    /// - parameter color:色
+    /// - parameter state:UIControlStateオブジェクト
+    /// - returns:UIImage
+    ///
     func setBackgroundColor(_ color: UIColor, forUIControlState state: UIControlState) {
         self.setBackgroundImage(imageWithColor(color), for: state)
     }

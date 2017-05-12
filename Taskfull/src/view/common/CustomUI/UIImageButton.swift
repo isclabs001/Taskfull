@@ -50,7 +50,12 @@ class UIImageButton : UICustomButton
         }
     }
     
-    // 画像情報設定
+    ///
+    /// 画像情報設定
+    /// - parameter image:画像
+    /// - parameter width:幅
+    /// - parameter height:高さ
+    ///
     func setImageInfo(_ image: UIImage?, width : Double, height : Double) {
         // サイズ設定
         self.frame = CGRect(x: 0,y: 0,width: width,height: height)

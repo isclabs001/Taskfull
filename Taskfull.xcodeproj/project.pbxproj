@@ -52,7 +52,6 @@
 		635669791EB063270008F57C /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635669781EB063270008F57C /* UIApplication.swift */; };
 		635669831EB06A660008F57C /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6356697D1EB06A660008F57C /* UITableViewExtension.swift */; };
 		635669841EB06A660008F57C /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6356697E1EB06A660008F57C /* UIView.swift */; };
-		635669851EB06A660008F57C /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6356697F1EB06A660008F57C /* UIViewController.swift */; };
 		635669871EB06AB20008F57C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635669861EB06AB20008F57C /* String.swift */; };
 		635CA7D51EB6C57D00FB3497 /* BaseMenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635CA7D41EB6C57D00FB3497 /* BaseMenuBarViewController.swift */; };
 		635CA7D71EB6FC9100FB3497 /* MainMenuBarSubItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635CA7D61EB6FC9000FB3497 /* MainMenuBarSubItemCell.xib */; };
@@ -148,7 +147,6 @@
 		635669781EB063270008F57C /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		6356697D1EB06A660008F57C /* UITableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		6356697E1EB06A660008F57C /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
-		6356697F1EB06A660008F57C /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		635669861EB06AB20008F57C /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		635CA7D41EB6C57D00FB3497 /* BaseMenuBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseMenuBarViewController.swift; sourceTree = "<group>"; };
 		635CA7D61EB6FC9000FB3497 /* MainMenuBarSubItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuBarSubItemCell.xib; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 				635669861EB06AB20008F57C /* String.swift */,
 				6356697D1EB06A660008F57C /* UITableViewExtension.swift */,
 				6356697E1EB06A660008F57C /* UIView.swift */,
-				6356697F1EB06A660008F57C /* UIViewController.swift */,
 				635669781EB063270008F57C /* UIApplication.swift */,
 				635669761EB063070008F57C /* NSObject.swift */,
 			);
@@ -713,7 +710,6 @@
 				635DCE841E73A18400F6F325 /* UICustomButton.swift in Sources */,
 				635669691EB03B190008F57C /* MainMenuBarViewController.swift in Sources */,
 				635DCE811E73A17E00F6F325 /* UICommon.swift in Sources */,
-				635669851EB06A660008F57C /* UIViewController.swift in Sources */,
 				63098FF81EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift in Sources */,
 				635DCE8A1E73A19400F6F325 /* ViewSwitchButton.swift in Sources */,
 				6356696C1EB043A70008F57C /* MainMenuBarSubItemCell.swift in Sources */,

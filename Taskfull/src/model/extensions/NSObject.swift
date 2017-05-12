@@ -9,7 +9,7 @@
 import Foundation
 
 ///
-///　NSObjectの拡張
+///　NSObjectの拡張クラス
 ///
 extension NSObject {
     ///

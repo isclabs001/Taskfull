@@ -6,20 +6,33 @@
 //  Copyright © 2017年 isc. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
+//
+// SlideMenuControllerデリゲート
+//
 @objc public protocol SlideMenuControllerDelegate {
+    // 左メニューバーの表示前イベント
     @objc optional func leftWillOpen()
+    // 左メニューバーの表示後イベント
     @objc optional func leftDidOpen()
+    // 左メニューバーの非表示前イベント
     @objc optional func leftWillClose()
+    // 左メニューバーの非表示後イベント
     @objc optional func leftDidClose()
+    // 右メニューバーの表示前イベント
     @objc optional func rightWillOpen()
+    // 右メニューバーの表示後イベント
     @objc optional func rightDidOpen()
+    // 右メニューバーの非表示前イベント
     @objc optional func rightWillClose()
+    // 右メニューバーの非表示後イベント
     @objc optional func rightDidClose()
 }
 
+//
+// SlideMenuOptions構造体
+//
 public struct SlideMenuOptions {
     public static var leftViewWidth: CGFloat = 270.0
     public static var leftBezelWidth: CGFloat? = 64.0
@@ -43,13 +56,25 @@ public struct SlideMenuOptions {
     public static var tapGesturesEnabled: Bool = true
 }
 
+//
+// SlideMenuControllerクラス
+//
 open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
 
+    /**
+     * 定数
+     */
+    //
+    // SlideAction定数
+    //
     public enum SlideAction {
         case open
         case close
     }
     
+    //
+    // TrackAction定数
+    //
     public enum TrackAction {
         case leftTapOpen
         case leftTapClose
@@ -61,13 +86,22 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         case rightFlickClose
     }
     
-    
+    //
+    // PanInfo構造体
+    //
     struct PanInfo {
         var action: SlideAction
         var shouldBounce: Bool
         var velocity: CGFloat
     }
+
     
+    /**
+     * 変数
+     */
+    //
+    // SlideMenuControllerDelegateデリゲート
+    //
     open weak var delegate: SlideMenuControllerDelegate?
     
     open var opacityView = UIView()
@@ -82,93 +116,156 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
     open var rightPanGesture: UIPanGestureRecognizer? = nil
     open var rightTapGesture: UITapGestureRecognizer? = nil
     
+    ///
+    ///　初期化処理（Storyboard/xibから）
+    ///　- parameter aDecoder:NSCoder
+    ///
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
+    ///
+    ///　初期化処理
+    ///　- parameter nibNameOrNil:String
+    ///　- parameter nibBundleOrNil:Bundle
+    ///
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
+    ///
+    ///　初期化処理
+    ///　- parameter mainViewController:メイン画面のコントローラー
+    ///
     public convenience init(mainViewController: UIViewController) {
+        // 基底の初期化処理を呼び出す
         self.init()
+        // メンバ変数にmainViewControllerを保持する
         self.mainViewController = mainViewController
+        // 初期表示処理を呼び出す
         initView()
     }
     
+    ///
+    ///　初期化処理
+    ///　- parameter mainViewController:メイン画面のコントローラー
+    ///　- parameter leftMenuViewController:左メニューバー画面のコントローラー
+    ///
     public convenience init(mainViewController: UIViewController, leftMenuViewController: UIViewController) {
+        // 基底の初期化処理を呼び出す
         self.init()
+        // メンバ変数にmainViewControllerを保持する
         self.mainViewController = mainViewController
-        leftViewController = leftMenuViewController
+        // メンバ変数にleftMenuViewControllerを保持する
+        self.leftViewController = leftMenuViewController
+        // 初期表示処理を呼び出す
         initView()
     }
     
+    ///
+    ///　初期化処理
+    ///　- parameter mainViewController:メイン画面のコントローラー
+    ///　- parameter rightMenuViewController:右メニューバー画面のコントローラー
+    ///
     public convenience init(mainViewController: UIViewController, rightMenuViewController: UIViewController) {
         self.init()
+        // メンバ変数にmainViewControllerを保持する
         self.mainViewController = mainViewController
-        rightViewController = rightMenuViewController
+        // メンバ変数にrightMenuViewControllerを保持する
+        self.rightViewController = rightMenuViewController
+        // 初期表示処理を呼び出す
         initView()
     }
     
+    ///
+    ///　初期化処理
+    ///　- parameter mainViewController:メイン画面のコントローラー
+    ///　- parameter leftMenuViewController:左メニューバー画面のコントローラー
+    ///　- parameter rightMenuViewController:右メニューバー画面のコントローラー
+    ///
     public convenience init(mainViewController: UIViewController, leftMenuViewController: UIViewController, rightMenuViewController: UIViewController) {
         self.init()
+        // メンバ変数にmainViewControllerを保持する
         self.mainViewController = mainViewController
-        leftViewController = leftMenuViewController
-        rightViewController = rightMenuViewController
+        // メンバ変数にleftMenuViewControllerを保持する
+        self.leftViewController = leftMenuViewController
+        // メンバ変数にrightMenuViewControllerを保持する
+        self.rightViewController = rightMenuViewController
+        // 初期表示処理を呼び出す
         initView()
     }
     
+    ///
+    ///　awakeFromNibイベント
+    ///
     open override func awakeFromNib() {
+        // 初期表示処理を呼び出す
         initView()
     }
-
-    deinit { }
     
+    ///
+    ///　初期表示処理
+    ///
     open func initView() {
-        mainContainerView = UIView(frame: view.bounds)
-        mainContainerView.backgroundColor = UIColor.clear
-        mainContainerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        view.insertSubview(mainContainerView, at: 0)
+        // メインコンテンツを生成する
+        self.mainContainerView = UIView(frame: view.bounds)
+        self.mainContainerView.backgroundColor = UIColor.clear
+        self.mainContainerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        // メインコンテンツの０番目にメイン画面を挿入する
+        view.insertSubview(self.mainContainerView, at: 0)
 
-      var opacityframe: CGRect = view.bounds
+        // 透明画面を作成
+        var opacityframe: CGRect = view.bounds
         let opacityOffset: CGFloat = 0
         opacityframe.origin.y = opacityframe.origin.y + opacityOffset
         opacityframe.size.height = opacityframe.size.height - opacityOffset
-        opacityView = UIView(frame: opacityframe)
-        opacityView.backgroundColor = SlideMenuOptions.opacityViewBackgroundColor
-        opacityView.autoresizingMask = [UIViewAutoresizing.flexibleHeight, UIViewAutoresizing.flexibleWidth]
-        opacityView.layer.opacity = 0.0
-        view.insertSubview(opacityView, at: 1)
+        self.opacityView = UIView(frame: opacityframe)
+        self.opacityView.backgroundColor = SlideMenuOptions.opacityViewBackgroundColor
+        self.opacityView.autoresizingMask = [UIViewAutoresizing.flexibleHeight, UIViewAutoresizing.flexibleWidth]
+        self.opacityView.layer.opacity = 0.0
+        // メインコンテンツの１番目に透明画面を挿入する
+        view.insertSubview(self.opacityView, at: 1)
       
-      if leftViewController != nil {
-        var leftFrame: CGRect = view.bounds
-        leftFrame.size.width = SlideMenuOptions.leftViewWidth
-        leftFrame.origin.x = leftMinOrigin()
-        let leftOffset: CGFloat = 0
-        leftFrame.origin.y = leftFrame.origin.y + leftOffset
-        leftFrame.size.height = leftFrame.size.height - leftOffset
-        leftContainerView = UIView(frame: leftFrame)
-        leftContainerView.backgroundColor = UIColor.clear
-        leftContainerView.autoresizingMask = UIViewAutoresizing.flexibleHeight
-        view.insertSubview(leftContainerView, at: 2)
-        addLeftGestures()
-      }
+        // 左メニューバー画面が有効な場合
+        if self.leftViewController != nil {
+            // 左メニューバー画面を作成
+            var leftFrame: CGRect = view.bounds
+            leftFrame.size.width = SlideMenuOptions.leftViewWidth
+            leftFrame.origin.x = leftMinOrigin()
+            let leftOffset: CGFloat = 0
+            leftFrame.origin.y = leftFrame.origin.y + leftOffset
+            leftFrame.size.height = leftFrame.size.height - leftOffset
+            self.leftContainerView = UIView(frame: leftFrame)
+            self.leftContainerView.backgroundColor = UIColor.clear
+            self.leftContainerView.autoresizingMask = UIViewAutoresizing.flexibleHeight
+            // メインコンテンツの２番目に左メニューバー画面を挿入する
+            view.insertSubview(self.leftContainerView, at: 2)
+            addLeftGestures()
+        }
       
-      if rightViewController != nil {
-        var rightFrame: CGRect = view.bounds
-        rightFrame.size.width = SlideMenuOptions.rightViewWidth
-        rightFrame.origin.x = rightMinOrigin()
-        let rightOffset: CGFloat = 0
-        rightFrame.origin.y = rightFrame.origin.y + rightOffset
-        rightFrame.size.height = rightFrame.size.height - rightOffset
-        rightContainerView = UIView(frame: rightFrame)
-        rightContainerView.backgroundColor = UIColor.clear
-        rightContainerView.autoresizingMask = UIViewAutoresizing.flexibleHeight
-        view.insertSubview(rightContainerView, at: 3)
-        addRightGestures()
-      }
+        // 右メニューバー画面が有効な場合
+        if self.rightViewController != nil {
+            // 右メニューバー画面を作成
+            var rightFrame: CGRect = view.bounds
+            rightFrame.size.width = SlideMenuOptions.rightViewWidth
+            rightFrame.origin.x = rightMinOrigin()
+            let rightOffset: CGFloat = 0
+            rightFrame.origin.y = rightFrame.origin.y + rightOffset
+            rightFrame.size.height = rightFrame.size.height - rightOffset
+            self.rightContainerView = UIView(frame: rightFrame)
+            self.rightContainerView.backgroundColor = UIColor.clear
+            self.rightContainerView.autoresizingMask = UIViewAutoresizing.flexibleHeight
+            // メインコンテンツの３番目に右メニューバー画面を挿入する
+            view.insertSubview(self.rightContainerView, at: 3)
+            addRightGestures()
+        }
     }
   
+    ///
+    ///　viewWillTransitionイベント処理
+    ///　- parameter size:CGSize
+    ///　- parameter coordinator:UIViewControllerTransitionCoordinator
+    ///
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         mainContainerView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -193,17 +290,26 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         })
     }
   
+    ///
+    ///　viewDidLoadイベント処理
+    ///
     open override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = UIRectEdge()
     }
 
+    ///
+    ///　viewWillAppearイベント処理
+    ///　- parameter:animated:true:アニメーションする false:アニメーションしない
+    ///
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //automatically called 
-        //self.mainViewController?.viewWillAppear(animated)
     }
     
+    ///
+    ///　画面の向きを取得
+    ///　- returns UIInterfaceOrientationMask
+    ///
     open override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         if let mainController = self.mainViewController{
             return mainController.supportedInterfaceOrientations
@@ -211,10 +317,17 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return UIInterfaceOrientationMask.all
     }
     
+    ///
+    ///　画面の回転制御を取得
+    ///　- returns Bool
+    ///
     open override var shouldAutorotate : Bool {
         return mainViewController?.shouldAutorotate ?? false
     }
         
+    ///
+    ///　viewWillLayoutSubviewsイベント処理
+    ///
     open override func viewWillLayoutSubviews() {
         // topLayoutGuideの値が確定するこのタイミングで各種ViewControllerをセットする
         setUpViewController(mainContainerView, targetViewController: mainViewController)
@@ -226,13 +339,17 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    ///　スタイル指定を取得
+    ///　- returns UIStatusBarStyle
+    ///
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return self.mainViewController?.preferredStatusBarStyle ?? .default
     }
     
     ///
     /// MainViewController取得処理
-    ///　- returns:nil以外:MainViewController nil:取得できなかった
+    ///　- returns nil以外:MainViewController nil:取得できなかった
     ///
     func getMainViewController() -> MainViewController? {
         // navigationControllerが有効な場合
@@ -253,7 +370,7 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
     
     ///
     /// 右メニューバー利用可/不可判断
-    ///　- returns:true:利用可 false:利用不可
+    ///　- returns true:利用可 false:利用不可
     ///
     func isValidRightMenuBar() -> Bool {
         // MainViewControllerが有効な場合
@@ -269,7 +386,7 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
     
     ///
     /// 左メニューバー利用可/不可判断
-    ///　- returns:true:利用可 false:利用不可
+    ///　- returns true:利用可 false:利用不可
     ///
     func isValidLeftMenuBar() -> Bool {
         // MainViewControllerが有効な場合
@@ -283,6 +400,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 左メニューバー表示処理
+    ///
     open override func openLeft() {
         // leftViewControllerが無効な場合
         guard let _ = leftViewController else { // If leftViewController is nil, then return
@@ -304,6 +424,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         track(.leftTapOpen)
     }
     
+    ///
+    /// 右メニューバー表示処理
+    ///
     open override func openRight() {
         // rightViewControllerが無効な場合
         guard let _ = rightViewController else { // If rightViewController is nil, then return
@@ -321,6 +444,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         track(.rightTapOpen)
     }
     
+    ///
+    /// 左メニューバー非表示処理
+    ///
     open override func closeLeft() {
         guard let _ = leftViewController else { // If leftViewController is nil, then return
             return
@@ -333,6 +459,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         setCloseWindowLevel()
     }
     
+    ///
+    /// 右メニューバー非表示処理
+    ///
     open override func closeRight() {
         guard let _ = rightViewController else { // If rightViewController is nil, then return
             return
@@ -345,7 +474,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         setCloseWindowLevel()
     }
     
-    
+    ///
+    /// 左メニューバー追加処理
+    ///
     open func addLeftGestures() {
     
         if leftViewController != nil {
@@ -367,6 +498,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 右メニューバー追加処理
+    ///
     open func addRightGestures() {
         
         if rightViewController != nil {
@@ -388,6 +522,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 左メニューバー削除処理
+    ///
     open func removeLeftGestures() {
         
         if leftPanGesture != nil {
@@ -401,6 +538,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 右メニューバー削除処理
+    ///
     open func removeRightGestures() {
         
         if rightPanGesture != nil {
@@ -414,17 +554,24 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 指定ビューの判定処理
+    ///　- returns Bool
+    ///
     open func isTagetViewController() -> Bool {
-        // Function to determine the target ViewController
-        // Please to override it if necessary
         return true
     }
     
+    ///
+    /// TrackAction処理
+    ///　- parameter:trackAction:TrackAction
+    ///
     open func track(_ trackAction: TrackAction) {
-        // function is for tracking
-        // Please to override it if necessary
     }
     
+    ///
+    /// LeftPanState構造体
+    ///
     struct LeftPanState {
         static var frameAtStartOfPan: CGRect = CGRect.zero
         static var startPointOfPan: CGPoint = CGPoint.zero
@@ -433,6 +580,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         static var lastState : UIGestureRecognizerState = .ended
     }
     
+    ///
+    /// 左メニューバーのスライドイベントによる表示処理
+    ///　- parameter:panGesture:UIPanGestureRecognizer
+    ///
     func handleLeftPanGesture(_ panGesture: UIPanGestureRecognizer) {
         
         if !isTagetViewController() {
@@ -509,6 +660,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         LeftPanState.lastState = panGesture.state
     }
     
+    ///
+    /// RightPanState構造体
+    ///
     struct RightPanState {
         static var frameAtStartOfPan: CGRect = CGRect.zero
         static var startPointOfPan: CGPoint = CGPoint.zero
@@ -517,6 +671,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         static var lastState : UIGestureRecognizerState = .ended
     }
     
+    ///
+    /// 右メニューバーのスライドイベントによる表示処理
+    ///　- parameter:panGesture:UIPanGestureRecognizer
+    ///
     func handleRightPanGesture(_ panGesture: UIPanGestureRecognizer) {
         
         if !isTagetViewController() {
@@ -594,6 +752,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         RightPanState.lastState = panGesture.state
     }
     
+    ///
+    /// 左メニューバーの表示処理
+    ///　- parameter:velocity:表示速度
+    ///
     open func openLeftWithVelocity(_ velocity: CGFloat) {
         let xOrigin: CGFloat = leftContainerView.frame.origin.x
         let finalXOrigin: CGFloat = 0.0
@@ -626,6 +788,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 右メニューバーの表示処理
+    ///　- parameter:velocity:表示速度
+    ///
     open func openRightWithVelocity(_ velocity: CGFloat) {
         let xOrigin: CGFloat = rightContainerView.frame.origin.x
     
@@ -659,6 +825,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 左メニューバーの非表示処理
+    ///　- parameter:velocity:表示速度
+    ///
     open func closeLeftWithVelocity(_ velocity: CGFloat) {
         
         let xOrigin: CGFloat = leftContainerView.frame.origin.x
@@ -689,7 +859,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    
+    ///
+    /// 右メニューバーの非表示処理
+    ///　- parameter velocity:表示速度
+    ///
     open func closeRightWithVelocity(_ velocity: CGFloat) {
     
         let xOrigin: CGFloat = rightContainerView.frame.origin.x
@@ -720,12 +893,13 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    
+    ///
+    /// 左メニューバーのトグル処理
+    ///
     open override func toggleLeft() {
         if isLeftOpen() {
             closeLeft()
             setCloseWindowLevel()
-            // Tracking of close tap is put in here. Because closeMenu is due to be call even when the menu tap.
             
             track(.leftTapClose)
         } else {
@@ -733,15 +907,26 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 左メニューバーの表示判定
+    ///　- returns true:表示中 false:非表示
+    ///
     open func isLeftOpen() -> Bool {
         // 左メニューバーがが有効、かつ、左メニューバーのX座標が表示座標である場合
         return leftViewController != nil && leftContainerView.frame.origin.x == 0.0
     }
     
+    ///
+    /// 左メニューバーの非表示判定
+    ///　- returns true:非表示 false:表示中
+    ///
     open func isLeftHidden() -> Bool {
         return leftContainerView.frame.origin.x <= leftMinOrigin()
     }
     
+    ///
+    /// 右メニューバーのトグル処理
+    ///
     open override func toggleRight() {
         if isRightOpen() {
             closeRight()
@@ -754,15 +939,28 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 右メニューバーの表示判定
+    ///　- returns true:表示中 false:非表示
+    ///
     open func isRightOpen() -> Bool {
         // 右メニューバーがが有効、かつ、右メニューバーのX座標が表示座標である場合
         return rightViewController != nil && rightContainerView.frame.origin.x == view.bounds.width - rightContainerView.frame.size.width
     }
     
+    ///
+    /// 右メニューバーの非表示判定
+    ///　- returns true:非表示 false:表示中
+    ///
     open func isRightHidden() -> Bool {
         return rightContainerView.frame.origin.x >= view.bounds.width
     }
     
+    ///
+    /// メイン画面に切り替える
+    ///　- parameter mainViewController:メイン画面
+    ///　- parameter close:true:メニューバーを閉じる false:メニューバーはそのままにする
+    ///
     open func changeMainViewController(_ mainViewController: UIViewController,  close: Bool) {
         
         removeViewController(self.mainViewController)
@@ -774,6 +972,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 左メニューバーの幅変更処理
+    ///　- parameter width:幅
+    ///
     open func changeLeftViewWidth(_ width: CGFloat) {
         
         SlideMenuOptions.leftViewWidth = width
@@ -786,6 +988,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         leftContainerView.frame = leftFrame
     }
     
+    ///
+    /// 右メニューバーの幅変更処理
+    ///　- parameter width:幅
+    ///
     open func changeRightViewWidth(_ width: CGFloat) {
         
         SlideMenuOptions.rightBezelWidth = width
@@ -797,35 +1003,28 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         rightFrame.size.height = rightFrame.size.height - rightOffset
         rightContainerView.frame = rightFrame
     }
-    
-    open func changeLeftViewController(_ leftViewController: UIViewController, closeLeft:Bool) {
-        
-        removeViewController(self.leftViewController)
-        self.leftViewController = leftViewController
-        setUpViewController(leftContainerView, targetViewController: leftViewController)
-        if closeLeft {
-            self.closeLeft()
-        }
-    }
-    
-    open func changeRightViewController(_ rightViewController: UIViewController, closeRight:Bool) {
-        removeViewController(self.rightViewController)
-        self.rightViewController = rightViewController
-        setUpViewController(rightContainerView, targetViewController: rightViewController)
-        if closeRight {
-            self.closeRight()
-        }
-    }
-    
+
+    ///
+    /// 左メニューバーの最小マージン取得
+    ///　- returns 左メニューバーの最小マージン
+    ///
     fileprivate func leftMinOrigin() -> CGFloat {
         return  -SlideMenuOptions.leftViewWidth
     }
     
+    ///
+    /// 右メニューバーの最小マージン取得
+    ///　- returns 右メニューバーの最小マージン
+    ///
     fileprivate func rightMinOrigin() -> CGFloat {
         return view.bounds.width
     }
     
-    
+    ///
+    /// 左メニューバーの表示動作情報取得
+    ///　- parameter velocity:表示速度
+    ///　- returns PanInfo
+    ///
     fileprivate func panLeftResultInfoForVelocity(_ velocity: CGPoint) -> PanInfo {
         
         let thresholdVelocity: CGFloat = 1000.0
@@ -847,6 +1046,11 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return panInfo
     }
     
+    ///
+    /// 右メニューバーの表示動作情報取得
+    ///　- parameter velocity:表示速度
+    ///　- returns PanInfo
+    ///
     fileprivate func panRightResultInfoForVelocity(_ velocity: CGPoint) -> PanInfo {
         
         let thresholdVelocity: CGFloat = -1000.0
@@ -868,6 +1072,12 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return panInfo
     }
     
+    ///
+    /// 左メニューバーの適正化した画面サイズ取得
+    ///　- parameter translation:表示位置
+    ///　- parameter toFrame:画面サイズ
+    ///　- returns 表示画面位置・サイズ
+    ///
     fileprivate func applyLeftTranslation(_ translation: CGPoint, toFrame:CGRect) -> CGRect {
         
         var newOrigin: CGFloat = toFrame.origin.x
@@ -887,6 +1097,12 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return newFrame
     }
     
+    ///
+    /// 右メニューバーの適正化した画面サイズ取得
+    ///　- parameter translation:表示位置
+    ///　- parameter toFrame:画面サイズ
+    ///　- returns 表示画面位置・サイズ
+    ///
     fileprivate func applyRightTranslation(_ translation: CGPoint, toFrame: CGRect) -> CGRect {
         
         var  newOrigin: CGFloat = toFrame.origin.x
@@ -906,6 +1122,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return newFrame
     }
     
+    ///
+    /// 左メニューバー幅の係数を取得
+    ///　- returns 幅の係数
+    ///
     fileprivate func getOpenedLeftRatio() -> CGFloat {
         
         let width: CGFloat = leftContainerView.frame.size.width
@@ -913,6 +1133,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return currentPosition / width
     }
     
+    ///
+    /// 右メニューバー幅の係数を取得
+    ///　- returns 幅の係数
+    ///
     fileprivate func getOpenedRightRatio() -> CGFloat {
         
         let width: CGFloat = rightContainerView.frame.size.width
@@ -920,6 +1144,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return -(currentPosition - view.bounds.width) / width
     }
     
+    ///
+    /// 左メニューバーの不透明度を設定
+    ///
     fileprivate func applyLeftOpacity() {
         
         let openedLeftRatio: CGFloat = getOpenedLeftRatio()
@@ -927,13 +1154,18 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         opacityView.layer.opacity = Float(opacity)
     }
     
-    
+    ///
+    /// 右メニューバーの不透明度を設定
+    ///
     fileprivate func applyRightOpacity() {
         let openedRightRatio: CGFloat = getOpenedRightRatio()
         let opacity: CGFloat = SlideMenuOptions.contentViewOpacity * openedRightRatio
         opacityView.layer.opacity = Float(opacity)
     }
     
+    ///
+    /// 左メニューバーのサイズを設定
+    ///
     fileprivate func applyLeftContentViewScale() {
         let openedLeftRatio: CGFloat = getOpenedLeftRatio()
         let scale: CGFloat = 1.0 - ((1.0 - SlideMenuOptions.contentViewScale) * openedLeftRatio)
@@ -942,6 +1174,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         SlideMenuOptions.contentViewDrag == true ? (mainContainerView.transform = CGAffineTransform(translationX: drag, y: 0)) : (mainContainerView.transform = CGAffineTransform(scaleX: scale, y: scale))
     }
     
+    ///
+    /// 右メニューバーのサイズを設定
+    ///
     fileprivate func applyRightContentViewScale() {
         let openedRightRatio: CGFloat = getOpenedRightRatio()
         let scale: CGFloat = 1.0 - ((1.0 - SlideMenuOptions.contentViewScale) * openedRightRatio)
@@ -950,6 +1185,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         SlideMenuOptions.contentViewDrag == true ? (mainContainerView.transform = CGAffineTransform(translationX: drag, y: 0)) : (mainContainerView.transform = CGAffineTransform(scaleX: scale, y: scale))
     }
     
+    ///
+    /// ビューに影を設定
+    ///
     fileprivate func addShadowToView(_ targetContainerView: UIView) {
         targetContainerView.layer.masksToBounds = false
         targetContainerView.layer.shadowOffset = SlideMenuOptions.shadowOffset
@@ -958,28 +1196,45 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         targetContainerView.layer.shadowPath = UIBezierPath(rect: targetContainerView.bounds).cgPath
     }
     
+    ///
+    /// ビューの影を削除
+    ///
     fileprivate func removeShadow(_ targetContainerView: UIView) {
         targetContainerView.layer.masksToBounds = true
         mainContainerView.layer.opacity = 1.0
     }
     
+    ///
+    /// 不透明度を削除
+    ///
     fileprivate func removeContentOpacity() {
         opacityView.layer.opacity = 0.0
     }
     
-
+    ///
+    /// 不透明度を設定
+    ///
     fileprivate func addContentOpacity() {
         opacityView.layer.opacity = Float(SlideMenuOptions.contentViewOpacity)
     }
     
+    ///
+    /// メイン画面を使用不可にする
+    ///
     fileprivate func disableContentInteraction() {
         mainContainerView.isUserInteractionEnabled = false
     }
     
+    ///
+    /// メイン画面を可能にする
+    ///
     fileprivate func enableContentInteraction() {
         mainContainerView.isUserInteractionEnabled = true
     }
     
+    ///
+    /// 画面の表示順を手前に表示
+    ///
     fileprivate func setOpenWindowLevel() {
         if SlideMenuOptions.hideStatusBar {
             DispatchQueue.main.async(execute: {
@@ -990,6 +1245,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 画面の表示順を元に戻す
+    ///
     fileprivate func setCloseWindowLevel() {
         if SlideMenuOptions.hideStatusBar {
             DispatchQueue.main.async(execute: {
@@ -1000,6 +1258,11 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// ビューコントローラの設定
+    ///　- parameter targetView:UIView
+    ///　- parameter targetViewController:UIViewController
+    ///
     fileprivate func setUpViewController(_ targetView: UIView, targetViewController: UIViewController?) {
         if let viewController = targetViewController {
             viewController.view.frame = targetView.bounds
@@ -1012,7 +1275,10 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    
+    ///
+    /// ビューコントローラの削除
+    ///　- parameter viewController:UIViewController
+    ///
     fileprivate func removeViewController(_ viewController: UIViewController?) {
         if let _viewController = viewController {
             _viewController.view.layer.removeAllAnimations()
@@ -1022,6 +1288,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 左メニューバーを閉じる（閉じる際のアニメーションなし）
+    ///
     open func closeLeftNonAnimation(){
         setCloseWindowLevel()
         let finalXOrigin: CGFloat = leftMinOrigin()
@@ -1034,6 +1303,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         enableContentInteraction()
     }
     
+    ///
+    /// 右メニューバーを閉じる（閉じる際のアニメーションなし）
+    ///
     open func closeRightNonAnimation(){
         setCloseWindowLevel()
         let finalXOrigin: CGFloat = view.bounds.width
@@ -1046,7 +1318,12 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         enableContentInteraction()
     }
     
-    // MARK: UIGestureRecognizerDelegate
+    ///
+    /// gestureRecognizerイベント
+    ///　- parameter gestureRecognizer:UIGestureRecognizer
+    ///　- parameter touch:UITouch
+    ///　- returns Bool
+    ///
     open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         
         let point: CGPoint = touch.location(in: view)
@@ -1064,15 +1341,31 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return true
     }
     
-    // returning true here helps if the main view is fullwidth with a scrollview
+    ///
+    /// gestureRecognizerイベント
+    ///　- parameter gestureRecognizer:UIGestureRecognizer
+    ///　- parameter otherGestureRecognizer:UIGestureRecognizer
+    ///　- returns Bool
+    ///
     open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return SlideMenuOptions.simultaneousGestureRecognizers
     }
     
+    ///
+    /// 左メニューバーのgestureRecognizerイベント
+    ///　- parameter gestureRecognizer:UIGestureRecognizer
+    ///　- parameter point:座標
+    ///　- returns Bool
+    ///
     fileprivate func slideLeftForGestureRecognizer( _ gesture: UIGestureRecognizer, point:CGPoint) -> Bool{
         return isLeftOpen() || SlideMenuOptions.panFromBezel && isLeftPointContainedWithinBezelRect(point)
     }
     
+    ///
+    /// 左メニューバーのオープン時のスライド判定
+    ///　- parameter point:座標
+    ///　- returns true:オープンする false:オープンしない
+    ///
     fileprivate func isLeftPointContainedWithinBezelRect(_ point: CGPoint) -> Bool{
         if let bezelWidth = SlideMenuOptions.leftBezelWidth {
             var leftBezelRect: CGRect = CGRect.zero
@@ -1084,16 +1377,30 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 左メニューバーのクローズ時のスライド判定
+    ///　- parameter point:座標
+    ///　- returns true:クローズする false:クローズしない
+    ///
     fileprivate func isPointContainedWithinLeftRect(_ point: CGPoint) -> Bool {
         return leftContainerView.frame.contains(point)
     }
     
-    
-    
+    ///
+    /// 右メニューバーのgestureRecognizerイベント
+    ///　- parameter gestureRecognizer:UIGestureRecognizer
+    ///　- parameter point:座標
+    ///　- returns Bool
+    ///
     fileprivate func slideRightViewForGestureRecognizer(_ gesture: UIGestureRecognizer, withTouchPoint point: CGPoint) -> Bool {
         return isRightOpen() || SlideMenuOptions.rightPanFromBezel && isRightPointContainedWithinBezelRect(point)
     }
     
+    ///
+    /// 右メニューバーのオープン時のスライド判定
+    ///　- parameter point:座標
+    ///　- returns true:オープンする false:オープンしない
+    ///
     fileprivate func isRightPointContainedWithinBezelRect(_ point: CGPoint) -> Bool {
         if let rightBezelWidth = SlideMenuOptions.rightBezelWidth {
             var rightBezelRect: CGRect = CGRect.zero
@@ -1106,15 +1413,25 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    ///
+    /// 右メニューバーのクローズ時のスライド判定
+    ///　- parameter point:座標
+    ///　- returns true:クローズする false:クローズしない
+    ///
     fileprivate func isPointContainedWithinRightRect(_ point: CGPoint) -> Bool {
         return rightContainerView.frame.contains(point)
     }
     
 }
 
-
+//
+// UIViewControllerの拡張
+//
 extension UIViewController {
-
+    ///
+    /// SlideMenuControllerの取得
+    ///　- returns nil以外:SlideMenuController nil:画面にSlideMenuControllerは存在しない
+    ///
     public func slideMenuController() -> SlideMenuController? {
         var viewController: UIViewController? = self
         while viewController != nil {
@@ -1126,46 +1443,44 @@ extension UIViewController {
         return nil
     }
     
-    public func addLeftBarButtonWithImage(_ buttonImage: UIImage) {
-        let leftButton: UIBarButtonItem = UIBarButtonItem(image: buttonImage, style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.toggleLeft))
-        navigationItem.leftBarButtonItem = leftButton
-    }
-    
-    public func addRightBarButtonWithImage(_ buttonImage: UIImage) {
-        let rightButton: UIBarButtonItem = UIBarButtonItem(image: buttonImage, style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.toggleRight))
-        navigationItem.rightBarButtonItem = rightButton
-    }
-    
+    ///
+    /// 左メニューバーのトグル処理
+    ///
     public func toggleLeft() {
         slideMenuController()?.toggleLeft()
     }
 
+    ///
+    /// 右メニューバーのトグル処理
+    ///
     public func toggleRight() {
         slideMenuController()?.toggleRight()
     }
     
+    ///
+    /// 左メニューバー表示処理
+    ///
     public func openLeft() {
         slideMenuController()?.openLeft()
     }
     
+    ///
+    /// 右メニューバー表示処理
+    ///
     public func openRight() {
         slideMenuController()?.openRight()    }
     
+    ///
+    /// 左メニューバー非表示処理
+    ///
     public func closeLeft() {
         slideMenuController()?.closeLeft()
     }
     
+    ///
+    /// 右メニューバー非表示処理
+    ///
     public func closeRight() {
         slideMenuController()?.closeRight()
-    }
-    
-    // Please specify if you want menu gesuture give priority to than targetScrollView
-    public func addPriorityToMenuGesuture(_ targetScrollView: UIScrollView) {
-        guard let slideController = slideMenuController(), let recognizers = slideController.view.gestureRecognizers else {
-            return
-        }
-        for recognizer in recognizers where recognizer is UIPanGestureRecognizer {
-            targetScrollView.panGestureRecognizer.require(toFail: recognizer)
-        }
     }
 }
