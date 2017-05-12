@@ -16,8 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
 
     var window: UIWindow?
     
-    var testbadge :Int = 0
-    
     // 通知用LocationManager:生成&&初期化
     var locationManager : CLLocationManager!
     
@@ -212,7 +210,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                     }
                     
                     // アイコンバッジ：数
-                    content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber
+                    //content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber
                     
                     // 通知サウンド:デフォルト
                     content.sound = UNNotificationSound.default()
