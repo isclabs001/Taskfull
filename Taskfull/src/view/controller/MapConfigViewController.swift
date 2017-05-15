@@ -142,8 +142,14 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             
             // ナビゲーションバー表示
             navigationController?.setNavigationBarHidden(false, animated: true)
+            // ナビゲーションバー表示設定
+            self.navigationController?.navigationBar.backgroundColor = UIColorUtility.rgb(222, g: 255, b: 255)
+            // ナビゲーションバー透過度
+            self.navigationController?.navigationBar.alpha = 0.9
+            // ナビゲーションバー透過フラグ
+            self.navigationController?.navigationBar.isTranslucent = true
             
-            //Mapkit:delegate設定
+            // Mapkit:delegate設定
             GPSMapView.delegate = self
             
             // GPS認証ステータスを取得

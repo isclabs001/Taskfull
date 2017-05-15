@@ -63,13 +63,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         locationManager = CLLocationManager()
         // 通知用LocationManager:Delegate設定
         self.locationManager.delegate = self
-        // 初回起動時、GPS認証ダイアログ表示(常に許可)
-        self.locationManager.requestAlwaysAuthorization()
         
+        
+        // GPS認証ステータスを取得
+        let status = CLLocationManager.authorizationStatus()
+        
+        // GPS認証がまだである場合(アプリ起動初回のみ)
+        if(status == .notDetermined) {
+            
+            // 初回起動時、GPS認証ダイアログ表示(常に許可)
+            self.locationManager.requestAlwaysAuthorization()
+            
+        }
+        
+        // GPSTEST:START
+        /*
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        self.locationManager.distanceFilter = 100
+        if #available(iOS 9.0, *) {
+            self.locationManager.allowsBackgroundLocationUpdates = true
+        } else {
+            // Fallback on earlier versions
+        }
+        //locationManager.pausesLocationUpdatesAutomatically = false
+        //locationManager.startUpdatingLocation()
+        */
+
 
     }
     
-    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("緯度：" + String(describing: manager.location?.coordinate.latitude))
+        print("経度：" + String(describing: manager.location?.coordinate.longitude))
+    }
     
     
     ///
@@ -102,7 +128,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         
         // LocationManager初期設定処理
-        setupLocationManager()
+        //setupLocationManager()
         
         // タスク通知生成処理
         taskExpirationNotification()
@@ -217,6 +243,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                         content.body = String(item.Memo)
                     }
                     
+                    
                     // アイコンバッジ：数
                     //content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber
                     
@@ -316,7 +343,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                     if(item.NotifiedLocation != CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE){
 
                         // GPS用　UNMutableNotificationContent作成
-                        content.title = String((item.Title) + "_到着")
+                        content.title = String((item.Title) + "_IN")
                         //メモが空欄である場合
                         if(true == StringUtility.isEmpty(item.Memo)){
                             //通知ボディ = 空白文字挿入※空欄対策
@@ -356,6 +383,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                         
                         // 通知リクエスト作成
                         let locationRequest = UNNotificationRequest(identifier: String(item.Id) + "_GPS",content: content,trigger: locationTrigger)
+                        
+                        print(locationRequest.identifier)
                         
                         // UNUserNotificationCenterに作成したUNNotificationRequestを追加
                         center.add(locationRequest)
@@ -398,6 +427,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         // ローカル通知：バッジ、サウンド、アラート
         completionHandler([.badge,.sound, .alert])
         
+        UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
+        
     }
     
     // ローカル通知タップ時イベント
@@ -406,11 +437,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        //UIApplication.shared.applicationIconBadgeNumber = 0
+        UIApplication.shared.applicationIconBadgeNumber = 0
         
         //通知：なし
         completionHandler()
     }
-    
+
 }
 

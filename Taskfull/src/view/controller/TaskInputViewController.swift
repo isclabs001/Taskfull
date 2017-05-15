@@ -101,7 +101,7 @@ class TaskInputViewController : BaseTaskInputViewController
                 MessageUtility.dispAlertOK(
                     viewController: self,
                     title: "",
-                    message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
+                    message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
             }
         }
     }
