@@ -299,7 +299,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         //delegate設定
         selfLocation.delegate = self
         
-        //　TODO：要修正
+        //　TODO：ローカライズ対応要修正
         if(CLLocationManager.locationServicesEnabled() == true){
             switch CLLocationManager.authorizationStatus() {
                 
@@ -392,10 +392,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     func locationManager(_ manager: CLLocationManager,didFailWithError error: Error){
         
         
-        debugPrint("error")
+        debugPrint("LocationError")
         
-        //　アラート表示
-        MessageUtility.dispAlertOK(viewController: self, title: "位置情報取得エラー", message: "位置情報が取得できません")
+        //　「位置情報取得エラー」アラート表示
+        MessageUtility.dispAlertOK(viewController: self, title: MessageUtility.getMessage(key: "MessageStringLocationAcquisitionError"), message: MessageUtility.getMessage(key: "MessageStringErrorLocationAcquisition"))
         
         //　位置移動イベント実装
         
@@ -534,7 +534,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // AlertにTextFieldを追加
         myAlert.addTextField { (textField: UITextField!) -> Void in
             
-            textField.placeholder = "通知地点"
+            // Placeholderを設定
+            textField.placeholder = MessageUtility.getMessage(key: "LabelItemTaskPointPlaceholder")
             
             // NotificationCenterを生成
             let myNotificationCenter = NotificationCenter.default
@@ -669,7 +670,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         let index  = (self.GPSMapView.annotations as NSArray).index(of: annotation)
         
         // インスタンス生成:サブメッセージ「緯度経度」
-        let myAlert = UIAlertController(title: view.annotation!.title!, message: ("緯度:" + String(self.GPSMapView.annotations[index].coordinate.latitude) + "\n" + "経度:" + String(self.GPSMapView.annotations[index].coordinate.longitude)), preferredStyle: UIAlertControllerStyle.actionSheet)
+        let myAlert = UIAlertController(title: view.annotation!.title!, message: (MessageUtility.getMessage(key: "MessageStringLocationLatitude") + String(self.GPSMapView.annotations[index].coordinate.latitude) + "\n" + MessageUtility.getMessage(key: "MessageStringLocationLongitude") + String(self.GPSMapView.annotations[index].coordinate.longitude)), preferredStyle: UIAlertControllerStyle.actionSheet)
 
 // TODO:アノテーションをインスタンス変数に格納しなければ編集不可の為[定数固定]、編集処理次フェーズ課題
 //        // 編集アクション生成

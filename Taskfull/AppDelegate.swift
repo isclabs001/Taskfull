@@ -101,6 +101,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         
+        // LocationManager初期設定処理
+        setupLocationManager()
+        
         // タスク通知生成処理
         taskExpirationNotification()
     }
@@ -116,6 +119,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         // アプリケーションがバックグラウンドに移行する際にイベントを通知する
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "applicationDidEnterBackground"), object: nil)
         
+        // LocationManager初期設定処理
+        setupLocationManager()
+        
         // タスク通知生成処理
         taskExpirationNotification()
         
@@ -130,6 +136,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
 
         // アプリケーションがフォアグラウンドに移行する際にイベントを通知する
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "applicationWillEnterForeground"), object: nil)
+        
+        // LocationManager初期設定処理
+        setupLocationManager()
         
         // タスク通知生成処理
         taskExpirationNotification()
@@ -382,7 +391,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         return taskData
     }
     
-    // フォアグラウンド時:通知受信時イベント
+    // フォアグラウンド時:ローカル通知受信時イベント
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         

@@ -12,6 +12,7 @@
 "TitleEditTask"="タスク編集";
 "TitleContentTask"="タスク内容";
 
+
 /// ラベル項目
 "LabelItemNameEmpty"="項目名未入力";
 "LabelItemNamePlaceHolder"="項目名:";
@@ -19,6 +20,7 @@
 "LabelItemAfterTaskAdd"="後続タスク追加";
 "LabelItemAfterTaskDisplay"="後続タスク表示";
 "LabelItemAfterTaskEdit"="後続タスク編集";
+"LabelItemTaskPointPlaceholder"="タスク通知地点";
 
 /// カテゴリー形式
 "CategoryTypeTask"="課題";
@@ -38,6 +40,10 @@
 "MessageStringTitleConfirmTaskComplete"="タスク完了確認";
 "MessageStringTitleConfirmDelete"="削除確認";
 "MessageStringTitleConfirmInput"="入力確認";
+"MessageStringPointAcquisitionError"="位置情報取得エラー";
+"MessageStringLocationLatitude"="緯度:";
+"MessageStringLocationLongitude"="経度:";
+
 /// 確認メッセージ
 "MessageStringConfirmMessageTaskComplete"="タスク「%@」を完了してもよろしいですか？";
 "MessageStringConfirmMessageTaskDelete"="編集中のタスク及び後続タスクを削除します。よろしいですか？";
@@ -48,4 +54,5 @@
 "MessageStringErrorNotificationPointListSameName"="既に同じ名前が使用されています。";
 "MessageStringErrorNotificationPointListDelete"="「%@」を使用している未完了タスクが存在しています。";
 "MessageStringErrorTaskCreateLimit"="通知地点作成上限(%@)です。";
+"MessageStringErrorLocationAcquisition"="現在位置が取得できません。";
 

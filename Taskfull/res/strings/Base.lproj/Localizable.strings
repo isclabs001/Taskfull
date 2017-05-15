@@ -19,6 +19,7 @@
 "LabelItemAfterTaskAdd"="Subsequent task add";
 "LabelItemAfterTaskDisplay"="Subsequent task display";
 "LabelItemAfterTaskEdit"="Subsequent task edit";
+"LabelItemTaskPointPlaceholder"="Task notification point";
 
 /// カテゴリー形式
 "CategoryTypeTask"="Task";
@@ -38,6 +39,10 @@
 "MessageStringTitleConfirmTaskComplete"="Complete confirm";
 "MessageStringTitleConfirmDelete"="Delete confirm";
 "MessageStringTitleConfirmInput"="Regist confirm";
+"MessageStringLocationAcquisitionError"="Location information acquisition error";
+"MessageStringLocationLatitude"="Latitude:";
+"MessageStringLocationLongitude"="Longitude:";
+
 /// 確認メッセージ
 "MessageStringConfirmMessageTaskComplete"="Are you sure you want to complete task '%@' ?";
 "MessageStringConfirmMessageTaskDelete"="Delete the currently edited task and succeeding task. Is it OK?";
@@ -47,7 +52,8 @@
 "MessageStringErrorNotificationPointListName"="Please enter a notification location name.";
 "MessageStringErrorNotificationPointListSameName"="The same name is already in use.";
 "MessageStringErrorNotificationPointListDelete"="An incomplete task using '%@' exists.";
-"MessageStringErrorTaskCreateLimit"="It is the notification point creation upper limit(10).";
+"MessageStringErrorTaskCreateLimit"="It is the notification point creation upper limit(%@).";
+"MessageStringErrorLocationAcquisition"="Current location can not be acquired";
 
 
 
