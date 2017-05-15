@@ -6,10 +6,10 @@
 "5jP-bL-5xk.normalTitle" = "後続タスク追加";
 
 /* Class = "UITextField"; placeholder = "通知時刻"; ObjectID = "6S7-hO-Ucy"; */
-"6S7-hO-Ucy.placeholder" = "通知時刻";
+"6S7-hO-Ucy.placeholder" = "タスク通知時刻";
 
 /* Class = "UITextField"; placeholder = "通知場所"; ObjectID = "702-8F-eoS"; */
-"702-8F-eoS.placeholder" = "通知場所";
+"702-8F-eoS.placeholder" = "タスク通知地点";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7dZ-PZ-lc6"; */
 "7dZ-PZ-lc6.normalTitle" = "Button";
@@ -39,7 +39,7 @@
 "Zh2-y1-WJP.normalTitle" = "Button";
 
 /* Class = "UITextField"; placeholder = "通知場所"; ObjectID = "aPD-ts-pDm"; */
-"aPD-ts-pDm.placeholder" = "通知場所";
+"aPD-ts-pDm.placeholder" = "タスク通知地点";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "cVH-fM-vMr"; */
 "cVH-fM-vMr.normalTitle" = "Button";
@@ -57,10 +57,10 @@
 "g4e-Va-Zua.segmentTitles[3]" = "至急";
 
 /* Class = "UITextField"; placeholder = "通知場所"; ObjectID = "ln1-Dl-wl9"; */
-"ln1-Dl-wl9.placeholder" = "通知場所";
+"ln1-Dl-wl9.placeholder" = "タスク通知地点";
 
 /* Class = "UITextField"; placeholder = "通知時刻"; ObjectID = "qGP-Lc-c3N"; */
-"qGP-Lc-c3N.placeholder" = "通知時刻";
+"qGP-Lc-c3N.placeholder" = "タスク通知時刻";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vhD-cs-b7O"; */
 "vhD-cs-b7O.normalTitle" = "Button";

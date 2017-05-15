@@ -237,7 +237,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             self.inputPointPicker.reloadAllComponents()
             
         }
-            
+        
+        // 選択行を初期値に選択
+        inputPointPicker.selectRow(0, inComponent: 0, animated: true)
+        
     }
     
     
@@ -422,12 +425,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         }
         // 作成上限である場合
         else{
+
+            //  通知地点作成上限アラート表示
+            MessageUtility.dispAlertOK(viewController: self, title: "", message: MessageUtility.getMessage(key: "MessageStringErrorTaskCreateLimit", param: String(CommonConst.INPUT_NOTIFICATION_POINT_LIST_LIMIT)))
             
-            // 制限アラート表示
-            MessageUtility.dispAlertOK(
-                viewController: self,
-                title: "",
-                message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
         }
     }
     
@@ -435,14 +436,15 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// MapView:addAnnotation時イベント
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        //一意名
+        // ピン一意名
         let myPinIdentifier = "PinAnnotationIdentifier"
         
         // ピン生成
         var myPinView: MKPinAnnotationView!
         
-        // MKPinAnnotationViewのインスタンスが生成されていなければ作る
+        // MKPinAnnotationViewのインスタンスが生成されていなければ作成
         if myPinView == nil {
+            
             
             myPinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: myPinIdentifier)
             
@@ -458,6 +460,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // annotationを設定
         myPinView.annotation = annotation
         
+        // ピンを返す
         return myPinView
 
     }
@@ -574,7 +577,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                     // mapViewへ円追加：addOverlayイベント処理開始
                     self.GPSMapView.add(selfCircle)
                     
-                    // TODO:通知地点登録
+                    // 通知地点登録処理
                     self.registrationPointList(pointTitle: strInputPointTrimTitle, location: tapLocation)
                 }
                 // 同名通知地点が存在した場合
@@ -647,7 +650,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 alert.addButton(withTitle: MessageUtility.getMessage(key: "MessageStringButtonOK"))
                 alert.show()
                 
-                // 前後半角スペース削除　※スペースのみ入力時、複数通知防止の為
+                // 前後半角スペース削除　※スペースのみ入力時、複数回検知防止の為
                 inputTextField.text = inputTextField.text?.trimmingCharacters(in: NSCharacterSet.whitespaces)
                 
             }
@@ -799,8 +802,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     //　ナビゲーションバーの「戻る」ボタン押下処理
     ///
     override func onClickNavigationBackBtn() {
+        
         // キャンセル
         setCancelFlag(cancelFlag: !self.updateFlag)
+        
     }
     
     

@@ -152,7 +152,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     }
     
     
-    // TODO:要メソッド化
     // タスクローカル通知生成処理
     fileprivate func taskExpirationNotification(){
         
@@ -215,7 +214,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                     // 通知サウンド:デフォルト
                     content.sound = UNNotificationSound.default()
                     
-                    // 画像
+                    // 画像TODO:冗長の為、要修正
                     switch item.ButtonColor {
                         
                     case CommonConst.TASK_BUTTON_COLOR_WHITE:
@@ -357,13 +356,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                 }
 
             })
-            
-        } else {
-            // iOS 9
-            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
-            UIApplication.shared.registerUserNotificationSettings(settings)
-            
-            
         }
     }
     

@@ -470,7 +470,6 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
             
             
         }
-        // TEST:START
         // 読込ID:子タスクが存在する場合(編集時用、編集設定にて詳細定義)
         else if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) != -1){
             
@@ -482,7 +481,6 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
             inputDatePicker.maximumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
             
         }
-        // TEST:END
         // 子タスクである場合
         else{
             
@@ -500,12 +498,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
             // DatePicker開始時刻＝親タスク終了時刻
             inputDatePicker.setDate(inputTaskEndDate, animated: false)
             
-            
-            // TEST:START
             // 設定最小日 ＝ 読込ID:親タスク終了日付
             inputDatePicker.minimumDate = FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime)
             
-            // TEST:END
             
         }
         
@@ -545,6 +540,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
 
     //Datepicer：値変更時イベント
     func updateInputDatePicker(_ sender: UIDatePicker, taskDateField: UITextField!){
+        
         // 値をタスク終了時刻入力欄に表示
         taskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(sender.date)
         
