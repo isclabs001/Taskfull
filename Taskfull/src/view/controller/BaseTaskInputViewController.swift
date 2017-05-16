@@ -48,45 +48,75 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     var paramCategoryType : Int = 0
     
 
-    // カラーボタンイメージ(全１２色)
-    // 重要度：低
+    /// カラーボタンイメージ(全１２色)
+    /// 重要度：低
     let mImageTaskColorBtn_WHITE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_WHITE])!
     let mImageTaskColorBtn_LIGHT_BLUE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_LIGHT_BLUE])!
     let mImageTaskColorBtn_GLAY : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_GLAY])!
-    // 重要度：中
+    /// 重要度：中
     let mImageTaskColorBtn_GREEN : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_GREEN])!
     let mImageTaskColorBtn_ORANGE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_ORANGE])!
     let mImageTaskColorBtn_BLUE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_BLUE])!
-    // 重要度：高
+    /// 重要度：高
     let mImageTaskColorBtn_YELLOW : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_YELLOW])!
     let mImageTaskColorBtn_PINK : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_PINK])!
     let mImageTaskColorBtn_PURPLE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_PURPLE])!
-    // 重要度：至急
+    /// 重要度：至急
     let mImageTaskColorBtn_DARK_YELLOW : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_YELLOW])!
     let mImageTaskColorBtn_DARK_PINK : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_PINK])!
     let mImageTaskColorBtn_DARK_PURPLE : UIImage = UIImage(named: CommonConst.TASK_BUTTON_COLOR_RESOURCE[CommonConst.TASK_BUTTON_COLOR_DARK_PURPLE])!
 
     
-    //PicerView　表示列
+    /// PicerView　表示列
+    ///
+    /// - Parameter pickerView: pickerView
+    /// - Returns: 表示列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        
         return CommonConst.INPUT_NOTIFICATION_POINT_LIST_PICKER_COLUMN_COUNT
+        
     }
-    //PicerView　表示行（要素数）
+    
+    /// PicerView　表示行（要素数）
+    ///
+    /// - Parameters:
+    ///   - pickerView: pickerView
+    ///   - component: component
+    /// - Returns: 表示行
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
         //要素数
         return pointListNameArray.count
+        
     }
-    //PicerView　表示要素
+    
+    /// PicerView　表示要素
+    ///
+    /// - Parameters:
+    ///   - pickerView: pickerView
+    ///   - row: 表示行
+    ///   - component: component
+    /// - Returns: 表示行要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
         //要素数
         return pointListNameArray[row]
+        
     }
-    //PicerView　値選択時イベント
+    
+    /// PicerView　値選択時イベント
+    ///
+    /// - Parameters:
+    ///   - pickerView: pickerView
+    ///   - row: 選択行
+    ///   - component: component
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
     }
     
     /// 通知地点名リスト用配列更新処理
+    ///
+    /// - Parameter InputPointListField: UITextField
     fileprivate func updataPointListNameArray(_ InputPointListField: UITextField!){
         
         // テキスト欄初期化
@@ -124,14 +154,21 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     }
     
     
-    //キーボード「リターンキー」：タップ時イベント
+    /// キーボード「リターンキー」：タップ時イベント
+    ///
+    /// - Parameter textField: UITextField
+    /// - Returns: Bool
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // キーボードを閉じる
         textField.resignFirstResponder()
         return false
     }
     
-    // 選択地点の設定
+    /// 選択地点の設定
+    ///
+    /// - Parameters:
+    ///   - textField: UITextField
+    ///   - row: 選択行
     func setSelectedPoint(textField : UITextField, row: Int) {
         
         // 選択行
@@ -142,9 +179,6 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
             
             // 選択項目をUITextFieldに設定
             textField.text = pointListNameArray[row]
-            
-            // 0.1秒バイブレーション作動
-            //actionViblation()
         
         // 初期値以外である場合
         default:
@@ -178,18 +212,20 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         }
     }
     
-    // didReceiveMemoryWarningイベント処理
+    /// didReceiveMemoryWarningイベント処理
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    //　オブザーバ解除
+    ///　オブザーバ解除
     deinit{
         NotificationCenter.default.removeObserver(self)
     }
     
     /// 初期化処理
+    ///
+    /// - Parameter mainView: UICustomView
     func initializeMainProc(mainView : UICustomView) ->Bool
     {
         // 基底のinitializeProcを呼び出す
@@ -226,13 +262,13 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         return ret
     }
     
-    //フォーカスが外れた際のイベント処理
+    /// フォーカスが外れた際のイベント処理
     func missFocusView(){
         // viewを閉じる
         view.endEditing(true)
     }
     
-    // ナビゲーションバー：初期設定
+    /// ナビゲーションバー：初期設定
     fileprivate func displayTopMenu(){
         
         // ナビゲーションバー表示
@@ -293,34 +329,40 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         }
     }
     
-    // 確定ボタン：タップ時イベント
+    /// 確定ボタン：タップ時イベント
     func onTouchDown_decideEditTaskButton(){}
     
-    // 登録内容入力欄設定
+    /// 登録内容入力欄設定
     func displayInputField(){}
     
-    // タスク内容初期表示処理
+    /// タスク内容初期表示処理
     func displayTaskContent(){}
     
-    // 遷移先モード分岐処理
+    /// 遷移先モード分岐処理
     func displayTaskModeChange(){}
     
-    //タスクカラーボタン:初期設定
+    /// タスクカラーボタン:初期設定
+    ///
+    /// - Parameters:
+    ///   - btn1: タスクカラーボタン_1
+    ///   - btn2: タスクカラーボタン_2
+    ///   - btn3: タスクカラーボタン_3
+    ///   - inputImportanceSegment: 重要度インデックス
     func dispayInputTaskColorBtn(btn1 : UICustomButton!, btn2 : UICustomButton!, btn3 : UICustomButton!, inputImportanceSegment: UISegmentedControl!){
         
-        //タスクカラーボタン:初期値設定
+        // タスクカラーボタン:初期値設定
         changeColorBtn(inputImportanceSegment.selectedSegmentIndex, btn1 : btn1, btn2 : btn2, btn3 : btn3)
         
-        //タスクカラーボタン_1:タップ時イベント設定
+        // タスクカラーボタン_1:タップ時イベント設定
         btn1.addTarget(self, action: #selector(onTouchDown_btn1(_:)), for: .touchUpInside)
         
-        //タスクカラーボタン_2:タップ時イベント設定
+        // タスクカラーボタン_2:タップ時イベント設定
         btn2.addTarget(self, action: #selector(onTouchDown_btn2(_:)), for: .touchUpInside)
         
-        //タスクカラーボタン_3:タップ時イベント設定
+        // タスクカラーボタン_3:タップ時イベント設定
         btn3.addTarget(self, action: #selector(onTouchDown_btn3(_:)), for: .touchUpInside)
         
-        //タスクカラーボタン:初期値設定
+        // タスクカラーボタン:初期値設定
         btn1.isSelected = false
         btn2.isSelected = true
         btn3.isSelected = false
@@ -329,7 +371,13 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         btn3.setBackgroundColor(UIColor.clear, forUIControlState: UIControlState())
     }
     
-    // タスクカラーボタン変更処理
+    /// タスクカラーボタン変更処理
+    ///
+    /// - Parameters:
+    ///   - selectedBtnIndex: セグメントインデックス
+    ///   - btn1: タスクカラーボタン_1
+    ///   - btn2: タスクカラーボタン_2
+    ///   - btn3: タスクカラーボタン_3
     func changeInputTaskColorBtn(selectedBtnIndex : Int, btn1 : UICustomButton!, btn2 : UICustomButton!, btn3 : UICustomButton!){
         
         switch(selectedBtnIndex) {
@@ -362,7 +410,13 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         }
     }
     
-    //カラーボタン変更処理(引数:重要度)
+    /// カラーボタン色画像変更処理
+    ///
+    /// - Parameters:
+    ///   - caseNumber: 重要度
+    ///   - btn1: タスクカラーボタン_1
+    ///   - btn2: タスクカラーボタン_2
+    ///   - btn3: タスクカラーボタン_3
     fileprivate func changeColorBtn(_ caseNumber : Int, btn1 : UICustomButton!, btn2 : UICustomButton!, btn3 : UICustomButton!){
         
         switch caseNumber {
@@ -412,16 +466,24 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         }
     }
     
-    //タスクカラーボタン_1:タップ時イベント
+    /// タスクカラーボタン_1:タップ時イベント
+    ///
+    /// - Parameter sender: タスクカラーボタン_1
     func onTouchDown_btn1(_ sender:UIButton){}
     
-    //タスクカラーボタン_2:タップ時イベント
+    /// タスクカラーボタン_2:タップ時イベント
+    ///
+    /// - Parameter sender: タスクカラーボタン_2
     func onTouchDown_btn2(_ sender:UIButton){}
     
-    //タスクカラーボタン_3:タップ時イベント
+    /// タスクカラーボタン_3:タップ時イベント
+    ///
+    /// - Parameter sender: タスクカラーボタン_3
     func onTouchDown_btn3(_ sender:UIButton){}
 
-    //項目名入力欄,メモ入力欄:初期設定
+    /// 項目名入力欄,メモ入力欄:初期設定
+    ///
+    /// - Parameter taskNameField: UITextField
     func displayInputTaskName(taskNameField: UITextField!){
         
         //項目名入力欄:delegate設定
@@ -433,26 +495,36 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: taskNameField)
     }
     
-    //textView:値変更確定時イベント
+    /// textView:値変更確定時イベント
+    ///
+    /// - Parameter textView: UITextField
     func textViewDidChange(_ textView: UITextView) {}
     
-    // textField:編集完了時イベント
+    /// textField:編集完了時イベント
+    ///
+    /// - Parameter nsNotification: Notification
     func textFieldDidChange(_ nsNotification: Notification) {}
     
-    //項目名入力欄,メモ入力欄:初期設定
+    /// 項目名入力欄,メモ入力欄:初期設定
+    ///
+    /// - Parameter taskMemoView: UIPlaceHolderTextView
     func displayInputTaskMemo(taskMemoView: UIPlaceHolderTextView!){
+        
         //メモ入力欄:delegate設定
         taskMemoView.delegate = self
+        
         //メモ入力欄(透かし文字"メモ:",左寄せ,上寄せ)
         taskMemoView.textAlignment = NSTextAlignment.left
         taskMemoView.layer.borderWidth = 1
         taskMemoView.layer.borderColor = UIColor.gray.cgColor
         taskMemoView.placeHolder = MessageUtility.getMessage(key: "LabelItemMemoPlaceHolder") as NSString
+        
     }
     
-    //タスク終了時刻欄:初期設定
+    /// タスク終了時刻欄:初期設定
+    ///
+    /// - Parameter taskDateField: UITextField
     func diplayInputTaskDate(taskDateField: UITextField!){
-        
         
         //タスク終了時刻入力欄（現在日付,中央寄せ,サイズ自動調整）
         // 登録開始タスクである場合(新規登録先頭タスク)
@@ -463,7 +535,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
             taskDateField.textAlignment = NSTextAlignment.center
             taskDateField.sizeToFit()
             
-            // タスク終了時刻入力欄を現在時刻に設定()※初期埋め時処理
+            // タスク終了時刻入力欄を現在時刻に設定()※初期埋め時処理:コメントアウト
 //            taskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(Date())
 //            taskDateField.textAlignment = NSTextAlignment.center
 //            taskDateField.sizeToFit()
@@ -516,11 +588,14 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
     }
 
-    // ツールバー：クリアボタンタップ時イベント
+    /// ツールバー：クリアボタンタップ時イベント
     func onTouch_ToolBarClearBtn(){}
 
-    // ツールバー：クリアボタン処理
+    /// ツールバー：クリアボタン処理
+    ///
+    /// - Parameter taskDateField: UITextField
     func clearToolBarButton(taskDateField: UITextField!) {
+        
         //　タスク終了時刻欄初期化
         taskDateField.text = StringUtility.EMPTY
         
@@ -532,13 +607,20 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
         // 0.1秒バイブレーション作動
         actionViblation()
+        
     }
     
     
-    //Datepicer：値変更時イベント
+    /// Datepicer：値変更時イベント
+    ///
+    /// - Parameter sender: UIDatePicker
     func inputDatePickerEdit(_ sender: UIDatePicker){}
 
-    //Datepicer：値変更時イベント
+    /// Datepicer：値変更時イベント
+    ///
+    /// - Parameters:
+    ///   - sender: UIDatePicker
+    ///   - taskDateField: UITextField
     func updateInputDatePicker(_ sender: UIDatePicker, taskDateField: UITextField!){
         
         // 値をタスク終了時刻入力欄に表示
@@ -552,10 +634,13 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
         // 0.1秒バイブレーション作動
         actionViblation()
+        
     }
 
     
-    //通知地点(登録地点リスト):初期設定
+    /// 通知地点(登録地点リスト):初期設定
+    ///
+    /// - Parameter pointListField: UITextField
     func displayInputPoint(pointListField: UITextField!){
         
         //登録地点リスト:要素追加イベント
@@ -574,7 +659,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
     }
     
-    //重要度:初期設定
+    /// 重要度:初期設定
+    ///
+    /// - Parameter importanceSegment: UISegmentedControl
     func displayInputImportanceSegment(importanceSegment: UISegmentedControl!){
         
         //重要度:セグメント値変更時イベント
@@ -582,10 +669,18 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
     }
 
-    //重要度:セグメント値変更時イベント
+    /// 重要度:セグメント値変更時イベント
+    ///
+    /// - Parameter segcon: UISegmentedControl
     func onTouchDown_InputImportanceSegment(_ segcon:UISegmentedControl){}
 
-    // 重要度:セグメント値変更時処理
+    /// 重要度:セグメント値変更時処理
+    ///
+    /// - Parameters:
+    ///   - importanceSegmentIndex: セグメントインデックス
+    ///   - btn1: タスクカラーボタン_1
+    ///   - btn2: タスクカラーボタン_2
+    ///   - btn3: タスクカラーボタン_3
     func didChengeImportanceSegmentValue(_ importanceSegmentIndex: Int, btn1 : UICustomButton!, btn2 : UICustomButton!, btn3 : UICustomButton!){
         
         //各セグメント選択時分岐処理
@@ -617,7 +712,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         }
     }
     
-    //後続タスク追加ボタン:初期設定
+    /// 後続タスク追加ボタン:初期設定
+    ///
+    /// - Parameter addAfterTask: UIButton
     func displayAddAfterTaskBtn(addAfterTask: UIButton!) {
 
         
@@ -645,7 +742,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
     }
     
-    //後続タスクボタン：タップ時イベント
+    /// 後続タスクボタン：タップ時イベント
+    ///
+    /// - Parameter sender: UIButton
     func onTouchDown_addAfterTaskButton(_ sender : UIButton){}
 
     /**
@@ -681,16 +780,14 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
     }
     
-    // バイブレーション作動
+    /// バイブレーション作動
     func actionViblation() {
         // 0.1秒バイブレーション作動
         AudioServicesPlaySystemSound(1003)
         AudioServicesDisposeSystemSoundID(1003)
     }
     
-    ///
-    //　ナビゲーションバーの「戻る」ボタン押下処理
-    ///
+    ///　ナビゲーションバーの「戻る」ボタン押下処理
     override func onClickNavigationBackBtn() {
         // キャンセル
         setCancelFlag(cancelFlag: true)
@@ -698,6 +795,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     
     /// 未完了かつロケーション初期値以外が設定されているタスク数取得処理
     ///
+    /// - Parameter strInputPointTitle: 編集タスクの位置情報タイトル
     /// - Returns: 未完了かつロケーション初期値以外が設定されているタスク数
     fileprivate func getTaskDataLocationCountValue(strInputPointTitle : String) -> Int {
         

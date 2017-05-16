@@ -20,11 +20,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /**
      * 画面遷移Identifier定義
      */
-    // タスク追加画面への遷移定義文字列
+    /// タスク追加画面への遷移定義文字列
     static internal let SEGUE_IDENTIFIER_TASK_INPUT = "toTaskInputViewController"
-    // タスク編集画面への遷移定義文字列
+    /// タスク編集画面への遷移定義文字列
     static internal let SEGUE_IDENTIFIER_TASK_EDIT = "toTaskEditViewController"
-    // GPS通知設定画面への遷移定義文字列
+    /// GPS通知設定画面への遷移定義文字列
     static internal let SEGUE_IDENTIFIER_CONFIG_MAP = "toMapConfigViewController"
     // 設定画面への遷移定義文字列
     static internal let SEGUE_IDENTIFIER_CONFIG = "toConfigViewController"
@@ -33,14 +33,14 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /**
      * 変数
      */
-    // 追加ボタンイメージ
+    /// 追加ボタンイメージ
     fileprivate let mImageAddButton : UIImage = UIImage(named: "add.png")!
     fileprivate let mImageAddButtonDown : UIImage = UIImage(named: "add_down.png")!
-    // モード変更ボタンイメージ
+    /// モード変更ボタンイメージ
     fileprivate let mImageModeChangeButton : UIImage = UIImage(named: "modechg.png")!
     fileprivate let mImageModeChangeButtonDown : UIImage = UIImage(named: "modechg_down.png")!
 
-    // パラメータ用タスクID格納変数
+    /// パラメータ用タスクID格納変数
     fileprivate var mParamTaskId : Int = 0
     
     /**

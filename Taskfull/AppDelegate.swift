@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
 
     var window: UIWindow?
     
-    // 通知用LocationManager:生成&&初期化
+    /// 通知用LocationManager:生成&&初期化
     var locationManager : CLLocationManager!
     
     ///
@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     }
     
     
-    // LocationManager初期設定処理
+    /// LocationManager初期設定処理
     fileprivate func setupLocationManager(){
         
         // LocationManager:初期化
@@ -88,16 +88,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         //locationManager.pausesLocationUpdatesAutomatically = false
         //locationManager.startUpdatingLocation()
         */
-
-
+        
+        // 位置情報精度:取得
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // 位置情報一回のみ取得
+        locationManager.requestLocation()
     }
     
+    /// 位置情報取得時イベント
+    ///
+    /// - Parameters:
+    ///   - manager: CLLocationManager
+    ///   - locations: CLLocation
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         //　DEBUG：補足座標
         #if DEBUG
+        print("位置情報取得日時：" + FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true))
         print("緯度：" + String(describing: manager.location?.coordinate.latitude))
         print("経度：" + String(describing: manager.location?.coordinate.longitude))
+        #endif
+        
+    }
+    
+    
+    /// 位置情報取得失敗時
+    ///
+    /// - Parameters:
+    ///   - manager: CLLocationManager
+    ///   - error: Error
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+        //　DEBUG：位置情報取得失敗
+        #if DEBUG
+            print("位置情報取得失敗")
         #endif
         
     }
@@ -192,7 +216,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     }
     
     
-    // タスクローカル通知生成処理
+
+    /// タスクローカル通知生成処理
     fileprivate func taskExpirationNotification(){
         
         //　ローカル通知初期化
@@ -391,7 +416,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                         region.notifyOnEntry = true
                         
                         // GPS通知トリガー作成(通知範囲,通知リピートなし)
-                        let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: true)
+                        let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
                         
                         // GPS通知リクエスト作成(identifier: 項目名 + "_GPS",content: content,trigger: locationTrigger)
                         let locationRequest = UNNotificationRequest(identifier: String(item.Id) + "_GPS",content: content,trigger: locationTrigger)
@@ -407,10 +432,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         }
     }
     
+
+    /// 未完了タスクEntity取得処理
     ///
-    /// 未完了タスクデータの取得
-    ///　- returns:未完了タスクデータ配列
-    ///
+    /// - Returns: 未完了タスクEntity
     fileprivate func getIncompleteTaskData() -> [TaskInfoDataEntity] {
         
         var taskData : [TaskInfoDataEntity] = [TaskInfoDataEntity]()
@@ -430,7 +455,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         return taskData
     }
     
-    // フォアグラウンド時:ローカル通知受信時イベント
+
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
@@ -444,8 +469,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         
     }
     
-    // ローカル通知タップ時イベント
+
     @available(iOS 10.0, *)
+    /// ローカル通知タップ時イベント
+    ///
+    /// - Parameters:
+    ///   - center: UNUserNotificationCenter
+    ///   - response: UNNotificationResponse
+    ///   - completionHandler: completionHandler
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
