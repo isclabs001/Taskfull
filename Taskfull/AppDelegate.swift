@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
 
     var window: UIWindow?
     
-    // 通知用LocationManager:生成&&初期化
+    /// 通知用LocationManager:生成&&初期化
     var locationManager : CLLocationManager!
     
     ///
@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     }
     
     
-    // LocationManager初期設定処理
+    /// LocationManager初期設定処理
     fileprivate func setupLocationManager(){
         
         // LocationManager:初期化
@@ -92,6 +92,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
 
     }
     
+    /// 位置情報取得時イベント
+    ///
+    /// - Parameters:
+    ///   - manager: CLLocationManager
+    ///   - locations: CLLocation
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         //　DEBUG：補足座標
@@ -192,7 +197,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     }
     
     
-    // タスクローカル通知生成処理
+
+    /// タスクローカル通知生成処理
     fileprivate func taskExpirationNotification(){
         
         //　ローカル通知初期化
@@ -406,10 +412,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         }
     }
     
+
+    /// 未完了タスクEntity取得処理
     ///
-    /// 未完了タスクデータの取得
-    ///　- returns:未完了タスクデータ配列
-    ///
+    /// - Returns: 未完了タスクEntity
     fileprivate func getIncompleteTaskData() -> [TaskInfoDataEntity] {
         
         var taskData : [TaskInfoDataEntity] = [TaskInfoDataEntity]()
@@ -429,8 +435,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         return taskData
     }
     
-    // フォアグラウンド時:ローカル通知受信時イベント
+
     @available(iOS 10.0, *)
+    /// フォアグラウンド時:ローカル通知受信時イベント
+    ///
+    /// - Parameters:
+    ///   - center: UNUserNotificationCenter
+    ///   - notification: notification
+    ///   - completionHandler: completionHandler
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
         // ローカル通知：バッジ、サウンド、アラート
@@ -441,8 +453,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         
     }
     
-    // ローカル通知タップ時イベント
+
     @available(iOS 10.0, *)
+    /// ローカル通知タップ時イベント
+    ///
+    /// - Parameters:
+    ///   - center: UNUserNotificationCenter
+    ///   - response: UNNotificationResponse
+    ///   - completionHandler: completionHandler
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {

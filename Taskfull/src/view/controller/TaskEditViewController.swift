@@ -49,7 +49,7 @@ class TaskEditViewController : BaseTaskInputViewController
         let _ = initializeProc()
     }
     
-    // 削除ボタンタップ時動作
+    /// 削除ボタンタップ時動作
     @IBAction func TouchUpInside_DeleteTaskBtn(_ sender: Any) {
         
         // タスク削除確認メッセージ表示
@@ -61,7 +61,7 @@ class TaskEditViewController : BaseTaskInputViewController
             funcCancelButton: nil)
     }
     
-    // タスク削除確認OKアクション
+    /// タスク削除確認OKアクション
     fileprivate func DeleteConfirmOKAction(action: UIAlertAction){
         
         // OKボタン押下
@@ -101,7 +101,7 @@ class TaskEditViewController : BaseTaskInputViewController
         return ret
     }
     
-    // 遷移先モード分岐処理
+    /// 遷移先モード分岐処理
     override func displayTaskModeChange(){
         
         // メイン画面モード
@@ -192,7 +192,7 @@ class TaskEditViewController : BaseTaskInputViewController
         
     }
     
-    // タスク内容初期表示処理
+    /// タスク内容初期表示処理
     override func displayTaskContent(){
         
         // 読込タスク読込処理開始
@@ -342,7 +342,10 @@ class TaskEditViewController : BaseTaskInputViewController
         }
     }
     
-    //textView:値変更確定時イベント
+
+    /// textView:値変更確定時イベント
+    ///
+    /// - Parameter textView: textView
     override func textViewDidChange(_ textView: UITextView) {
         
         //　文字列変換完了後(== nil)かつ制限文字数を超えていた場合
@@ -361,8 +364,9 @@ class TaskEditViewController : BaseTaskInputViewController
     }
     
     
-    
-    // textField:編集完了時イベント
+    /// textField:編集完了時イベント
+    ///
+    /// - Parameter nsNotification: Notification
     override func textFieldDidChange(_ nsNotification: Notification) {
         
         //　UITextFieldへ変換
@@ -387,7 +391,7 @@ class TaskEditViewController : BaseTaskInputViewController
     }
     
     
-    //　編集内容入力欄設定
+    ///　編集内容入力欄設定
     override func displayInputField(){
         
         //項目名入力欄,メモ入力欄:初期設定
@@ -411,23 +415,23 @@ class TaskEditViewController : BaseTaskInputViewController
     }
 
     
-    //タスクカラーボタン_1:タップ時イベント
+    /// タスクカラーボタン_1:タップ時イベント
     override func onTouchDown_btn1(_ sender:UIButton){
         changeInputTaskColorBtn(selectedBtnIndex: 0, btn1 : InputTaskColorBtn_1, btn2 : InputTaskColorBtn_2, btn3 : InputTaskColorBtn_3)
     }
     
-    //タスクカラーボタン_2:タップ時イベント
+    /// タスクカラーボタン_2:タップ時イベント
     override func onTouchDown_btn2(_ sender:UIButton){
         changeInputTaskColorBtn(selectedBtnIndex : 1, btn1 : self.InputTaskColorBtn_1, btn2 : self.InputTaskColorBtn_2, btn3 : self.InputTaskColorBtn_3)
     }
     
-    //タスクカラーボタン_3:タップ時イベント
+    /// タスクカラーボタン_3:タップ時イベント
     override func onTouchDown_btn3(_ sender:UIButton){
         changeInputTaskColorBtn(selectedBtnIndex : 2, btn1 : self.InputTaskColorBtn_1, btn2 : self.InputTaskColorBtn_2, btn3 : self.InputTaskColorBtn_3)
     }
     
 
-    //重要度:セグメント値変更時イベント
+    /// 重要度:セグメント値変更時イベント
     override func onTouchDown_InputImportanceSegment(_ segcon:UISegmentedControl){
         
         // 重要度:セグメント値変更時処理
@@ -435,7 +439,7 @@ class TaskEditViewController : BaseTaskInputViewController
         
     }
     
-    // ツールバー：クリアボタンタップ時イベント
+    /// ツールバー：クリアボタンタップ時イベント
     override func onTouch_ToolBarClearBtn(){
         
         //　ツールバー：クリアボタン処理
@@ -443,7 +447,7 @@ class TaskEditViewController : BaseTaskInputViewController
     }
     
     
-    //Datepicer：値変更時イベント
+    /// Datepicer：値変更時イベント
     override func inputDatePickerEdit(_ sender: UIDatePicker){
         
         // Datepicer：値変更処理
@@ -451,7 +455,7 @@ class TaskEditViewController : BaseTaskInputViewController
     }
 
     
-    //後続タスクボタン：タップ時イベント
+    /// 後続タスクボタン：タップ時イベント
     override func onTouchDown_addAfterTaskButton(_ sender : UIButton){
         
         // TODO:タスク参照時、編集イベント不要
@@ -513,7 +517,7 @@ class TaskEditViewController : BaseTaskInputViewController
     }
     
     
-    // 確定ボタン：タップ時イベント
+    /// 確定ボタン：タップ時イベント
     override func onTouchDown_decideEditTaskButton(){
         
         // タスク編集イベント
@@ -526,9 +530,8 @@ class TaskEditViewController : BaseTaskInputViewController
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    /**
-     タスク編集イベント
-     */
+
+    /// タスク編集処理
     func inputEditTask(){
         
         // OKボタン押下
@@ -537,7 +540,7 @@ class TaskEditViewController : BaseTaskInputViewController
         // 編集対象タスク情報Entity(編集対象外情報格納)
         let editTaskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(self.paramTaskId)!
         
-        /// EDIT START
+        /// EDIT:START
         // 編集対象タスク格納Entity
         let taskInfoDataEntity : TaskInfoDataEntity = TaskInfoDataEntity()
         
@@ -545,8 +548,8 @@ class TaskEditViewController : BaseTaskInputViewController
         // 読込タスクIDを設定
         taskInfoDataEntity.Id = self.paramTaskId
         
-        //項目名(編集対象)
-        //項目名未入力時チェック
+        // 項目名(編集対象)
+        // 項目名未入力時チェック
         if(false == StringUtility.isEmpty(InputTaskNameField.text)){
             // 空白の場合、代入文字
             taskInfoDataEntity.Title = MessageUtility.getMessage(key: "LabelItemNameEmpty")
@@ -556,14 +559,14 @@ class TaskEditViewController : BaseTaskInputViewController
             taskInfoDataEntity.Title = InputTaskNameField.text! as String
         }
         
-        //メモ(編集対象)
+        // メモ(編集対象)
         taskInfoDataEntity.Memo = InputTaskMemoView.text! as String
         
-        //タスク終了時刻(編集対象)
+        // タスク終了時刻(編集対象)
         taskInfoDataEntity.DateTime = FunctionUtility.DateToyyyyMMddHHmmss(inputTaskEndDate, separation: true)
         
-        //通知地点(編集対象)
-        //通知地点未入力時チェック
+        // 通知地点(編集対象)
+        // 通知地点未入力時チェック
         if(false == StringUtility.isEmpty(InputPointListField.text)){
             // 空白の場合、固定値代入
             taskInfoDataEntity.NotifiedLocation = CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE
@@ -573,11 +576,11 @@ class TaskEditViewController : BaseTaskInputViewController
             taskInfoDataEntity.NotifiedLocation = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(InputPointListField.text! as String)
         }
         
-        //重要度(編集対象)
+        // 重要度(編集対象)
         taskInfoDataEntity.Importance = InputImportanceSegment.selectedSegmentIndex as Int
         
-        //タスクカラー(編集対象)
-        //選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
+        // タスクカラー(編集対象)
+        // 選択されているボタンのタイトル(タスクボタン色定数)をIntに変換後返す
         if (InputTaskColorBtn_1.isSelected == true){
             taskInfoDataEntity.ButtonColor = Int(InputTaskColorBtn_1.currentTitle!)!
         }
@@ -623,11 +626,17 @@ class TaskEditViewController : BaseTaskInputViewController
         
         // タスク情報書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-        /// EDIT END
+        
+        /// EDIT:END
         
     }
     
-    //PicerView　値選択時イベント
+    /// PicerView　値選択時イベント
+    ///
+    /// - Parameters:
+    ///   - pickerView: pickerview
+    ///   - row: 選択行
+    ///   - component: component
     override func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         // 登録地点選択処理
