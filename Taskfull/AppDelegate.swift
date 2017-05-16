@@ -217,7 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     
     
 
-    /// TODO:要クラス化
+    /// TODO:要クラス化、通常通知,時間前通知,GPS通知作成処理メソッド化
     /// タスクローカル通知生成処理
     fileprivate func taskExpirationNotification(){
         
