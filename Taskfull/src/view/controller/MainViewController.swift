@@ -882,8 +882,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
     ///
     @IBAction func onTouchUp_TaskCirclrImageButton(_ sender : UITaskImageButton){
         
-        debugPrint(sender.tag.description)
-
+        //　DEBUG：ボタンタグ
+        #if DEBUG
+        debugPrint("ボタンタグ:" + sender.tag.description)
+        #endif
+            
         switch(self.mActionMode){
         // 現在編集モードの場合
         case CommonConst.ActionType.edit:
@@ -969,11 +972,9 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
             // タスク登録モード
             dvc.paramMainViewMode = CommonConst.ActionType.add
             
-            
-            // TEST:START
             // タスク:カテゴリータイプ
             dvc.paramCategoryType = TaskInfoUtility.DefaultInstance.GetCategoryType()
-            // TEST:END
+
         }
         // タスク編集画面へ遷移する場合
         else if(segue.identifier == MainViewController.SEGUE_IDENTIFIER_TASK_EDIT){
@@ -985,10 +986,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
             dvc.paramTaskId = self.mParamTaskId
             dvc.paramMainViewMode = self.mActionMode
             
-            // TEST:START
             // タスク:カテゴリータイプ
             dvc.paramCategoryType = TaskInfoUtility.DefaultInstance.GetCategoryType()
-            // TEST:END
             
         }
         

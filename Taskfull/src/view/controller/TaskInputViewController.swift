@@ -5,7 +5,7 @@
 //  Created by IscIsc on 2017/03/11.
 //  Copyright © 2017年 isc. All rights reserved.
 //
-//TODO:文字の定数化,登録データ型,登録地点リスト,AutoLayout,入力方法最適化,メソッド順整理
+
 
 import UIKit
 import AudioToolbox
@@ -64,7 +64,9 @@ class TaskInputViewController : BaseTaskInputViewController
         return ret
     }
     
-    //textView:値変更確定時イベント
+    /// textView:値変更確定時イベント
+    ///
+    /// - Parameter textView: textView
     override func textViewDidChange(_ textView: UITextView) {
         
         //　文字列変換完了後(== nil)かつ制限文字数を超えていた場合
@@ -82,7 +84,10 @@ class TaskInputViewController : BaseTaskInputViewController
         }
     }
     
-    // textField:編集完了時イベント
+
+    /// textField:編集完了時イベント
+    ///
+    /// - Parameter nsNotification: textField通知
     override func textFieldDidChange(_ nsNotification: Notification) {
         
         //　UITextFieldへ変換
@@ -107,7 +112,7 @@ class TaskInputViewController : BaseTaskInputViewController
     }
     
     
-    //登録内容入力欄設定
+    /// 登録内容入力欄設定
     override func displayInputField(){
         
         // 項目名入力欄,メモ入力欄:初期設定
@@ -133,24 +138,32 @@ class TaskInputViewController : BaseTaskInputViewController
         
     }
     
-    //タスクカラーボタン_1:タップ時イベント
+    /// タスクカラーボタン_1:タップ時イベント
+    ///
+    /// - Parameter sender: UIButton
     override func onTouchDown_btn1(_ sender:UIButton){
         changeInputTaskColorBtn(selectedBtnIndex: 0, btn1 : InputTaskColorBtn_1, btn2 : InputTaskColorBtn_2, btn3 : InputTaskColorBtn_3)
     }
     
-    //タスクカラーボタン_2:タップ時イベント
+    /// タスクカラーボタン_2:タップ時イベント
+    ///
+    /// - Parameter sender: UIButton
     override func onTouchDown_btn2(_ sender:UIButton){
         changeInputTaskColorBtn(selectedBtnIndex : 1, btn1 : self.InputTaskColorBtn_1, btn2 : self.InputTaskColorBtn_2, btn3 : self.InputTaskColorBtn_3)
     }
     
-    //タスクカラーボタン_3:タップ時イベント
+    /// タスクカラーボタン_3:タップ時イベント
+    ///
+    /// - Parameter sender: UIButton
     override func onTouchDown_btn3(_ sender:UIButton){
         changeInputTaskColorBtn(selectedBtnIndex : 2, btn1 : self.InputTaskColorBtn_1, btn2 : self.InputTaskColorBtn_2, btn3 : self.InputTaskColorBtn_3)
     }
     
     
     
-    //重要度:セグメント値変更時イベント
+    /// 重要度:セグメント値変更時イベント
+    ///
+    /// - Parameter segcon: セグメントインデックス
     override func onTouchDown_InputImportanceSegment(_ segcon:UISegmentedControl){
         
         // 重要度:セグメント値変更時処理
@@ -158,7 +171,8 @@ class TaskInputViewController : BaseTaskInputViewController
         
     }
     
-    // ツールバー：クリアボタンタップ時イベント
+
+    /// ツールバー：クリアボタンタップ時イベント
     override func onTouch_ToolBarClearBtn(){
         
         //　ツールバー：クリアボタン処理
@@ -166,7 +180,9 @@ class TaskInputViewController : BaseTaskInputViewController
     }
     
     
-    //DatePicker：値変更時イベント
+    /// DatePicker：値変更時イベント
+    ///
+    /// - Parameter sender: UIDatePicker
     override func inputDatePickerEdit(_ sender: UIDatePicker){
 
         // DatePicker：値変更処理
@@ -174,7 +190,9 @@ class TaskInputViewController : BaseTaskInputViewController
     }
     
     
-    //後続タスクボタン：タップ時イベント
+    /// 後続タスクボタン：タップ時イベント
+    ///
+    /// - Parameter sender: UIButton
     override func onTouchDown_addAfterTaskButton(_ sender : UIButton){
         
         // 通知時刻欄が空欄ではない場合
@@ -196,6 +214,7 @@ class TaskInputViewController : BaseTaskInputViewController
             
             // 後続タスク追加ボタン:登録画面遷移
             navigationController?.pushViewController(vc, animated: true)
+            
         }
         // 通知時刻欄が空欄である場合
         else{
@@ -212,7 +231,7 @@ class TaskInputViewController : BaseTaskInputViewController
     
     
     
-    // 登録確定ボタン：タップ時イベント
+    /// 登録確定ボタン：タップ時イベント
     override func onTouchDown_decideEditTaskButton(){
         
         // キーボードを閉じる
@@ -243,22 +262,23 @@ class TaskInputViewController : BaseTaskInputViewController
         
     }
     
-    // 通知時刻欄空欄時、OKアクション
+
+    /// 通知時刻欄空欄時、OKアクション
+    ///
+    /// - Parameter action: 通知時刻を入力状態に移行
     fileprivate func inputConfirmOKAction(action: UIAlertAction){
         
         // OKボタン押下
         self.isOkBtn = true
         
-        // TODO:Picker表示が遅い(仕様)
         // 通知時刻欄:入力状態
         InputTaskDateField.becomeFirstResponder()
         
     }
     
     
-    /**
-     タスク登録イベント
-     */
+
+    /// タスク登録イベント
     func inputRegistrationTask(){
         
         /*
@@ -268,7 +288,6 @@ class TaskInputViewController : BaseTaskInputViewController
         // OKボタン押下
         self.isOkBtn = true
         
-        // TEST START
         // 新規のタスク登録画面である場合
         if(self.paramBackStatus  != true){
         
@@ -313,7 +332,6 @@ class TaskInputViewController : BaseTaskInputViewController
                 
                 // 空白ではない場合、入力値
                 taskInfoDataEntity.NotifiedLocation = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(InputPointListField.text! as String)
-                print(InputPointListField.text! as String)
             }
             
             
@@ -470,23 +488,16 @@ class TaskInputViewController : BaseTaskInputViewController
         
     }
     
-    //PicerView　値選択時イベント
+    /// PicerView　値選択時イベント
+    ///
+    /// - Parameters:
+    ///   - pickerView: pickerview
+    ///   - row: 選択行
+    ///   - component: component
     override func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         // 登録地点選択処理
         setSelectedPoint(textField : self.InputPointListField, row: row)
-        
-        // 空欄以外を選択した場合(row = 0以外)
-        if(row != 0){
-            
-            // Pickerのタイトルより、選択ID取得
-            let infoLocationId = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(pointListNameArray[row])
-            
-            // 選択Entity取得
-            let taskLocationDataEntity : TaskInfoLocationDataEntity = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(infoLocationId)!
-            
-            
-        }
         
     }
 }
