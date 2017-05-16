@@ -184,7 +184,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         default:
             
             // 未完了かつロケーション初期値以外が設定されているタスク数が20以下である場合
-            if(getTaskDataLocationCountValue(strInputPointTitle: textField.text!) <= 20){
+            if(getTaskDataLocationCountValue(strInputPointTitle: textField.text!) <= CommonConst.INPUT_NOTIFICATION_TASK_POINT_LIST_SET_COUNT_LIMIT){
                 
                 // 選択項目をUITextFieldに設定
                 textField.text = pointListNameArray[row]
@@ -206,7 +206,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
                 view.endEditing(true)
                 
                 // アラート表示
-                MessageUtility.dispAlertOK(viewController: self, title: "", message: "通知地点設定数上限です。\n未完了タスク20個まで設定可能です")
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: MessageUtility.getMessage(key: "MessageStringErrorLocationSettingUpperLimit", param: String(CommonConst.INPUT_NOTIFICATION_TASK_POINT_LIST_SET_COUNT_LIMIT)))
                 
             }
         }

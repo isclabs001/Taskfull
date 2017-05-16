@@ -369,8 +369,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             //「常に許可」に設定されている場合
             case CLAuthorizationStatus.authorizedAlways:
                 
-                // 位置情報取得精度(10m)
-                selfLocation.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                // 位置情報取得精度(最高精度)
+                selfLocation.desiredAccuracy = kCLLocationAccuracyBest
                 // 位置情報取得間隔(10m移動したら位置補足)
                 selfLocation.distanceFilter = 10
                 // 現在位置取得(位置情報更新)

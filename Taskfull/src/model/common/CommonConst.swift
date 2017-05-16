@@ -246,4 +246,12 @@ class CommonConst
      */
     static internal let INPUT_NOTIFICATION_POINT_LIST_PICKER_COLUMN_COUNT: Int = 1;
     
+    
+    /**
+     * 通知地点設定上限数
+     */
+    static internal let INPUT_NOTIFICATION_TASK_POINT_LIST_SET_COUNT_LIMIT: Int = 20;
+    
+    
+    
 }

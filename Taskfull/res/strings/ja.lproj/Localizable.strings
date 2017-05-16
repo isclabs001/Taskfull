@@ -55,4 +55,5 @@
 "MessageStringErrorNotificationPointListDelete"="「%@」を設定している未完了タスクが存在しています。";
 "MessageStringErrorTaskCreateLimit"="通知地点作成上限(%@)です。";
 "MessageStringErrorLocationAcquisition"="現在位置が取得できません。";
+"MessageStringErrorLocationSettingUpperLimit"="通知地点設定数上限です。\n未完了タスク%@個まで設定可能です。";
 
