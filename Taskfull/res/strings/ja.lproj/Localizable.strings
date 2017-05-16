@@ -52,7 +52,7 @@
 "MessageStringErrorTaskDateInput"="通知時刻を入力して下さい。";
 "MessageStringErrorNotificationPointListName"="通知地点名を入力してください。";
 "MessageStringErrorNotificationPointListSameName"="既に同じ名前が使用されています。";
-"MessageStringErrorNotificationPointListDelete"="「%@」を使用している未完了タスクが存在しています。";
+"MessageStringErrorNotificationPointListDelete"="「%@」を設定している未完了タスクが存在しています。";
 "MessageStringErrorTaskCreateLimit"="通知地点作成上限(%@)です。";
 "MessageStringErrorLocationAcquisition"="現在位置が取得できません。";
 

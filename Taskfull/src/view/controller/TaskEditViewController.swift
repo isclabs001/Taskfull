@@ -117,7 +117,6 @@ class TaskEditViewController : BaseTaskInputViewController
             DeleteTaskBtn.isHidden = false
             DeleteTaskBtn.isEnabled = true
             
-            // TEST:START
             // 編集モード時後続タスク追加処理対策
             // 読込ID:後続タスクが存在しないかつ子タスクではない場合
             if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1 && self.paramParrentId == -1){
@@ -134,18 +133,16 @@ class TaskEditViewController : BaseTaskInputViewController
             // 読込ID:後続タスクが存在しないかつ子タスクである場合
             else if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1 && self.paramParrentId != -1){
                 
-                // 後続タスクボタン無効化
+                // 後続タスクボタン無効化:コメントアウト
                 //AddAfterTask.isEnabled = false
                 //AddAfterTask.isHidden = true
                 
-                // TEST:START 後続タスク作成上限撤廃の為、表示
                 // 後続タスク追加ボタン表示
                 AddAfterTask.isEnabled = true
                 AddAfterTask.isHidden = false
                 
                 // 後続タスク追加ボタン:タイトル再設定(登録)
                 AddAfterTask.setTitle(MessageUtility.getMessage(key: "LabelItemAfterTaskAdd"), for: UIControlState())
-                // TEST:END
                 
                 return
                 
@@ -159,7 +156,6 @@ class TaskEditViewController : BaseTaskInputViewController
                 AddAfterTask.isHidden = false
                 
             }
-            // TEST:END
             
             break;
             
@@ -173,7 +169,6 @@ class TaskEditViewController : BaseTaskInputViewController
             DeleteTaskBtn.isHidden = true
             DeleteTaskBtn.isEnabled = false
             
-            // TEST:START
             // 読込ID:後続タスクが存在しない場合
             if(TaskInfoUtility.DefaultInstance.GetParrentIndex(self.paramTaskId) == -1){
                 
@@ -190,7 +185,6 @@ class TaskEditViewController : BaseTaskInputViewController
                 AddAfterTask.isHidden = false
 
             }
-            // TEST:END
             
             break;
             
@@ -218,7 +212,6 @@ class TaskEditViewController : BaseTaskInputViewController
         inputDatePicker.setDate(inputTaskEndDate, animated: false)
         
         
-        // TEST:START
         // Datepicker制限再設定処理
         // 読込ID:子タスクが存在する場合(判定:親タスク)
         if(TaskInfoUtility.DefaultInstance.GetParrentIndex(taskInfo.Id) != -1){
@@ -229,7 +222,6 @@ class TaskEditViewController : BaseTaskInputViewController
             // 設定最大日 ＝ 読込ID:子タスク終了日付
             inputDatePicker.maximumDate = FunctionUtility.yyyyMMddHHmmssToDate(parrentTaskInfo.DateTime)
             
-            // TEST:START
             // 読込ID:親タスクが存在する場合(判定:中間タスク)
             if(TaskInfoUtility.DefaultInstance.GetIndex(taskInfo.ParrentId) != -1){
                 
@@ -245,7 +237,6 @@ class TaskEditViewController : BaseTaskInputViewController
                 }
                 
             }
-            // TEST:END
             
             
         }
@@ -278,7 +269,6 @@ class TaskEditViewController : BaseTaskInputViewController
             inputDatePicker.minimumDate = nil
             
         }
-        // TEST:END
         
         
         // 通知地点リスト欄
@@ -391,7 +381,7 @@ class TaskEditViewController : BaseTaskInputViewController
                 MessageUtility.dispAlertOK(
                     viewController: self,
                     title: "",
-                    message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_MEMO_STRING_LIMIT))))
+                    message: MessageUtility.getMessage(key: "MessageStringErrorTaskCountLimit", param: (String(CommonConst.INPUT_TASK_NAME_STRING_LIMIT))))
             }
         }
     }

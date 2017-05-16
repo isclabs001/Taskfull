@@ -547,6 +547,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         //  同一値をタスク終了時刻取得変数に格納
         inputTaskEndDate = sender.date
         
+        // 入力済の為、背景色変更
+        taskDateField.backgroundColor = UIColorUtility.rgb(245, g: 255, b: 228)
+        
         // 0.1秒バイブレーション作動
         actionViblation()
     }

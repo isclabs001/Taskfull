@@ -32,7 +32,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     // 登録地点リスト入力PickerView
     let inputPointPicker : UIPickerView! = UIPickerView()
     
-    // 現在位置格納ロケーション：権限通知重複対策の為、プロパティで宣言
+    // 現在位置格納ロケーション：権限通知重複対策の為、プロパティにて宣言
     var selfLocation : CLLocationManager! = CLLocationManager()
 
     // 更新フラグ
@@ -49,23 +49,23 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         let _ = initializeProc()
     }
     
-    //PicerView　表示列
+    // PicerView　表示列
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    //PicerView　表示行（要素数）
+    // PicerView　表示行（要素数）
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         // 要素数
         return pointListNameArray.count
     }
-    //PicerView　表示要素
+    // PicerView　表示要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         // PicerViewを表示要素を戻す
         return pointListNameArray[row]
         
     }
-    //PicerView　値選択時イベント
+    // PicerView　値選択時イベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         // 選択IDの登録名をtextFieldへ反映
@@ -109,8 +109,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     
     //フォーカスが外れた際のイベント処理
     func missFocusView(){
+        
         // viewを閉じる
         view.endEditing(true)
+        
     }
     
     // 選択地点の設定
@@ -142,8 +144,14 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             
             // ナビゲーションバー表示
             navigationController?.setNavigationBarHidden(false, animated: true)
+            // ナビゲーションバー表示設定
+            self.navigationController?.navigationBar.backgroundColor = UIColorUtility.rgb(222, g: 255, b: 255)
+            // ナビゲーションバー透過度
+            self.navigationController?.navigationBar.alpha = 0.9
+            // ナビゲーションバー透過フラグ
+            self.navigationController?.navigationBar.isTranslucent = true
             
-            //Mapkit:delegate設定
+            // Mapkit:delegate設定
             GPSMapView.delegate = self
             
             // GPS認証ステータスを取得
@@ -303,25 +311,32 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         if(CLLocationManager.locationServicesEnabled() == true){
             switch CLLocationManager.authorizationStatus() {
                 
-            //未設定の場合
+            //　位置情報サービス権限未設定の場合
             case CLAuthorizationStatus.notDetermined:
+                
+                // 位置情報サービス権限許可通知表示
                 selfLocation.requestWhenInUseAuthorization()
                 
-            //機能制限されている場合
+            //　機能制限されている場合
             case CLAuthorizationStatus.restricted:
-                alertMessage(message: "位置情報サービスの利用が制限されている為利用できません。")
+                alertMessage(message: "位置情報サービスの利用が制限されている為、利用できません。")
                 
             //「許可しない」に設定されている場合
             case CLAuthorizationStatus.denied:
-                alertMessage(message: "位置情報の利用が許可されていないため利用できません。")
+                alertMessage(message: "位置情報サービスの利用が許可されていない為、利用できません。")
                 
             //「このAppの使用中のみ許可」に設定されている場合
             case CLAuthorizationStatus.authorizedWhenInUse:
-                alertMessage(message: "位置情報の利用が制限されています。")
+                alertMessage(message: "位置情報サービスの利用が制限されています。")
                 
             //「常に許可」に設定されている場合
             case CLAuthorizationStatus.authorizedAlways:
-                //位置情報の取得を開始する。
+                
+                // 位置情報取得精度(10m)
+                selfLocation.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                // 位置情報取得間隔(10m移動したら位置補足)
+                selfLocation.distanceFilter = 10
+                // 現在位置取得(位置情報更新)
                 selfLocation.startUpdatingLocation()
             }
             
@@ -330,20 +345,14 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             alertMessage(message: "位置情報サービスがONになっていないため利用できません。")
         }
         
-         /*
-         //ios9.0以上
-         if #available(iOS 9.0, *) {
-         selfLocation.allowsBackgroundLocationUpdates = true
-         } else {
-         // Fallback on earlier versions
-         }*/
-        
-        // 位置情報取得精度(10m)
-        selfLocation.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        // 位置情報取得間隔(10m移動したら位置補足)
-        selfLocation.distanceFilter = 10
-        // 現在位置取得(位置情報更新)
-        selfLocation.startUpdatingLocation()
+
+        // ”常に許可”の場合のみ、位置取得を開始する為コメントアウト
+//        // 位置情報取得精度(10m)
+//        selfLocation.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+//        // 位置情報取得間隔(10m移動したら位置補足)
+//        selfLocation.distanceFilter = 10
+//        // 現在位置取得(位置情報更新)
+//        selfLocation.startUpdatingLocation()
         
         
     }
@@ -352,7 +361,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// メッセージ出力処理
     func alertMessage(message:String) {
         
-        let aleartController = UIAlertController(title: "注意", message: message, preferredStyle: .alert)
+        let aleartController = UIAlertController(title: "", message: message, preferredStyle: .alert)
         let defaultAction = UIAlertAction(title:"OK", style: .default, handler:nil)
         aleartController.addAction(defaultAction)
         
@@ -391,13 +400,14 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// 位置情報取得失敗時イベント
     func locationManager(_ manager: CLLocationManager,didFailWithError error: Error){
         
-        
-        debugPrint("LocationError")
-        
+        //　DEBUG：ボタンタグ
+        #if DEBUG
+        debugPrint("位置情報取得失敗")
+        #endif
+            
         //　「位置情報取得エラー」アラート表示
         MessageUtility.dispAlertOK(viewController: self, title: MessageUtility.getMessage(key: "MessageStringLocationAcquisitionError"), message: MessageUtility.getMessage(key: "MessageStringErrorLocationAcquisition"))
         
-        //　位置移動イベント実装
         
     }
 
@@ -687,7 +697,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             // アノテーションタイトルと紐付いている位置情報Id取得
             let intLocationId = TaskInfoUtility.DefaultInstance.GetInfoLocationIndexForTitle(self.GPSMapView.annotations[index].title!!)
             
-            // 一致するタイトルのデータ削除
+            // 一致する"タイトル"の位置情報データ削除
             // 設定タスクが存在しない場合
             if(self.getTaskDataLocationValue(intLocationId: intLocationId) == -1){
                 
@@ -697,7 +707,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 
                 // 選択アノテーション削除(インデックス指定)
                 self.GPSMapView.removeAnnotation(self.GPSMapView.annotations[index])
-                // 選択オーバーレイ削除(アノテーションインデックスが前挿入である為、要ズレ回避)
+                // 選択オーバーレイ削除(アノテーションインデックスが前挿入である為、要ズレ回避):コメント回避
                 // self.GPSMapView.remove(self.GPSMapView.overlays[index])
                 
                 // アノテーションインデックス対策代替処理:START
@@ -737,7 +747,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // キャンセルアクション生成
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {(action: UIAlertAction!) in
             
-            debugPrint("Cancel")
+            #if DEBUG
+            debugPrint("CancelAction")
+            #endif
             
         })
         
@@ -775,7 +787,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             }
         }
         
-        // タイトル設定
+        // タイトル
         taskLocationDataEntity.Title = pointTitle
         
         // 緯度

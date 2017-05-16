@@ -124,7 +124,7 @@
                                 <rect key="frame" x="0.0" y="333" width="414" height="67"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Task notification time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-hO-Ucy" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="14" width="374" height="45"/>
+                                        <rect key="frame" x="10" y="14" width="394" height="45"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -134,9 +134,9 @@
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="6S7-hO-Ucy" firstAttribute="leading" secondItem="5On-Nh-lw1" secondAttribute="leading" constant="20" id="2uO-go-WNQ"/>
+                                    <constraint firstItem="6S7-hO-Ucy" firstAttribute="leading" secondItem="5On-Nh-lw1" secondAttribute="leading" constant="10" id="2uO-go-WNQ"/>
                                     <constraint firstItem="6S7-hO-Ucy" firstAttribute="top" secondItem="5On-Nh-lw1" secondAttribute="top" constant="14" id="5kg-qF-FVn"/>
-                                    <constraint firstAttribute="trailing" secondItem="6S7-hO-Ucy" secondAttribute="trailing" constant="20" id="Joh-HT-dDw"/>
+                                    <constraint firstAttribute="trailing" secondItem="6S7-hO-Ucy" secondAttribute="trailing" constant="10" id="Joh-HT-dDw"/>
                                     <constraint firstAttribute="bottom" secondItem="6S7-hO-Ucy" secondAttribute="bottom" constant="8" id="wGa-Z5-XOo"/>
                                 </constraints>
                             </view>
@@ -144,7 +144,7 @@
                                 <rect key="frame" x="0.0" y="467" width="414" height="67"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="g4e-Va-Zua">
-                                        <rect key="frame" x="20" y="10" width="374" height="48"/>
+                                        <rect key="frame" x="10" y="10" width="394" height="48"/>
                                         <segments>
                                             <segment title="Low"/>
                                             <segment title="Middle"/>
@@ -155,17 +155,17 @@
                                     </segmentedControl>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="g4e-Va-Zua" firstAttribute="leading" secondItem="TEZ-4M-O0U" secondAttribute="leading" constant="20" id="QhO-a1-zzx"/>
+                                    <constraint firstItem="g4e-Va-Zua" firstAttribute="leading" secondItem="TEZ-4M-O0U" secondAttribute="leading" constant="10" id="QhO-a1-zzx"/>
                                     <constraint firstAttribute="bottom" secondItem="g4e-Va-Zua" secondAttribute="bottom" constant="10" id="hwT-KF-Lqc"/>
                                     <constraint firstItem="g4e-Va-Zua" firstAttribute="top" secondItem="TEZ-4M-O0U" secondAttribute="top" constant="10" id="mUD-uZ-gwm"/>
-                                    <constraint firstAttribute="trailing" secondItem="g4e-Va-Zua" secondAttribute="trailing" constant="20" id="yHI-BI-Ryo"/>
+                                    <constraint firstAttribute="trailing" secondItem="g4e-Va-Zua" secondAttribute="trailing" constant="10" id="yHI-BI-Ryo"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeg-2x-1ZN" userLabel="BaseTaskNameView">
                                 <rect key="frame" x="0.0" y="64" width="414" height="67"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SsX-6L-Joj">
-                                        <rect key="frame" x="20" y="11" width="374" height="48"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SsX-6L-Joj">
+                                        <rect key="frame" x="10" y="11" width="394" height="48"/>
                                         <color key="backgroundColor" red="0.95999370805973161" green="1" blue="0.89272231540000013" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -173,9 +173,9 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="SsX-6L-Joj" firstAttribute="top" secondItem="aeg-2x-1ZN" secondAttribute="top" constant="11" id="4DZ-nA-tNA"/>
-                                    <constraint firstItem="SsX-6L-Joj" firstAttribute="leading" secondItem="aeg-2x-1ZN" secondAttribute="leading" constant="20" id="Iph-rH-PSh"/>
+                                    <constraint firstItem="SsX-6L-Joj" firstAttribute="leading" secondItem="aeg-2x-1ZN" secondAttribute="leading" constant="10" id="Iph-rH-PSh"/>
                                     <constraint firstAttribute="bottom" secondItem="SsX-6L-Joj" secondAttribute="bottom" constant="8" id="chG-Dh-qbt"/>
-                                    <constraint firstAttribute="trailing" secondItem="SsX-6L-Joj" secondAttribute="trailing" constant="20" id="v2t-Kn-rSy"/>
+                                    <constraint firstAttribute="trailing" secondItem="SsX-6L-Joj" secondAttribute="trailing" constant="10" id="v2t-Kn-rSy"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFr-HC-1HV" userLabel="BaseAddBtnview">
@@ -223,15 +223,15 @@
                                 <rect key="frame" x="0.0" y="131" width="414" height="202"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tM4-dB-mS2" customClass="UIPlaceHolderTextView" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="2" width="374" height="196"/>
+                                        <rect key="frame" x="10" y="2" width="394" height="196"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                                     </textView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="tM4-dB-mS2" firstAttribute="leading" secondItem="p8W-DM-IDd" secondAttribute="leading" constant="20" id="0d1-fW-nyr"/>
-                                    <constraint firstAttribute="trailing" secondItem="tM4-dB-mS2" secondAttribute="trailing" constant="20" id="0pE-qg-zKf"/>
+                                    <constraint firstItem="tM4-dB-mS2" firstAttribute="leading" secondItem="p8W-DM-IDd" secondAttribute="leading" constant="10" id="0d1-fW-nyr"/>
+                                    <constraint firstAttribute="trailing" secondItem="tM4-dB-mS2" secondAttribute="trailing" constant="10" id="0pE-qg-zKf"/>
                                     <constraint firstAttribute="bottom" secondItem="tM4-dB-mS2" secondAttribute="bottom" constant="4" id="aRt-Rr-9b0"/>
                                     <constraint firstItem="tM4-dB-mS2" firstAttribute="top" secondItem="p8W-DM-IDd" secondAttribute="top" constant="2" id="fVL-vA-TPB"/>
                                 </constraints>
@@ -304,7 +304,7 @@
                                 <rect key="frame" x="0.0" y="400" width="414" height="67"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Task notification point" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aPD-ts-pDm" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="10" width="374" height="45"/>
+                                        <rect key="frame" x="10" y="10" width="394" height="45"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -312,9 +312,9 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="aPD-ts-pDm" secondAttribute="bottom" constant="12" id="4Hm-2n-zxj"/>
-                                    <constraint firstAttribute="trailing" secondItem="aPD-ts-pDm" secondAttribute="trailing" constant="20" id="Vkr-Ng-Fm6"/>
+                                    <constraint firstAttribute="trailing" secondItem="aPD-ts-pDm" secondAttribute="trailing" constant="10" id="Vkr-Ng-Fm6"/>
                                     <constraint firstItem="aPD-ts-pDm" firstAttribute="top" secondItem="Esl-3M-zfd" secondAttribute="top" constant="10" id="eYE-vj-MtV"/>
-                                    <constraint firstItem="aPD-ts-pDm" firstAttribute="leading" secondItem="Esl-3M-zfd" secondAttribute="leading" constant="20" id="gm8-vh-Ar3"/>
+                                    <constraint firstItem="aPD-ts-pDm" firstAttribute="leading" secondItem="Esl-3M-zfd" secondAttribute="leading" constant="10" id="gm8-vh-Ar3"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -395,17 +395,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ki-T3-eb1" userLabel="BasePointListView">
                                 <rect key="frame" x="0.0" y="64" width="414" height="74"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Task notification point" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-Dl-wl9" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="25" y="16" width="364" height="42"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Task notification point" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-Dl-wl9" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="16" width="394" height="42"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" red="0.56843455632527673" green="0.83220682541529334" blue="0.89897107415729094" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="ln1-Dl-wl9" secondAttribute="trailing" constant="25" id="1ga-3d-qlu"/>
-                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="25" id="L9S-jj-9Nj"/>
+                                    <constraint firstAttribute="trailing" secondItem="ln1-Dl-wl9" secondAttribute="trailing" constant="10" id="1ga-3d-qlu"/>
+                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="10" id="L9S-jj-9Nj"/>
                                     <constraint firstAttribute="bottom" secondItem="ln1-Dl-wl9" secondAttribute="bottom" constant="16" id="q3O-oy-vUD"/>
                                     <constraint firstItem="ln1-Dl-wl9" firstAttribute="top" secondItem="5Ki-T3-eb1" secondAttribute="top" constant="16" id="tuD-9e-5im"/>
                                 </constraints>
@@ -469,7 +469,7 @@
                                 <rect key="frame" x="0.0" y="333" width="414" height="67"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Task notification time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-Lc-c3N" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="14" width="374" height="45"/>
+                                        <rect key="frame" x="10" y="14" width="394" height="45"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -480,8 +480,8 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="qGP-Lc-c3N" secondAttribute="bottom" constant="8" id="Ao9-GW-uSI"/>
-                                    <constraint firstAttribute="trailing" secondItem="qGP-Lc-c3N" secondAttribute="trailing" constant="20" id="TKY-jX-blP"/>
-                                    <constraint firstItem="qGP-Lc-c3N" firstAttribute="leading" secondItem="xFm-Rz-a1k" secondAttribute="leading" constant="20" id="eCO-fX-8Lp"/>
+                                    <constraint firstAttribute="trailing" secondItem="qGP-Lc-c3N" secondAttribute="trailing" constant="10" id="TKY-jX-blP"/>
+                                    <constraint firstItem="qGP-Lc-c3N" firstAttribute="leading" secondItem="xFm-Rz-a1k" secondAttribute="leading" constant="10" id="eCO-fX-8Lp"/>
                                     <constraint firstItem="qGP-Lc-c3N" firstAttribute="top" secondItem="xFm-Rz-a1k" secondAttribute="top" constant="14" id="zR8-Hx-gSa"/>
                                 </constraints>
                             </view>
@@ -489,7 +489,7 @@
                                 <rect key="frame" x="0.0" y="467" width="414" height="67"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="LBd-6C-BTm">
-                                        <rect key="frame" x="20" y="10" width="374" height="48"/>
+                                        <rect key="frame" x="10" y="10" width="394" height="48"/>
                                         <segments>
                                             <segment title="Low"/>
                                             <segment title="Middle"/>
@@ -501,24 +501,24 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="LBd-6C-BTm" firstAttribute="top" secondItem="Z7q-qG-2R4" secondAttribute="top" constant="10" id="79F-4f-5dj"/>
-                                    <constraint firstAttribute="trailing" secondItem="LBd-6C-BTm" secondAttribute="trailing" constant="20" id="9zk-kL-X19"/>
-                                    <constraint firstItem="LBd-6C-BTm" firstAttribute="leading" secondItem="Z7q-qG-2R4" secondAttribute="leading" constant="20" id="VwQ-sC-uVL"/>
+                                    <constraint firstAttribute="trailing" secondItem="LBd-6C-BTm" secondAttribute="trailing" constant="10" id="9zk-kL-X19"/>
+                                    <constraint firstItem="LBd-6C-BTm" firstAttribute="leading" secondItem="Z7q-qG-2R4" secondAttribute="leading" constant="10" id="VwQ-sC-uVL"/>
                                     <constraint firstAttribute="bottom" secondItem="LBd-6C-BTm" secondAttribute="bottom" constant="10" id="WvC-wE-siA"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QeW-1a-lSM" userLabel="BaseTaskNameView">
                                 <rect key="frame" x="0.0" y="64" width="414" height="67"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OKX-kS-5Ne">
-                                        <rect key="frame" x="20" y="11" width="374" height="48"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OKX-kS-5Ne">
+                                        <rect key="frame" x="10" y="11" width="394" height="48"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="OKX-kS-5Ne" firstAttribute="leading" secondItem="QeW-1a-lSM" secondAttribute="leading" constant="20" id="VUv-5r-VMe"/>
-                                    <constraint firstAttribute="trailing" secondItem="OKX-kS-5Ne" secondAttribute="trailing" constant="20" id="iC6-i0-DpZ"/>
+                                    <constraint firstItem="OKX-kS-5Ne" firstAttribute="leading" secondItem="QeW-1a-lSM" secondAttribute="leading" constant="10" id="VUv-5r-VMe"/>
+                                    <constraint firstAttribute="trailing" secondItem="OKX-kS-5Ne" secondAttribute="trailing" constant="10" id="iC6-i0-DpZ"/>
                                     <constraint firstAttribute="bottom" secondItem="OKX-kS-5Ne" secondAttribute="bottom" constant="8" id="nV5-7h-qko"/>
                                     <constraint firstItem="OKX-kS-5Ne" firstAttribute="top" secondItem="QeW-1a-lSM" secondAttribute="top" constant="11" id="snc-70-0UN"/>
                                 </constraints>
@@ -566,7 +566,7 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <state key="normal" title="Delete">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleColor" red="1" green="0.85490196080000003" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedGradationBackgroundStartColor">
@@ -607,16 +607,16 @@
                                 <rect key="frame" x="0.0" y="131" width="414" height="202"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NNc-Ro-PdU" customClass="UIPlaceHolderTextView" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="2" width="374" height="196"/>
+                                        <rect key="frame" x="10" y="2" width="394" height="196"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                                     </textView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="NNc-Ro-PdU" secondAttribute="trailing" constant="20" id="GNF-qi-aiO"/>
+                                    <constraint firstAttribute="trailing" secondItem="NNc-Ro-PdU" secondAttribute="trailing" constant="10" id="GNF-qi-aiO"/>
                                     <constraint firstAttribute="bottom" secondItem="NNc-Ro-PdU" secondAttribute="bottom" constant="4" id="QDX-ng-cYP"/>
-                                    <constraint firstItem="NNc-Ro-PdU" firstAttribute="leading" secondItem="itA-BU-Zhc" secondAttribute="leading" constant="20" id="Zt2-XS-let"/>
+                                    <constraint firstItem="NNc-Ro-PdU" firstAttribute="leading" secondItem="itA-BU-Zhc" secondAttribute="leading" constant="10" id="Zt2-XS-let"/>
                                     <constraint firstItem="NNc-Ro-PdU" firstAttribute="top" secondItem="itA-BU-Zhc" secondAttribute="top" constant="2" id="hSp-LJ-arc"/>
                                 </constraints>
                             </view>
@@ -688,15 +688,15 @@
                                 <rect key="frame" x="0.0" y="400" width="414" height="67"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Task notification point" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="702-8F-eoS" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="10" width="374" height="45"/>
+                                        <rect key="frame" x="10" y="10" width="394" height="45"/>
                                         <color key="backgroundColor" red="0.95999370809999995" green="1" blue="0.89272231540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="702-8F-eoS" secondAttribute="trailing" constant="20" id="1IO-Za-n3K"/>
-                                    <constraint firstItem="702-8F-eoS" firstAttribute="leading" secondItem="2bA-Ur-Mkc" secondAttribute="leading" constant="20" id="8s1-iQ-GXD"/>
+                                    <constraint firstAttribute="trailing" secondItem="702-8F-eoS" secondAttribute="trailing" constant="10" id="1IO-Za-n3K"/>
+                                    <constraint firstItem="702-8F-eoS" firstAttribute="leading" secondItem="2bA-Ur-Mkc" secondAttribute="leading" constant="10" id="8s1-iQ-GXD"/>
                                     <constraint firstAttribute="bottom" secondItem="702-8F-eoS" secondAttribute="bottom" constant="12" id="EuB-Jh-3ss"/>
                                     <constraint firstItem="702-8F-eoS" firstAttribute="top" secondItem="2bA-Ur-Mkc" secondAttribute="top" constant="10" id="kiI-Dz-mLf"/>
                                 </constraints>
