@@ -11,7 +11,7 @@ import UIKit
 ///
 /// メイン画面
 ///
-class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenuControllerDelegate
+class MainViewController : BaseViewController, NSURLConnectionDelegate
 {
     /**
      * 定数
@@ -1106,32 +1106,5 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
     fileprivate func redrawTaskMenuBar() {
         // タスクカテゴリーメニューバーの再描画
         self.taskCategoryManuBarController.redraw()
-    }
-    
-    
-    
-    /// SlideMenuControllerDelegate
-    func leftWillOpen() {
-    }
-    
-    func leftDidOpen() {
-    }
-    
-    func leftWillClose() {
-    }
-    
-    func leftDidClose() {
-    }
-    
-    func rightWillOpen() {
-    }
-    
-    func rightDidOpen() {
-    }
-    
-    func rightWillClose() {
-    }
-    
-    func rightDidClose() {
     }
 }

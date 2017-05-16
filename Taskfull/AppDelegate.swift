@@ -46,10 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         
         // ExSlideMenuControllerを生成（メイン画面と左にメインメニューバー画面）
         let slideMenuController = ExSlideMenuController(mainViewController: mainNavigationController, leftMenuViewController: taskCategoryMenuBarViewController, rightMenuViewController: mainMenuBarViewController)
-        // スクロールユーの装飾をする
+        // スクロールビューの装飾（枠の凹み）を自動調整する
         slideMenuController.automaticallyAdjustsScrollViewInsets = true
-        // ExSlideMenuControllerのデリゲートをメイン画面に設定する
-        slideMenuController.delegate = mainViewController
         // 初期表示画面をExSlideMenuControllerに設定する。
         self.window?.rootViewController = slideMenuController
         self.window?.makeKeyAndVisible()
@@ -167,6 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         //　ローカル通知初期化
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            
         } else {
             // Fallback on earlier versions
         };
@@ -393,8 +392,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     
     // フォアグラウンド時:ローカル通知受信時イベント
     @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    
         // ローカル通知：バッジ、サウンド、アラート
         completionHandler([.badge,.sound, .alert])
         
