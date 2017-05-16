@@ -226,7 +226,7 @@ class CommonConst
     /**
      * ジオフェンス通知範囲(半径)
      */
-    static internal let NOTIFICATION_GEOFENCE_RADIUS_RANGE: Double = 50;
+    static internal let NOTIFICATION_GEOFENCE_RADIUS_RANGE: Double = 100;
     
     
     /**

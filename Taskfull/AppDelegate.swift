@@ -88,8 +88,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         //locationManager.pausesLocationUpdatesAutomatically = false
         //locationManager.startUpdatingLocation()
         */
-
-
+        
+        // 位置情報精度:取得
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // 位置情報一回のみ取得
+        locationManager.requestLocation()
     }
     
     /// 位置情報取得時イベント
@@ -101,8 +104,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         
         //　DEBUG：補足座標
         #if DEBUG
+        print("位置情報取得日時：" + FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true))
         print("緯度：" + String(describing: manager.location?.coordinate.latitude))
         print("経度：" + String(describing: manager.location?.coordinate.longitude))
+        #endif
+        
+    }
+    
+    
+    /// 位置情報取得失敗時
+    ///
+    /// - Parameters:
+    ///   - manager: CLLocationManager
+    ///   - error: Error
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+        //　DEBUG：位置情報取得失敗
+        #if DEBUG
+            print("位置情報取得失敗")
         #endif
         
     }
@@ -396,7 +415,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                         region.notifyOnEntry = true
                         
                         // GPS通知トリガー作成(通知範囲,通知リピートなし)
-                        let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: true)
+                        let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
                         
                         // GPS通知リクエスト作成(identifier: 項目名 + "_GPS",content: content,trigger: locationTrigger)
                         let locationRequest = UNNotificationRequest(identifier: String(item.Id) + "_GPS",content: content,trigger: locationTrigger)

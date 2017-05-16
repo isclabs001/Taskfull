@@ -629,6 +629,25 @@ class TaskEditViewController : BaseTaskInputViewController
         
         /// EDIT:END
         
+        // DEBUG:編集タスク情報読み出し
+        #if DEBUG
+            print("------編集タスク情報------")
+            print("タスクID:" + String(taskInfoDataEntity.Id))
+            print("項目名:" + taskInfoDataEntity.Title)
+            print("メモ:" + taskInfoDataEntity.Memo)
+            print("通知時刻:" + taskInfoDataEntity.DateTime)
+            print("通知地点(ID):" + String(taskInfoDataEntity.NotifiedLocation))
+            print("重要度:" + String(taskInfoDataEntity.Importance))
+            print("タスクカラー(ID):" + String(taskInfoDataEntity.ButtonColor))
+            print("親ID:" + String(taskInfoDataEntity.ParrentId))
+            print("カテゴリータイプ:" + String(taskInfoDataEntity.CategoryType))
+            print("完了フラグ:" + String(taskInfoDataEntity.CompleteFlag))
+            print("作成日時:" + taskInfoDataEntity.CreateDateTime)
+            print("更新日時:" + taskInfoDataEntity.UpdateDateTime)
+            print("-----------------------")
+        #endif
+        
+        
     }
     
     /// PicerView　値選択時イベント
