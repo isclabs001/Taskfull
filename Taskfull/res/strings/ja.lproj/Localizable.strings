@@ -31,6 +31,16 @@
 /// メインメニュー形式
 "MainMenuTypeTaskAdd"="タスク追加";
 "MainMenuTypeGPSNotification"="GPS通知設定";
+"MainMenuTypeConfig"="設定";
+
+/// カスタムコントロール用タイトル
+"ConfigNoticeTime5MinutesAgo"="5分前";
+"ConfigNoticeTime10MinutesAgo"="10分前";
+"ConfigNoticeTime15MinutesAgo"="15分前";
+"ConfigNoticeTime30MinutesAgo"="30分前";
+"ConfigNoticeTime1HoursAgo"="1時間前";
+"ConfigNoticeTime3HoursAgo"="3時間前";
+"ConfigNoticeTime6HoursAgo"="6時間前";
 
 
 /// メッセージボタン

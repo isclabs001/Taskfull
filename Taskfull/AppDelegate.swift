@@ -36,7 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         let mainMenuBarViewController = storyboard.instantiateViewController(withIdentifier: "MainMenuBarStoryBoard") as! MainMenuBarViewController
 
         // メイン画面にタスクカテゴリーメニューバーのコントローラを設定
-        mainViewController.taskCategoryManuBarController = taskCategoryMenuBarViewController
+        mainViewController.taskCategoryMenuBarController = taskCategoryMenuBarViewController
+        // メイン画面にメインメニューバーのコントローラを設定
+        mainViewController.mainMenuBarController = mainMenuBarViewController
         
         // メイン画面のナビゲーターコントローラを取得
         let mainNavigationController: UINavigationController = UINavigationController(rootViewController: mainViewController)
@@ -46,10 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         
         // ExSlideMenuControllerを生成（メイン画面と左にメインメニューバー画面）
         let slideMenuController = ExSlideMenuController(mainViewController: mainNavigationController, leftMenuViewController: taskCategoryMenuBarViewController, rightMenuViewController: mainMenuBarViewController)
-        // スクロールユーの装飾をする
+        // スクロールビューの装飾（枠の凹み）を自動調整する
         slideMenuController.automaticallyAdjustsScrollViewInsets = true
-        // ExSlideMenuControllerのデリゲートをメイン画面に設定する
-        slideMenuController.delegate = mainViewController
         // 初期表示画面をExSlideMenuControllerに設定する。
         self.window?.rootViewController = slideMenuController
         self.window?.makeKeyAndVisible()

@@ -30,6 +30,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
     static internal let JSON_FIELD_HEADER_CATEGORY_TYPE : String = "category_type";
     static internal let JSON_FIELD_HEADER_DATA : String = "data";
     static internal let JSON_FIELD_HEADER_LOCATION : String = "location";
+    static internal let JSON_FIELD_HEADER_CONFIG : String = "config";
     
     /**
      * タスク用JSONデータ部フィールド名
@@ -47,7 +48,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
     static internal let JSON_FIELD_DATA_COMPLETE_FLAG : String = "complete_flag";
     static internal let JSON_FIELD_DATA_CREATE_DATETIME : String = "create_datetime";
     static internal let JSON_FIELD_DATA_UPDATE_DATETIME : String = "update_datetime";
-
+    
     /**
      * 位置情報用JSONフィールド名
      */
@@ -55,6 +56,17 @@ open class TaskJsonUtility : BaseJsonDataUtility
     static internal let JSON_FIELD_LOCATION_TITLE: String = "title";
     static internal let JSON_FIELD_LOCATION_LATITUDE: String = "Latitude";
     static internal let JSON_FIELD_LOCATION_LONGITUDE: String = "Longitude";
+    
+    /**
+     * 設定情報用JSONフィールド名
+     */
+    static internal let JSON_FIELD_CONFIG_001: String = "001";
+    static internal let JSON_FIELD_CONFIG_002: String = "002";
+    static internal let JSON_FIELD_CONFIG_003: String = "003";
+    static internal let JSON_FIELD_CONFIG_004: String = "004";
+    static internal let JSON_FIELD_CONFIG_005: String = "005";
+    static internal let JSON_FIELD_CONFIG_006: String = "006";
+    static internal let JSON_FIELD_CONFIG_007: String = "007";
     
     ///
     ///　タスク用JSONオブジェクトの初期データ作成
@@ -65,6 +77,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
         var taskHeader : Dictionary<String, AnyObject> = [:]
         let taskData : [Dictionary<String, AnyObject>] = []
         let locationInfo : [Dictionary<String, AnyObject>] = []
+        let configInfo : Dictionary<String, AnyObject> = Dictionary<String, AnyObject>()
         
         // バージョン設定
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_VERSION] = TaskInfoHeaderEntity.VERSION as AnyObject
@@ -76,6 +89,8 @@ open class TaskJsonUtility : BaseJsonDataUtility
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_DATA] = taskData as AnyObject
         // 位置情報設定
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_LOCATION] = locationInfo as AnyObject
+        // 設定情報設定
+        taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_CONFIG] = configInfo as AnyObject
         
         return taskHeader
     }
@@ -227,7 +242,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
                             workArry = JSONItemToObject(value as AnyObject) as! [AnyObject]
                             
                             for workItemArry in workArry {
-                                // TaskInfoDataEntity項目生成
+                                // TaskInfoLocationDataEntity項目生成
                                 let data : TaskInfoLocationDataEntity = TaskInfoLocationDataEntity()
                                 
                                 // データ配列数分処理する
@@ -256,6 +271,52 @@ open class TaskJsonUtility : BaseJsonDataUtility
                                 }
                                 // 配列に構造体を追加
                                 ret.Location.append(data)
+                            }
+                            break
+                        // キー項目がJSON_FIELD_HEADER_CONFIG
+                        case TaskJsonUtility.JSON_FIELD_HEADER_CONFIG:
+                            var workArry : [AnyObject] = [AnyObject]()
+                            
+                            // データ部のデータ配列を取得する
+                            workArry = JSONItemToObject(value as AnyObject) as! [AnyObject]
+                            
+                            for workItemArry in workArry {
+                                // データ配列数分処理する
+                                for (dataKey, dataValue) in workItemArry as! Dictionary<String, AnyObject> {
+                                    // キー項目をStringに変換
+                                    switch(dataKey){
+                                    // キー項目がJSON_FIELD_CONFIG_001
+                                    case TaskJsonUtility.JSON_FIELD_CONFIG_001:
+                                        ret.Config.MinuteAgo5 = dataValue as! Int
+                                        break
+                                    // キー項目がJSON_FIELD_CONFIG_002
+                                    case TaskJsonUtility.JSON_FIELD_CONFIG_002:
+                                        ret.Config.MinuteAgo10 = dataValue as! Int
+                                        break
+                                    // キー項目がJSON_FIELD_CONFIG_003
+                                    case TaskJsonUtility.JSON_FIELD_CONFIG_003:
+                                        ret.Config.MinuteAgo15 = dataValue as! Int
+                                        break
+                                    // キー項目がJSON_FIELD_CONFIG_004
+                                    case TaskJsonUtility.JSON_FIELD_CONFIG_004:
+                                        ret.Config.MinuteAgo30 = dataValue as! Int
+                                        break
+                                    // キー項目がJSON_FIELD_CONFIG_005
+                                    case TaskJsonUtility.JSON_FIELD_CONFIG_005:
+                                        ret.Config.HoursAgo1 = dataValue as! Int
+                                        break
+                                    // キー項目がJSON_FIELD_CONFIG_006
+                                    case TaskJsonUtility.JSON_FIELD_CONFIG_006:
+                                        ret.Config.HoursAgo3 = dataValue as! Int
+                                        break
+                                    // キー項目がJSON_FIELD_CONFIG_007
+                                    case TaskJsonUtility.JSON_FIELD_CONFIG_007:
+                                        ret.Config.HoursAgo6 = dataValue as! Int
+                                        break
+                                    default:
+                                        break
+                                    }
+                                }
                             }
                             break
                         default:
@@ -373,6 +434,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
         // データ配列部設定
         jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_DATA, value: jsonDataBuff, isComma: true))
         
+        
         // LOCATION
         jsonDataBuff.removeAll()
         // 位置データ数分処理する
@@ -399,7 +461,31 @@ open class TaskJsonUtility : BaseJsonDataUtility
             jsonDataBuff.append(bracketsChild2)
         }
         // データ配列部設定
-        jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_LOCATION, value: jsonDataBuff, isComma: false))
+        jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_LOCATION, value: jsonDataBuff, isComma: true))
+        
+        
+        // CONFIG
+        jsonDataBuff.removeAll()
+        // 子項目の配列カッコ（{）を設定
+        jsonDataBuff.append(bracketsChild1)
+        // MinuteAgo5設定
+        jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_CONFIG_001, value: taskInfoHeaderEntity.Config.MinuteAgo5, isComma: true))
+        // MinuteAgo10設定
+        jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_CONFIG_002, value: taskInfoHeaderEntity.Config.MinuteAgo10, isComma: true))
+        // MinuteAgo15設定
+        jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_CONFIG_003, value: taskInfoHeaderEntity.Config.MinuteAgo15, isComma: true))
+        // MinuteAgo30設定
+        jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_CONFIG_004, value: taskInfoHeaderEntity.Config.MinuteAgo30, isComma: true))
+        // HoursAgo1設定
+        jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_CONFIG_005, value: taskInfoHeaderEntity.Config.HoursAgo1, isComma: true))
+        // HoursAgo3設定
+        jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_CONFIG_006, value: taskInfoHeaderEntity.Config.HoursAgo3, isComma: true))
+        // HoursAgo6設定
+        jsonDataBuff.append(formatJsonItem(TaskJsonUtility.JSON_FIELD_CONFIG_007, value: taskInfoHeaderEntity.Config.HoursAgo6, isComma: false))
+        // 子項目の配列カッコ（}）を設定
+        jsonDataBuff.append(bracketsChild2)
+        // データ配列部設定
+        jsonBuff.append(formatJsonArray(TaskJsonUtility.JSON_FIELD_HEADER_CONFIG, value: jsonDataBuff, isComma: false))
 
         // JSON終了カッコ設定
         jsonBuff.append(bracketsEnd)

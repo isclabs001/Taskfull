@@ -80,6 +80,18 @@ class CommonConst
     static internal let TASK_COMPLETE_FLAG_VALID : Int = 1;
     
     /**
+     * ON/OFF
+     */
+    /**
+     * OFF
+     */
+    static internal let OFF : Int = 0;
+    /**
+     * ON
+     */
+    static internal let ON : Int = 1;
+    
+    /**
      * タスクボタンサイズ
      */
     /**
@@ -210,16 +222,20 @@ class CommonConst
         case taskAdd = 0
         // GPS通知設定
         case configGps
+        // 設定
+        case config
         // 最大
-        case max = 2
+        case max = 3
     }
     static internal let MAIN_MENU_TYPE_STRING : Array<String> = [
         MessageUtility.getMessage(key: "MainMenuTypeTaskAdd"),
         MessageUtility.getMessage(key: "MainMenuTypeGPSNotification"),
+        MessageUtility.getMessage(key: "MainMenuTypeConfig"),
     ]
     static internal let MAIN_MENU_TYPE_BACKGROUND_COLOR : Array<UIColor> = [
         UIColorUtility.rgb(232, g: 207, b: 255),
         UIColorUtility.rgb(153, g: 217, b: 234),
+        UIColorUtility.rgb(255, g: 205, b: 120),
     ]
     
     

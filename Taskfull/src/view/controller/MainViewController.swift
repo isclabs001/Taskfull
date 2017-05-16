@@ -11,7 +11,7 @@ import UIKit
 ///
 /// メイン画面
 ///
-class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenuControllerDelegate
+class MainViewController : BaseViewController, NSURLConnectionDelegate
 {
     /**
      * 定数
@@ -26,6 +26,8 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
     static internal let SEGUE_IDENTIFIER_TASK_EDIT = "toTaskEditViewController"
     /// GPS通知設定画面への遷移定義文字列
     static internal let SEGUE_IDENTIFIER_CONFIG_MAP = "toMapConfigViewController"
+    // 設定画面への遷移定義文字列
+    static internal let SEGUE_IDENTIFIER_CONFIG = "toConfigViewController"
 
     
     /**
@@ -77,7 +79,12 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
     /**
      * タスクカテゴリーメニューバー画面
      */
-    open var taskCategoryManuBarController : TaskCategoryMenuBarViewController! = nil
+    open var taskCategoryMenuBarController : TaskCategoryMenuBarViewController! = nil
+    
+    /**
+     * メインメニューバー画面
+     */
+    open var mainMenuBarController : MainMenuBarViewController! = nil
     
     /**
      * キャンセルフラグƒ
@@ -132,6 +139,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
     ///　- parameter animated:アニメーションフラグ
     ///
     override func viewDidAppear(_ animated: Bool) {
+        
+        // メインメニューバーの再描画
+        redrawMeinMenuBar()
+
         // 画面遷移しない場合
         if(self.transDisplayFlag == CommonConst.MainMenuType.none){
             // キャンセルフラグが立っていない場合
@@ -268,13 +279,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
         case CommonConst.ActionType.edit:
             self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_1
             self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_ORANGE_2
-            self.RightMenuBarBtn.isHidden = false
             break;
         // 上記以外の場合
         default:
             self.mainView.gradationBackgroundStartColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_1
             self.mainView.gradationBackgroundEndColor = CommonConst.CL_BACKGROUND_GRADIATION_BLUE_2
-            self.RightMenuBarBtn.isHidden = true
             break;
         }
     }
@@ -1014,7 +1023,7 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
             // タスクを表示する
             displayTask(self.mActionMode)
         }
-
+        
         // キャンセルフラグを初期化
         self.cancelFlag = false
     }
@@ -1033,6 +1042,11 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
         case CommonConst.MainMenuType.configGps:
             // GPS設定画面を表示
             self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_CONFIG_MAP, sender: self)
+            break
+        // 設定画面の場合
+        case CommonConst.MainMenuType.config:
+            // 設定画面を表示
+            self.performSegue(withIdentifier: MainViewController.SEGUE_IDENTIFIER_CONFIG, sender: self)
             break
         default:
             break
@@ -1098,39 +1112,20 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate,SlideMenu
         // タスクカテゴリーメニューバーの再描画
         redrawTaskMenuBar()
     }
-
+    
     ///
     /// タスクカテゴリーメニューバーの再描画
     ///
     fileprivate func redrawTaskMenuBar() {
         // タスクカテゴリーメニューバーの再描画
-        self.taskCategoryManuBarController.redraw()
+        self.taskCategoryMenuBarController.redraw()
     }
     
-    
-    
-    /// SlideMenuControllerDelegate
-    func leftWillOpen() {
-    }
-    
-    func leftDidOpen() {
-    }
-    
-    func leftWillClose() {
-    }
-    
-    func leftDidClose() {
-    }
-    
-    func rightWillOpen() {
-    }
-    
-    func rightDidOpen() {
-    }
-    
-    func rightWillClose() {
-    }
-    
-    func rightDidClose() {
+    ///
+    /// メインメニューバーの再描画
+    ///
+    fileprivate func redrawMeinMenuBar() {
+        // メインメニューバーの再描画
+        self.mainMenuBarController.redraw()
     }
 }
