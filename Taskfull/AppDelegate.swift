@@ -217,6 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     
     
 
+    /// TODO:要クラス化
     /// タスクローカル通知生成処理
     fileprivate func taskExpirationNotification(){
         
@@ -271,8 +272,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
                     
                     // メモが空欄である場合
                     if(true == StringUtility.isEmpty(item.Memo)){
+                        
                         //通知ボディ = 空白文字挿入
                         content.body = " "
+                        
                     }
                     else{
                         //通知ボディ ＝ メモ設定
