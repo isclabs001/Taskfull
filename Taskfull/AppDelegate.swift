@@ -223,7 +223,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         //　ローカル通知初期化
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-            
         } else {
             // Fallback on earlier versions
         };
@@ -457,10 +456,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     
 
     @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-    
+    /// フォアグラウンド時:ローカル通知受信時イベント
+    ///
+    /// - Parameters:
+    ///   - center: UNUserNotificationCenter
+    ///   - notification: notification
+    ///   - completionHandler: completionHandler
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
         // ローカル通知：バッジ、サウンド、アラート
         completionHandler([.badge,.sound, .alert])
         

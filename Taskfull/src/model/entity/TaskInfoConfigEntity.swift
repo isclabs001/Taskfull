@@ -53,9 +53,9 @@ open class TaskInfoConfigEntity {
      */
     init()
     {
-        // 変数初期化
+        // 変数初期化(10分前はデフォルトON)
         self.MinuteAgo5 = CommonConst.OFF
-        self.MinuteAgo10 = CommonConst.OFF
+        self.MinuteAgo10 = CommonConst.ON
         self.MinuteAgo15 = CommonConst.OFF
         self.MinuteAgo30 = CommonConst.OFF
         self.HoursAgo1 = CommonConst.OFF
@@ -68,9 +68,9 @@ open class TaskInfoConfigEntity {
      */
     open func clear()
     {
-        // 変数初期化
+        // 変数初期化(10分前はデフォルトON)
         self.MinuteAgo5 = CommonConst.OFF
-        self.MinuteAgo10 = CommonConst.OFF
+        self.MinuteAgo10 = CommonConst.ON
         self.MinuteAgo15 = CommonConst.OFF
         self.MinuteAgo30 = CommonConst.OFF
         self.HoursAgo1 = CommonConst.OFF
