@@ -36,7 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         let mainMenuBarViewController = storyboard.instantiateViewController(withIdentifier: "MainMenuBarStoryBoard") as! MainMenuBarViewController
 
         // メイン画面にタスクカテゴリーメニューバーのコントローラを設定
-        mainViewController.taskCategoryManuBarController = taskCategoryMenuBarViewController
+        mainViewController.taskCategoryMenuBarController = taskCategoryMenuBarViewController
+        // メイン画面にメインメニューバーのコントローラを設定
+        mainViewController.mainMenuBarController = mainMenuBarViewController
         
         // メイン画面のナビゲーターコントローラを取得
         let mainNavigationController: UINavigationController = UINavigationController(rootViewController: mainViewController)

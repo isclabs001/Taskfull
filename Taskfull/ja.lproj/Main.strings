@@ -67,3 +67,28 @@
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "w2T-Od-cqa"; */
 "w2T-Od-cqa.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "事前通知時間設定"; ObjectID = "zDa-Qt-TP1"; */
+"zDa-Qt-TP1.text" = "事前通知時間設定";
+
+/* Class = "UIView"; lKl-4w-0K8.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0] = "5分前"; ObjectID = "lKl-4w-0K8"; */
+"lKl-4w-0K8.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "5分前";
+
+/* Class = "UIView"; k8c-aY-71U.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0] = "10分前"; ObjectID = "k8c-aY-71U"; */
+"k8c-aY-71U.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "10分前";
+
+/* Class = "UIView"; fM3-KD-7FF.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0] = "15分前"; ObjectID = "fM3-KD-7FF"; */
+"fM3-KD-7FF.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "15分前";
+
+/* Class = "UIView"; 8Tk-im-Km0.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0] = "30分前"; ObjectID = "8Tk-im-Km0"; */
+"8Tk-im-Km0.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "30分前";
+
+/* Class = "UIView"; xuW-Bv-eSR.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0] = "1時間前"; ObjectID = "xuW-Bv-eSR"; */
+"xuW-Bv-eSR.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "1時間前";
+
+/* Class = "UIView"; pw2-MZ-Vq7.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0] = "3時間前"; ObjectID = "pw2-MZ-Vq7"; */
+"pw2-MZ-Vq7.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "3時間前";
+
+/* Class = "UIView"; YnT-mC-WTc.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0] = "6時間前"; ObjectID = "YnT-mC-WTc"; */
+"YnT-mC-WTc.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "6時間前";
+

@@ -30,6 +30,16 @@
 /// メインメニュー形式
 "MainMenuTypeTaskAdd"="Task regist";
 "MainMenuTypeGPSNotification"="GPS notice";
+"MainMenuTypeConfig"="Config";
+
+/// カスタムコントロール用タイトル
+"ConfigNoticeTime5MinutesAgo"="5 minutes ago";
+"ConfigNoticeTime10MinutesAgo"="10 minutes ago";
+"ConfigNoticeTime15MinutesAgo"="15 minutes ago";
+"ConfigNoticeTime30MinutesAgo"="30 minutes ago";
+"ConfigNoticeTime1HoursAgo"="1 hours ago";
+"ConfigNoticeTime3HoursAgo"="3 hours ago";
+"ConfigNoticeTime6HoursAgo"="6 hours ago";
 
 
 /// メッセージボタン
@@ -54,6 +64,4 @@
 "MessageStringErrorNotificationPointListDelete"="An incomplete task using '%@' exists.";
 "MessageStringErrorTaskCreateLimit"="It is the notification point creation upper limit(%@).";
 "MessageStringErrorLocationAcquisition"="Current location can not be acquired";
-
-
 

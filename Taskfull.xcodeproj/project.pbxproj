@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		427952D41E9C84560064CE2E /* MapConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427952D31E9C84560064CE2E /* MapConfigViewController.swift */; };
 		427952D71E9C99F00064CE2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427952D61E9C99F00064CE2E /* CoreLocation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		630305E91ECAA0370010F49A /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630305E81ECAA0370010F49A /* ConfigViewController.swift */; };
+		630305EC1ECAA6A60010F49A /* UICheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630305EB1ECAA6A60010F49A /* UICheckbox.swift */; };
+		630305EE1ECAA6D80010F49A /* UICheckbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 630305ED1ECAA6D80010F49A /* UICheckbox.xib */; };
+		630305F01ECABB300010F49A /* btn_check_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 630305EF1ECABB300010F49A /* btn_check_off.png */; };
+		630305F21ECABB3C0010F49A /* btn_check_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 630305F11ECABB3C0010F49A /* btn_check_on.png */; };
 		63098FF81EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63098FF71EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift */; };
 		63098FFA1EB3287800EF34C6 /* menubar_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 63098FF91EB3287800EF34C6 /* menubar_right.png */; };
 		63098FFC1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63098FFB1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift */; };
@@ -74,6 +79,7 @@
 		636CE3BD1E6010CE002273BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 636CE3BB1E6010CE002273BE /* LaunchScreen.storyboard */; };
 		636CE3C81E6010CE002273BE /* TaskfullTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636CE3C71E6010CE002273BE /* TaskfullTests.swift */; };
 		636CE3D31E6010CE002273BE /* TaskfullUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636CE3D21E6010CE002273BE /* TaskfullUITests.swift */; };
+		638A4DB61ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A4DB51ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift */; };
 		63B64A4C1EA8800A004ABBC0 /* MessageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */; };
 		63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */; };
 		63C5CF0D1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */; };
@@ -105,6 +111,11 @@
 /* Begin PBXFileReference section */
 		427952D31E9C84560064CE2E /* MapConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapConfigViewController.swift; sourceTree = "<group>"; };
 		427952D61E9C99F00064CE2E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		630305E81ECAA0370010F49A /* ConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
+		630305EB1ECAA6A60010F49A /* UICheckbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICheckbox.swift; sourceTree = "<group>"; };
+		630305ED1ECAA6D80010F49A /* UICheckbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UICheckbox.xib; sourceTree = "<group>"; };
+		630305EF1ECABB300010F49A /* btn_check_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_check_off.png; sourceTree = "<group>"; };
+		630305F11ECABB3C0010F49A /* btn_check_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_check_on.png; sourceTree = "<group>"; };
 		63098FF71EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInfoLocationDataEntity.swift; sourceTree = "<group>"; };
 		63098FF91EB3287800EF34C6 /* menubar_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menubar_right.png; sourceTree = "<group>"; };
 		63098FFB1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCategoryMenuBarViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +187,7 @@
 		636CE3CE1E6010CE002273BE /* TaskfullUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaskfullUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		636CE3D21E6010CE002273BE /* TaskfullUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskfullUITests.swift; sourceTree = "<group>"; };
 		636CE3D41E6010CE002273BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		638A4DB51ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInfoConfigEntity.swift; sourceTree = "<group>"; };
 		63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageUtility.swift; sourceTree = "<group>"; };
 		63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDisabledTextField.swift; sourceTree = "<group>"; };
 		63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPlaceHolderTextView.swift; sourceTree = "<group>"; };
@@ -222,6 +234,15 @@
 				427952D61E9C99F00064CE2E /* CoreLocation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		630305EA1ECAA64E0010F49A /* UICheckbox */ = {
+			isa = PBXGroup;
+			children = (
+				630305EB1ECAA6A60010F49A /* UICheckbox.swift */,
+				630305ED1ECAA6D80010F49A /* UICheckbox.xib */,
+			);
+			path = UICheckbox;
 			sourceTree = "<group>";
 		};
 		631238AF1E7410310054AC30 /* UITaskImageButton */ = {
@@ -281,6 +302,8 @@
 		635DCE651E739C9A00F6F325 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				630305F11ECABB3C0010F49A /* btn_check_on.png */,
+				630305EF1ECABB300010F49A /* btn_check_off.png */,
 				63098FF91EB3287800EF34C6 /* menubar_right.png */,
 				63D028DD1EB1932800573666 /* circle.png */,
 				63D028DB1EB17ECF00573666 /* menubar_left.png */,
@@ -381,6 +404,7 @@
 				631372FC1E8F2F0A0089C19E /* TaskInfoDataEntity.swift */,
 				63098FF71EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift */,
 				631373001E91EBBF0089C19E /* ViewTaskItemEntity.swift */,
+				638A4DB51ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -406,6 +430,7 @@
 		635DCE7A1E73A0E100F6F325 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				630305EA1ECAA64E0010F49A /* UICheckbox */,
 				635669621EB031DE0008F57C /* SlideMenBar */,
 				63C55E521E8A0ABD00740991 /* InputCustomField */,
 				635DCE7D1E73A13200F6F325 /* CustomUI */,
@@ -428,6 +453,7 @@
 				635CA7D41EB6C57D00FB3497 /* BaseMenuBarViewController.swift */,
 				635669681EB03B190008F57C /* MainMenuBarViewController.swift */,
 				63098FFB1EB33DD100EF34C6 /* TaskCategoryMenuBarViewController.swift */,
+				630305E81ECAA0370010F49A /* ConfigViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -668,11 +694,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				630305F21ECABB3C0010F49A /* btn_check_on.png in Resources */,
 				636CE3BD1E6010CE002273BE /* LaunchScreen.storyboard in Resources */,
 				631238AC1E73EA180054AC30 /* modechg_down.png in Resources */,
 				631373161E92325C0089C19E /* soap012.png in Resources */,
 				630990021EB341F900EF34C6 /* TaskCategoryMenuBarSubItemCell.xib in Resources */,
 				63D028DC1EB17ECF00573666 /* menubar_left.png in Resources */,
+				630305F01ECABB300010F49A /* btn_check_off.png in Resources */,
 				631373141E92325C0089C19E /* soap010.png in Resources */,
 				631373111E92325C0089C19E /* soap007.png in Resources */,
 				63098FFA1EB3287800EF34C6 /* menubar_right.png in Resources */,
@@ -682,6 +710,7 @@
 				631373171E92325C0089C19E /* soap013.png in Resources */,
 				631238A61E73E4960054AC30 /* modechg.png in Resources */,
 				631238A81E73E4960054AC30 /* soap002.png in Resources */,
+				630305EE1ECAA6D80010F49A /* UICheckbox.xib in Resources */,
 				631373151E92325C0089C19E /* soap011.png in Resources */,
 				631373101E92325C0089C19E /* soap006.png in Resources */,
 				631373121E92325C0089C19E /* soap008.png in Resources */,
@@ -720,11 +749,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				630305E91ECAA0370010F49A /* ConfigViewController.swift in Sources */,
+				630305EC1ECAA6A60010F49A /* UICheckbox.swift in Sources */,
 				63C9423E1E8E5E450052AB80 /* StringExtensions.swift in Sources */,
 				63C5CF0D1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift in Sources */,
 				635DCE8E1E73A1FB00F6F325 /* BaseViewController.swift in Sources */,
 				635DCE841E73A18400F6F325 /* UICustomButton.swift in Sources */,
 				635669691EB03B190008F57C /* MainMenuBarViewController.swift in Sources */,
+				638A4DB61ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift in Sources */,
 				635DCE811E73A17E00F6F325 /* UICommon.swift in Sources */,
 				63098FF81EB3172800EF34C6 /* TaskInfoLocationDataEntity.swift in Sources */,
 				635DCE8A1E73A19400F6F325 /* ViewSwitchButton.swift in Sources */,

@@ -43,6 +43,10 @@ open class TaskInfoHeaderEntity {
      * TaskInfoLocationDataEntityデータ配列
      */
     var Location : [TaskInfoLocationDataEntity]
+    /**
+     * TaskInfoConfigEntityデータ配列
+     */
+    var Config : TaskInfoConfigEntity
     
     /**
      * イニシャライズ
@@ -55,5 +59,6 @@ open class TaskInfoHeaderEntity {
         self.CategoryType = CommonConst.CategoryType.task.rawValue
         self.Data = []
         self.Location = []
+        self.Config = TaskInfoConfigEntity()
     }
 }

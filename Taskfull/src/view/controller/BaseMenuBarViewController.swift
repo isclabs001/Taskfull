@@ -51,8 +51,8 @@ class BaseMenuBarViewController : BaseViewController {
             
             // メインメニュー形式
             switch(mainMenuType) {
-            // タスク追加、GPS設定の場合
-            case CommonConst.MainMenuType.taskAdd, CommonConst.MainMenuType.configGps:
+            // タスク追加、GPS設定、設定の場合
+            case CommonConst.MainMenuType.taskAdd, CommonConst.MainMenuType.configGps, CommonConst.MainMenuType.config:
                 // キャンセルフラグを立てる
                 parrentMainViewController.cancelFlag = true
                 // 画面を切り替える

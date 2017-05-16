@@ -262,6 +262,7 @@ open class TaskInfoUtility {
         self._taskInfo.AssignmentId = 0
         self._taskInfo.Data.removeAll()
         self._taskInfo.Location.removeAll()
+        self._taskInfo.Config.clear()
     }
     
     ///
@@ -463,5 +464,21 @@ open class TaskInfoUtility {
         
         // 見つからない場合は「Error」を返す
         return "Error"
+    }
+    
+    ///
+    /// 設定情報データ情報の取得
+    ///　- returns:TaskInfoConfigEntity
+    ///
+    open func GetTaskInfoConfig() -> TaskInfoConfigEntity {
+        return self._taskInfo.Config
+    }
+    
+    ///
+    /// 設定情報データ情報の設定
+    ///　- parameter:taskInfoConfigEntity:TaskInfoConfigEntity
+    ///
+    open func SetTaskInfoConfig(_ taskInfoConfigEntity : TaskInfoConfigEntity) {
+        self._taskInfo.Config = taskInfoConfigEntity
     }
 }
