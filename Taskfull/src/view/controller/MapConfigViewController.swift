@@ -773,9 +773,6 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 TaskInfoUtility.DefaultInstance.RemoveLocationInfo(intLocationId)
                 TaskInfoUtility.DefaultInstance.WriteTaskInfo()
                 
-                // 通知設定処理
-                NotificationUtility.DefaultInstance.taskExpirationNotification()
-                
                 // 選択アノテーション削除(インデックス指定)
                 self.GPSMapView.removeAnnotation(self.GPSMapView.annotations[index])
                 // 選択オーバーレイ削除(アノテーションインデックスが前挿入である為、要ズレ回避):コメント回避
@@ -872,9 +869,6 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         
         // ロケーション情報の書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
-        
-        // 通知設定処理
-        NotificationUtility.DefaultInstance.taskExpirationNotification()
         
         // 更新フラグを立てる
         self.updateFlag = true

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nae-2G-uHF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nae-2G-uHF">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -838,36 +838,54 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lKl-4w-0K8" customClass="UICheckbox" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="368" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Rs7-xa-iLl"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="labelTitle" value="5 minutes ago" localized="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k8c-aY-71U" customClass="UICheckbox" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="368" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Xhj-5t-buY"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="labelTitle" value="10 minutes ago" localized="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fM3-KD-7FF" customClass="UICheckbox" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="100" width="368" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="6LK-pK-nrh"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="labelTitle" value="15 minutes ago" localized="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Tk-im-Km0" customClass="UICheckbox" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="150" width="368" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="A4y-TU-5Br"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="labelTitle" value="30 minutes ago" localized="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view tag="4" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xuW-Bv-eSR" customClass="UICheckbox" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="200" width="368" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="VE7-A8-Yyo"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="labelTitle" value="1 hours ago" localized="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pw2-MZ-Vq7" customClass="UICheckbox" customModule="Taskfull" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="250" width="368" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Mz5-pY-ENd"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="labelTitle" value="3 hours ago" localized="YES"/>
                                         </userDefinedRuntimeAttributes>
@@ -880,13 +898,13 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="pw2-MZ-Vq7" secondAttribute="bottom" constant="366" id="210-Ur-KZa"/>
-                                    <constraint firstItem="8Tk-im-Km0" firstAttribute="top" secondItem="qva-ae-Djn" secondAttribute="top" constant="150" id="3iN-W0-nbw"/>
-                                    <constraint firstItem="xuW-Bv-eSR" firstAttribute="top" secondItem="qva-ae-Djn" secondAttribute="top" constant="200" id="DtH-SJ-Nic"/>
-                                    <constraint firstItem="YnT-mC-WTc" firstAttribute="top" secondItem="qva-ae-Djn" secondAttribute="top" constant="300" id="dXH-4X-Kp2"/>
-                                    <constraint firstItem="k8c-aY-71U" firstAttribute="top" secondItem="qva-ae-Djn" secondAttribute="top" constant="50" id="o9q-Ad-kjT"/>
-                                    <constraint firstItem="pw2-MZ-Vq7" firstAttribute="top" secondItem="qva-ae-Djn" secondAttribute="top" constant="250" id="tnY-R0-a7K"/>
-                                    <constraint firstItem="fM3-KD-7FF" firstAttribute="top" secondItem="qva-ae-Djn" secondAttribute="top" constant="100" id="xbE-oM-EnW"/>
+                                    <constraint firstItem="lKl-4w-0K8" firstAttribute="top" secondItem="qva-ae-Djn" secondAttribute="top" id="6oO-jJ-VpG"/>
+                                    <constraint firstItem="xuW-Bv-eSR" firstAttribute="top" secondItem="8Tk-im-Km0" secondAttribute="bottom" id="E9k-ho-YnM"/>
+                                    <constraint firstItem="pw2-MZ-Vq7" firstAttribute="top" secondItem="xuW-Bv-eSR" secondAttribute="bottom" id="hMw-5P-EdY"/>
+                                    <constraint firstItem="fM3-KD-7FF" firstAttribute="top" secondItem="k8c-aY-71U" secondAttribute="bottom" id="hfd-8n-zVO"/>
+                                    <constraint firstItem="8Tk-im-Km0" firstAttribute="top" secondItem="fM3-KD-7FF" secondAttribute="bottom" id="iAp-Sr-xOe"/>
+                                    <constraint firstItem="YnT-mC-WTc" firstAttribute="top" secondItem="pw2-MZ-Vq7" secondAttribute="bottom" id="oUW-zO-cmv"/>
+                                    <constraint firstItem="k8c-aY-71U" firstAttribute="top" secondItem="lKl-4w-0K8" secondAttribute="bottom" id="zvQ-rL-MuY"/>
                                 </constraints>
                             </stackView>
                         </subviews>
