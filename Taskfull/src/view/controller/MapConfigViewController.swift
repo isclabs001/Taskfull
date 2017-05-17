@@ -344,45 +344,25 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         //delegate設定
         selfLocation.delegate = self
         
-        //　TODO：ローカライズ対応要修正
-        if(CLLocationManager.locationServicesEnabled() == true){
-            switch CLLocationManager.authorizationStatus() {
-                
-            //　位置情報サービス権限未設定の場合
-            case CLAuthorizationStatus.notDetermined:
-                
-                // 位置情報サービス権限許可通知表示
-                selfLocation.requestWhenInUseAuthorization()
-                
-            //　機能制限されている場合
-            case CLAuthorizationStatus.restricted:
-                alertMessage(message: "位置情報サービスの利用が制限されている為、利用できません。")
-                
-            //「許可しない」に設定されている場合
-            case CLAuthorizationStatus.denied:
-                alertMessage(message: "位置情報サービスの利用が許可されていない為、利用できません。")
-                
-            //「このAppの使用中のみ許可」に設定されている場合
-            case CLAuthorizationStatus.authorizedWhenInUse:
-                alertMessage(message: "位置情報サービスの利用が制限されています。")
-                
-            //「常に許可」に設定されている場合
-            case CLAuthorizationStatus.authorizedAlways:
-                
-                // 位置情報取得精度(最高精度)
-                selfLocation.desiredAccuracy = kCLLocationAccuracyBest
-                // 位置情報取得間隔(10m移動したら位置補足)
-                selfLocation.distanceFilter = 10
-                // 現在位置取得(位置情報更新)
-                selfLocation.startUpdatingLocation()
-            }
+        // 位置情報サービス通知権限確認アラート表示
+        LocationManagerAuthorizationStatusAleart()
+        
+        // 位置情報サービス権限許可通知表示
+        selfLocation.requestAlwaysAuthorization()
+        
+        //「常に許可」に設定されている場合
+        if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
             
-        } else {
-            //位置情報サービスがOFFの場合
-            alertMessage(message: "位置情報サービスがONになっていないため利用できません。")
+            // 位置情報取得精度(最高精度)
+            selfLocation.desiredAccuracy = kCLLocationAccuracyBest
+            // 位置情報取得間隔(10m移動したら位置補足)
+            selfLocation.distanceFilter = 10
+            // 現在位置取得(位置情報更新)
+            selfLocation.startUpdatingLocation()
+            
         }
         
-
+        
         // ”常に許可”の場合のみ、位置取得を開始する為コメントアウト
 //        // 位置情報取得精度(10m)
 //        selfLocation.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -394,18 +374,52 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         
     }
     
-    /// メッセージ出力処理
-    ///
-    /// - Parameter message: String
-    func alertMessage(message:String) {
+    /// 位置情報サービス通知権限確認アラート
+    open func LocationManagerAuthorizationStatusAleart() {
         
-        let aleartController = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title:"OK", style: .default, handler:nil)
-        aleartController.addAction(defaultAction)
-        
-        present(aleartController, animated:true, completion:nil)
+        if(CLLocationManager.locationServicesEnabled() == true){
+            switch CLLocationManager.authorizationStatus() {
+                
+            //　位置情報サービス権限未設定の場合
+            case CLAuthorizationStatus.notDetermined:
+                
+                // 位置情報サービス権限許可通知表示
+                selfLocation.requestAlwaysAuthorization()
+                
+            //　機能制限されている場合
+            case CLAuthorizationStatus.restricted:
+                
+                // "位置情報サービスの利用が制限されている為、利用できません。"
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: MessageUtility.getMessage(key: "MessageStringCLLocationManagerStatusRestricted"))
+                
+            //「許可しない」に設定されている場合
+            case CLAuthorizationStatus.denied:
+                
+                // "位置情報サービスの利用が許可されていない為、利用できません。"
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: MessageUtility.getMessage(key: "MessageStringCLLocationManagerStatusDenied"))
+                
+            //「このAppの使用中のみ許可」に設定されている場合
+            case CLAuthorizationStatus.authorizedWhenInUse:
+                
+                // "位置情報サービスの利用が制限されています。"
+                MessageUtility.dispAlertOK(viewController: self, title: "", message: MessageUtility.getMessage(key: "MessageStringCLLocationManagerStatusAuthorizedWhenInUse"))
+                
+            //「常に許可」に設定されている場合
+            case CLAuthorizationStatus.authorizedAlways:
+                
+                break
+                
+            }
+            // 位置情報サービスがOFFの場合
+        } else {
+            
+            // "位置情報サービスがONになっていない為、利用できません。"
+            MessageUtility.dispAlertOK(viewController: self, title: "", message: MessageUtility.getMessage(key: "MessageStringCLLocationManagerStatusOFF"))
+        }
         
     }
+    
+
     
     /// 位置情報取得時イベント
     ///
@@ -427,7 +441,15 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         GPSMapView.region = region
         
         // Map再更新防止の為、位置情報取得停止
-        selfLocation.stopUpdatingLocation()
+        //selfLocation.stopUpdatingLocation()
+        
+        //　DEBUG：補足座標
+        #if DEBUG
+            print("MAP用位置情報取得日時：" + FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true))
+            print("緯度：" + String(describing: manager.location?.coordinate.latitude))
+            print("経度：" + String(describing: manager.location?.coordinate.longitude))
+        #endif
+        
     }
 
     /// 画面表示直後時処理（初期表示含む）
@@ -452,9 +474,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         #if DEBUG
         debugPrint("位置情報取得失敗")
         #endif
-            
+        
         //　「位置情報取得エラー」アラート表示
-        MessageUtility.dispAlertOK(viewController: self, title: MessageUtility.getMessage(key: "MessageStringLocationAcquisitionError"), message: MessageUtility.getMessage(key: "MessageStringErrorLocationAcquisition"))
+        MessageUtility.dispAlertOK(viewController: self, title: "", message: MessageUtility.getMessage(key: "MessageStringErrorLocationAcquisition"))
         
         
     }

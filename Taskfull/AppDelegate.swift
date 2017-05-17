@@ -65,17 +65,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
             // 通知用LocationManager:Delegate設定
             self.locationManager.delegate = self
         }
-            
+
         // GPS認証ステータスを取得
         let status = CLLocationManager.authorizationStatus()
         
         // GPS認証がまだである場合(アプリ起動初回のみ)
         if(status == .notDetermined) {
             
-            // 初回起動時、GPS認証ダイアログ表示(常に許可)
+           // 初回起動時、GPS認証ダイアログ表示(常に許可)
             self.locationManager.requestAlwaysAuthorization()
             
         }
+        
         
         // GPSローカル通知に不要であるためコメントアウト
         /*
@@ -90,11 +91,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         //locationManager.startUpdatingLocation()
         */
         
-        // 位置情報精度:取得
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // バックグラウンド時：最高精度取得
+        self.locationManager.allowsBackgroundLocationUpdates = true
+        self.locationManager.distanceFilter = 10
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.startUpdatingLocation()
+        
         // 位置情報一回のみ取得
-        locationManager.requestLocation()
+        //locationManager.requestLocation()
     }
+    
+    /// 位置情報サービス通知権限確認アラート
+    func LocationManagerAuthorizationStatusAleart() {
+        
+        if(CLLocationManager.locationServicesEnabled() == true){
+            switch CLLocationManager.authorizationStatus() {
+                
+            //　位置情報サービス権限未設定の場合
+            case CLAuthorizationStatus.notDetermined:
+                
+                // LocationManager:初期化
+                if(nil == locationManager){
+                    locationManager = CLLocationManager()
+                    
+                    // 通知用LocationManager:Delegate設定
+                    self.locationManager.delegate = self
+                }
+                
+                // 位置情報サービス権限許可通知表示
+                locationManager.requestAlwaysAuthorization()
+                
+            //　機能制限されている場合
+            case CLAuthorizationStatus.restricted:
+                
+                // "位置情報サービスの利用が制限されている為、利用できません。"
+                MessageUtility.dispAlertOK(viewController: (self.window?.rootViewController)!, title: "", message: MessageUtility.getMessage(key: "MessageStringCLLocationManagerStatusRestricted"))
+                
+            //「許可しない」に設定されている場合
+            case CLAuthorizationStatus.denied:
+                
+                // "位置情報サービスの利用が許可されていない為、利用できません。"
+                MessageUtility.dispAlertOK(viewController: (self.window?.rootViewController)!, title: "", message: MessageUtility.getMessage(key: "MessageStringCLLocationManagerStatusDenied"))
+                
+            //「このAppの使用中のみ許可」に設定されている場合
+            case CLAuthorizationStatus.authorizedWhenInUse:
+                
+                // "位置情報サービスの利用が制限されています。"
+                MessageUtility.dispAlertOK(viewController: (self.window?.rootViewController)!, title: "", message: MessageUtility.getMessage(key: "MessageStringCLLocationManagerStatusAuthorizedWhenInUse"))
+                
+            //「常に許可」に設定されている場合
+            case CLAuthorizationStatus.authorizedAlways:
+                
+                break
+                
+            }
+            // 位置情報サービスがOFFの場合
+        } else {
+            
+            // "位置情報サービスがONになっていない為、利用できません。"
+            MessageUtility.dispAlertOK(viewController: (self.window?.rootViewController)!, title: "", message: MessageUtility.getMessage(key: "MessageStringCLLocationManagerStatusOFF"))
+        }
+        
+    }
+    
     
     /// 位置情報取得時イベント
     ///
@@ -122,6 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         //　DEBUG：位置情報取得失敗
         #if DEBUG
             print("位置情報取得失敗")
+            print("位置情報取得失敗日時：" + FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true))
         #endif
         
     }
@@ -137,6 +198,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         
         // スライドメニューありのメイン画面作成処理
         self.createMainSlideMenuView()
+        
+        // 位置情報サービス通知権限確認アラート
+        LocationManagerAuthorizationStatusAleart()
         
         // LocationManager初期設定処理
         setupLocationManager()
@@ -190,6 +254,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
 
         // アプリケーションがフォアグラウンドに移行する際にイベントを通知する
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "applicationWillEnterForeground"), object: nil)
+        
+        // 位置情報サービス通知権限確認アラート
+        LocationManagerAuthorizationStatusAleart()
         
         // LocationManager初期設定処理
         setupLocationManager()
