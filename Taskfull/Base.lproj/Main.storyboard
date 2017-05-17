@@ -6,7 +6,6 @@
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -39,18 +38,20 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menubar_left.png" translatesAutoresizingMaskIntoConstraints="NO" id="a3a-Px-uQz">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rL0-rQ-mmz">
                                 <rect key="frame" x="0.0" y="304" width="24" height="64"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="a3a-Px-uQz" secondAttribute="height" multiplier="3:8" id="YB8-35-aSH"/>
+                                    <constraint firstAttribute="width" secondItem="rL0-rQ-mmz" secondAttribute="height" multiplier="3:8" id="MM8-uy-YfR"/>
                                 </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menubar_right.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ek5-2D-uul">
+                                <state key="normal" image="menubar_left.png"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7PV-3h-vkl">
                                 <rect key="frame" x="390" y="304" width="24" height="64"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Ek5-2D-uul" secondAttribute="height" multiplier="3:8" id="u3f-Nm-3LM"/>
+                                    <constraint firstAttribute="width" secondItem="7PV-3h-vkl" secondAttribute="height" multiplier="3:8" id="znA-5t-WZR"/>
                                 </constraints>
-                            </imageView>
+                                <state key="normal" image="menubar_right.png"/>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXR-Lq-i1V" customClass="UICircleImageButton" customModule="Taskfull" customModuleProvider="target">
                                 <rect key="frame" x="167" y="636" width="80" height="80"/>
                                 <constraints>
@@ -70,16 +71,17 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="rL0-rQ-mmz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="240" id="8ip-VP-ANe"/>
                             <constraint firstAttribute="trailing" secondItem="Jxg-T7-lVi" secondAttribute="trailing" id="F12-K6-B8D"/>
-                            <constraint firstAttribute="leading" secondItem="a3a-Px-uQz" secondAttribute="leading" id="Nil-Sy-IEA"/>
+                            <constraint firstItem="7PV-3h-vkl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="240" id="UWk-vG-suC"/>
+                            <constraint firstAttribute="trailing" secondItem="7PV-3h-vkl" secondAttribute="trailing" id="ZEp-ry-5zd"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="SXR-Lq-i1V" secondAttribute="bottom" constant="20" id="bvM-WE-scV"/>
                             <constraint firstItem="Jxg-T7-lVi" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cHO-JA-8xO"/>
-                            <constraint firstItem="y3c-jy-aDJ" firstAttribute="bottom" secondItem="Ek5-2D-uul" secondAttribute="centerY" constant="-272" id="eR8-LU-vsY"/>
                             <constraint firstItem="Jxg-T7-lVi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="m6q-Sd-k8K"/>
-                            <constraint firstItem="a3a-Px-uQz" firstAttribute="centerY" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="272" id="mKz-4Y-afi"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jxg-T7-lVi" secondAttribute="bottom" id="tZd-jC-MkT"/>
                             <constraint firstItem="SXR-Lq-i1V" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ta3-IC-Lyu"/>
-                            <constraint firstAttribute="trailing" secondItem="Ek5-2D-uul" secondAttribute="trailing" id="ycN-Bk-maE"/>
+                            <constraint firstItem="rL0-rQ-mmz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vXT-oG-4D9"/>
+                            <constraint firstAttribute="trailing" secondItem="7PV-3h-vkl" secondAttribute="trailing" id="wGh-Py-zp0"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="gradationBackgroundStartColor">
@@ -92,8 +94,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="pNc-OI-mSp"/>
                     <connections>
-                        <outlet property="LeftMenuBarBtn" destination="a3a-Px-uQz" id="jpT-WK-IIi"/>
-                        <outlet property="RightMenuBarBtn" destination="Ek5-2D-uul" id="dWT-Xc-iz1"/>
+                        <outlet property="LeftMenuBarBtn" destination="rL0-rQ-mmz" id="FEi-oP-lai"/>
+                        <outlet property="RightMenuBarBtn" destination="7PV-3h-vkl" id="BM8-oI-6Qz"/>
                         <outlet property="imageCanvasView" destination="yuf-aY-2H9" id="P0u-mA-EXb"/>
                         <outlet property="mainView" destination="8bC-Xf-vdC" id="ATd-hy-9gO"/>
                         <outlet property="modeButton" destination="SXR-Lq-i1V" id="hT3-Ny-xN4"/>
