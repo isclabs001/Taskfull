@@ -8,16 +8,14 @@
 
 import UIKit
 import CoreLocation
-import UserNotifications
-import NotificationCenter
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate,UNUserNotificationCenterDelegate{
+class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate{
 
     var window: UIWindow?
     
     /// 通知用LocationManager:生成&&初期化
-    var locationManager : CLLocationManager!
+    var locationManager : CLLocationManager! = nil
     
     ///
     /// スライドメニューありのメイン画面作成処理
@@ -55,16 +53,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         self.window?.makeKeyAndVisible()
     }
     
-    
+    ///
     /// LocationManager初期設定処理
+    ///
     fileprivate func setupLocationManager(){
         
         // LocationManager:初期化
-        locationManager = CLLocationManager()
+        if(nil == locationManager){
+            locationManager = CLLocationManager()
         
-        // 通知用LocationManager:Delegate設定
-        self.locationManager.delegate = self
-        
+            // 通知用LocationManager:Delegate設定
+            self.locationManager.delegate = self
+        }
+            
         // GPS認証ステータスを取得
         let status = CLLocationManager.authorizationStatus()
         
@@ -97,9 +98,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     
     /// 位置情報取得時イベント
     ///
-    /// - Parameters:
-    ///   - manager: CLLocationManager
-    ///   - locations: CLLocation
+    /// - Parameters manager: CLLocationManager
+    /// - Parameters locations: CLLocation
+    ///
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         //　DEBUG：補足座標
@@ -110,7 +111,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         #endif
         
     }
-    
     
     /// 位置情報取得失敗時
     ///
@@ -125,7 +125,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         #endif
         
     }
-    
     
     ///
     /// Application起動処理
@@ -143,7 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         setupLocationManager()
         
         // タスクローカル通知生成処理
-        taskExpirationNotification()
+        NotificationUtility.DefaultInstance.taskExpirationNotification()
         
         return true
     }
@@ -160,7 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         //setupLocationManager()
         
         // タスク通知生成処理
-        taskExpirationNotification()
+        NotificationUtility.DefaultInstance.taskExpirationNotification()
     }
 
     ///
@@ -178,7 +177,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         setupLocationManager()
         
         // タスク通知生成処理
-        taskExpirationNotification()
+        NotificationUtility.DefaultInstance.taskExpirationNotification()
         
     }
 
@@ -196,7 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         setupLocationManager()
         
         // タスク通知生成処理
-        taskExpirationNotification()
+        NotificationUtility.DefaultInstance.taskExpirationNotification()
     }
 
     ///
@@ -214,285 +213,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
-
-    /// TODO:要クラス化、通常通知,時間前通知,GPS通知作成処理メソッド化
-    /// タスクローカル通知生成処理
-    fileprivate func taskExpirationNotification(){
-        
-        //　ローカル通知初期化
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-        } else {
-            // Fallback on earlier versions
-        };
-        
-        
-        if #available(iOS 10.0, *) {
-            
-            // 通知デリゲート設定
-            let center = UNUserNotificationCenter.current()
-            center.delegate = self
-            
-            // 通知種類(バッチ,サウンド,アラート)
-            center.requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (granted, error) in
-                if error != nil {
-                    return
-                }
-                
-                // DEBUG:通知権限判定
-                #if DEBUG
-                if granted {
-                    debugPrint("通知許可")
-                } else {
-                    debugPrint("通知拒否")
-                }
-                debugPrint("ローカル通知設定開始")
-                #endif
-                
-                //　DateComponents変換用カレンダー生成(西暦)
-                let calender  =  Calendar(identifier:.gregorian)
-                
-                //　未完了タスク数分処理
-                for item in self.getIncompleteTaskData() {
-                    
-                    //　DEBUG：ローカル通知日時
-                    #if DEBUG
-                        print("-----------------------------------")
-                        print("タスク項目名:" + item.Title)
-                    #endif
-                    
-                    
-                    // UNMutableNotificationContent作成
-                    let content = UNMutableNotificationContent()
-                    
-                    // 通知タイトル設定
-                    content.title = String(item.Title)
-                    
-                    // メモが空欄である場合
-                    if(true == StringUtility.isEmpty(item.Memo)){
-                        
-                        //通知ボディ = 空白文字挿入
-                        content.body = " "
-                        
-                    }
-                    else{
-                        //通知ボディ ＝ メモ設定
-                        content.body = String(item.Memo)
-                    }
-                    
-                    // 通知サウンド:デフォルト
-                    content.sound = UNNotificationSound.default()
-                    
-                    // 画像TODO:冗長の為、要修正
-                    switch item.ButtonColor {
-                        
-                    case CommonConst.TASK_BUTTON_COLOR_WHITE:
-                        
-                        if let path = Bundle.main.path(forResource: "soap001", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_LIGHT_BLUE:
-                        
-                        if let path = Bundle.main.path(forResource: "soap002", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_GLAY:
-                        
-                        if let path = Bundle.main.path(forResource: "soap003", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_GREEN:
-                        
-                        if let path = Bundle.main.path(forResource: "soap004", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_ORANGE:
-                        
-                        if let path = Bundle.main.path(forResource: "soap005", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_BLUE:
-                        
-                        if let path = Bundle.main.path(forResource: "soap006", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_YELLOW:
-                        
-                        if let path = Bundle.main.path(forResource: "soap007", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_PINK:
-                        
-                        if let path = Bundle.main.path(forResource: "soap008", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_PURPLE:
-                        
-                        if let path = Bundle.main.path(forResource: "soap009", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_DARK_YELLOW:
-                        
-                        if let path = Bundle.main.path(forResource: "soap010", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_DARK_PINK:
-                        
-                        if let path = Bundle.main.path(forResource: "soap011", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    case CommonConst.TASK_BUTTON_COLOR_DARK_PURPLE:
-                        
-                        if let path = Bundle.main.path(forResource: "soap012", ofType: "png") {
-                            content.attachments = [try! UNNotificationAttachment(identifier: item.Title + "_" + String(item.ButtonColor), url: URL(fileURLWithPath: path), options: nil)]
-                        }
-                    default:
-                        break;
-                    }
-                    
-                    
-                    
-                    // タスク終了日時をdateComponetsへ変換
-                    let dateComponents =   calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime))
-                    
-                    // 変換したタスク日時をトリガーに設定(リピート:なし)
-                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: dateComponents, repeats: false)
-                    
-
-                    //　DEBUG：ローカル通知日時
-                    #if DEBUG
-                    print("------ローカル通知日時------")
-                    print(calender.dateComponents([.year,.month,.day,.hour,.minute], from: FunctionUtility.yyyyMMddHHmmssToDate(item.DateTime)))
-                    print("-------------------------")
-                    #endif
-                        
-                    // UNNotificationRequest作成(identifier:タスクID,content: タスク内容,trigger: 設定日時)
-                    let request = UNNotificationRequest.init(identifier: String(item.Id), content: content, trigger: trigger)
-                    
-                    // UNUserNotificationCenterに作成したUNNotificationRequestを追加
-                    center.add(request)
-                    
-                    // GPS通知作成処理
-                    // 通知地点初期値(未設定)ではない場合
-                    if(item.NotifiedLocation != CommonConst.INPUT_NOTIFICATION_POINT_LIST_INITIAL_VALUE){
-
-                        // GPS用　UNMutableNotificationContent作成
-                        content.title = String((item.Title) + "_IN")
-                        
-                        //メモが空欄である場合
-                        if(true == StringUtility.isEmpty(item.Memo)){
-                            //通知ボディ = 空白文字挿入※空欄対策
-                            content.body = " "
-                        }
-                        else{
-                            //通知ボディ ＝ メモ設定
-                            content.body = String(item.Memo)
-                        }
-                        //通知サウンド:デフォルト
-                        content.sound = UNNotificationSound.default()
-                        
-                        
-                        // TaskInfoLocationDataEntity
-                        let taskLocationDataEntity : TaskInfoLocationDataEntity  = TaskInfoUtility.DefaultInstance.GetInfoLocationDataForId(item.NotifiedLocation)!
-                        
-                        // 通知座標指定
-                        let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(taskLocationDataEntity.Latitude,taskLocationDataEntity.Longitude)
-                        
-                        // DEBUG:ローカル通知指定座標読み出し
-                        #if DEBUG
-                        print("------ローカル通知指定座標------")
-                        debugPrint("地点名:" + taskLocationDataEntity.Title)
-                        debugPrint("緯度:" + String(taskLocationDataEntity.Latitude))
-                        debugPrint("経度:" + String(taskLocationDataEntity.Longitude))
-                        print("----------------------------")
-                        print("-----------------------------------")
-                        #endif
-                            
-                        
-                        // 通知範囲指定
-                        let region = CLCircularRegion(center: coordinate, radius: CommonConst.NOTIFICATION_GEOFENCE_RADIUS_RANGE, identifier: "region" + item.Title)
-                        
-                        // 通知範囲In
-                        region.notifyOnEntry = true
-                        
-                        // GPS通知トリガー作成(通知範囲,通知リピートなし)
-                        let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
-                        
-                        // GPS通知リクエスト作成(identifier: 項目名 + "_GPS",content: content,trigger: locationTrigger)
-                        let locationRequest = UNNotificationRequest(identifier: String(item.Id) + "_GPS",content: content,trigger: locationTrigger)
-                        
-                        // UNUserNotificationCenterに作成したUNNotificationRequestを追加
-                        center.add(locationRequest)
-                        
-                    }
-
-                }
-
-            })
-        }
-    }
-    
-
-    /// 未完了タスクEntity取得処理
-    ///
-    /// - Returns: 未完了タスクEntity
-    fileprivate func getIncompleteTaskData() -> [TaskInfoDataEntity] {
-        
-        var taskData : [TaskInfoDataEntity] = [TaskInfoDataEntity]()
-        
-        // データ数分表示する
-        for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
-            // 未完了である場合
-            if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag) {
-                
-                // 通知対象に追加
-                taskData.append(data)
-                
-            }
-        }
-        
-        // 結果を返す
-        return taskData
-    }
-    
-
-    @available(iOS 10.0, *)
-    /// フォアグラウンド時:ローカル通知受信時イベント
-    ///
-    /// - Parameters:
-    ///   - center: UNUserNotificationCenter
-    ///   - notification: notification
-    ///   - completionHandler: completionHandler
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        // ローカル通知：バッジ、サウンド、アラート
-        completionHandler([.badge,.sound, .alert])
-        
-        // アイコンバッジ追加処理:仮実装
-        //UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
-        
-    }
-    
-
-    @available(iOS 10.0, *)
-    /// ローカル通知タップ時イベント
-    ///
-    /// - Parameters:
-    ///   - center: UNUserNotificationCenter
-    ///   - response: UNNotificationResponse
-    ///   - completionHandler: completionHandler
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        // アイコンバッジ初期化処理:テスト実装
-        UIApplication.shared.applicationIconBadgeNumber = 0
-        
-        //通知：なし
-        completionHandler()
-    }
-
-}
+ }
 

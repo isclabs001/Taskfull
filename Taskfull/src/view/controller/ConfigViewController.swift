@@ -58,7 +58,7 @@ class ConfigViewController : BaseViewController
     override func initializeProc() ->Bool
     {
         // 基底のinitializeProcを呼び出す
-        var ret : Bool = super.initializeProc()
+        let ret : Bool = super.initializeProc()
         
         //　正常な場合
         if(true == ret)
@@ -132,6 +132,10 @@ class ConfigViewController : BaseViewController
     ///　- parameter selected:チェック状態
     ///
     private func setConfig(index : Int, selected : Bool) {
+        
+        // OKボタン押下
+        self.isOkBtn = true
+
         // 選択状態からOn/Offを取得
         let onoff : Int = (selected) ? CommonConst.ON : CommonConst.OFF
         

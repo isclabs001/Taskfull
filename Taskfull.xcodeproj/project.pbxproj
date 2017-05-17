@@ -80,10 +80,10 @@
 		636CE3C81E6010CE002273BE /* TaskfullTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636CE3C71E6010CE002273BE /* TaskfullTests.swift */; };
 		636CE3D31E6010CE002273BE /* TaskfullUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636CE3D21E6010CE002273BE /* TaskfullUITests.swift */; };
 		638A4DB61ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A4DB51ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift */; };
+		638A4DB81ECBCBBC00EF7EBB /* NotificationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A4DB71ECBCBBC00EF7EBB /* NotificationUtility.swift */; };
 		63B64A4C1EA8800A004ABBC0 /* MessageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */; };
 		63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */; };
 		63C5CF0D1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */; };
-		63C9423E1E8E5E450052AB80 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9423D1E8E5E450052AB80 /* StringExtensions.swift */; };
 		63C942401E8E69260052AB80 /* TaskJsonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9423F1E8E69260052AB80 /* TaskJsonUtility.swift */; };
 		63D028DC1EB17ECF00573666 /* menubar_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D028DB1EB17ECF00573666 /* menubar_left.png */; };
 		63D028DE1EB1932800573666 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D028DD1EB1932800573666 /* circle.png */; };
@@ -188,10 +188,10 @@
 		636CE3D21E6010CE002273BE /* TaskfullUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskfullUITests.swift; sourceTree = "<group>"; };
 		636CE3D41E6010CE002273BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		638A4DB51ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInfoConfigEntity.swift; sourceTree = "<group>"; };
+		638A4DB71ECBCBBC00EF7EBB /* NotificationUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationUtility.swift; sourceTree = "<group>"; };
 		63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageUtility.swift; sourceTree = "<group>"; };
 		63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDisabledTextField.swift; sourceTree = "<group>"; };
 		63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPlaceHolderTextView.swift; sourceTree = "<group>"; };
-		63C9423D1E8E5E450052AB80 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		63C9423F1E8E69260052AB80 /* TaskJsonUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskJsonUtility.swift; sourceTree = "<group>"; };
 		63D028DB1EB17ECF00573666 /* menubar_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menubar_left.png; sourceTree = "<group>"; };
 		63D028DD1EB1932800573666 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
@@ -414,8 +414,8 @@
 			children = (
 				635DCE761E73A04F00F6F325 /* FunctionUtility.swift */,
 				635DCE781E73A05500F6F325 /* StringUtility.swift */,
-				63C9423D1E8E5E450052AB80 /* StringExtensions.swift */,
 				63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */,
+				638A4DB71ECBCBBC00EF7EBB /* NotificationUtility.swift */,
 			);
 			path = utility;
 			sourceTree = "<group>";
@@ -642,7 +642,7 @@
 				TargetAttributes = {
 					636CE3AE1E6010CD002273BE = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = 6T8VVAM3NP;
+						DevelopmentTeam = M324VL775J;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -751,7 +751,6 @@
 			files = (
 				630305E91ECAA0370010F49A /* ConfigViewController.swift in Sources */,
 				630305EC1ECAA6A60010F49A /* UICheckbox.swift in Sources */,
-				63C9423E1E8E5E450052AB80 /* StringExtensions.swift in Sources */,
 				63C5CF0D1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift in Sources */,
 				635DCE8E1E73A1FB00F6F325 /* BaseViewController.swift in Sources */,
 				635DCE841E73A18400F6F325 /* UICustomButton.swift in Sources */,
@@ -779,6 +778,7 @@
 				636CE3B31E6010CD002273BE /* AppDelegate.swift in Sources */,
 				635669841EB06A660008F57C /* UIView.swift in Sources */,
 				635669701EB0465D0008F57C /* BaseTableViewCell.swift in Sources */,
+				638A4DB81ECBCBBC00EF7EBB /* NotificationUtility.swift in Sources */,
 				635CA7D51EB6C57D00FB3497 /* BaseMenuBarViewController.swift in Sources */,
 				635DCE851E73A18400F6F325 /* UICustomView.swift in Sources */,
 				635669831EB06A660008F57C /* UITableViewExtension.swift in Sources */,
@@ -904,7 +904,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -946,7 +946,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -959,7 +959,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6T8VVAM3NP;
+				DEVELOPMENT_TEAM = M324VL775J;
 				INFOPLIST_FILE = Taskfull/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -978,7 +978,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6T8VVAM3NP;
+				DEVELOPMENT_TEAM = M324VL775J;
 				INFOPLIST_FILE = Taskfull/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

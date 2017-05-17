@@ -77,7 +77,7 @@ open class TaskJsonUtility : BaseJsonDataUtility
         var taskHeader : Dictionary<String, AnyObject> = [:]
         let taskData : [Dictionary<String, AnyObject>] = []
         let locationInfo : [Dictionary<String, AnyObject>] = []
-        let configInfo : Dictionary<String, AnyObject> = Dictionary<String, AnyObject>()
+        let configInfo : [Dictionary<String, AnyObject>] = []
         
         // バージョン設定
         taskHeader[TaskJsonUtility.JSON_FIELD_HEADER_VERSION] = TaskInfoHeaderEntity.VERSION as AnyObject
