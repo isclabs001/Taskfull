@@ -46,6 +46,8 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     var paramBackStatus : Bool = false
     /// パラメータ:カテゴリータイプ
     var paramCategoryType : Int = 0
+    /// パラメータ:更新フラグ(false:未更新,true:更新済)
+    var paramUpdateFlag : Bool = false
     
 
     /// カラーボタンイメージ(全１２色)
@@ -789,8 +791,11 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     
     ///　ナビゲーションバーの「戻る」ボタン押下処理
     override func onClickNavigationBackBtn() {
-        // キャンセル
-        setCancelFlag(cancelFlag: true)
+        // 更新済みではない場合
+        if(false == self.paramUpdateFlag && false == self.isOkBtn){
+            // キャンセルフラグを立てる
+            setCancelFlag(cancelFlag: true)
+        }
     }
     
     /// 未完了かつロケーション初期値以外が設定されているタスク数取得処理

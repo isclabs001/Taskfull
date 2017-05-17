@@ -208,6 +208,9 @@ class TaskInputViewController : BaseTaskInputViewController
             vc.paramTaskId = self.paramTaskId
             // タスク:カテゴリータイプ
             vc.paramCategoryType = paramCategoryType
+            // タスク:更新フラグ（更新済）
+            self.paramUpdateFlag = true
+            vc.paramUpdateFlag = true
             
             // ナビゲーションバー:レイヤー追加
             self.navigationController?.view.layer.add(navigationTrasitionAnimate(0.7, "pageCurl", kCATransitionFromRight), forKey: kCATransition)
