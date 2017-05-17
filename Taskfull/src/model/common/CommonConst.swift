@@ -270,4 +270,26 @@ class CommonConst
     
     
     
+    /**
+     * 事前通知時間
+     */
+    enum BeforeNotificationTime: Int {
+        case MinuteAgo5 = 0
+        case MinuteAgo10
+        case MinuteAgo15
+        case MinuteAgo30
+        case HoursAgo1
+        case HoursAgo3
+        case HoursAgo6
+        case max
+    }
+    static internal let BEFORE_NOTIFICATION_TIME_SEC : [Int] = [
+        60 * 5,             // 5分
+        60 * 10,            // 10分
+        60 * 15,            // 15分
+        60 * 30,            // 30分
+        60 * 60,            // 1時間
+        60 * 60 * 3,        // 3時間
+        60 * 60 * 6,        // 6時間
+    ]
 }

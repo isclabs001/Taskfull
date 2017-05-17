@@ -1109,6 +1109,10 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
         TaskInfoUtility.DefaultInstance.SetTaskInfoDataForComplete(id)
         // 変更内容書き込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        
+        // 通知設定処理
+        NotificationUtility.DefaultInstance.taskExpirationNotification()
+
         // タスクカテゴリーメニューバーの再描画
         redrawTaskMenuBar()
     }

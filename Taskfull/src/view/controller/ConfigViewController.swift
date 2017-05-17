@@ -142,31 +142,31 @@ class ConfigViewController : BaseViewController
         // 選択された場合
         switch(index) {
         // 5分前
-        case 0:
+        case CommonConst.BeforeNotificationTime.MinuteAgo5.rawValue:
             TaskInfoUtility.DefaultInstance.GetTaskInfoConfig().MinuteAgo5 = onoff
             break;
         // 10分前
-        case 1:
+        case CommonConst.BeforeNotificationTime.MinuteAgo10.rawValue:
             TaskInfoUtility.DefaultInstance.GetTaskInfoConfig().MinuteAgo10 = onoff
             break;
         // 15分前
-        case 2:
+        case CommonConst.BeforeNotificationTime.MinuteAgo15.rawValue:
             TaskInfoUtility.DefaultInstance.GetTaskInfoConfig().MinuteAgo15 = onoff
             break;
         // 30分前
-        case 3:
+        case CommonConst.BeforeNotificationTime.MinuteAgo30.rawValue:
             TaskInfoUtility.DefaultInstance.GetTaskInfoConfig().MinuteAgo30 = onoff
             break;
         // 1時間前
-        case 4:
+        case CommonConst.BeforeNotificationTime.HoursAgo1.rawValue:
             TaskInfoUtility.DefaultInstance.GetTaskInfoConfig().HoursAgo1 = onoff
             break;
         // 3時間前
-        case 5:
+        case CommonConst.BeforeNotificationTime.HoursAgo3.rawValue:
             TaskInfoUtility.DefaultInstance.GetTaskInfoConfig().HoursAgo3 = onoff
             break;
-        // 3時間前
-        case 6:
+        // 6時間前
+        case CommonConst.BeforeNotificationTime.HoursAgo6.rawValue:
             TaskInfoUtility.DefaultInstance.GetTaskInfoConfig().HoursAgo6 = onoff
             break;
         default:
@@ -175,5 +175,8 @@ class ConfigViewController : BaseViewController
         
         // 書き込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        
+        // 通知設定処理
+        NotificationUtility.DefaultInstance.taskExpirationNotification()
     }
 }

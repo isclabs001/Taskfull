@@ -394,6 +394,9 @@ class TaskInputViewController : BaseTaskInputViewController
             // タスク情報の書込み
             TaskInfoUtility.DefaultInstance.WriteTaskInfo()
             
+            // 通知設定処理
+            NotificationUtility.DefaultInstance.taskExpirationNotification()
+            
             // ステータスを表示済みへ更新
             self.paramBackStatus  = true
             

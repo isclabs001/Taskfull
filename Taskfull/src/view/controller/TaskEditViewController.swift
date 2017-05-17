@@ -76,6 +76,9 @@ class TaskEditViewController : BaseTaskInputViewController
         // 削除内容書き込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
         
+        // 通知設定処理
+        NotificationUtility.DefaultInstance.taskExpirationNotification()
+        
         // ナビゲーションバー:レイヤー追加
         self.navigationController?.view.layer.add(self.navigationTrasitionAnimate(0.7, "suckEffect", "kCATransitionFromRight"), forKey: kCATransition)
         
@@ -626,6 +629,9 @@ class TaskEditViewController : BaseTaskInputViewController
         
         // タスク情報書込み
         TaskInfoUtility.DefaultInstance.WriteTaskInfo()
+        
+        // 通知設定処理
+        NotificationUtility.DefaultInstance.taskExpirationNotification()
         
         /// EDIT:END
         

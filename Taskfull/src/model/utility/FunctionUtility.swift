@@ -124,12 +124,40 @@ class FunctionUtility
     ///　- parameter date2:対象日付
     ///　- returns:時間数差
     ///
+    static func DiffHour(_ date1 : Date, date2 : Date) -> Int {
+        return Int(date1.timeIntervalSince(date2) / 60 / 60)
+    }
+    
+    ///
+    ///　秒の差処理
+    ///　- parameter date1:基準日付
+    ///　- parameter date2:対象日付
+    ///　- returns:時間数差
+    ///
+    static func DiffSec(_ date1 : Date, date2 : Date) -> Int {
+        return Int(date1.timeIntervalSince(date2))
+    }
+    
+    ///
+    ///　時間の差処理
+    ///　- parameter date1:基準日付
+    ///　- parameter date2:対象日付
+    ///　- returns:時間数差
+    ///
     static func DiffHour(_ date1 : String, date2 : String) -> Int {
-        let date1Work : Date = yyyyMMddHHmmssToDate(date1)
-        let date2Work : Date = yyyyMMddHHmmssToDate(date2)
-        
-        // 秒の差を時間に変換
-        return Int(date1Work.timeIntervalSince(date2Work) / 60 / 60)
+        // 時間の差処理
+        return DiffHour(yyyyMMddHHmmssToDate(date1), date2: yyyyMMddHHmmssToDate(date2))
+    }
+    
+    ///
+    ///　日の差処理
+    ///　- parameter date1:基準日付
+    ///　- parameter date2:対象日付
+    ///　- returns:日数差
+    ///
+    static func DiffDate(_ date1 : Date, date2 : Date) -> Int {
+        // 秒の差を日に変換
+        return Int(DiffHour(date1, date2: date2) / 24)
     }
     
     ///
@@ -140,7 +168,7 @@ class FunctionUtility
     ///
     static func DiffDate(_ date1 : String, date2 : String) -> Int {
         // 秒の差を日に変換
-        return Int(DiffHour(date1, date2: date2) / 24)
+        return Int(DiffHour(yyyyMMddHHmmssToDate(date1), date2: yyyyMMddHHmmssToDate(date2)) / 24)
     }
     
     ///
