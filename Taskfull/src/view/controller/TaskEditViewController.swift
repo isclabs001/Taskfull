@@ -483,6 +483,8 @@ class TaskEditViewController : BaseTaskInputViewController
                 vc.paramMainViewMode = CommonConst.ActionType.add
                 // タスク:カテゴリータイプ
                 vc.paramCategoryType = paramCategoryType
+                // タスク:更新フラグ（更新済）
+                vc.paramUpdateFlag = true
                 
                 // 後続タスク追加ボタン:編集画面遷移処理
                 navigationController?.pushViewController(vc, animated: true)
@@ -512,6 +514,8 @@ class TaskEditViewController : BaseTaskInputViewController
             vc.paramParrentId = childTaskInfo.ParrentId
             // カテゴリータイプ
             vc.paramCategoryType = paramCategoryType
+            // タスク:更新フラグ（未更新）
+            vc.paramUpdateFlag = false
             
             // 後続タスク追加ボタン:編集画面遷移
             navigationController?.pushViewController(vc, animated: true)

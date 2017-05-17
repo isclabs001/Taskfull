@@ -11,7 +11,7 @@ import UIKit
 ///
 /// メイン画面
 ///
-class MainViewController : BaseViewController, NSURLConnectionDelegate
+class MainViewController : BaseViewController
 {
     /**
      * 定数
@@ -69,12 +69,12 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     /**
      * 左メニューバーボタン
      */
-    @IBOutlet weak var LeftMenuBarBtn: UIImageView!
+    @IBOutlet weak var LeftMenuBarBtn: UIButton!
     
     /**
      * 右メニューバーボタン
      */
-    @IBOutlet weak var RightMenuBarBtn: UIImageView!
+    @IBOutlet weak var RightMenuBarBtn: UIButton!
     
     /**
      * タスクカテゴリーメニューバー画面
@@ -236,7 +236,13 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
             NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: NSNotification.Name(rawValue: "applicationDidEnterBackground"), object: nil)
             // applicationWillEnterForegroundの通知を受信する
             NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterForeground), name: NSNotification.Name(rawValue: "applicationWillEnterForeground"), object: nil)
+
+            // 左メニューバーボタンにタップイベント追加
+            self.LeftMenuBarBtn.addTarget(self, action: #selector(MainViewController.onTouchUp_LeftMenuBarBUtton(_:)), for: .touchUpInside)
             
+            // 右メニューバーボタンにタップイベント追加
+            self.RightMenuBarBtn.addTarget(self, action: #selector(MainViewController.onTouchUp_RightMenuBarBUtton(_:)), for: .touchUpInside)
+
             // 動作モードによるメイン画面の初期化
             initializeMain(self.mActionMode)
             
@@ -1131,5 +1137,23 @@ class MainViewController : BaseViewController, NSURLConnectionDelegate
     fileprivate func redrawMeinMenuBar() {
         // メインメニューバーの再描画
         self.mainMenuBarController.redraw()
+    }
+    
+    ///
+    /// 左メニューバーボタン押下イベント
+    ///　- parameter sender:イベントが発生したオブジェクト
+    ///
+    @IBAction func onTouchUp_LeftMenuBarBUtton(_ sender : UIButton){
+        // 左メニューバーを表示する
+        self.slideMenuController()?.openLeft()
+    }
+    
+    ///
+    /// 右メニューバーボタン押下イベント
+    ///　- parameter sender:イベントが発生したオブジェクト
+    ///
+    @IBAction func onTouchUp_RightMenuBarBUtton(_ sender : UIButton){
+        // 右メニューバーを表示する
+        self.slideMenuController()?.openRight()
     }
 }
