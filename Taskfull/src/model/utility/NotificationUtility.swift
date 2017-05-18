@@ -27,6 +27,11 @@ open class NotificationUtility : NSObject, UNUserNotificationCenterDelegate
      * NotificationUtilityシングルトン変数
      */
     open static var DefaultInstance : NotificationUtility = NotificationUtility()
+
+    /**
+     * NotificationRequests登録数（）
+     */
+    open var RegistCount : Int = 0
     
     ///
     /// タスクローカル通知生成処理
@@ -38,7 +43,8 @@ open class NotificationUtility : NSObject, UNUserNotificationCenterDelegate
             let center : UNUserNotificationCenter = UNUserNotificationCenter.current()
             //　ローカル通知初期化
             center.removeAllPendingNotificationRequests()
-
+            self.RegistCount = 0
+            
             // 通知デリゲート設定
             center.delegate = self
             
@@ -95,8 +101,9 @@ open class NotificationUtility : NSObject, UNUserNotificationCenterDelegate
         // タスク完了時間
         let taskDate : Date = FunctionUtility.yyyyMMddHHmmssToDate(taskInfoData.DateTime)
         
-        // 現在秒以降の場合
-        if(0 <= FunctionUtility.DiffSec(taskDate, date2: systemDate)) {
+        // 現在秒以降、かつ、通知登録数の最大数に達していない場合
+        if(0 <= FunctionUtility.DiffSec(taskDate, date2: systemDate)
+            && CommonConst.INPUT_NOTIFICATION_TASK_SET_COUNT_LIMIT > self.RegistCount) {
             // 通知を設定する
             setNotifiedTask(center : center, taskInfoData : taskInfoData, systemDate : systemDate, calender : calender, taskDate : taskDate, key : String(taskInfoData.Id), addMessage : StringUtility.EMPTY)
             
@@ -120,8 +127,9 @@ open class NotificationUtility : NSObject, UNUserNotificationCenterDelegate
     ///
     fileprivate func setNotifiedTask(center : UNUserNotificationCenter, taskInfoData : TaskInfoDataEntity, systemDate : Date, calender : Calendar, taskDate : Date, key : String, addMessage : String) {
         
-        // 現在秒以降の場合
-        if(0 <= FunctionUtility.DiffSec(taskDate, date2: systemDate)) {
+        // 現在秒以降、かつ、通知登録数の最大数に達していない場合
+        if(0 <= FunctionUtility.DiffSec(taskDate, date2: systemDate)
+            && CommonConst.INPUT_NOTIFICATION_TASK_SET_COUNT_LIMIT > self.RegistCount) {
             // UNMutableNotificationContent作成
             let content = UNMutableNotificationContent()
         
@@ -167,6 +175,12 @@ open class NotificationUtility : NSObject, UNUserNotificationCenterDelegate
         
             // UNUserNotificationCenterに作成したUNNotificationRequestを追加
             center.add(request)
+            self.RegistCount += 1
+
+            //　DEBUG：タスク通知登録数
+            #if DEBUG
+                print("タスク通知登録数:" + String(self.RegistCount))
+            #endif
         }
     }
     
@@ -293,10 +307,12 @@ open class NotificationUtility : NSObject, UNUserNotificationCenterDelegate
             }
         }
         
+        // 完了日の昇順でソートする
+        taskData.sort(by: <)
+        
         // 結果を返す
         return taskData
     }
-    
     
     @available(iOS 10.0, *)
     ///

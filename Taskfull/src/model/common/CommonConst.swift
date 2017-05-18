@@ -268,8 +268,6 @@ class CommonConst
      */
     static internal let INPUT_NOTIFICATION_TASK_POINT_LIST_SET_COUNT_LIMIT: Int = 20;
     
-    
-    
     /**
      * 事前通知時間
      */
@@ -292,4 +290,9 @@ class CommonConst
         60 * 60 * 3,        // 3時間
         60 * 60 * 6,        // 6時間
     ]
+    
+    /**
+     * 通知登録最大数
+     */
+    static internal let INPUT_NOTIFICATION_TASK_SET_COUNT_LIMIT: Int = 64 - INPUT_NOTIFICATION_TASK_POINT_LIST_SET_COUNT_LIMIT;
 }
