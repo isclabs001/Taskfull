@@ -81,10 +81,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         self.locationManager.allowsBackgroundLocationUpdates = true
         //　位置情報取得間隔(m)
         //self.locationManager.distanceFilter = 10
-        self.locationManager.distanceFilter = 100
+        self.locationManager.distanceFilter = 75
         //　位置情報取得精度(10m前後)
-        //locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        //　位置情報取得精度(100m前後)※誤差顕著
+        //locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        
         // 加速度センサー等の状態を判断して、位置情報取得をPause
         // バックグラウンド時、Pause状態から復帰不能となる為'False'
         locationManager.pausesLocationUpdatesAutomatically = false

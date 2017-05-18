@@ -13,7 +13,7 @@
 "TitleContentTask"="Task Content";
 
 /// ラベル項目
-"LabelItemNameEmpty"="Item name not yet entered";
+"LabelItemNameEmpty"="Name not yet entered";
 "LabelItemNamePlaceHolder"="Item Name:";
 "LabelItemMemoPlaceHolder"="Memo:";
 "LabelItemAfterTaskAdd"="Subsequent task add";
