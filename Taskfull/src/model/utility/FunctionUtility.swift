@@ -52,11 +52,19 @@ class FunctionUtility
         let weekDay : Int = component.weekday!
         let weekDaySymbolIndex : Int  = weekDay - 1
         
-        //曜日名取得の為JPにロケール変更
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ja_JP")
-        //文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
-        dateFormatter.dateFormat = "yyyy年MM月dd日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex])) HH時mm分"
+        // 日本語の場合
+        if(CommonConst.LOCALE_LANGUAGE_JABANESE == Locale.preferredLanguages.first){
+            //曜日名取得の為JPにロケール変更
+            dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_JABANESE)
+            //文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
+            dateFormatter.dateFormat = "yyyy年MM月dd日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex])) HH時mm分"
+
+        // 上記以外の場合
+        } else {
+            // MM/dd/yyyy HH:mmとする
+            dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+        }
         return dateFormatter.string(from: date)
     }
     
@@ -75,12 +83,20 @@ class FunctionUtility
         
         // 曜日名取得の為JPにロケール変更
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ja_JP")
+        // 日本語の場合
+        if(CommonConst.LOCALE_LANGUAGE_JABANESE == Locale.preferredLanguages.first){
+            dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_JABANESE)
         
-        // 文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
-        dateFormatter.dateFormat = "M月d日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex])) HH時mm分"
+            // 文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
+            // "M月d日(曜日) HH時mm分"とする
+            dateFormatter.dateFormat = "M月d日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex])) HH時mm分"
+
+        // 上記以外の場合
+        } else {
+            // M/d HH:mmとする
+            dateFormatter.dateFormat = "M/d HH:mm"
+        }
         
-        // "M月d日(曜日) HH時mm分"を返す
         return dateFormatter.string(from: date)
     }
     

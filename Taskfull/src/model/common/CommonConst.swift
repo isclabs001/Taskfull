@@ -295,4 +295,9 @@ class CommonConst
      * 通知登録最大数
      */
     static internal let INPUT_NOTIFICATION_TASK_SET_COUNT_LIMIT: Int = 64 - INPUT_NOTIFICATION_TASK_POINT_LIST_SET_COUNT_LIMIT;
+    
+    /**
+     * 言語（日本語）
+     */
+    static internal let LOCALE_LANGUAGE_JABANESE : String = "ja-JP";
 }
