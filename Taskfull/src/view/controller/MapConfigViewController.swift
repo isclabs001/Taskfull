@@ -441,7 +441,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         GPSMapView.region = region
         
         // Map再更新防止の為、位置情報取得停止
-        //selfLocation.stopUpdatingLocation()
+        selfLocation.stopUpdatingLocation()
         
         //　DEBUG：補足座標
         #if DEBUG

@@ -77,33 +77,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
             
         }
         
-        
-        // GPSローカル通知に不要であるためコメントアウト
-        /*
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        self.locationManager.distanceFilter = 100
-        if #available(iOS 9.0, *) {
-            self.locationManager.allowsBackgroundLocationUpdates = true
-        } else {
-            // Fallback on earlier versions
-        }
-        //locationManager.pausesLocationUpdatesAutomatically = false
-        //locationManager.startUpdatingLocation()
-        */
-        
-        // バックグラウンド時：最高精度取得
+        // バックグラウンド時、動作
         self.locationManager.allowsBackgroundLocationUpdates = true
-        self.locationManager.distanceFilter = 10
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        //　位置情報取得間隔(m)
+        //self.locationManager.distanceFilter = 10
+        self.locationManager.distanceFilter = 100
+        //　位置情報取得精度(10m前後)
+        //locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        // 加速度センサー等の状態を判断して、位置情報取得をPause
+        // バックグラウンド時、Pause状態から復帰不能となる為'False'
         locationManager.pausesLocationUpdatesAutomatically = false
+        // 位置情報取得開始
         locationManager.startUpdatingLocation()
+        
+        // 大規模位置情報取得処理
+        // 基地局単位で捕捉(500m~?km)※広すぎる為、コメントアウト
+        //locationManager.startMonitoringSignificantLocationChanges()
         
         // 位置情報一回のみ取得
         //locationManager.requestLocation()
     }
     
     /// 位置情報サービス通知権限確認アラート
-    func LocationManagerAuthorizationStatusAleart() {
+    func AppLocationManagerAuthorizationStatusAleart() {
         
         if(CLLocationManager.locationServicesEnabled() == true){
             switch CLLocationManager.authorizationStatus() {
@@ -200,7 +197,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         self.createMainSlideMenuView()
         
         // 位置情報サービス通知権限確認アラート
-        LocationManagerAuthorizationStatusAleart()
+        AppLocationManagerAuthorizationStatusAleart()
         
         // LocationManager初期設定処理
         setupLocationManager()
@@ -256,7 +253,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "applicationWillEnterForeground"), object: nil)
         
         // 位置情報サービス通知権限確認アラート
-        LocationManagerAuthorizationStatusAleart()
+        AppLocationManagerAuthorizationStatusAleart()
         
         // LocationManager初期設定処理
         setupLocationManager()
