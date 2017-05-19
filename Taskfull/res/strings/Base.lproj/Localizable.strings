@@ -24,7 +24,7 @@
 /// カテゴリー形式
 "CategoryTypeTask"="Task";
 "CategoryTypeShopping"="Shopping";
-"CategoryTypeEmployment"="Employment";
+"CategoryTypeEmployment"="Job";
 "CategoryTypeOther"="Other";
 
 /// メインメニュー形式
@@ -41,6 +41,8 @@
 "ConfigNoticeTime3HoursAgo"="3 hours ago";
 "ConfigNoticeTime6HoursAgo"="6 hours ago";
 
+/// NSLocale用一意名
+"NSLocaleStringIdentifier"="en_US";
 
 /// メッセージボタン
 "MessageStringButtonOK"="OK";

@@ -53,7 +53,7 @@ class FunctionUtility
         let weekDaySymbolIndex : Int  = weekDay - 1
         
         let dateFormatter = DateFormatter()
-        // 日本語の場合
+        // 日本語の場合(言語ではなく地域設定)
         if(CommonConst.LOCALE_LANGUAGE_JABANESE == Locale.preferredLanguages.first){
             //曜日名取得の為JPにロケール変更
             dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_JABANESE)

@@ -42,6 +42,8 @@
 "ConfigNoticeTime3HoursAgo"="3時間前";
 "ConfigNoticeTime6HoursAgo"="6時間前";
 
+/// NSLocale用一意名
+"NSLocaleStringIdentifier"="ja_JP";
 
 /// メッセージボタン
 "MessageStringButtonOK"="OK";

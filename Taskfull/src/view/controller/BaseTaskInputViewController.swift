@@ -581,9 +581,10 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
         //タスク終了時刻入力欄 入力方法：DatePicker
         taskDateField.inputView = inputDatePicker
-        //DatePiceker設定（日付時刻,JP）
+        //DatePiceker（dateAndTime）
         inputDatePicker.datePickerMode = UIDatePickerMode.dateAndTime
-        inputDatePicker.locale = Locale(identifier : "ja_JP")
+        //DatePiceker設定（ローカライズ対応）
+        inputDatePicker.locale = Locale(identifier : MessageUtility.getMessage(key: "NSLocaleStringIdentifier"))
         
         //DatePiceker値変更時イベント設定
         inputDatePicker.addTarget(self, action: #selector(inputDatePickerEdit(_:)), for: UIControlEvents.valueChanged)
