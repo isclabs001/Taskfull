@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         }
         
         
-        // "LocationBackgroundFlag"未存在時
+        // 位置情報取得フラグ未存在時
         if(UserDefaults.standard.object(forKey: CommonConst.LOCATION_BACKGROUND_FLAG) == nil){
             
             // バックグラウンド時、位置情報取得フラグ生成

@@ -303,7 +303,7 @@ class CommonConst
     
     
     /**
-     * 言語（日本語）
+     * 位置情報取得フラグ
      */
     static internal let LOCATION_BACKGROUND_FLAG : String = "LocationBackgroundFlag";
     
