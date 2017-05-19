@@ -400,13 +400,25 @@
                                 </constraints>
                             </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0vp-qP-Zqr">
-                                <rect key="frame" x="0.0" y="138" width="414" height="598"/>
+                                <rect key="frame" x="0.0" y="189" width="414" height="547"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ki-T3-eb1" userLabel="BasePointListView">
-                                <rect key="frame" x="0.0" y="64" width="414" height="74"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="125"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Task notification point" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-Dl-wl9" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="16" width="394" height="42"/>
+                                        <rect key="frame" x="10" y="85" width="394" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yyh-kb-gly">
+                                        <rect key="frame" x="226" y="39" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="LocationBackgroundFlagBtnValueChanged:" destination="GuG-Ie-jQR" eventType="valueChanged" id="wHv-ks-vYO"/>
+                                        </connections>
+                                    </switch>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Location High precision mode" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yng-Z6-tXK" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="46" width="196" height="17"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -415,16 +427,19 @@
                                 <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="ln1-Dl-wl9" secondAttribute="trailing" constant="10" id="1ga-3d-qlu"/>
+                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="top" secondItem="Yyh-kb-gly" secondAttribute="bottom" constant="15" id="2oj-xh-Va5"/>
+                                    <constraint firstItem="Yyh-kb-gly" firstAttribute="leading" secondItem="Yng-Z6-tXK" secondAttribute="trailing" constant="20" id="6zH-65-Gyg"/>
                                     <constraint firstItem="ln1-Dl-wl9" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="10" id="L9S-jj-9Nj"/>
-                                    <constraint firstAttribute="bottom" secondItem="ln1-Dl-wl9" secondAttribute="bottom" constant="16" id="q3O-oy-vUD"/>
-                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="top" secondItem="5Ki-T3-eb1" secondAttribute="top" constant="16" id="tuD-9e-5im"/>
+                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="top" secondItem="Yng-Z6-tXK" secondAttribute="bottom" constant="22" id="g1d-2Y-Uw2"/>
+                                    <constraint firstAttribute="bottom" secondItem="ln1-Dl-wl9" secondAttribute="bottom" constant="10" id="q3O-oy-vUD"/>
+                                    <constraint firstItem="Yng-Z6-tXK" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="10" id="y0t-U2-AcA"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="5Ki-T3-eb1" secondAttribute="trailing" constant="-20" id="2xs-aF-JDf"/>
-                            <constraint firstItem="5Ki-T3-eb1" firstAttribute="height" secondItem="64E-2y-nKd" secondAttribute="height" multiplier="0.1" id="6Rd-Zj-ltq"/>
+                            <constraint firstItem="5Ki-T3-eb1" firstAttribute="height" secondItem="64E-2y-nKd" secondAttribute="height" multiplier="0.17" id="6Rd-Zj-ltq"/>
                             <constraint firstItem="gd1-BO-RdB" firstAttribute="leading" secondItem="64E-2y-nKd" secondAttribute="leading" id="LLK-Of-VVO"/>
                             <constraint firstItem="5Ki-T3-eb1" firstAttribute="top" secondItem="0Q0-By-4fm" secondAttribute="bottom" id="MIw-mB-URG"/>
                             <constraint firstItem="0vp-qP-Zqr" firstAttribute="leading" secondItem="gd1-BO-RdB" secondAttribute="trailing" id="Mit-ol-GRf"/>
@@ -439,11 +454,12 @@
                     <connections>
                         <outlet property="GPSMapView" destination="0vp-qP-Zqr" id="c6i-81-j0s"/>
                         <outlet property="InputPointListField" destination="ln1-Dl-wl9" id="HeL-KU-MUy"/>
+                        <outlet property="LocationBackgroundFlagSwitch" destination="Yyh-kb-gly" id="69L-Xb-dVf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JRq-zI-LRU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="977" y="1280"/>
+            <point key="canvasLocation" x="976.81159420289862" y="1279.8913043478262"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Yoa-Ul-xHo">

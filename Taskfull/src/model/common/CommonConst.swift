@@ -300,4 +300,12 @@ class CommonConst
      * 言語（日本語）
      */
     static internal let LOCALE_LANGUAGE_JABANESE : String = "ja-JP";
+    
+    
+    /**
+     * 言語（日本語）
+     */
+    static internal let LOCATION_BACKGROUND_FLAG : String = "LocationBackgroundFlag";
+    
+    
 }

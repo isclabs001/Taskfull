@@ -55,10 +55,13 @@
 "MessageStringPointAcquisitionError"="位置情報取得エラー";
 "MessageStringLocationLatitude"="緯度:";
 "MessageStringLocationLongitude"="経度:";
+"MessageStringLocationBackground"="モード変更確認";
 
 /// 確認メッセージ
 "MessageStringConfirmMessageTaskComplete"="タスク「%@」を完了してもよろしいですか？";
 "MessageStringConfirmMessageTaskDelete"="編集中のタスク及び後続タスクを削除します。よろしいですか？";
+"MessageStringConfirmLocationBackground"="常に位置情報を取得する為、電池消費量が多くなります。よろしいですか？";
+
 /// エラーメッセージ
 "MessageStringErrorTaskCountLimit"="%@文字以内で入力して下さい。";
 "MessageStringErrorTaskDateInput"="通知時刻を入力して下さい。";

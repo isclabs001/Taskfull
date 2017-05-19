@@ -19,7 +19,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     // Mapkit
     @IBOutlet weak var GPSMapView: MKMapView!
     @IBOutlet weak var InputPointListField: InputDisabledTextField!
+    @IBOutlet weak var LocationBackgroundFlagSwitch: UISwitch!
     
+    
+
     /**
      * 定数
      */
@@ -50,7 +53,92 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         let _ = initializeProc()
     }
     
-
+    /// LocationBackgroundFlagSwitch値変更時イベント
+    ///
+    /// - Parameter sender: Any
+    @IBAction func LocationBackgroundFlagBtnValueChanged(_ sender: Any) {
+        
+        // "LocationBackgroundFlag"未存在時
+        if(UserDefaults.standard.object(forKey: CommonConst.LOCATION_BACKGROUND_FLAG) == nil){
+            
+            // バックグラウンド時、位置情報取得フラグ生成
+            UserDefaults.standard.set(false, forKey: CommonConst.LOCATION_BACKGROUND_FLAG)
+            
+        }
+        
+        // ONである場合
+        if(LocationBackgroundFlagSwitch.isOn == true){
+            
+            
+            // 取得確認メッセージ表示
+            MessageUtility.dispAlertOKCancel(
+                viewController: self,
+                title: MessageUtility.getMessage(key: "MessageStringLocationBackground"),
+                message: MessageUtility.getMessage(key: "MessageStringConfirmLocationBackground"),
+                funcOkButton: LocationConfirmOKAction,
+                funcCancelButton: LocationConfirmCancelAction)
+            
+            
+        }
+        // OFFである場合
+        else{
+            
+            
+            // 位置情報取得フラグ = false
+            UserDefaults.standard.set(false, forKey: CommonConst.LOCATION_BACKGROUND_FLAG)
+            
+        }
+        
+        
+    }
+    
+    /// バックグラウンド時、位置情報取得確認OKアクション
+    fileprivate func LocationConfirmOKAction(action: UIAlertAction){
+        
+        // 位置情報取得フラグ = true
+        UserDefaults.standard.set(true, forKey: CommonConst.LOCATION_BACKGROUND_FLAG)
+        
+    }
+    
+    /// バックグラウンド時、位置情報取得確認キャンセルアクション
+    fileprivate func LocationConfirmCancelAction(action: UIAlertAction){
+        
+        // OFFに変更
+        LocationBackgroundFlagSwitch.setOn(false, animated: true)
+        
+    }
+    
+    /// 位置情報取得フラグボタン初期処理
+    func diplayFlagSwitch(){
+        
+        
+        // "LocationBackgroundFlag"未存在時
+        if(UserDefaults.standard.object(forKey: CommonConst.LOCATION_BACKGROUND_FLAG) == nil){
+            
+            // バックグラウンド時、位置情報取得フラグ生成
+            UserDefaults.standard.set(false, forKey: CommonConst.LOCATION_BACKGROUND_FLAG)
+            
+        }
+        
+        // 位置情報取得フラグ'ON'である場合
+        if(UserDefaults.standard.bool(forKey: CommonConst.LOCATION_BACKGROUND_FLAG) == true){
+            
+            // ONに変更
+            LocationBackgroundFlagSwitch.setOn(true, animated: true)
+            
+        }
+        // 位置情報取得フラグ'OFF'である場合
+        else{
+            
+            // OFFに変更
+            LocationBackgroundFlagSwitch.setOn(false, animated: true)
+            
+        }
+        
+        
+    }
+    
+    
     /// PicerView　表示列
     ///
     /// - Parameter pickerView: pickerView
@@ -216,6 +304,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
 
             /// リスト内ピン生成処理
             displayGeneratePin()
+            
+            // 位置情報取得フラグボタン初期処理
+            diplayFlagSwitch()
             
             // 戻り値にtrueを設定
             ret = true

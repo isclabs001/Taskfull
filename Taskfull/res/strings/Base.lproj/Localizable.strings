@@ -54,10 +54,13 @@
 "MessageStringLocationAcquisitionError"="Location information acquisition error";
 "MessageStringLocationLatitude"="Latitude:";
 "MessageStringLocationLongitude"="Longitude:";
+"MessageStringLocationBackground"="Confirm mode change";
 
 /// 確認メッセージ
 "MessageStringConfirmMessageTaskComplete"="Are you sure you want to complete task '%@' ?";
 "MessageStringConfirmMessageTaskDelete"="Delete the currently edited task and succeeding task. Is it OK?";
+"MessageStringConfirmLocationBackground"="Always acquire position information, battery consumption will increase. Is it OK?";
+
 /// エラーメッセージ
 "MessageStringErrorTaskCountLimit"="Please enter within %@ characters.";
 "MessageStringErrorTaskDateInput"="Please enter notification time.";

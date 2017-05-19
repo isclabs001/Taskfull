@@ -77,28 +77,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
             
         }
         
-        // バックグラウンド時、動作
-        self.locationManager.allowsBackgroundLocationUpdates = true
-        //　位置情報取得間隔(m)
-        //self.locationManager.distanceFilter = 10
-        self.locationManager.distanceFilter = 75
-        //　位置情報取得精度(10m前後)
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        //　位置情報取得精度(100m前後)※誤差顕著
-        //locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
-        // 加速度センサー等の状態を判断して、位置情報取得をPause
-        // バックグラウンド時、Pause状態から復帰不能となる為'False'
-        locationManager.pausesLocationUpdatesAutomatically = false
-        // 位置情報取得開始
-        locationManager.startUpdatingLocation()
+        // "LocationBackgroundFlag"未存在時
+        if(UserDefaults.standard.object(forKey: CommonConst.LOCATION_BACKGROUND_FLAG) == nil){
+            
+            // バックグラウンド時、位置情報取得フラグ生成
+            UserDefaults.standard.set(false, forKey: CommonConst.LOCATION_BACKGROUND_FLAG)
+            
+        }
+        
+        // 位置情報取得フラグ'ON'である場合
+        if(UserDefaults.standard.bool(forKey: CommonConst.LOCATION_BACKGROUND_FLAG) == true){
+            
+            
+            // バックグラウンド時、動作
+            self.locationManager.allowsBackgroundLocationUpdates = true
+            //　位置情報取得間隔(m)
+            //self.locationManager.distanceFilter = 10
+            self.locationManager.distanceFilter = 50
+            //　位置情報取得精度(10m前後)
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            // 加速度センサー等の状態を判断して、位置情報取得をPause
+            // バックグラウンド時、Pause状態から復帰不能となる為'False'
+            locationManager.pausesLocationUpdatesAutomatically = false
+            // 位置情報取得開始
+            locationManager.startUpdatingLocation()
+            
+        }
+        // 位置情報取得フラグ'OFF'である場合
+        else{
+            
+            // 位置情報取得停止
+            locationManager.stopUpdatingLocation()
+            
+        }
         
         // 大規模位置情報取得処理
         // 基地局単位で捕捉(500m~?km)※広すぎる為、コメントアウト
         //locationManager.startMonitoringSignificantLocationChanges()
         
-        // 位置情報一回のみ取得
-        //locationManager.requestLocation()
     }
     
     /// 位置情報サービス通知権限確認アラート
@@ -206,6 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         
         // タスクローカル通知生成処理
         NotificationUtility.DefaultInstance.taskExpirationNotification()
+
         
         return true
     }
