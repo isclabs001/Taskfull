@@ -55,6 +55,7 @@
 "MessageStringLocationLatitude"="Latitude:";
 "MessageStringLocationLongitude"="Longitude:";
 "MessageStringLocationBackground"="Confirm mode change";
+"MessageStringLocationBackgroundModeTitle"="Location High precision mode";
 
 /// 確認メッセージ
 "MessageStringConfirmMessageTaskComplete"="Are you sure you want to complete task '%@' ?";

@@ -471,6 +471,7 @@
                         <outlet property="GPSMapView" destination="0vp-qP-Zqr" id="c6i-81-j0s"/>
                         <outlet property="InputPointListField" destination="ln1-Dl-wl9" id="HeL-KU-MUy"/>
                         <outlet property="LocationBackgroundFlagSwitch" destination="Yyh-kb-gly" id="69L-Xb-dVf"/>
+                        <outlet property="LocationModeTitleTextField" destination="Yng-Z6-tXK" id="tXo-aM-QfJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JRq-zI-LRU" userLabel="First Responder" sceneMemberID="firstResponder"/>

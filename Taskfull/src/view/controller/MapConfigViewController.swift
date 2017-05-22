@@ -20,7 +20,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     @IBOutlet weak var GPSMapView: MKMapView!
     @IBOutlet weak var InputPointListField: InputDisabledTextField!
     @IBOutlet weak var LocationBackgroundFlagSwitch: UISwitch!
-    
+    @IBOutlet weak var LocationModeTitleTextField: InputDisabledTextField!
     
 
     /**
@@ -132,6 +132,14 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             
             // OFFに変更
             LocationBackgroundFlagSwitch.setOn(false, animated: true)
+            
+        }
+        
+        // 日本語の場合
+        if(NSLocale.preferredLanguages.first == "ja-JP"){
+            
+            // タイトル代入 ※Stringsファイルに反映されない為
+            LocationModeTitleTextField.text = MessageUtility.getMessage(key: "MessageStringLocationBackgroundModeTitle")
             
         }
         

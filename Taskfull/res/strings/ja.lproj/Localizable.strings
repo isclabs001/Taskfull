@@ -56,6 +56,7 @@
 "MessageStringLocationLatitude"="緯度:";
 "MessageStringLocationLongitude"="経度:";
 "MessageStringLocationBackground"="モード変更確認";
+"MessageStringLocationBackgroundModeTitle"="位置通知 高精度モード";
 
 /// 確認メッセージ
 "MessageStringConfirmMessageTaskComplete"="タスク「%@」を完了してもよろしいですか？";
