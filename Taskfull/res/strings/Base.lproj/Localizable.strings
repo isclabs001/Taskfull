@@ -29,8 +29,8 @@
 
 /// メインメニュー形式
 "MainMenuTypeTaskAdd"="Task regist";
-"MainMenuTypeGPSNotification"="GPS notice";
-"MainMenuTypeConfig"="Config";
+"MainMenuTypeGPSNotification"="Point config";
+"MainMenuTypeConfig"="Prior Config";
 
 /// カスタムコントロール用タイトル
 "ConfigNoticeTime5MinutesAgo"="5 minutes ago";
