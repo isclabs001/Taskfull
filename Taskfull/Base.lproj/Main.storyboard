@@ -405,20 +405,36 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ki-T3-eb1" userLabel="BasePointListView">
                                 <rect key="frame" x="0.0" y="64" width="414" height="125"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fTS-gT-2At" userLabel="BaseModeView">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Location High precision mode" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yng-Z6-tXK" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
+                                                <rect key="frame" x="10" y="30" width="196" height="17"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="196" id="6rB-bF-326"/>
+                                                    <constraint firstAttribute="height" constant="17" id="cXA-Xn-PTm"/>
+                                                    <constraint firstAttribute="width" secondItem="Yng-Z6-tXK" secondAttribute="height" multiplier="196:17" id="nYO-Oq-DQv"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yyh-kb-gly">
+                                                <rect key="frame" x="235" y="23" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="LocationBackgroundFlagBtnValueChanged:" destination="GuG-Ie-jQR" eventType="valueChanged" id="wHv-ks-vYO"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Yng-Z6-tXK" firstAttribute="leading" secondItem="fTS-gT-2At" secondAttribute="leading" constant="10" id="cbs-6g-jV6"/>
+                                            <constraint firstItem="Yng-Z6-tXK" firstAttribute="centerY" secondItem="Yyh-kb-gly" secondAttribute="centerY" id="nOI-oT-ONw"/>
+                                            <constraint firstAttribute="bottom" secondItem="Yng-Z6-tXK" secondAttribute="bottom" constant="16" id="rTP-Y0-wCy"/>
+                                            <constraint firstItem="Yyh-kb-gly" firstAttribute="leading" secondItem="Yng-Z6-tXK" secondAttribute="trailing" constant="29" id="wKQ-lL-VJx"/>
+                                        </constraints>
+                                    </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Task notification point" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-Dl-wl9" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="85" width="394" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yyh-kb-gly">
-                                        <rect key="frame" x="226" y="39" width="51" height="31"/>
-                                        <connections>
-                                            <action selector="LocationBackgroundFlagBtnValueChanged:" destination="GuG-Ie-jQR" eventType="valueChanged" id="wHv-ks-vYO"/>
-                                        </connections>
-                                    </switch>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Location High precision mode" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yng-Z6-tXK" customClass="InputDisabledTextField" customModule="Taskfull" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="46" width="196" height="17"/>
+                                        <rect key="frame" x="10" y="80" width="394" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -427,12 +443,12 @@
                                 <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="ln1-Dl-wl9" secondAttribute="trailing" constant="10" id="1ga-3d-qlu"/>
-                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="top" secondItem="Yyh-kb-gly" secondAttribute="bottom" constant="15" id="2oj-xh-Va5"/>
-                                    <constraint firstItem="Yyh-kb-gly" firstAttribute="leading" secondItem="Yng-Z6-tXK" secondAttribute="trailing" constant="20" id="6zH-65-Gyg"/>
+                                    <constraint firstAttribute="trailing" secondItem="fTS-gT-2At" secondAttribute="trailing" id="44o-jJ-lOF"/>
+                                    <constraint firstItem="fTS-gT-2At" firstAttribute="top" secondItem="5Ki-T3-eb1" secondAttribute="top" id="ADG-jK-kWi"/>
                                     <constraint firstItem="ln1-Dl-wl9" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="10" id="L9S-jj-9Nj"/>
-                                    <constraint firstItem="ln1-Dl-wl9" firstAttribute="top" secondItem="Yng-Z6-tXK" secondAttribute="bottom" constant="22" id="g1d-2Y-Uw2"/>
-                                    <constraint firstAttribute="bottom" secondItem="ln1-Dl-wl9" secondAttribute="bottom" constant="10" id="q3O-oy-vUD"/>
-                                    <constraint firstItem="Yng-Z6-tXK" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="10" id="y0t-U2-AcA"/>
+                                    <constraint firstItem="fTS-gT-2At" firstAttribute="height" secondItem="5Ki-T3-eb1" secondAttribute="height" multiplier="0.5" id="QsD-3d-hwE"/>
+                                    <constraint firstItem="fTS-gT-2At" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" id="cEy-X1-JYa"/>
+                                    <constraint firstAttribute="bottom" secondItem="ln1-Dl-wl9" secondAttribute="bottom" constant="15" id="q3O-oy-vUD"/>
                                 </constraints>
                             </view>
                         </subviews>
