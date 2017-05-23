@@ -90,10 +90,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         if(UserDefaults.standard.bool(forKey: CommonConst.LOCATION_BACKGROUND_FLAG) == true){
             
             
-            // バックグラウンド時、動作
+            // バックグラウンド時、動作フラグ = True
             self.locationManager.allowsBackgroundLocationUpdates = true
             //　位置情報取得間隔(m)
-            //self.locationManager.distanceFilter = 10
             self.locationManager.distanceFilter = 50
             //　位置情報取得精度(10m前後)
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -181,9 +180,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         
         //　DEBUG：補足座標
         #if DEBUG
-        print("位置情報取得日時：" + FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true))
-        print("緯度：" + String(describing: manager.location?.coordinate.latitude))
-        print("経度：" + String(describing: manager.location?.coordinate.longitude))
+            print("位置情報取得日時：" + FunctionUtility.DateToyyyyMMddHHmmss(Date(), separation: true))
+            print("緯度：" + String(describing: manager.location?.coordinate.latitude))
+            print("経度：" + String(describing: manager.location?.coordinate.longitude))
         #endif
         
     }

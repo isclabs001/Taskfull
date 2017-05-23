@@ -11,7 +11,7 @@ import UIKit
 import AudioToolbox
 
 ///
-/// タスク入力画面
+/// タスク登録画面
 ///
 class TaskInputViewController : BaseTaskInputViewController
 {
@@ -66,7 +66,7 @@ class TaskInputViewController : BaseTaskInputViewController
     
     /// textView:値変更確定時イベント
     ///
-    /// - Parameter textView: textView
+    /// - Parameter textView: メモ入力欄
     override func textViewDidChange(_ textView: UITextView) {
         
         //　文字列変換完了後(== nil)かつ制限文字数を超えていた場合
@@ -87,7 +87,7 @@ class TaskInputViewController : BaseTaskInputViewController
 
     /// textField:編集完了時イベント
     ///
-    /// - Parameter nsNotification: textField通知
+    /// - Parameter nsNotification: textField編集完了時、通知イベント
     override func textFieldDidChange(_ nsNotification: Notification) {
         
         //　UITextFieldへ変換
@@ -140,21 +140,21 @@ class TaskInputViewController : BaseTaskInputViewController
     
     /// タスクカラーボタン_1:タップ時イベント
     ///
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: タスクカラーボタン_1
     override func onTouchDown_btn1(_ sender:UIButton){
         changeInputTaskColorBtn(selectedBtnIndex: 0, btn1 : InputTaskColorBtn_1, btn2 : InputTaskColorBtn_2, btn3 : InputTaskColorBtn_3)
     }
     
     /// タスクカラーボタン_2:タップ時イベント
     ///
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: タスクカラーボタン_2
     override func onTouchDown_btn2(_ sender:UIButton){
         changeInputTaskColorBtn(selectedBtnIndex : 1, btn1 : self.InputTaskColorBtn_1, btn2 : self.InputTaskColorBtn_2, btn3 : self.InputTaskColorBtn_3)
     }
     
     /// タスクカラーボタン_3:タップ時イベント
     ///
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: タスクカラーボタン_3
     override func onTouchDown_btn3(_ sender:UIButton){
         changeInputTaskColorBtn(selectedBtnIndex : 2, btn1 : self.InputTaskColorBtn_1, btn2 : self.InputTaskColorBtn_2, btn3 : self.InputTaskColorBtn_3)
     }
@@ -182,7 +182,7 @@ class TaskInputViewController : BaseTaskInputViewController
     
     /// DatePicker：値変更時イベント
     ///
-    /// - Parameter sender: UIDatePicker
+    /// - Parameter sender: 通知時刻設定欄DatePicker
     override func inputDatePickerEdit(_ sender: UIDatePicker){
 
         // DatePicker：値変更処理
@@ -192,7 +192,7 @@ class TaskInputViewController : BaseTaskInputViewController
     
     /// 後続タスクボタン：タップ時イベント
     ///
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: 後続タスクボタン
     override func onTouchDown_addAfterTaskButton(_ sender : UIButton){
         
         // 通知時刻欄が空欄ではない場合
@@ -268,7 +268,7 @@ class TaskInputViewController : BaseTaskInputViewController
 
     /// 通知時刻欄空欄時、OKアクション
     ///
-    /// - Parameter action: 通知時刻を入力状態に移行
+    /// - Parameter action: 通知時刻欄空欄時、OKアクション
     fileprivate func inputConfirmOKAction(action: UIAlertAction){
         
         // OKボタン押下
@@ -535,9 +535,9 @@ class TaskInputViewController : BaseTaskInputViewController
     /// PicerView　値選択時イベント
     ///
     /// - Parameters:
-    ///   - pickerView: pickerview
-    ///   - row: 選択行
-    ///   - component: component
+    ///   - pickerView: 通知地点リスト
+    ///   - row: 通知地点リスト選択行
+    ///   - component: 通知地点リストコンポーネント
     override func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         // 登録地点選択処理

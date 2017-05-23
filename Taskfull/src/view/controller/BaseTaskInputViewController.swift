@@ -5,13 +5,12 @@
 //  Created by IscIsc on 2017/04/24.
 //  Copyright © 2017年 isc. All rights reserved.
 //
-//TODO:文字の定数化,登録データ型,登録地点リスト,AutoLayout,入力方法最適化,メソッド順整理
 
 import UIKit
 import AudioToolbox
 
 ///
-/// タスク入力画面
+/// タスク関連Base画面
 ///
 class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,UITextViewDelegate
 {
@@ -71,8 +70,8 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     
     /// PicerView　表示列
     ///
-    /// - Parameter pickerView: pickerView
-    /// - Returns: 表示列数
+    /// - Parameter pickerView: 通知地点リスト
+    /// - Returns: 通知地点リスト表示列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
         return CommonConst.INPUT_NOTIFICATION_POINT_LIST_PICKER_COLUMN_COUNT
@@ -82,12 +81,12 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     /// PicerView　表示行（要素数）
     ///
     /// - Parameters:
-    ///   - pickerView: pickerView
-    ///   - component: component
-    /// - Returns: 表示行
+    ///   - pickerView: 通知地点リスト
+    ///   - component: 通知地点リストコンポーネント
+    /// - Returns: 通知地点リスト表示行
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        //要素数
+        //　通知地点リスト要素数
         return pointListNameArray.count
         
     }
@@ -95,10 +94,10 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     /// PicerView　表示要素
     ///
     /// - Parameters:
-    ///   - pickerView: pickerView
-    ///   - row: 表示行
-    ///   - component: component
-    /// - Returns: 表示行要素
+    ///   - pickerView: 通知地点リスト
+    ///   - row: 通知地点リスト表示行
+    ///   - component: 通知地点リストコンポーネント
+    /// - Returns: 通知地点リスト表示行要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         //要素数
@@ -109,16 +108,16 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     /// PicerView　値選択時イベント
     ///
     /// - Parameters:
-    ///   - pickerView: pickerView
-    ///   - row: 選択行
-    ///   - component: component
+    ///   - pickerView: 通知地点リスト
+    ///   - row: 通知地点リスト選択行
+    ///   - component: 通知地点リストコンポーネント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
     }
     
     /// 通知地点名リスト用配列更新処理
     ///
-    /// - Parameter InputPointListField: UITextField
+    /// - Parameter InputPointListField: 通知地点リスト入力欄
     fileprivate func updataPointListNameArray(_ InputPointListField: UITextField!){
         
         // テキスト欄初期化
@@ -169,8 +168,8 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     /// 選択地点の設定
     ///
     /// - Parameters:
-    ///   - textField: UITextField
-    ///   - row: 選択行
+    ///   - textField: 通知地点リスト入力欄
+    ///   - row: 通知地点リスト選択行
     func setSelectedPoint(textField : UITextField, row: Int) {
         
         // 選択行
@@ -485,7 +484,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
 
     /// 項目名入力欄,メモ入力欄:初期設定
     ///
-    /// - Parameter taskNameField: UITextField
+    /// - Parameter taskNameField: 項目名入力欄
     func displayInputTaskName(taskNameField: UITextField!){
         
         //項目名入力欄:delegate設定
@@ -509,7 +508,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     
     /// 項目名入力欄,メモ入力欄:初期設定
     ///
-    /// - Parameter taskMemoView: UIPlaceHolderTextView
+    /// - Parameter taskMemoView: メモ入力欄
     func displayInputTaskMemo(taskMemoView: UIPlaceHolderTextView!){
         
         //メモ入力欄:delegate設定
@@ -523,21 +522,21 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         
     }
     
-    /// タスク終了時刻欄:初期設定
+    /// タスク通知時刻欄:初期設定
     ///
-    /// - Parameter taskDateField: UITextField
+    /// - Parameter taskDateField: タスク通知時刻欄
     func diplayInputTaskDate(taskDateField: UITextField!){
         
-        //タスク終了時刻入力欄（現在日付,中央寄せ,サイズ自動調整）
+        // タスク通知時刻欄入力欄（現在日付,中央寄せ,サイズ自動調整）
         // 登録開始タスクである場合(新規登録先頭タスク)
         if(paramTaskId == -2 ){
             
-            // タスク終了時刻入力欄を空欄に設定
+            // タスク通知時刻欄入力欄を空欄に設定
             taskDateField.text = ""
             taskDateField.textAlignment = NSTextAlignment.center
             taskDateField.sizeToFit()
             
-            // タスク終了時刻入力欄を現在時刻に設定()※初期埋め時処理:コメントアウト
+            // タスク通知時刻欄を現在時刻に設定()※初期埋め時処理:コメントアウト
 //            taskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(Date())
 //            taskDateField.textAlignment = NSTextAlignment.center
 //            taskDateField.sizeToFit()
@@ -561,10 +560,10 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
             // 読込タスク(親タスク)の終了時刻取得
             let taskInfo : TaskInfoDataEntity = TaskInfoUtility.DefaultInstance.GetTaskInfoDataForId(paramTaskId)!
             
-            // タスク終了時刻入力欄を読込タスク(親タスク)の終了時刻取得に設定
+            // タスク通知時刻欄を読込タスク(親タスク)の終了時刻取得に設定
             taskDateField.text = FunctionUtility.DateToyyyyMMddHHmm_JP(FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime))
             
-            // タスク終了時刻取得変数へ親タスク終了時刻格納
+            // タスク通知時刻取得変数へ親タスク終了時刻格納
             inputTaskEndDate = FunctionUtility.yyyyMMddHHmmssToDate(taskInfo.DateTime)
             taskDateField.textAlignment = NSTextAlignment.center
             taskDateField.sizeToFit()
@@ -579,7 +578,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         }
         
         
-        //タスク終了時刻入力欄 入力方法：DatePicker
+        //タスク通知時刻欄 入力方法：DatePicker
         taskDateField.inputView = inputDatePicker
         //DatePiceker（dateAndTime）
         inputDatePicker.datePickerMode = UIDatePickerMode.dateAndTime
@@ -616,14 +615,14 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     
     /// Datepicer：値変更時イベント
     ///
-    /// - Parameter sender: UIDatePicker
+    /// - Parameter sender: タスク通知時刻DatePicker
     func inputDatePickerEdit(_ sender: UIDatePicker){}
 
     /// Datepicer：値変更時イベント
     ///
     /// - Parameters:
-    ///   - sender: UIDatePicker
-    ///   - taskDateField: UITextField
+    ///   - sender: タスク通知時刻欄DatePicker
+    ///   - taskDateField: タスク通知時刻欄
     func updateInputDatePicker(_ sender: UIDatePicker, taskDateField: UITextField!){
         
         // 値をタスク終了時刻入力欄に表示
@@ -641,9 +640,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     }
 
     
-    /// 通知地点(登録地点リスト):初期設定
+    /// 通知地点リスト:初期設定
     ///
-    /// - Parameter pointListField: UITextField
+    /// - Parameter pointListField: 通知地点リスト入力欄
     func displayInputPoint(pointListField: UITextField!){
         
         //登録地点リスト:要素追加イベント
@@ -664,7 +663,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     
     /// 重要度:初期設定
     ///
-    /// - Parameter importanceSegment: UISegmentedControl
+    /// - Parameter importanceSegment: 重要度セグメント
     func displayInputImportanceSegment(importanceSegment: UISegmentedControl!){
         
         //重要度:セグメント値変更時イベント
@@ -674,7 +673,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
 
     /// 重要度:セグメント値変更時イベント
     ///
-    /// - Parameter segcon: UISegmentedControl
+    /// - Parameter segcon: 重要度セグメント
     func onTouchDown_InputImportanceSegment(_ segcon:UISegmentedControl){}
 
     /// 重要度:セグメント値変更時処理
@@ -715,9 +714,9 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
         }
     }
     
-    /// 後続タスク追加ボタン:初期設定
+    /// 後続タスクボタン:初期設定
     ///
-    /// - Parameter addAfterTask: UIButton
+    /// - Parameter addAfterTask: 後続タスクボタン
     func displayAddAfterTaskBtn(addAfterTask: UIButton!) {
 
         
@@ -747,7 +746,7 @@ class BaseTaskInputViewController : BaseViewController,UIPickerViewDelegate,UIPi
     
     /// 後続タスクボタン：タップ時イベント
     ///
-    /// - Parameter sender: UIButton
+    /// - Parameter sender: 後続タスクボタン
     func onTouchDown_addAfterTaskButton(_ sender : UIButton){}
 
     /**
