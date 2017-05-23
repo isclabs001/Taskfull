@@ -54,16 +54,19 @@ class FunctionUtility
         
         let dateFormatter = DateFormatter()
         // 日本語の場合(言語ではなく地域設定)
-        if(CommonConst.LOCALE_LANGUAGE_JABANESE == Locale.preferredLanguages.first){
+        if(CommonConst.LOCALE_LANGUAGE_JAPANESE == Locale.preferredLanguages.first){
             //曜日名取得の為JPにロケール変更
-            dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_JABANESE)
+            dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_JAPANESE)
             //文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
             dateFormatter.dateFormat = "yyyy年MM月dd日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex])) HH時mm分"
 
         // 上記以外の場合
         } else {
-            // MM/dd/yyyy HH:mmとする
-            dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+            dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_ENGLISH)
+            
+            // 文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
+            // "MM/dd/yyyy(曜日) HH:mm"とする
+            dateFormatter.dateFormat = "MM/dd/yyyy(E) HH:mm"
         }
         return dateFormatter.string(from: date)
     }
@@ -84,8 +87,8 @@ class FunctionUtility
         // 曜日名取得の為JPにロケール変更
         let dateFormatter = DateFormatter()
         // 日本語の場合
-        if(CommonConst.LOCALE_LANGUAGE_JABANESE == Locale.preferredLanguages.first){
-            dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_JABANESE)
+        if(CommonConst.LOCALE_LANGUAGE_JAPANESE == Locale.preferredLanguages.first){
+            dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_JAPANESE)
         
             // 文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
             // "M月d日(曜日) HH時mm分"とする
@@ -93,8 +96,11 @@ class FunctionUtility
 
         // 上記以外の場合
         } else {
-            // M/d HH:mmとする
-            dateFormatter.dateFormat = "M/d HH:mm"
+            dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_ENGLISH)
+            
+            // 文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
+            // "M/d(曜日) HH:mm"とする
+            dateFormatter.dateFormat = "M/d(E) HH:mm"
         }
         
         return dateFormatter.string(from: date)
