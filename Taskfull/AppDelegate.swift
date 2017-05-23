@@ -259,6 +259,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
         // タスク通知生成処理
         NotificationUtility.DefaultInstance.taskExpirationNotification()
         
+        // 未完了タスク数分バッジ追加処理
+        UIApplication.shared.applicationIconBadgeNumber = getIncompleteTaskNumber()
     }
 
     ///
@@ -296,5 +298,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,CLLocationManagerDelegate
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    
+    ///
+    /// 未完了タスク数取得処理
+    /// - Returns: 未完了タスク数
+    ///
+    fileprivate func getIncompleteTaskNumber() -> Int {
+        
+        // 未完了タスク数
+        var intInCompleteTaskCount : Int = 0
+        
+        // データ数分表示する
+        for data in TaskInfoUtility.DefaultInstance.GetTaskInfoData() {
+            // 未完了である場合
+            if(CommonConst.TASK_COMPLETE_FLAG_INVALID == data.CompleteFlag) {
+                
+                // 未完了タスク数　+ 1
+                intInCompleteTaskCount += 1
+            }
+        }
+        
+        // 結果を返す
+        return intInCompleteTaskCount
+    }
+    
  }
 
