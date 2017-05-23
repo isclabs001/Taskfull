@@ -59,10 +59,28 @@ class TaskInputViewController : BaseTaskInputViewController
         {
             // 初期化処理
             ret = initializeMainProc(mainView: self.MainView)
+            
+            // タスク通知時刻欄空欄確認処理
+            confirmEmptyDateTextField()
+            
         }
         
         return ret
     }
+    
+    /// タスク通知時刻欄空欄確認処理
+    func confirmEmptyDateTextField(){
+        
+        // タスク通知時刻欄空欄である場合
+        if(StringUtility.isEmpty(InputTaskDateField.text) == false){
+            
+            // タスク通知時刻欄背景色変更
+            InputTaskDateField.backgroundColor = UIColorUtility.rgb(243, g: 237, b: 255)
+            
+        }
+        
+    }
+    
     
     /// textView:値変更確定時イベント
     ///
@@ -187,6 +205,10 @@ class TaskInputViewController : BaseTaskInputViewController
 
         // DatePicker：値変更処理
         updateInputDatePicker(sender, taskDateField: InputTaskDateField)
+        
+        // // タスク通知時刻欄背景色変更:通常色へ変更
+        InputTaskDateField.backgroundColor = UIColorUtility.rgb(245, g: 255, b: 228)
+        
     }
     
     
