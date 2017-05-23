@@ -12,7 +12,7 @@ import CoreLocation
 import AudioToolbox
 
 ///
-/// GPSリマインダー画面
+/// 通知地点設定画面
 ///
 class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKMapViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource
 {
@@ -36,7 +36,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// 登録地点リスト入力PickerView
     let inputPointPicker : UIPickerView! = UIPickerView()
     
-    /// 現在位置格納ロケーション：権限通知重複対策の為、プロパティにて宣言
+    /// 現在位置格納ロケーションマネージャー：権限通知重複対策の為、プロパティにて宣言
     var selfLocation : CLLocationManager! = CLLocationManager()
 
     /// 更新フラグ
@@ -55,7 +55,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     
     /// LocationBackgroundFlagSwitch値変更時イベント
     ///
-    /// - Parameter sender: Any
+    /// - Parameter sender: ロケーション取得モード切り替えボタン
     @IBAction func LocationBackgroundFlagBtnValueChanged(_ sender: Any) {
         
         // "LocationBackgroundFlag"未存在時
@@ -149,8 +149,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     
     /// PicerView　表示列
     ///
-    /// - Parameter pickerView: pickerView
-    /// - Returns: 表示列数
+    /// - Parameter pickerView: タスク通知地点リスト
+    /// - Returns: タスク通知地点リスト表示列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return CommonConst.INPUT_NOTIFICATION_POINT_LIST_PICKER_COLUMN_COUNT
     }
@@ -158,9 +158,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// PicerView　表示行（要素数）
     ///
     /// - Parameters:
-    ///   - pickerView: pickerView
-    ///   - component: component
-    /// - Returns: 表示行
+    ///   - pickerView: タスク通知地点リスト
+    ///   - component: タスク通知地点リストコンポーンネント
+    /// - Returns: タスク通知地点リスト表示行
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         // 要素数
         return pointListNameArray.count
@@ -170,10 +170,10 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// PicerView　表示要素
     ///
     /// - Parameters:
-    ///   - pickerView: pickerView
-    ///   - row: 表示行
-    ///   - component: component
-    /// - Returns: 表示行要素
+    ///   - pickerView: タスク通知地点リスト
+    ///   - row: タスク通知地点リスト表示行
+    ///   - component: タスク通知地点リストコンポーネント
+    /// - Returns: タスク通知地点リスト表示行要素
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         // PicerViewを表示要素を戻す
@@ -185,9 +185,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// PicerView　値選択時イベント
     ///
     /// - Parameters:
-    ///   - pickerView: pickerView
-    ///   - row: 選択行
-    ///   - component: component
+    ///   - pickerView: タスク通知地点リスト
+    ///   - row: タスク通知地点リスト選択行
+    ///   - component: タスク通知地点リストコンポーネント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         // 選択IDの登録名をtextFieldへ反映
@@ -225,7 +225,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     
     /// キーボード「リターンキー」：タップ時イベント
     ///
-    /// - Parameter textField: texrField
+    /// - Parameter textField: 通知地点入力欄
     /// - Returns: Bool
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // キーボードを閉じる
@@ -245,8 +245,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// 選択地点名の設定
     ///
     /// - Parameters:
-    ///   - textField: textField
-    ///   - row: 選択行
+    ///   - textField: タスク通知地点リスト表示欄
+    ///   - row: タスク通知地点リスト選択行
     func setSelectedPoint(textField : UITextField, row: Int) {
         
         // 選択項目をUITextFieldに設定する
@@ -326,7 +326,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     
     /// 通知地点(登録地点リスト):初期設定
     ///
-    /// - Parameter pointListField: pointListField
+    /// - Parameter pointListField: タスク通知地点リスト表示欄
     func displayInputPoint(pointListField: UITextField!){
         
         //登録地点リスト:要素更新処理
@@ -461,16 +461,6 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             
         }
         
-        
-        // ”常に許可”の場合のみ、位置取得を開始する為コメントアウト
-//        // 位置情報取得精度(10m)
-//        selfLocation.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-//        // 位置情報取得間隔(10m移動したら位置補足)
-//        selfLocation.distanceFilter = 10
-//        // 現在位置取得(位置情報更新)
-//        selfLocation.startUpdatingLocation()
-        
-        
     }
     
     /// 位置情報サービス通知権限確認アラート
@@ -523,8 +513,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// 位置情報取得時イベント
     ///
     /// - Parameters:
-    ///   - manager: CLLocationManager
-    ///   - locations: CLLocation
+    ///   - manager: 現在位置格納ロケーションマネージャー
+    ///   - locations: 取得位置
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         // MapViewに設定された位置情報取得
@@ -565,13 +555,13 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// 位置情報取得失敗時イベント
     ///
     /// - Parameters:
-    ///   - manager: CLLocationManager
-    ///   - error: Error
+    ///   - manager: 現在位置格納ロケーションマネージャー
+    ///   - error: Error情報
     func locationManager(_ manager: CLLocationManager,didFailWithError error: Error){
         
         //　DEBUG：ボタンタグ
         #if DEBUG
-        debugPrint("位置情報取得失敗")
+            debugPrint("位置情報取得失敗")
         #endif
         
         //　「位置情報取得エラー」アラート表示
@@ -583,7 +573,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     
     /// ロングタップ時イベント
     ///
-    /// - Parameter sender: UILongPressGestureRecognizer
+    /// - Parameter sender: ロングタップ感知イベント
     func MapLongTap(sender: UILongPressGestureRecognizer) {
 
         // 長押し時、ピンの再生成防止
@@ -617,9 +607,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// MapView:addAnnotation時イベント
     ///
     /// - Parameters:
-    ///   - mapView: MKMapView
-    ///   - annotation: MKAnnotation
-    /// - Returns: MKAnnotationView
+    ///   - mapView: マップ
+    ///   - annotation: ピン
+    /// - Returns: 新規生成ピン
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         // ピン一意名
@@ -655,9 +645,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// MapView:addOverlay時イベント
     ///
     /// - Parameters:
-    ///   - mapView: MKMapView
-    ///   - overlay: KOverlay
-    /// - Returns:　MKOverlayRenderer
+    ///   - mapView: マップ
+    ///   - overlay: 円
+    /// - Returns:　新規生成円(オーバーレイ)
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
         // renderer生成
@@ -689,16 +679,17 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// アノテーション追加時イベント
     ///
     /// - Parameters:
-    ///   - mapView: MKMapView
-    ///   - views: MKAnnotationView
+    ///   - mapView: マップ
+    ///   - views: アノテーション(ピン)
     func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
         
+        // アノテーション数分処理
         for view in views {
             
             // ボタン生成
             let pinSideBtn  = UIButton(type: UIButtonType.detailDisclosure)
             
-            // Pinのバルーンにボタン追加
+            // Pinのバルーンにコールアウトボタン追加
             view.rightCalloutAccessoryView = pinSideBtn
         }
         
@@ -708,9 +699,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     /// アノテーション:コールアウトボタンタップ時イベント
     ///
     /// - Parameters:
-    ///   - mapView: MKMapView
-    ///   - view: MKAnnotationView
-    ///   - control: UIControl
+    ///   - mapView: マップ
+    ///   - view: アノテーション(ピン)
+    ///   - control: コールアウトボタンタップイベント
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         // 編集シート表示
@@ -819,7 +810,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
 
     ///　TextField入力値制限処理
     ///
-    /// - Parameter sender: NSNotification
+    /// - Parameter sender: 値変更時通知イベント
     func changeTextField(sender: NSNotification) {
         
         //　UITextFieldへ変換
@@ -860,7 +851,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
 
     ///　アクションシート表示
     ///
-    /// - Parameter view: MKAnnotationView
+    /// - Parameter view: アノテーション(ピン)
     func activeSheet(view: MKAnnotationView){
         
         //　アノテーション = ピン
