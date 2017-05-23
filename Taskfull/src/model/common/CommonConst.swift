@@ -299,7 +299,11 @@ class CommonConst
     /**
      * 言語（日本語）
      */
-    static internal let LOCALE_LANGUAGE_JABANESE : String = "ja-JP";
+    static internal let LOCALE_LANGUAGE_JAPANESE : String = "ja-JP";
+    /**
+     * 言語（英語）
+     */
+    static internal let LOCALE_LANGUAGE_ENGLISH : String = "en-US";
     
     
     /**
