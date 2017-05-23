@@ -46,22 +46,17 @@ class FunctionUtility
     ///
     static func DateToyyyyMMddHHmm_JP(_ date : Date) -> String
     {
-        //曜日インデックス取得
-        let calendar : Calendar = Calendar(identifier : Calendar.Identifier.gregorian)
-        let component : DateComponents = (calendar as NSCalendar).components([NSCalendar.Unit.weekday], from: date)
-        let weekDay : Int = component.weekday!
-        let weekDaySymbolIndex : Int  = weekDay - 1
-        
         let dateFormatter = DateFormatter()
         // 日本語の場合(言語ではなく地域設定)
         if(CommonConst.LOCALE_LANGUAGE_JAPANESE == Locale.preferredLanguages.first){
             //曜日名取得の為JPにロケール変更
             dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_JAPANESE)
             //文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
-            dateFormatter.dateFormat = "yyyy年MM月dd日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex])) HH時mm分"
+            dateFormatter.dateFormat = "yyyy年MM月dd日(E) HH時mm分"
 
         // 上記以外の場合
         } else {
+            // 曜日名取得の為USにロケール変更
             dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_ENGLISH)
             
             // 文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
@@ -78,24 +73,19 @@ class FunctionUtility
     ///
     static func DateToMdHHmm_JP(_ date : Date) -> String
     {
-        // 曜日インデックス取得
-        let calendar : Calendar = Calendar(identifier : Calendar.Identifier.gregorian)
-        let component : DateComponents = (calendar as NSCalendar).components([NSCalendar.Unit.weekday], from: date)
-        let weekDay : Int = component.weekday!
-        let weekDaySymbolIndex : Int  = weekDay - 1
-        
-        // 曜日名取得の為JPにロケール変更
         let dateFormatter = DateFormatter()
         // 日本語の場合
         if(CommonConst.LOCALE_LANGUAGE_JAPANESE == Locale.preferredLanguages.first){
+            // 曜日名取得の為JPにロケール変更
             dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_JAPANESE)
         
             // 文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
             // "M月d日(曜日) HH時mm分"とする
-            dateFormatter.dateFormat = "M月d日(\(dateFormatter.shortWeekdaySymbols[weekDaySymbolIndex])) HH時mm分"
+            dateFormatter.dateFormat = "M月d日(E) HH時mm分"
 
         // 上記以外の場合
         } else {
+            // 曜日名取得の為USにロケール変更
             dateFormatter.locale = Locale(identifier: CommonConst.LOCALE_LANGUAGE_ENGLISH)
             
             // 文字列変換&shortWeekdaySymbolsプロパティより曜日名取得
