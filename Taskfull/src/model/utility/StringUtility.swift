@@ -1,6 +1,6 @@
 //
 //  StringUtility.swift
-//  SchoolCafeteriaMap
+//  Taskfull
 //
 //  Created by IscIsc on 2016/07/20.
 //  Copyright © 2016年 IscIsc. All rights reserved.

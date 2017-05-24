@@ -1,12 +1,12 @@
 //
-//  StringExtension.swift
-//  SlideMenuControllerSwift
+//  String.swift
+//  Taskfull
 //
 //  Created by IscIsc on 2017/04/26.
 //  Copyright © 2017年 isc. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 ///
 /// String拡張クラス
@@ -118,7 +118,7 @@ extension String {
     
     ///
     /// パスを結合する
-    /// - param path:結合するパス
+    /// - parameter path:結合するパス
     /// - returns: 結合したパス
     ///
     func stringByAppendingPathComponent(_ path: String) -> String {
@@ -127,10 +127,36 @@ extension String {
     
     ///
     /// 拡張子を結合する
-    /// - param ext:結合する拡張子
+    /// - parameter ext:結合する拡張子
     /// - returns: 結合したパス
     ///
     func stringByAppendingPathExtension(_ ext: String) -> String? {
         return to_ns().appendingPathExtension(ext)
+    }
+    
+    
+    ///
+    /// フォントサイズから高さを取得
+    ///　- parameter fontName:フォント名
+    ///　- parameter fontSize:フォントサイズ
+    ///　- parameter width:コントロールの幅
+    ///　- returns コントロールの高さ
+    ///
+    func stringHeightWithFontSize(_ fontName: String, fontSize: CGFloat, width: CGFloat) -> CGFloat {
+        // フォント取得
+        let font = UIFont(name: fontName, size: fontSize)
+        // サイズを取得（高さはCGFloatの最大値）
+        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        // NSMutableParagraphStyle生成
+        let paragraphStyle = NSMutableParagraphStyle()
+        // 文字列は単語単位で折り返しにする
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        // 属性を設定
+        let attributes = [NSFontAttributeName:font!,
+                          NSParagraphStyleAttributeName:paragraphStyle.copy()]
+        // １行文の高さを取得する
+        let text = self as NSString
+        let rect = text.boundingRect(with: size, options:.usesLineFragmentOrigin, attributes: attributes, context:nil)
+        return rect.size.height
     }
 }

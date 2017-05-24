@@ -33,14 +33,9 @@ class MainViewController : BaseViewController
     /**
      * 変数
      */
-    /// 追加ボタンイメージ
-    fileprivate let mImageAddButton : UIImage = UIImage(named: "add.png")!
-    fileprivate let mImageAddButtonDown : UIImage = UIImage(named: "add_down.png")!
-    /// モード変更ボタンイメージ
-    fileprivate let mImageModeChangeButton : UIImage = UIImage(named: "modechg.png")!
-    fileprivate let mImageModeChangeButtonDown : UIImage = UIImage(named: "modechg_down.png")!
-
-    /// パラメータ用タスクID格納変数
+    /**
+     * パラメータ用タスクID格納変数
+     */
     fileprivate var mParamTaskId : Int = 0
     
     /**
@@ -865,17 +860,21 @@ class MainViewController : BaseViewController
     ///　- parameter sender:イベントが発生したオブジェクト
     ///
     @IBAction func onTouchDown_ModeButton(_ sender: AnyObject) {
+
+        var message = StringUtility.EMPTY
         
         switch(self.mActionMode){
             // 現在編集モードの場合
             case CommonConst.ActionType.edit:
                 // 参照モードに切り替える
                 self.mActionMode = CommonConst.ActionType.reference
+                message = MessageUtility.getMessage(key: "MessageStringInfoMessageSwitchReferenceMode")
                 break;
             // 上記以外の場合
             default:
                 // 編集モードに切り替える
                 self.mActionMode = CommonConst.ActionType.edit
+                message = MessageUtility.getMessage(key: "MessageStringInfoMessageSwitchEditMode")
                 break;
         }
         
@@ -889,6 +888,9 @@ class MainViewController : BaseViewController
             // タスクを表示する
             displayTask(self.mActionMode)
         }
+        
+        // トーストメッセージ表示
+        self.presentWindow!.makeToastWindow(message: message)
     }
     
     ///

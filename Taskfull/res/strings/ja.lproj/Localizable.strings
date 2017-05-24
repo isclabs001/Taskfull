@@ -58,6 +58,11 @@
 "MessageStringLocationBackground"="モード変更確認";
 "MessageStringLocationBackgroundModeTitle"="位置通知 高精度モード";
 
+/// 情報メッセージ
+"MessageStringInfoMessageSwitchReferenceMode"="参照モードに切替";
+"MessageStringInfoMessageSwitchEditMode"="編集モードに切替";
+
+
 /// 確認メッセージ
 "MessageStringConfirmMessageTaskComplete"="タスク「%@」を完了してもよろしいですか？";
 "MessageStringConfirmMessageTaskDelete"="編集中のタスク及び後続タスクを削除します。よろしいですか？";
