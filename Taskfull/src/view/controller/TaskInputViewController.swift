@@ -35,7 +35,7 @@ class TaskInputViewController : BaseTaskInputViewController
     @IBOutlet weak var InputTaskColorBtn_2: UICustomButton!
     @IBOutlet weak var InputTaskColorBtn_3: UICustomButton!
     @IBOutlet weak var MainView: UICustomView!
-    
+    @IBOutlet weak var PointListClearView: UIView!
     
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
@@ -67,6 +67,43 @@ class TaskInputViewController : BaseTaskInputViewController
         
         return ret
     }
+    
+    /// 通知地点リスト未登録アラート用View処理
+    func diplayPointListClearView(){
+        
+        // タスク通知地点が登録されていない場合
+        if(TaskInfoUtility.DefaultInstance.GetInfoLocationCount() == 0){
+            
+            // 通知地点リスト未登録アラート用View表示
+            PointListClearView.isHidden = false
+            
+        }
+        // タスク通知地点が登録されている場合
+        else{
+            
+            // 通知地点リスト未登録アラート用View非表示
+            PointListClearView.isHidden = true
+            
+        }
+        
+        
+    }
+    
+    /// 通知地点リスト未登録アラート用イベント
+    func PointListErrorConfirmCount(){
+        
+        // タスク通知地点が登録されていない場合
+        if(TaskInfoUtility.DefaultInstance.GetInfoLocationCount() == 0){
+            
+            // 通知地点リスト未登録アラート表示
+            MessageUtility.dispAlertOK(
+                viewController: self,
+                title: "",
+                message: MessageUtility.getMessage(key: "MessageStringErrorNotificationPointListCount0_TASK", param: MessageUtility.getMessage(key: "MainMenuTypeGPSNotification")))
+            
+        }
+    }
+    
     
     /// タスク通知時刻欄空欄確認処理
     func confirmEmptyDateTextField(){
@@ -154,6 +191,11 @@ class TaskInputViewController : BaseTaskInputViewController
         //後続タスクボタン:初期設定
         displayAddAfterTaskBtn(addAfterTask: self.AddAfterTask)
         
+        // 通知地点リスト未登録アラート用View処理
+        diplayPointListClearView()
+        
+        // 通知地点リスト未登録アラート用イベント追加
+        PointListClearView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TaskInputViewController.PointListErrorConfirmCount)))
     }
     
     /// タスクカラーボタン_1:タップ時イベント
