@@ -57,6 +57,10 @@
 "MessageStringLocationBackground"="Confirm mode change";
 "MessageStringLocationBackgroundModeTitle"="Location High precision mode";
 
+/// 情報メッセージ
+"MessageStringInfoMessageSwitchReferenceMode"="Switch to reference mode";
+"MessageStringInfoMessageSwitchEditMode"="Switch to edit mode";
+
 /// 確認メッセージ
 "MessageStringConfirmMessageTaskComplete"="Are you sure you want to complete task '%@' ?";
 "MessageStringConfirmMessageTaskDelete"="Delete the currently edited task and succeeding task. Is it OK?";

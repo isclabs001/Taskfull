@@ -1,6 +1,6 @@
 //
 //  UIApplication.swift
-//  SlideMenuControllerSwift
+//  Taskfull
 //
 //  Created by IscIsc on 2017/04/26.
 //  Copyright © 2017年 isc. All rights reserved.

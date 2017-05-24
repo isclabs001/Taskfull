@@ -23,6 +23,9 @@ open class BaseViewController: UIViewController {
     /// OKボタン押下有無
     var isOkBtn : Bool = false
     
+    /// トーストウィンドウ用変数
+    var presentWindow : UIWindow?
+
     /**
      * 左メニューバー利用可/不可判断
      */
@@ -39,6 +42,22 @@ open class BaseViewController: UIViewController {
         get {
             return false
         }
+    }
+    
+    
+    /**
+     * viewDidLoadイベント処理
+     */
+    override open func viewDidLoad() {
+        // 基底のviewDidLoad処理を呼び出す
+        super.viewDidLoad()
+        
+        // トーストの背景色を設定
+        UIView.setToastWindowThemeColor(color: UIColor.white)
+        // トーストの文字色を設定
+        UIView.setToastWindowFontColor(color: UIColor.darkGray)
+        // トーストの親ウィンドウを「UIApplication.shared.keyWindow」から取得
+        self.presentWindow = UIApplication.shared.keyWindow
     }
     
     ///

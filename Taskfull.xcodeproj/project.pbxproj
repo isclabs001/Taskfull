@@ -82,6 +82,7 @@
 		638A4DB61ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A4DB51ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift */; };
 		638A4DB81ECBCBBC00EF7EBB /* NotificationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A4DB71ECBCBBC00EF7EBB /* NotificationUtility.swift */; };
 		63B64A4C1EA8800A004ABBC0 /* MessageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */; };
+		63B7AB7E1ED5536000F5B9F5 /* UIViewExtensionToastWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B7AB7D1ED5536000F5B9F5 /* UIViewExtensionToastWindow.swift */; };
 		63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */; };
 		63C5CF0D1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */; };
 		63C942401E8E69260052AB80 /* TaskJsonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9423F1E8E69260052AB80 /* TaskJsonUtility.swift */; };
@@ -190,6 +191,7 @@
 		638A4DB51ECAF2D900EF7EBB /* TaskInfoConfigEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskInfoConfigEntity.swift; sourceTree = "<group>"; };
 		638A4DB71ECBCBBC00EF7EBB /* NotificationUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationUtility.swift; sourceTree = "<group>"; };
 		63B64A4B1EA8800A004ABBC0 /* MessageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageUtility.swift; sourceTree = "<group>"; };
+		63B7AB7D1ED5536000F5B9F5 /* UIViewExtensionToastWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensionToastWindow.swift; sourceTree = "<group>"; };
 		63C55E531E8A0BC500740991 /* InputDisabledTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDisabledTextField.swift; sourceTree = "<group>"; };
 		63C5CF0C1E8E1DA200055DE2 /* InputPlaceHolderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPlaceHolderTextView.swift; sourceTree = "<group>"; };
 		63C9423F1E8E69260052AB80 /* TaskJsonUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskJsonUtility.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				6356697E1EB06A660008F57C /* UIView.swift */,
 				635669781EB063270008F57C /* UIApplication.swift */,
 				635669761EB063070008F57C /* NSObject.swift */,
+				63B7AB7D1ED5536000F5B9F5 /* UIViewExtensionToastWindow.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -795,6 +798,7 @@
 				63C55E541E8A0BC500740991 /* InputDisabledTextField.swift in Sources */,
 				63C942401E8E69260052AB80 /* TaskJsonUtility.swift in Sources */,
 				63098FFE1EB340D100EF34C6 /* TaskCategoryMenuBarSubItemCell.swift in Sources */,
+				63B7AB7E1ED5536000F5B9F5 /* UIViewExtensionToastWindow.swift in Sources */,
 				63B64A4C1EA8800A004ABBC0 /* MessageUtility.swift in Sources */,
 				635DCE871E73A18D00F6F325 /* UIGradientButton.swift in Sources */,
 			);
