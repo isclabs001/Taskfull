@@ -53,7 +53,7 @@ var HRToastFontColor: UnsafePointer<UIColor>?      =   nil
 /*
  *  トーストウィンドウ動作設定値
  */
-let HRToastHidesOnTap       =   true
+let HRToastHidesOnTap       =   false
 let HRToastDisplayShadow    =   true
 
 ///
