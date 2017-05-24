@@ -79,7 +79,8 @@
 "MessageStringCLLocationManagerStatusDenied"="It is not available because it is not permitted to use location information service.";
 "MessageStringCLLocationManagerStatusAuthorizedWhenInUse"="Use of location information service is restricted.";
 "MessageStringCLLocationManagerStatusOFF"="It is not available because the location information service is not ON.";
-
+"MessageStringErrorNotificationPointListCount0_TASK"="Notification point is not registered. Please register the spot with 「%@」.";
+"MessageStringErrorNotificationPointListCount0_GPS"="Notification point is not registered.";
 
 
 

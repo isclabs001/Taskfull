@@ -319,9 +319,16 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <view alpha="0.5" tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HAV-Fw-X3r" userLabel="PointListClearView">
+                                        <rect key="frame" x="10" y="10" width="394" height="45"/>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="aPD-ts-pDm" secondAttribute="bottom" constant="12" id="4Hm-2n-zxj"/>
+                                    <constraint firstItem="HAV-Fw-X3r" firstAttribute="leading" secondItem="Esl-3M-zfd" secondAttribute="leading" constant="10" id="9qv-XU-vIt"/>
+                                    <constraint firstItem="HAV-Fw-X3r" firstAttribute="top" secondItem="Esl-3M-zfd" secondAttribute="top" constant="10" id="BkL-p9-22T"/>
+                                    <constraint firstAttribute="bottom" secondItem="HAV-Fw-X3r" secondAttribute="bottom" constant="12" id="F26-y4-8pU"/>
+                                    <constraint firstAttribute="trailing" secondItem="HAV-Fw-X3r" secondAttribute="trailing" constant="10" id="JiE-if-LCl"/>
                                     <constraint firstAttribute="trailing" secondItem="aPD-ts-pDm" secondAttribute="trailing" constant="10" id="Vkr-Ng-Fm6"/>
                                     <constraint firstItem="aPD-ts-pDm" firstAttribute="top" secondItem="Esl-3M-zfd" secondAttribute="top" constant="10" id="eYE-vj-MtV"/>
                                     <constraint firstItem="aPD-ts-pDm" firstAttribute="leading" secondItem="Esl-3M-zfd" secondAttribute="leading" constant="10" id="gm8-vh-Ar3"/>
@@ -374,11 +381,12 @@
                         <outlet property="InputTaskMemoView" destination="tM4-dB-mS2" id="dh0-Q5-206"/>
                         <outlet property="InputTaskNameField" destination="SsX-6L-Joj" id="yD0-w4-4l7"/>
                         <outlet property="MainView" destination="bq6-y5-sSE" id="tQR-74-gxL"/>
+                        <outlet property="PointListClearView" destination="HAV-Fw-X3r" id="S0L-i2-Bcw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iON-5N-sL3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="275" y="1280"/>
+            <point key="canvasLocation" x="273.91304347826087" y="1279.8913043478262"/>
         </scene>
         <!--Map Config View Controller-->
         <scene sceneID="0WK-eO-bIY">
