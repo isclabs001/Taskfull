@@ -341,8 +341,9 @@ extension UIView {
     ///
     func handleToastTapped(_ recognizer: UITapGestureRecognizer) {
         // タイマーを停止する
-        let timer = objc_getAssociatedObject(self, &HRToastTimer) as! Timer
-        timer.invalidate()
+        if let timer: Timer = objc_getAssociatedObject(self, &HRToastTimer) as? Timer {
+            timer.invalidate()
+        }
         
         // トーストウィンドウを閉じる
         hideToastWindow(toast: recognizer.view!)
