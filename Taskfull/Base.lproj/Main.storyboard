@@ -447,6 +447,10 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cmi-Yz-lZz" userLabel="PointListClearView">
+                                        <rect key="frame" x="10" y="80" width="394" height="30"/>
+                                        <color key="backgroundColor" red="0.28627450980000002" green="0.36078431370000003" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -455,7 +459,11 @@
                                     <constraint firstItem="fTS-gT-2At" firstAttribute="top" secondItem="5Ki-T3-eb1" secondAttribute="top" id="ADG-jK-kWi"/>
                                     <constraint firstItem="ln1-Dl-wl9" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="10" id="L9S-jj-9Nj"/>
                                     <constraint firstItem="fTS-gT-2At" firstAttribute="height" secondItem="5Ki-T3-eb1" secondAttribute="height" multiplier="0.5" id="QsD-3d-hwE"/>
+                                    <constraint firstItem="cmi-Yz-lZz" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" constant="10" id="ZFr-6b-RaP"/>
                                     <constraint firstItem="fTS-gT-2At" firstAttribute="leading" secondItem="5Ki-T3-eb1" secondAttribute="leading" id="cEy-X1-JYa"/>
+                                    <constraint firstItem="cmi-Yz-lZz" firstAttribute="top" secondItem="ln1-Dl-wl9" secondAttribute="top" id="cLE-5x-M1c"/>
+                                    <constraint firstAttribute="trailing" secondItem="cmi-Yz-lZz" secondAttribute="trailing" constant="10" id="hAY-xA-psE"/>
+                                    <constraint firstAttribute="bottom" secondItem="cmi-Yz-lZz" secondAttribute="bottom" constant="15" id="maz-Mj-E1b"/>
                                     <constraint firstAttribute="bottom" secondItem="ln1-Dl-wl9" secondAttribute="bottom" constant="15" id="q3O-oy-vUD"/>
                                 </constraints>
                             </view>
@@ -480,6 +488,7 @@
                         <outlet property="InputPointListField" destination="ln1-Dl-wl9" id="HeL-KU-MUy"/>
                         <outlet property="LocationBackgroundFlagSwitch" destination="Yyh-kb-gly" id="69L-Xb-dVf"/>
                         <outlet property="LocationModeTitleTextField" destination="Yng-Z6-tXK" id="tXo-aM-QfJ"/>
+                        <outlet property="PointListClearView" destination="cmi-Yz-lZz" id="VaU-Cm-ncm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JRq-zI-LRU" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -21,7 +21,7 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
     @IBOutlet weak var InputPointListField: InputDisabledTextField!
     @IBOutlet weak var LocationBackgroundFlagSwitch: UISwitch!
     @IBOutlet weak var LocationModeTitleTextField: InputDisabledTextField!
-    
+    @IBOutlet weak var PointListClearView: UIView!
 
     /**
      * 定数
@@ -52,6 +52,43 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         // 初期化
         let _ = initializeProc()
     }
+    
+    /// 通知地点リスト未登録アラート用View表示切り替え処理
+    func diplayPointListClearView(){
+        
+        // タスク通知地点が登録されていない場合
+        if(TaskInfoUtility.DefaultInstance.GetInfoLocationCount() == 0){
+            
+            // 通知地点リスト未登録アラート用View表示
+            PointListClearView.isHidden = false
+            
+        }
+            // タスク通知地点が登録されている場合
+        else{
+            
+            // 通知地点リスト未登録アラート用View非表示
+            PointListClearView.isHidden = true
+            
+        }
+        
+        
+    }
+    
+    /// 通知地点リスト未登録アラート用イベント
+    func PointListErrorConfirmCount(){
+        
+        // タスク通知地点が登録されていない場合
+        if(TaskInfoUtility.DefaultInstance.GetInfoLocationCount() == 0){
+            
+            // 通知地点リスト未登録アラート表示
+            MessageUtility.dispAlertOK(
+                viewController: self,
+                title: "",
+                message: MessageUtility.getMessage(key: "MessageStringErrorNotificationPointListCount0_GPS"))
+            
+        }
+    }
+    
     
     /// LocationBackgroundFlagSwitch値変更時イベント
     ///
@@ -315,6 +352,12 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
             
             // 位置情報取得フラグボタン初期処理
             diplayFlagSwitch()
+            
+            // 通知地点リスト未登録アラート用View表示処理
+            diplayPointListClearView()
+            
+            // 通知地点リスト未登録アラート用イベント追加
+            PointListClearView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(MapConfigViewController.PointListErrorConfirmCount)))
             
             // 戻り値にtrueを設定
             ret = true
@@ -912,6 +955,8 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
                 // 通知地点名配列更新処理
                 self.updataPointListNameArray()
                 
+                // 通知地点リスト未登録アラート用View表示処理
+                self.diplayPointListClearView()
                 
             }
             // 設定タスクが存在する場合
@@ -987,6 +1032,9 @@ class MapConfigViewController : BaseViewController,CLLocationManagerDelegate,MKM
         
         // 通知地点名配列更新処理
         updataPointListNameArray()
+        
+        // 通知地点リスト未登録アラート用View表示処理
+        diplayPointListClearView()
         
     }
 
