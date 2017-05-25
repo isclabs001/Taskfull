@@ -449,7 +449,6 @@
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cmi-Yz-lZz" userLabel="PointListClearView">
                                         <rect key="frame" x="10" y="80" width="394" height="30"/>
-                                        <color key="backgroundColor" red="0.28627450980000002" green="0.36078431370000003" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.8715620476" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -753,11 +752,18 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BzQ-mG-uuM" userLabel="PointListClearView">
+                                        <rect key="frame" x="10" y="10" width="394" height="45"/>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="702-8F-eoS" secondAttribute="trailing" constant="10" id="1IO-Za-n3K"/>
+                                    <constraint firstItem="BzQ-mG-uuM" firstAttribute="top" secondItem="2bA-Ur-Mkc" secondAttribute="top" constant="10" id="4hb-tH-4hi"/>
+                                    <constraint firstItem="BzQ-mG-uuM" firstAttribute="leading" secondItem="2bA-Ur-Mkc" secondAttribute="leading" constant="10" id="5FD-3s-LES"/>
+                                    <constraint firstAttribute="bottom" secondItem="BzQ-mG-uuM" secondAttribute="bottom" constant="12" id="8J0-O3-GrR"/>
                                     <constraint firstItem="702-8F-eoS" firstAttribute="leading" secondItem="2bA-Ur-Mkc" secondAttribute="leading" constant="10" id="8s1-iQ-GXD"/>
                                     <constraint firstAttribute="bottom" secondItem="702-8F-eoS" secondAttribute="bottom" constant="12" id="EuB-Jh-3ss"/>
+                                    <constraint firstAttribute="trailing" secondItem="BzQ-mG-uuM" secondAttribute="trailing" constant="10" id="g9K-eO-ju1"/>
                                     <constraint firstItem="702-8F-eoS" firstAttribute="top" secondItem="2bA-Ur-Mkc" secondAttribute="top" constant="10" id="kiI-Dz-mLf"/>
                                 </constraints>
                             </view>
@@ -825,6 +831,7 @@
                         <outlet property="InputTaskMemoView" destination="NNc-Ro-PdU" id="9JZ-RG-J36"/>
                         <outlet property="InputTaskNameField" destination="OKX-kS-5Ne" id="5MO-8s-Dm1"/>
                         <outlet property="MainView" destination="jEB-k5-Hab" id="Ju7-kw-4eX"/>
+                        <outlet property="PointListClearView" destination="BzQ-mG-uuM" id="7AO-Ym-5Lz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="35H-OM-o7w" userLabel="First Responder" sceneMemberID="firstResponder"/>

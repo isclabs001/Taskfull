@@ -37,7 +37,7 @@ class TaskEditViewController : BaseTaskInputViewController
     @IBOutlet var MainView: UICustomView!
     @IBOutlet weak var HiddenContentClearView: UIView!
     @IBOutlet weak var DeleteTaskBtn: UICustomButton!
-    
+    @IBOutlet weak var PointListClearView: UIView!
     
     /// viewDidLoadイベント処理
     override func viewDidLoad() {
@@ -48,6 +48,44 @@ class TaskEditViewController : BaseTaskInputViewController
         // 初期化
         let _ = initializeProc()
     }
+    
+    
+    /// 通知地点リスト未登録アラート用View処理
+    func diplayPointListClearView(){
+        
+        // タスク通知地点が登録されていない場合
+        if(TaskInfoUtility.DefaultInstance.GetInfoLocationCount() == 0){
+            
+            // 通知地点リスト未登録アラート用View表示
+            PointListClearView.isHidden = false
+            
+        }
+            // タスク通知地点が登録されている場合
+        else{
+            
+            // 通知地点リスト未登録アラート用View非表示
+            PointListClearView.isHidden = true
+            
+        }
+        
+        
+    }
+    
+    /// 通知地点リスト未登録アラート用イベント
+    func PointListErrorConfirmCount(){
+        
+        // タスク通知地点が登録されていない場合
+        if(TaskInfoUtility.DefaultInstance.GetInfoLocationCount() == 0){
+            
+            // 通知地点リスト未登録アラート表示
+            MessageUtility.dispAlertOK(
+                viewController: self,
+                title: "",
+                message: MessageUtility.getMessage(key: "MessageStringErrorNotificationPointListCount0_TASK", param: MessageUtility.getMessage(key: "MainMenuTypeGPSNotification")))
+            
+        }
+    }
+    
     
     /// 削除ボタンタップ時動作
     @IBAction func TouchUpInside_DeleteTaskBtn(_ sender: Any) {
@@ -415,6 +453,13 @@ class TaskEditViewController : BaseTaskInputViewController
         
         //後続タスクボタン:初期設定
         displayAddAfterTaskBtn(addAfterTask: self.AddAfterTask)
+        
+        // 通知地点リスト未登録アラート用View表示処理
+        diplayPointListClearView()
+        
+        // 通知地点リスト未登録アラート用イベント追加
+        PointListClearView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TaskEditViewController.PointListErrorConfirmCount)))
+        
     }
 
     
